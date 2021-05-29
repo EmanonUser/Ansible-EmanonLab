@@ -1,0 +1,9 @@
+---
+homelab:
+  hosts:
+    router:
+      # ansible_host: r.local.emanon
+      ansible_host: 192.168.122.57
+  vars:
+    ansible_user: ansible
+    ansible_ssh_private_key_file: ansibleMaster_ed25519
