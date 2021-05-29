@@ -1,0 +1,13 @@
+---
+- name: System and packages configuation
+  hosts: router
+  gather_facts: yes
+  become: yes
+
+  tasks:
+  - name: System configuration
+    block:
+      - name: Interfaces configuration
+        block:
+          - name: WAN interface config
+          
