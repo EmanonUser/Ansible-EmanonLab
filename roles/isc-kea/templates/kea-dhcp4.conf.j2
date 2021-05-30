@@ -1,0 +1,206 @@
+{
+	"Dhcp4": {
+
+		"valid-lifetime": 4000,
+		"renew-timer": 1000,
+		"rebind-timer": 2000,
+		"option-data": [
+			{
+				"name": "domain-name-servers",
+					"data": "192.168.5.1"
+			},
+		{
+					"name": "domain-search",
+					"data": "local.emanon"
+			},
+			{
+				"name": "ntp-servers",
+					"data": "192.168.5.1"
+			} ],
+
+		"interfaces-config": {
+			"interfaces": [ "bond0" ],
+		"dhcp-socket-type": "udp"
+		},
+
+		"lease-database": {
+			"type": "memfile",
+			"persist": true,
+			"name": "/var/lib/kea/dhcp4.leases",
+		"lfc-interval": 3600
+		},
+
+		"loggers": [
+			{
+				"name": "kea-dhcp4",
+				"output_options": [
+					{
+						"output": "/var/log/kea/kea-dhcp4.log",
+						"pattern": "%D{%Y-%m-%d %H:%M:%S.%q} %-5p [%c/%i] %m\n",
+						"flush": false,
+						"maxsize": 1048576,
+						"maxver": 8
+					}
+				],
+				"severity": "INFO",
+				"debuglevel": 0
+			}
+		],
+
+		"host-reservation-identifiers": [ "hw-address" ],
+		"option-def": [
+			{
+			"name": "PXE",
+			"code": 1,
+			"space": "vendor-encapsulated-options-space",
+			"type": "string",
+			"encapsulate": ""  
+		} ],
+
+		"subnet4": [
+			{
+				"subnet": "192.168.10.0/24",
+				"pools": [ { "pool": "192.168.10.100 - 192.168.10.200" } ],
+			"option-data": [
+					{
+						"name": "routers",
+						"data": "192.168.10.1"
+					}, 
+					{
+						"name": "PXE",
+					"space": "vendor-encapsulated-options-space",
+				"code": 1,
+				"data": "Raspberry Pi Boot"
+					},
+			{
+				"name": "vendor-encapsulated-options"
+			},
+					{
+						"name": "tftp-server-name",
+						"data": "192.168.10.25"
+					} ],
+			"reservations": [
+			{	
+				"hw-address": "ac:1f:6b:77:cf:b8",
+				"ip-address": "192.168.10.25",
+				"hostname": "truenas"
+			}, 
+			{	
+				"hw-address": "ac:1f:6b:77:c8:78",
+				"ip-address": "192.168.10.26",
+				"hostname": "ipmi"
+			}, 
+			{	
+				"hw-address": "dc:a6:32:25:7f:cc",
+				"ip-address": "192.168.10.30",
+				"hostname": "pi"
+			}, 
+			{	
+				"hw-address": "b4:fb:e4:90:49:50",
+				"ip-address": "192.168.10.40",
+				"hostname": "ubnt"
+			} 
+			]
+			},
+		
+			{
+				"subnet": "192.168.20.0/24",
+				"pools": [ { "pool": "192.168.20.100 - 192.168.20.200" } ],
+			"option-data": [
+					{
+						"name": "routers",
+						"data": "192.168.20.1"
+					} ],
+			"reservations": [
+			{	
+				"hw-address": "00:d8:61:57:9c:fb",
+				"ip-address": "192.168.20.20",
+				"hostname": "arch"
+			} 
+			]	
+		},
+
+			{
+				"subnet": "192.168.50.0/24",
+				"pools": [ { "pool": "192.168.50.100 - 192.168.50.200" } ],
+			"option-data": [
+					{
+						"name": "routers",
+						"data": "192.168.50.1"
+					} ],
+			"reservations": [
+			{	
+				"hw-address": "a4:cf:12:d7:91:6d",
+				"ip-address": "192.168.50.50",
+				"hostname": "shp1"
+			}, 
+			{	
+				"hw-address": "a4:cf:12:d7:8f:48",
+				"ip-address": "192.168.50.51",
+				"hostname": "shp2"
+			}, 
+			{	
+				"hw-address": "e8:db:84:89:1b:35",
+				"ip-address": "192.168.50.52",
+				"hostname": "shp3"
+			}, 
+			{	
+				"hw-address": "e8:db:84:89:24:61",
+				"ip-address": "192.168.50.53",
+				"hostname": "shp4"
+			}, 
+			{	
+				"hw-address": "e8:db:84:88:3a:fa",
+				"ip-address": "192.168.50.54",
+				"hostname": "shp5"
+			}, 
+			{	
+				"hw-address": "50:c7:bf:0a:f3:44",
+				"ip-address": "192.168.50.55",
+				"hostname": "hs110"
+			}, 
+			{	
+				"hw-address": "c8:2b:96:09:17:b0",
+				"ip-address": "192.168.50.60",
+				"hostname": "prom117"
+			}
+			]	
+		},
+
+			{
+				"subnet": "192.168.70.0/24",
+				"pools": [ { "pool": "192.168.70.100 - 192.168.70.200" } ],
+			"option-data": [
+					{
+						"name": "routers",
+						"data": "192.168.70.1"
+					} ],
+			"reservations": [
+			{	
+				"hw-address": "00:21:5a:e5:51:f9",
+				"ip-address": "192.168.70.5",
+				"hostname": "printer"
+			} ] 
+		},
+			{
+				"subnet": "192.168.100.0/24",
+				"pools": [ { "pool": "192.168.100.100 - 192.168.100.200" } ],
+			"option-data": [
+					{
+						"name": "routers",
+						"data": "192.168.100.1"
+					} ]
+		},
+			{
+				"subnet": "192.168.200.0/24",
+				"pools": [ { "pool": "192.168.200.100 - 192.168.200.200" } ],
+			"option-data": [
+					{
+						"name": "routers",
+						"data": "192.168.200.1"
+					} ]
+		}
+
+		]
+	}
+}
