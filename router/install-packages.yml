@@ -70,7 +70,7 @@
 
     - name: Install base packages
       ansible.builtin.apt:
-        state: present
+        state: lastest
         default_release: buster
         name:
           - sshguard
