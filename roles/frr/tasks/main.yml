@@ -31,7 +31,7 @@
         path: "{{ item }}"
         state: absent
       loop:
-        - /etc/frr/deamons
+        - /etc/frr/daemons
         - /etc/frr/frr.conf
         - /etc/frr/vtysh.conf
 
