@@ -26,6 +26,7 @@
         update_cache: yes
         state: present
     
+    # TODO: Only delete, copy and restart if the file are default (ie support update)
     - name: Remove FRRouting default config files
       ansible.builtin.file:
         path: "{{ item }}"
@@ -62,4 +63,5 @@
     - name: Restart FRRouting service
       ansible.builtin.service:
         name: frr.service
+        enabled: yes
         state: restarted
