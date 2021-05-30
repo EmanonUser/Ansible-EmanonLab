@@ -6,4 +6,4 @@ homelab:
       ansible_host: 192.168.122.57
   vars:
     ansible_user: ansible
-    ansible_ssh_private_key_file: ansibleMaster_ed25519
+    ansible_ssh_private_key_file: /home/emanon/.ssh/AnsibleMaster_key_ed25519
