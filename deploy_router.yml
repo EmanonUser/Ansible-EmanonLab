@@ -7,3 +7,4 @@
   roles:
     - router_init
     - frr
+    - isc-kea
