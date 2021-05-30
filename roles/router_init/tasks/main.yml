@@ -27,4 +27,9 @@
       create: yes
       mode: u=rw,g=,o=
       state: present
-      
+    
+  - name: Add debian-backports repository
+    ansible.builtin.apt_repository:
+      repo: deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
+      filename: "{{ ansible_distribution_release }}-backports"
+      state: present
