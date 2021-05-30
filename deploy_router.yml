@@ -8,3 +8,4 @@
     - router_init
     - frr
     - isc-kea
+    - nftables
