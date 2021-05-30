@@ -1,0 +1,9 @@
+---
+- name: Provisioning of the main Debian router
+  hosts: router
+  become: yes
+  gather_facts: yes
+  tasks:
+  roles:
+    - router_init
+    - frr
