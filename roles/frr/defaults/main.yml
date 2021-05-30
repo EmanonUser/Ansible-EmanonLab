@@ -1,0 +1,3 @@
+---
+frr_version: frr-stable
+frr_pythontools_version: latest

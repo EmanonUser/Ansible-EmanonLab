@@ -1,0 +1,11 @@
+---
+- name: Router base configuration
+  block:
+
+  - name: Add primary user
+    ansible.builtin.user:
+      name: "{{ primary_user }}" 
+      state: present
+      create_home: yes
+      shell: /bin/bash
+      comment: Primary user created by Ansible

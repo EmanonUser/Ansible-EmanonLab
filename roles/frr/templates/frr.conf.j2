@@ -1,0 +1,15 @@
+frr defaults traditional
+hostname r
+log syslog informational
+service integrated-vtysh-config
+!
+interface bond0
+ ip ospf area 0
+ ip ospf network non-broadcast
+!
+router ospf
+ ospf router-id 192.168.5.1
+ neighbor 192.168.5.2
+!
+line vty
+!
