@@ -1,2 +1,3 @@
 ---
-primary_user: testing 
+primary_user: emanon
+primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHdiEauH9/9qtJgYOzpbu+oicuEQW8JC3XD28SEDfSbY emanon@arch

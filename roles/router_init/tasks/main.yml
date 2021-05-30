@@ -5,7 +5,26 @@
   - name: Add primary user
     ansible.builtin.user:
       name: "{{ primary_user }}" 
-      state: present
       create_home: yes
       shell: /bin/bash
       comment: Primary user created by Ansible
+      state: present
+  
+  - name: Create SSH dir for primary user
+    ansible.builtin.file:
+      path: /home/{{ primary_user }}/.ssh/
+      owner: "{{ primary_user }}"
+      group: "{{ primary_user }}"
+      mode: u=rwx,g=,o=
+      state: directory
+
+  - name: Add SSH key to primary user
+    ansible.builtin.lineinfile:
+      path: /home/{{ primary_user }}/.ssh/authorized_keys
+      line: "{{ primary_user_ssh_pubkey }}"
+      owner: "{{ primary_user }}"
+      group: "{{ primary_user }}"
+      create: yes
+      mode: u=rw,g=,o=
+      state: present
+      
