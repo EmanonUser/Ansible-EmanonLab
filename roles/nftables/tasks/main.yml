@@ -4,15 +4,9 @@
 
   - name: Install nftables from backports
     ansible.builtin.apt:
-      name:
-        - nftables
+      name: nftables
       default_release: buster-backports
       state: latest
-  
-  - name: Remove nftables default config file
-    ansible.builtin.file:
-      path: /etc/nftables.conf
-      state: absent
   
   - name: Copy nftables config file
     ansible.builtin.copy:
@@ -21,6 +15,7 @@
       owner: root
       group: root
       mode: u=rw,g=,o=
+      force: yes
 
   - name: Restart nftables service
     ansible.builtin.service:
