@@ -1,6 +1,11 @@
 ---
 - name: Router base configuration
   block:
+  
+  - name: Resync clock after a snapshot rollback ( only VM )
+    ansible.builtin.service:
+      name: systemd-timesyncd.service
+      state: restarted
 
   - name: Add primary user
     ansible.builtin.user:
@@ -33,3 +38,7 @@
       repo: deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
       filename: "{{ ansible_distribution_release }}-backports"
       state: present
+  
+  - name: Update repository
+    ansible.builtin.apt:
+      update_cache: yes
