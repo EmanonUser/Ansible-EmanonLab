@@ -32,6 +32,13 @@
       create: yes
       mode: u=rw,g=,o=
       state: present
+  
+  - name: Add primary user to sudoers
+    ansible.builtin.lineinfile:
+      path: /etc/sudoers
+      line: "{{ primary_user }} ALL=(ALL:ALL) ALL"
+      state: present
+      validate: /usr/sbin/visudo -cf %s
     
   - name: Add debian-backports repository
     ansible.builtin.apt_repository:
