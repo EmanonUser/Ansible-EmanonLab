@@ -6,6 +6,7 @@
   tasks:
   roles:
     - router_init
+    - router_packages
     - frr
     - isc-kea
     - nftables
