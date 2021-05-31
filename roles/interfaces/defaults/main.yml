@@ -1,0 +1,6 @@
+---
+wan_1_interface: enp1s0
+lan_1_interface: enp7s0
+lan_2_interface: enp8s0
+
+lan_static_ip: 192.168.5.1/24

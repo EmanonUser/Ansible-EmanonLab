@@ -1,0 +1,31 @@
+---
+- name: Install and configure interfaces 
+  block:
+  
+  - name: Install ifenslave
+    ansible.builtin.apt:
+      name: ifenslave
+      default_release: buster
+      state: latest
+
+  - name: Remove old setup
+    ansible.builtin.file:
+      path: /etc/network/interfaces.d/setup
+      state: absent
+
+  - name: Configure interfaces
+    ansible.builtin.template:
+      src: interfaces.j2
+      dest: /etc/network/interfaces
+      owner: root
+      group: root
+      mode: u=rw,g=,o=
+      force: yes
+    register: interfaces_config_result
+
+  - name: Restart networking service
+    ansible.builtin.service:
+      name: networking.service
+      enabled: yes
+      state: restarted
+    when: interfaces_config_result.changed | bool == true

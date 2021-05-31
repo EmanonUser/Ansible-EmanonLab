@@ -1,0 +1,20 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto {{ wan_1_interface }}
+iface {{ wan_1_interface }} inet dhcp
+	dns-nameservers 127.0.0.1
+
+auto bond0
+iface bond0 inet static
+	address {{ lan_static_ip }}
+	bond-slaves {{ lan_1_interface }} {{ lan_2_interface }}
+	bond_mode 4
+	bond_miimon 100
