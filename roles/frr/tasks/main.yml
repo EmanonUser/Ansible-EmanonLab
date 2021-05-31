@@ -1,11 +1,6 @@
 ---
 - name: Install and configuration of FRRouting
   block:
-    - name: Resync clock after a snapshot rollback ( only VM )
-      ansible.builtin.service:
-        name: systemd-timesyncd.service
-        state: restarted
-
 
     - name: Add FRRouting GPG key
       ansible.builtin.apt_key:
@@ -26,16 +21,6 @@
         update_cache: yes
         state: present
     
-    # TODO: Only delete, copy and restart if the file are default (ie support update)
-    - name: Remove FRRouting default config files
-      ansible.builtin.file:
-        path: "{{ item }}"
-        state: absent
-      loop:
-        - /etc/frr/daemons
-        - /etc/frr/frr.conf
-        - /etc/frr/vtysh.conf
-
     - name: Configure FRRouting 
       ansible.builtin.template:
         src: frr.conf.j2
@@ -43,6 +28,7 @@
         owner: frr
         group: frr
         mode: u=rw,g=r,o=
+        force: yes
     
     - name: Configure FRRouting Deamons
       ansible.builtin.template:
@@ -51,6 +37,7 @@
         owner: frr
         group: frr
         mode: u=rw,g=r,o=
+        force: yes
     
     - name: Configure FRRouting Vtysh
       ansible.builtin.template:
@@ -59,6 +46,7 @@
         owner: frr
         group: frr
         mode: u=rw,g=r,o=
+        force: yes
 
     - name: Restart FRRouting service
       ansible.builtin.service:
