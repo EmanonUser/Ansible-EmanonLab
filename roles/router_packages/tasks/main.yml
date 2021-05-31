@@ -1,0 +1,23 @@
+---
+- name: Installation of basic packages from buster-stable
+  ansible.builtin.apt:
+    name: "{{ stable_packages }}"
+    state: present
+
+- name: Installation of basic packages from buster-backports
+  ansible.builtin.apt:
+    name: "{{ backports_packages }}"
+    default_release: buster-backports
+    state: latest
+
+- name: Upgrade Kernel to "{{ kernel_version }}"
+  ansible.builtin.apt:
+    name:
+          - linux-image-{{ kernel_version }}
+          - linux-headers-{{ kernel_version }}
+  register: apt_result
+
+- name: Reboot to apply Kernel upgrade
+  reboot:
+    reboot_timeout: 300
+  when: apt_result.changed | bool == true

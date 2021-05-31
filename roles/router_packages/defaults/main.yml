@@ -1,0 +1,13 @@
+---
+stable_packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - apt-transport-https
+  - dnsutils
+  - ldnsutils
+  - conntrack
+
+backports_packages:
+  - neovim
+
+kernel_version: 5.10.0-0.bpo.3-amd64
