@@ -16,9 +16,11 @@
       group: root
       mode: u=rw,g=,o=
       force: yes
+    register: nftables_config_result
 
   - name: Restart nftables service
     ansible.builtin.service:
       name: nftables.service
       enabled: yes
       state: restarted
+    when: nftables_config_result.changed | bool == true
