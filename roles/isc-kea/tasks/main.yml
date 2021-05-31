@@ -23,10 +23,6 @@
       update_cache: yes
       state: present
 
-  - name: Remove isc-Kea default config files
-    ansible.builtin.file:
-      path: /etc/kea/kea-dhcp4.conf
-      state: absent
     
     # TODO: Use the template module to add pools, ip reservations etc...
   - name: Configure isc-Kea-dhcp4-server
@@ -36,6 +32,7 @@
       owner: root
       group: root
       mode: u=rw,g=r,o=r
+      force: yes
   
   - name: Restart isc-Kea-dhcp4-server service
     ansible.builtin.service:
