@@ -33,9 +33,11 @@
       group: root
       mode: u=rw,g=r,o=r
       force: yes
+    register: kea_config_result
   
   - name: Restart isc-Kea-dhcp4-server service
     ansible.builtin.service:
       name: isc-kea-dhcp4-server.service
       enabled: yes
       state: restarted
+    when: kea_config_result.changed | bool == true
