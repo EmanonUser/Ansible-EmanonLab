@@ -22,10 +22,4 @@
       mode: u=rw,g=,o=
       force: yes
     register: interfaces_config_result
-
-  - name: Restart networking service
-    ansible.builtin.service:
-      name: networking.service
-      enabled: yes
-      state: restarted
-    when: interfaces_config_result.changed | bool == true
+    notify: Restart Networking service

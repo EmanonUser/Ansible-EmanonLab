@@ -1,0 +1,6 @@
+---
+- name: Restart Nftables service
+  ansible.builtin.systemd:
+    name: nftables.service
+    enabled: yes
+    state: restarted

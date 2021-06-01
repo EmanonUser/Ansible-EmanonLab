@@ -1,0 +1,6 @@
+---
+- name: Restart FRRouting service
+  ansible.builtin.systemd:
+    name: frr.service
+    enabled: yes
+    state: restarted
