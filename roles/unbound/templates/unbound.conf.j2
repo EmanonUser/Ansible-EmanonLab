@@ -1,0 +1,40 @@
+# Unbound configuration file for Debian.
+#
+# See the unbound.conf(5) man page.
+#
+# See /usr/share/doc/unbound/examples/unbound.conf for a commented
+# reference config file.
+#
+# The following line includes additional configuration files from the
+# /etc/unbound/unbound.conf.d directory.
+include-toplevel: "/etc/unbound/unbound.conf.d/*.conf"
+server:
+ chroot: ""
+ verbosity: 1
+ logfile: "/var/log/unbound/unbound.log"
+ log-queries: yes
+{% for unbound_interface_ip in unbound_interfaces_ip %}
+ interface: {{ unbound_interface_ip }}
+{% endfor %}
+ port: {{ unbound_settings['port'] }}
+ do-ip4: {{ unbound_settings.ipv4 }}
+ do-ip6: {{ unbound_settings.ipv6 }}
+ do-udp: {{ unbound_settings.udp }}
+ do-tcp: {{ unbound_settings.tcp }}
+
+
+{% for unbound_acces_control_addr in unbound_acces_control %}
+ access-control: {{ unbound_acces_control_addr }}
+{% endfor %}
+	
+ domain-insecure: "{{ unbound_local_zone }}"
+ local-zone: "{{ unbound_local_zone }}" static
+{% for unbound_local_data in unbound__static_subdomain %}
+ local-data: "{{ unbound_local_data }}"
+{% endfor %}
+
+forward-zone:
+ name: "."
+{% for forward_addr in unbound_forward_zone %}
+ forward-addr: {{ forward_addr }}
+{% endfor %} 
