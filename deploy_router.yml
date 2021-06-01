@@ -3,11 +3,12 @@
   hosts: router
   become: yes
   gather_facts: yes
-  tasks:
   roles:
     - router_init
     - router_packages
+    - interfaces
     - frr
     - isc-kea
-    - interfaces
-    #- nftables
+    - wireguard
+    - unbound
+    - nftables
