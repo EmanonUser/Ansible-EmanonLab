@@ -13,6 +13,7 @@
       create_home: yes
       shell: /bin/bash
       comment: Primary user created by Ansible
+      password: "{{ primary_user_password | password_hash('sha512') }}"
       state: present
   
   - name: Create SSH dir for primary user
