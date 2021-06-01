@@ -53,3 +53,14 @@
         force: yes
       register: vtysh_config_result
       notify: Restart FRRouting service
+    
+    - name: Configure Debian service list
+      ansible.builtin.lineinfile:
+        path: /etc/services
+        insertafter: "mon		2583/udp"
+        line: "{{ item }}"
+        owner: root
+        group: root
+        mode: u=rw,g=r,o=r
+        state: present
+      loop: "{{ frr_services_port }}"
