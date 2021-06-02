@@ -17,3 +17,13 @@
     mode: u=rw,g=r,o=r
     force: yes
   notify: Restart Unbound service
+
+- name: Config resolv.conf
+  ansible.builtin.lineinfile:
+    path: /etc/resolv.conf
+    line: nameserver 127.0.0.1
+    search_string: nameserver
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    state: present
