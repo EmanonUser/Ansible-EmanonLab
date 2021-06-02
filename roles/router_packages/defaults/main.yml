@@ -6,6 +6,7 @@ stable_packages:
   - dnsutils
   - ldnsutils
   - conntrack
+  - git
 
 backports_packages:
   - neovim
