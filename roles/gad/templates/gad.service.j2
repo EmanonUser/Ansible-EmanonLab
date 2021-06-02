@@ -1,0 +1,10 @@
+[Service]
+Type=simple
+User={{ _primary_user_username }}
+Group={{ _primary_user_username }}
+EnvironmentFile=/etc/systemd/system/gad.env
+ExecStart=sh -c '/opt/gandi-automatic-dns/gad -5 -v -a $API_KEY -d {{ gandi_domain_name }} -r {{ gandi_subdomain }}'
+RuntimeMaxSec=240
+
+[Install]
+WantedBy=multi-user.target

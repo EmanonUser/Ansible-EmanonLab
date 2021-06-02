@@ -1,0 +1,31 @@
+---
+- name: Install and configure Gandi Automatic DNS
+  block:
+
+  - name: Install Gandi Automatic DNS
+    ansible.builtin.git:
+      repo: https://github.com/brianhp2/gandi-automatic-dns.git
+      dest: /opt/gandi-automatic-dns
+      clone: yes
+  
+  - name: Set permissions
+    ansible.builtin.file:
+      path: /opt/gandi-automatic-dns
+      owner: "{{ primary_user_username }}"
+      group: "{{ primary_user_username }}"
+      mode: u=rx,g=,o=
+
+  - name: Install systemd service files
+    ansible.builtin.template:
+      src: "{{ item }}.j2"
+      dest: /etc/systemd/system/{{ item }}
+      owner: root
+      group: root
+      mode: u=rw,g=,o=
+      force: yes
+    loop:
+      - gad.env
+      - gad.service
+      - gad.timer
+    notify: Enable & Restart Gad service
+

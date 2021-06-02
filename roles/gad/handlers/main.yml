@@ -1,0 +1,6 @@
+---
+- name: Enable & Restart Gad service
+  ansible.builtin.systemd:
+    name: gad
+    enabled: yes
+    state: restarted

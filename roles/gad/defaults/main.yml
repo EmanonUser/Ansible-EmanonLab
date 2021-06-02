@@ -1,0 +1,5 @@
+---
+primary_user_username: "{{ _primary_user_username }}"
+gandi_api_key: "{{ _gandi_api_key }}"
+gandi_domain_name: emanon.moe
+gandi_subdomain: iwakura

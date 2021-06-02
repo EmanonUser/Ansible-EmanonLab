@@ -1,6 +1,7 @@
 ---
 # Vars path if secret ( _ as a prefix ) roles/*/main.yml ---> hosts_vars/router/vars.yml ---> hosts_vars/router/vault.yml
 # Router_init
+_primary_user_username: "{{ vault_primary_user_username }}"
 _primary_user_password: "{{ vault_primary_user_password }}"
 
 # Wireguard
@@ -14,3 +15,6 @@ _peer1_preshared_key: "{{ vault_peer1_preshared_key }}"
 _peer2_private_key: "{{ vault_peer2_private_key }}"
 _peer2_public_key: "{{ vault_peer2_public_key }}"
 _peer2_preshared_key: "{{ vault_peer2_preshared_key }}"
+
+# gad
+_gandi_api_key: "{{ vault_gandi_api_key }}"
