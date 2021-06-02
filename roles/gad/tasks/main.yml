@@ -27,5 +27,5 @@
       - gad.env
       - gad.service
       - gad.timer
-    notify: Enable & Restart Gad service
+    notify: Enable Gad timer
 
