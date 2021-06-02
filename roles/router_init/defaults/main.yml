@@ -1,6 +1,6 @@
 ---
-primary_user: emanon
-primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHdiEauH9/9qtJgYOzpbu+oicuEQW8JC3XD28SEDfSbY emanon@arch
+primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4iwEp9bq99CuoyWCLceCXwek0d4t+r9nLM6YgMlmy7 emanon@arch
 
 # Vault
-primary_user_password: "{{ _primary_user_password }}" # ---> /hosts_vars/router/vars.yml --> /hosts_vars/router/vault.yml
+primary_user_username: "{{ _primary_user_username }}"
+primary_user_password: "{{ _primary_user_password }}" 
