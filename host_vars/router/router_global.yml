@@ -1,0 +1,36 @@
+---
+# Network vars nftables & interfaces
+_WAN_interface_name: enp1s0
+_LAN_interface_name:
+  - enp7s0
+  - enp8s0
+
+_LACP_interface_name: bond0
+_wireguard_interface_name: wg0
+
+_device:
+    router:
+      ipv4_addr:  192.168.5.1
+      ipv4_addr_cidr:  192.168.5.1/24
+      hostname: r
+    brocade:
+      ipv4_addr:  192.168.5.2
+      ipv4_addr_cidr: 192.168.5.2/24
+      hostname: sw
+    arch:
+      ipv4_addr:  192.168.20.20
+      ipv4_addr_cidr: 192.168.20.20/24
+      hostname: arch
+    truenas:
+      ipv4_addr:  192.168.10.25
+      ipv4_addr_cidr: 192.168.10.25/24
+      hostname: arch
+    pi:
+      ipv4_addr:  192.168.10.30
+      ipv4_addr_cidr: 192.168.10.30/24
+      hostname: pi
+
+
+
+_domain_name: emanon.moe
+_subdomain_name: iwakura
