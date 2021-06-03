@@ -1,0 +1,10 @@
+---
+ntp_interfaces_ip:
+  - "{{ _device.router.ipv4_addr }}"
+  - 127.0.0.1
+
+ntp_pool_server:
+  - 0.debian.pool.ntp.org iburst
+  - 1.debian.pool.ntp.org iburst
+  - 2.debian.pool.ntp.org iburst
+  - 3.debian.pool.ntp.org iburst
