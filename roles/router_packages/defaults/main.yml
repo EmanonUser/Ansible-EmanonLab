@@ -2,11 +2,13 @@
 stable_packages:
   - debian-keyring
   - debian-archive-keyring
+  - ca-certificates
   - apt-transport-https
   - dnsutils
   - ldnsutils
   - conntrack
   - git
+  - msmtp
 
 backports_packages:
   - neovim
