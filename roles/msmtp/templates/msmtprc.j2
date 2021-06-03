@@ -1,0 +1,13 @@
+defaults
+port 587
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+account gandi
+host mail.gandi.net
+from notify@emanon.moe
+auth on
+user notify@emanon.moe
+password {{ gandi_mail_password }}
+
+account default : gandi

@@ -1,0 +1,9 @@
+---
+- name: Configure Gandi email account
+  ansible.builtin.template:
+    src: msmtprc.j2
+    dest: /home/restic/.msmtprc
+    owner: restic
+    group: restic
+    mode: u=rw,g=,o=
+    force: yes
