@@ -16,5 +16,18 @@ _peer2_private_key: "{{ vault_peer2_private_key }}"
 _peer2_public_key: "{{ vault_peer2_public_key }}"
 _peer2_preshared_key: "{{ vault_peer2_preshared_key }}"
 
+
 # gad
 _gandi_api_key: "{{ vault_gandi_api_key }}"
+
+
+# restic
+_restic_repository_1: "{{ vault_restic_repository_1 }}"
+_restic_repository_password_1: "{{ vault_restic_repository_password_1 }}"
+
+_restic_repository_2: "{{ vault_restic_repository_2 }}"
+_restic_repository_password_2: "{{ vault_restic_repository_password_2 }}"
+
+
+# msmtp
+_gandi_mail_password: "{{ vault_gandi_mail_password }}"
