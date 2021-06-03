@@ -3,4 +3,4 @@
   ansible.builtin.systemd:
     name: ntp.service
     state: restarted
-    enabled: yes 
+    enabled: yes

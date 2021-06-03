@@ -7,7 +7,7 @@
       name: ntp
       default_release: buster
       state: present
-  
+
   - name: Configure ntpd
     ansible.builtin.template:
       src: ntp.conf.j2

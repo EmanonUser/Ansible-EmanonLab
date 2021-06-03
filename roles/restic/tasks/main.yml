@@ -8,7 +8,7 @@
       shell: /bin/bash
       comment: Restic user created by Ansible
       state: present
-  
+
   - name: Create folder
     ansible.builtin.file:
       path: /home/restic/bin
@@ -31,7 +31,7 @@
       group: restic
       mode: u=rx,g=,o=
     when: not stat_value.stat.exists
-  
+
   - name: Extract restic archive # Ansible unarchive module have trouble with .bz2
     ansible.builtin.shell:
       cmd: bunzip2 restic_linux_amd64.bz2 ; mv restic_linux_amd64 restic
@@ -52,7 +52,7 @@
       group: restic
       mode: u=rw,g=,o=
       force: yes
-  
+
   - name: Configure Restic service
     ansible.builtin.template:
       src: "{{ item }}.j2"

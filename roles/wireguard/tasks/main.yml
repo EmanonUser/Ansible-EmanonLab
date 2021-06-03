@@ -4,7 +4,7 @@
 
     - name: Install Wireguard from backports
       ansible.builtin.apt:
-        name: 
+        name:
           - wireguard
           - wireguard-dkms
           - wireguard-tools

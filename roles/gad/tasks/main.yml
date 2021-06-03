@@ -7,7 +7,7 @@
       repo: https://github.com/brianhp2/gandi-automatic-dns.git
       dest: /opt/gandi-automatic-dns
       clone: yes
-  
+
   - name: Set permissions
     ansible.builtin.file:
       path: /opt/gandi-automatic-dns

@@ -20,7 +20,7 @@
           - frr-pythontools
         update_cache: yes
         state: present
-    
+
     - name: Configure FRRouting
       ansible.builtin.template:
         src: frr.conf.j2

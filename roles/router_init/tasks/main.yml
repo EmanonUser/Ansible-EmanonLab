@@ -4,13 +4,13 @@
 
   - name: Add primary user
     ansible.builtin.user:
-      name: "{{ primary_user_username }}" 
+      name: "{{ primary_user_username }}"
       create_home: yes
       shell: /usr/bin/bash
       comment: Primary user created by Ansible
       password: "{{ primary_user_password | password_hash('sha512') }}"
       state: present
-  
+
   - name: Create SSH dir for primary user
     ansible.builtin.file:
       path: /home/{{ primary_user_username }}/.ssh/
@@ -28,20 +28,20 @@
       create: yes
       mode: u=rw,g=,o=
       state: present
-  
+
   - name: Add primary user to sudoers
     ansible.builtin.lineinfile:
       path: /etc/sudoers
       line: "{{ primary_user_username }} ALL=(ALL:ALL) ALL"
       state: present
       validate: /usr/sbin/visudo -cf %s
-    
+
   - name: Add debian-backports repository
     ansible.builtin.apt_repository:
       repo: deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
       filename: "{{ ansible_distribution_release }}-backports"
       state: present
-  
+
   - name: Update repository & Upgrade packages
     ansible.builtin.apt:
       update_cache: yes

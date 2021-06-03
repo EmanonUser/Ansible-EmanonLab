@@ -1,7 +1,7 @@
 ---
-- name: Install and configure interfaces 
+- name: Install and configure interfaces
   block:
-  
+
   - name: Install ifenslave
     ansible.builtin.apt:
       name: ifenslave
