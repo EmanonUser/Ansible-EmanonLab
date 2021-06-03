@@ -16,4 +16,6 @@
     - msmtp
     - ntpd
     - sshguard
+    - prometeus_node_exporter
     - nftables
+    

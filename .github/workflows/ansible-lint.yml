@@ -57,3 +57,6 @@ jobs:
           ./host_vars/router/vault.yml
           ./host_vars/router/router_global.yml
           ./host_vars/router/secrets.yml
+          ./roles/prometeus_node_exporter/defaults/main.yml
+          ./roles/prometeus_node_exporter/tasks/main.yml
+          ./roles/prometeus_node_exporter/handlers/main.yml

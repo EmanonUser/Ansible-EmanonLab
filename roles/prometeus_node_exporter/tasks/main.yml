@@ -1,0 +1,47 @@
+---
+- name: Install and configure Prometheus node-exporter
+  block:
+
+  - name: Create folder
+    ansible.builtin.file:
+      path: /opt/prometheus
+      owner: emanon
+      group: emanon
+      mode: u=rwx,g=,o=
+      state: directory
+
+  - name: Check if node_exporter Binary already exist
+    ansible.builtin.stat:
+      path: /opt/prometheus/node_exporter
+    register: stat_value
+
+  - name: Download node_exporter binary
+    ansible.builtin.get_url:
+      url: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+      dest: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+      checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/sha256sums.txt"
+      owner: emanon
+      group: emanon
+      mode: u=rx,g=,o=
+    when: not stat_value.stat.exists
+  
+  - name: Extract node_exporter archive
+    ansible.builtin.unarchive:
+      src: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+      dest: /opt/prometheus/
+      remote_src: yes
+  
+  - name: Delete archive
+    ansible.builtin.file:
+      path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+      state: absent
+
+  - name: Configure node_exporter service file
+    ansible.builtin.template:
+      src: node-exporter.service.j2
+      dest: /etc/systemd/system/node-exporter.service
+      owner: root
+      group: root
+      mode: u=rw,g=,o=
+      force: yes
+    notify: Enable & Restart node-exporter service

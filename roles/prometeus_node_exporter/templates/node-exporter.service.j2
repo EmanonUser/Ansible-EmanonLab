@@ -1,0 +1,13 @@
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=emanon
+Group=emanon
+Type=simple
+ExecStart=/opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter --no-collector.rapl --collector.systemd --collector.processes
+
+[Install]
+WantedBy=multi-user.target
