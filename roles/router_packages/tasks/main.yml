@@ -10,6 +10,14 @@
     default_release: buster-backports
     state: latest
 
+- name: Create .config folder for neovim
+  ansible.builtin.file:
+    path: /home/{{ primary_user_username }}/.config/nvim
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+
 - name: Configure neovim
   ansible.builtin.copy:
     src: neovim_init.vim
