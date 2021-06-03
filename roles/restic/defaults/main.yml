@@ -11,6 +11,7 @@ restic_backup_paths:
   - /etc/wireguard
   - /etc/sshguard
   - /home/emanon/.ssh
+  - /etc/brocade
   - /home/restic/.msmtprc
   - /etc/ntp.conf
   - /etc/systemd/system/restic-deb.env
