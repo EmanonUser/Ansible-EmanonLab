@@ -12,10 +12,10 @@
         repo: deb https://deb.frrouting.org/frr {{ ansible_distribution_release }} {{ frr_version }}
         filename: frr
         state: present
-    
+
     - name: Install FRRouting
       ansible.builtin.apt:
-        name: 
+        name:
           - frr
           - frr-pythontools
         update_cache: yes
