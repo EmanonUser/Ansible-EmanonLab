@@ -8,7 +8,7 @@
   ansible.builtin.apt:
     name: "{{ backports_packages }}"
     default_release: buster-backports
-    state: latest
+    state: present
 
 - name: Create .config folder for neovim
   ansible.builtin.file:

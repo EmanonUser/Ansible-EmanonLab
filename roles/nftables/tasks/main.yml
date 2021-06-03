@@ -6,7 +6,7 @@
     ansible.builtin.apt:
       name: nftables
       default_release: buster-backports
-      state: latest
+      state: present
   
   - name: Copy nftables config file
     ansible.builtin.template:

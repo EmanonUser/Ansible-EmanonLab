@@ -9,7 +9,7 @@
           - wireguard-dkms
           - wireguard-tools
         default_release: buster-backports
-        state: latest
+        state: present
 
     - name: Configure Wireguard
       ansible.builtin.template:
