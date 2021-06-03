@@ -47,6 +47,7 @@
       filename: "{{ ansible_distribution_release }}-backports"
       state: present
   
-  - name: Update repository
+  - name: Update repository & Upgrade packages
     ansible.builtin.apt:
       update_cache: yes
+      upgrade: yes

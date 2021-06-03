@@ -22,4 +22,4 @@
       mode: u=rw,g=,o=
       force: yes
     register: interfaces_config_result
-    notify: Restart Networking service
+    notify: Enable & Restart networking service

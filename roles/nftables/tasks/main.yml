@@ -17,4 +17,4 @@
       mode: u=rw,g=,o=
       force: yes
     register: nftables_config_result
-    notify: Restart Nftables service
+    notify: Enable & Restart nftables service

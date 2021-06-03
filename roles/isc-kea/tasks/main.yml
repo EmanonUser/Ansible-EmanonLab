@@ -34,4 +34,4 @@
       mode: u=rw,g=r,o=r
       force: yes
     register: kea_config_result
-    notify: Restart Kea service
+    notify: Enable & Restart Kea-dhcp4 service

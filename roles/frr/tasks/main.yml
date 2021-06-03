@@ -30,7 +30,7 @@
         mode: u=rw,g=r,o=
         force: yes
       register: frr_config_result
-      notify: Restart FRRouting service
+      notify: Enable & Restart FRRouting service
     
     - name: Configure FRRouting Deamons
       ansible.builtin.template:
@@ -41,7 +41,7 @@
         mode: u=rw,g=r,o=
         force: yes
       register: daemons_config_result
-      notify: Restart FRRouting service
+      notify: Enable & Restart FRRouting service
     
     - name: Configure FRRouting Vtysh
       ansible.builtin.template:
@@ -52,7 +52,7 @@
         mode: u=rw,g=r,o=
         force: yes
       register: vtysh_config_result
-      notify: Restart FRRouting service
+      notify: Enable & Restart FRRouting service
     
     - name: Configure Debian service list
       ansible.builtin.blockinfile:

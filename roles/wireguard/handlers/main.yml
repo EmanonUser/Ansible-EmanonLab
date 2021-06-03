@@ -1,5 +1,5 @@
 ---
-- name: Restart Wireguard service
+- name: Enable & Restart wireguard service
   ansible.builtin.systemd:
     name: wg-quick@wg0.service
     enabled: yes

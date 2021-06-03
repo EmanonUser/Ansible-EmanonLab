@@ -16,7 +16,7 @@
     group: root
     mode: u=rw,g=r,o=r
     force: yes
-  notify: Restart Unbound service
+  notify: Enable & Restart unbound service
 
 - name: Config resolv.conf
   ansible.builtin.copy:

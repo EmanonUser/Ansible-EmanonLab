@@ -1,5 +1,5 @@
 ---  
-- name: Restart Networking service
+- name: Enable & Restart networking service
   ansible.builtin.systemd:
     name: networking.service
     enabled: yes
