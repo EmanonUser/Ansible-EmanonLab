@@ -9,8 +9,11 @@ stable_packages:
   - conntrack
   - git
   - msmtp
+  - tcpdump
+  - zsh
 
 backports_packages:
   - neovim
 
 kernel_version: 5.10.0-0.bpo.3-amd64
+kernel_upgrade: no

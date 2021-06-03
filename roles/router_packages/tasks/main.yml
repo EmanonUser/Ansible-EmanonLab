@@ -15,6 +15,7 @@
     name:
           - linux-image-{{ kernel_version }}
           - linux-headers-{{ kernel_version }}
+  when: kernel_upgrade
   register: apt_result
 
 - name: Reboot to apply Kernel upgrade
