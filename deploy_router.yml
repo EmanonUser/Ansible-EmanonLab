@@ -15,4 +15,5 @@
     - restic
     - msmtp
     - ntpd
+    - sshguard
     - nftables
