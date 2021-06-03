@@ -29,7 +29,6 @@
         group: frr
         mode: u=rw,g=r,o=
         force: yes
-      register: frr_config_result
       notify: Enable & Restart FRRouting service
 
     - name: Configure FRRouting Deamons
@@ -40,7 +39,6 @@
         group: frr
         mode: u=rw,g=r,o=
         force: yes
-      register: daemons_config_result
       notify: Enable & Restart FRRouting service
 
     - name: Configure FRRouting Vtysh
@@ -51,7 +49,6 @@
         group: frr
         mode: u=rw,g=r,o=
         force: yes
-      register: vtysh_config_result
       notify: Enable & Restart FRRouting service
 
     - name: Configure Debian service list
