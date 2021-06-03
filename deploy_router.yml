@@ -8,7 +8,7 @@
     - router_packages
     - interfaces
     - frr
-    - isc-kea
+    - isc_kea
     - wireguard
     - unbound
     - gad
