@@ -43,9 +43,9 @@ jobs:
           ./roles/unbound/defaults/main.yml
           ./roles/unbound/tasks/main.yml
           ./roles/unbound/handlers/main.yml
-          ./roles/isc-kea/defaults/main.yml
-          ./roles/isc-kea/tasks/main.yml
-          ./roles/isc-kea/handlers/main.yml
+          ./roles/isc_kea/defaults/main.yml
+          ./roles/isc_kea/tasks/main.yml
+          ./roles/isc_kea/handlers/main.yml
           ./roles/restic/defaults/main.yml
           ./roles/restic/tasks/main.yml
           ./roles/restic/handlers/main.yml

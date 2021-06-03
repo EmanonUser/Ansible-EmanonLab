@@ -35,6 +35,7 @@
       line: "{{ primary_user_username }} ALL=(ALL:ALL) ALL"
       state: present
       validate: /usr/sbin/visudo -cf %s
+    no_log: true
 
   - name: Add debian-backports repository
     ansible.builtin.apt_repository:
