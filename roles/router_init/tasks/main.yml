@@ -1,12 +1,7 @@
 ---
 - name: Router base configuration
   block:
-  
-  - name: Resync clock after a snapshot rollback ( only VM )
-    ansible.builtin.service:
-      name: systemd-timesyncd.service
-      state: restarted
-
+    
   - name: Add primary user
     ansible.builtin.user:
       name: "{{ primary_user_username }}" 

@@ -71,8 +71,8 @@ table inet firewall {
 	chain output {
 		type filter hook output priority filter; policy drop;
 		ct state invalid counter drop
-		# Disable in VM oifname "enp1s0" ip daddr 192.168.1.1 counter accept	# Don't Block SSH for ndd
-		# Disable in VM oifname $WAN ip daddr @RFC1918_3330v4 counter drop 	# Block Leaking Private ip from WAN
+		oifname "enp1s0" ip daddr 192.168.1.1 counter accept	# Don't Block SSH for ndd
+		oifname $WAN ip daddr @RFC1918_3330v4 counter drop 	# Block Leaking Private ip from WAN
 		ct state { established, related, new } counter accept
 	}
 }

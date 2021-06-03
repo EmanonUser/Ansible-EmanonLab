@@ -2,8 +2,8 @@
 # Network vars nftables & interfaces
 _WAN_interface_name: enp1s0
 _LAN_interface_name:
-  - enp7s0
-  - enp8s0
+  - enp2s0
+  - enp3s0
 
 _LACP_interface_name: bond0
 _wireguard_interface_name: wg0
