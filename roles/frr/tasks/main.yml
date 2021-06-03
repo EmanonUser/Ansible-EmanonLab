@@ -57,7 +57,7 @@
     - name: Configure Debian service list
       ansible.builtin.blockinfile:
         path: /etc/services
-        insertafter: "mon		2583/udp"
+        insertafter: "mon 2583/udp"
         block: "{{ frr_services_port }}"
         owner: root
         group: root
