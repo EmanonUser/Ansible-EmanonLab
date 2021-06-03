@@ -12,7 +12,7 @@
 
   - name: Check if node_exporter Binary already exist
     ansible.builtin.stat:
-      path: /opt/prometheus/node_exporter
+      path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter
     register: stat_value
 
   - name: Download node_exporter binary
