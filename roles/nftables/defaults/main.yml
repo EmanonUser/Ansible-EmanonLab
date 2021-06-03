@@ -1,0 +1,8 @@
+---
+WAN_interface_name: "{{ _WAN_interface_name }}"
+LACP_interface_name: "{{ _LACP_interface_name }}"
+wireguard_interface_name: "{{ _wireguard_interface_name }}"
+
+arch_ipv4_addr: "{{ _device.arch.ipv4_addr }}"
+pi_ipv4_addr: "{{ _device.pi.ipv4_addr }}"
+brocade_ipv4_addr: "{{ _device.brocade.ipv4_addr }}"
