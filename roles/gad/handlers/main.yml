@@ -2,4 +2,5 @@
 - name: Enable Gad timer
   ansible.builtin.systemd:
     name: gad.timer
+    state: restarted
     enabled: yes
