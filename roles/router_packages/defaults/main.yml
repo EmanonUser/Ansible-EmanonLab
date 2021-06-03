@@ -1,4 +1,5 @@
 ---
+primary_user_username: "{{ _primary_user_username }}"
 stable_packages:
   - debian-keyring
   - debian-archive-keyring
