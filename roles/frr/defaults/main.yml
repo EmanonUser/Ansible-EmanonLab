@@ -1,5 +1,5 @@
 ---
-frr_version: frr-stable
+frr_version: frr-7
 frr_pythontools_version: latest
 frr_daemons:
   - bgpd=no
