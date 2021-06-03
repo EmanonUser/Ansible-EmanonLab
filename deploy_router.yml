@@ -11,4 +11,8 @@
     - isc-kea
     - wireguard
     - unbound
+    - gad
+    - restic
+    - msmtp
+    - ntpd
     - nftables
