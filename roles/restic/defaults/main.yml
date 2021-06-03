@@ -1,0 +1,36 @@
+---
+restic_version: 0.12.0 # https://github.com/restic/restic/releases/download/v0.12.0/restic_0.12.0_linux_amd64.bz2
+restic_backup_paths: 
+  - /etc/frr
+  - /etc/kea
+  - /etc/unbound
+  - /etc/nftables.conf
+  - /etc/network/interfaces
+  - /etc/hosts
+  - /etc/hostname
+  - /etc/wireguard
+  - /etc/sshguard
+  - /home/emanon/.ssh
+  - /home/restic/.msmtprc
+  - /etc/ntp.conf
+  - /etc/systemd/system/restic-deb.env
+  - /etc/systemd/system/restic-deb.service
+  - /etc/systemd/system/restic-deb.timer
+  - /etc/systemd/system/restic.env
+  - /etc/systemd/system/restic.service
+  - /etc/systemd/system/restic.timer
+
+# secret
+restic_repository_1: "{{ _restic_repository_1 }}"
+restic_repository_password_1: "{{ _restic_repository_password_1 }}"
+
+restic_repository_2: "{{ _restic_repository_2 }}"
+restic_repository_password_2: "{{ _restic_repository_password_2 }}"
+
+restic_services:
+  - restic.service
+  - restic.timer
+  - restic.env
+  - restic-deb.service
+  - restic-deb.timer
+  - restic-deb.env

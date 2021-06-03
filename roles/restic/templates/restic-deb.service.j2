@@ -1,0 +1,16 @@
+[Unit]
+Description=Restic Backup To Debian Server
+Wants=restic-deb.timer
+
+[Service]
+Type=oneshot
+User=restic
+Group=restic
+EnvironmentFile=/etc/systemd/system/restic-deb.env
+ExecStartPre=/usr/bin/ssh -f -N -M -S ~/ssh.socket emanon@lain.emanon.moe -L 9000:localhost:8000
+ExecStart=/home/restic/bin/restic -vvv backup --files-from /home/restic/bin/configs_path
+ExecStartPost=/usr/bin/ssh emanon@lain.emanon.moe -S /home/restic/ssh.socket -O exit
+ExecStopPost=/bin/sh -c 'if [ $$EXIT_STATUS != '0' ]; then echo "Subject: Systemd service error\nrestic-deb.service failed check the status" | msmtp notify@emanon.moe; fi;'
+
+[Install]
+WantedBy=multi-user.target

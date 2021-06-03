@@ -1,0 +1,10 @@
+[Unit]
+Description=Restic Backup Timer
+
+[Timer]
+OnStartupSec=5m
+OnUnitActiveSec=24h
+Unit=restic-deb.service
+
+[Install]
+WantedBy=timers.target
