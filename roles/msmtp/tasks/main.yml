@@ -1,9 +1,20 @@
 ---
-- name: Configure Gandi email account
-  ansible.builtin.template:
-    src: msmtprc.j2
-    dest: /home/restic/.msmtprc
-    owner: restic
-    group: restic
-    mode: u=rw,g=,o=
-    force: yes
+- name: Installl and configure msmtp
+  block:
+
+  - name: Create folder
+    ansible.builtin.file:
+      path: /home/restic/bin
+      owner: restic
+      group: restic
+      mode: u=rwx,g=,o=
+      state: directory
+
+  - name: Configure Gandi email account
+    ansible.builtin.template:
+      src: msmtprc.j2
+      dest: /home/restic/.msmtprc
+      owner: restic
+      group: restic
+      mode: u=rw,g=,o=
+      force: yes

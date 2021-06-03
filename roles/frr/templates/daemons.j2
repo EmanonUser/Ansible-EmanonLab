@@ -14,22 +14,10 @@
 #
 # The watchfrr, zebra and staticd daemons are always started.
 #
-bgpd=no
-ospfd=yes
-ospf6d=no
-ripd=no
-ripngd=no
-isisd=no
-pimd=no
-ldpd=no
-nhrpd=no
-eigrpd=no
-babeld=no
-sharpd=no
-pbrd=no
-bfdd=no
-fabricd=no
-vrrpd=no
+
+{% for daemon in frr_daemons %}
+{{ daemon }}
+{% endfor %}
 
 #
 # If this option is set the /etc/init.d/frr script automatically loads

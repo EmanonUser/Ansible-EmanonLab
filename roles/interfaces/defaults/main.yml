@@ -1,6 +1,8 @@
 ---
-wan_1_interface: enp1s0
-lan_1_interface: enp7s0
-lan_2_interface: enp8s0
+WAN_interface_name: "{{ _WAN_interface_name }}"
+LAN_interface_1_name: "{{ _LAN_interface_name[0] }}"
+LAN_interface_2_name: "{{ _LAN_interface_name[1] }}"
 
-lan_static_ip: 192.168.5.1/24
+LAN_static_ip: "{{ _device.router.ipv4_addr }}"
+LAN_static_ip_cidr: "{{ _device.router.ipv4_addr_cidr }}"
+LACP_interface_name: "{{ _LACP_interface_name }}"
