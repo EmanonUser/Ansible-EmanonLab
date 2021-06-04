@@ -11,9 +11,7 @@ unbound_settings:
   tcp: "yes"
 
 unbound_forward_zone:
-  - "9.9.9.9"
-  - "1.1.1.1"
-  - "1.0.0.1"
+  - "192.168.10.30"
 
 unbound_acces_control:
   - 192.168.5.0/24 allow
