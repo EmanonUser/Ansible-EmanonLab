@@ -7,3 +7,4 @@ TODO:
     - ssh hardening
     - (zabbix agent?)
     - modify gad to download from release https://github.com/brianhp2/gandi-automatic-dns/releases
+    - (zabbix agent?)
