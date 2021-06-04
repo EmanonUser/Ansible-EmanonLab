@@ -10,6 +10,7 @@
       comment: Primary user created by Ansible
       password: "{{ primary_user_password | password_hash('sha512') }}"
       state: present
+    when: router_init
 
   - name: Create SSH dir for primary user
     ansible.builtin.file:
