@@ -50,8 +50,8 @@ table inet firewall {
 		
 		iifname $LAN ip saddr {{ brocade_ipv4_addr }} ip protocol ospf counter accept # Accept OSPFv2 from brocade
 		
-		iifname $LAN udp dport { 53, 67, 123 } counter accept # DHCP server & NTP server for LAN
-		iifname $LAN tcp dport { 9100, 10050 } counter accept # Monitoring agent
+		iifname $LAN udp dport { 53, 67, 123 } counter accept # DNS server & DHCP server & NTP server for LAN
+		iifname $LAN tcp dport { 9100 } counter accept # Prometheus Node exporter
 		udp dport 51820 ct state new log level notice prefix "New Wireguard connexion: " counter accept
 		tcp dport ssh ct state new log level notice prefix "New SSH connexion: " counter accept
 	}
