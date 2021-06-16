@@ -7,7 +7,7 @@
         name: openssh-server
         default_release: buster-backports
         state: present
-      
+
     - name: Configure openssh-server
       ansible.builtin.copy:
         src: sshd_config
