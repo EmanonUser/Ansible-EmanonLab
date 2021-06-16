@@ -40,3 +40,4 @@ unbound__static_subdomain:
  - "syncthing.local.emanon. 10800 IN A 192.168.10.30"
  - "unifi.local.emanon. 10800 IN A 192.168.10.30"
  - "restic.local.emanon. 10800 IN A 192.168.10.30"
+ - "adguard.local.emanon. 10800 IN A 192.168.10.30"
