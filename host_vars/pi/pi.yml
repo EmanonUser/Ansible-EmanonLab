@@ -8,6 +8,9 @@ _debian_stable_packages:
   - debian-archive-keyring
   - ca-certificates
   - apt-transport-https
+  - curl
+  - gnupg2
+  - lsb-release
   - dnsutils
   - ldnsutils
   - git
@@ -15,6 +18,7 @@ _debian_stable_packages:
   - tcpdump
   - mtr-tiny
   - zsh
+  - unzip
 debian_backports_packages:
   - neovim
 _kernel_upgrade: no
@@ -26,3 +30,6 @@ _cpu_architecture: arm64
 
 # Role firewalld && prometheus
 _firewalld_zone: home
+
+# Role: nomad
+_nomad_version: 1.1.2

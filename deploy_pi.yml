@@ -9,5 +9,7 @@
     - firewalld
     - prometheus_node_exporter
     - nfs_share
+    - docker
+    - nomad
 
   # Prometheus, syncthing, haproxy
