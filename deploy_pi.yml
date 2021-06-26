@@ -8,6 +8,6 @@
     - install_packages
     - firewalld
     - prometheus_node_exporter
-    - nfs-share
+    - nfs_share
 
   # Prometheus, syncthing, haproxy
