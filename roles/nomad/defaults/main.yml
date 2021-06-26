@@ -1,0 +1,3 @@
+---
+nomad_version: "{{ _nomad_version }}"
+cpu_architecture: "{{ _cpu_architecture }}"

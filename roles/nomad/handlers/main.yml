@@ -1,0 +1,5 @@
+- name: Enable & Restart nomad service
+  ansible.builtin.systemd:
+    name: nomad.service
+    enabled: yes
+    state: restarted
