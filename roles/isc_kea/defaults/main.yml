@@ -1,2 +1,2 @@
 ---
-kea_version: kea-1-9
+kea_version: "{{ _kea_version }}"

@@ -1,22 +1,6 @@
 ---
-frr_version: frr-7
-frr_daemons:
-  - bgpd=no
-  - ospfd=yes
-  - ospf6d=no
-  - ripd=no
-  - ripngd=no
-  - isisd=no
-  - pimd=no
-  - ldpd=no
-  - nhrpd=no
-  - eigrpd=no
-  - babeld=no
-  - sharpd=no
-  - pbrd=no
-  - bfdd=no
-  - fabricd=no
-  - vrrpd=no
+frr_version: "{{ _frr_version }}"
+frr_daemons: "{{ _frr_daemons }}"
 frr_services_port: |
   zebrasrv      	2600/tcp                 # zebra service
   zebra         	2601/tcp                 # zebra vty
