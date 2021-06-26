@@ -1,0 +1,6 @@
+---
+- name: Enable & Restart mnt-vault mount
+  ansible.builtin.systemd:
+    name: mnt-vault.mount
+    enabled: yes
+    state: restarted

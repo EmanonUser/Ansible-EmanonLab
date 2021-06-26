@@ -1,0 +1,15 @@
+---
+- name: Install nfs client
+  ansible.builtin.apt:
+    name: nfs-common
+    state: present
+
+- name: Configure nfs share
+  ansible.builtin.template:
+    src: mnt-vault.mount.j2
+    dest: /etc/systemd/system/mnt-vault.mount
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    force: yes
+  notify: Enable & Restart mnt-vault mount
