@@ -15,7 +15,7 @@
       permanent: yes
       state: enabled
       immediate: yes
-    
+
   - name: Open firewalld ssh port
     ansible.posix.firewalld:
       zone: home
