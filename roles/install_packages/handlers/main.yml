@@ -1,0 +1,4 @@
+---
+- name: Reboot to apply Kernel upgrade
+  reboot:
+    reboot_timeout: 300
