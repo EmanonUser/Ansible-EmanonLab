@@ -1,3 +1,21 @@
 ---
 # Role: Device_init
 _create_user: no
+
+# Role: install_packages
+_debian_stable_packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - dnsutils
+  - ldnsutils
+  - git
+  - tmux
+  - tcpdump
+  - zsh
+
+debian_backports_packages:
+  - neovim
+
+_kernel_upgrade: no
