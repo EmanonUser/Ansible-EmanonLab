@@ -1,3 +1,4 @@
 ---
 primary_user_username: "{{ _primary_user_username }}"
 cpu_architecture: "{{ _cpu_architecture }}"
+docker_gpg_file: /usr/share/keyrings/docker-archive-keyring.gpg
