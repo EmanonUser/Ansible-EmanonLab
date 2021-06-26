@@ -5,4 +5,9 @@
   gather_facts: yes
   roles:
     - device_init
+    - install_packages
     - firewalld
+    - prometheus_node_exporter
+    - nfs-share
+
+  # Prometheus, syncthing, haproxy
