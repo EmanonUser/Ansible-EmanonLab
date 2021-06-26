@@ -23,3 +23,6 @@ _kernel_upgrade: no
 _download_url: https://github.com/prometheus/node_exporter/releases/download/
 _node_exporter_version: 1.1.2
 _cpu_architecture: arm64
+
+# Role firewalld && prometheus
+_firewalld_zone: home

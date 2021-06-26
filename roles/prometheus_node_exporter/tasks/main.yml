@@ -36,6 +36,7 @@
     ansible.builtin.file:
       path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
       state: absent
+    when: not stat_value.stat.exists
 
   - name: Configure node_exporter service file
     ansible.builtin.template:
@@ -46,3 +47,12 @@
       mode: u=rw,g=,o=
       force: yes
     notify: Enable & Restart node-exporter service
+
+  - name: Open firewalld port
+    ansible.posix.firewalld:
+      zone: "{{ firewalld_zone }}"
+      port: 9100/tcp
+      permanent: yes
+      state: enabled
+      immediate: yes
+    when: ansible_host == "pi.local.emanon"

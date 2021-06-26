@@ -18,7 +18,7 @@
 
   - name: Open firewalld ssh port
     ansible.posix.firewalld:
-      zone: home
+      zone: "{{ firewalld_zone }}"
       service: ssh
       permanent: yes
       state: enabled
