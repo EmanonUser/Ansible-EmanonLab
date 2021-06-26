@@ -1,0 +1,3 @@
+---
+primary_user_username: "{{ _primary_user_username }}"
+cpu_architecture: "{{ _cpu_architecture }}"
