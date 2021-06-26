@@ -1,0 +1,13 @@
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ primary_user_username }}
+Group={{ primary_user_username }}
+Type=simple
+ExecStart=/opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}/node_exporter --no-collector.rapl --collector.systemd --collector.processes
+
+[Install]
+WantedBy=multi-user.target

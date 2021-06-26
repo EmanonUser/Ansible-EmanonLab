@@ -5,36 +5,36 @@
   - name: Create folder
     ansible.builtin.file:
       path: /opt/prometheus
-      owner: emanon
-      group: emanon
+      owner: "{{ primary_user_username }}"
+      group: "{{ primary_user_username }}"
       mode: u=rwx,g=,o=
       state: directory
 
   - name: Check if node_exporter Binary already exist
     ansible.builtin.stat:
-      path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter
+      path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}/node_exporter
     register: stat_value
 
   - name: Download node_exporter binary
     ansible.builtin.get_url:
-      url: "{{ download_url }}v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
-      dest: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+      url: "{{ download_url }}v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz"
+      dest: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
       checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/sha256sums.txt"
-      owner: emanon
-      group: emanon
+      owner: "{{ primary_user_username }}"
+      group: "{{ primary_user_username }}"
       mode: u=rx,g=,o=
     when: not stat_value.stat.exists
 
   - name: Extract node_exporter archive
     ansible.builtin.unarchive:
-      src: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+      src: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
       dest: /opt/prometheus/
       remote_src: yes
     when: not stat_value.stat.exists
 
   - name: Delete archive
     ansible.builtin.file:
-      path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+      path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
       state: absent
 
   - name: Configure node_exporter service file

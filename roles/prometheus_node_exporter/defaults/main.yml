@@ -1,0 +1,5 @@
+---
+primary_user_username: "{{ _primary_user_username }}"
+download_url: "{{ _download_url }}"
+node_exporter_version: "{{ _node_exporter_version }}"
+cpu_architecture: "{{ _cpu_architecture }}"
