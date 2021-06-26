@@ -1,0 +1,7 @@
+---
+- name: Provisioning of the raspberry pi 4 server
+  hosts: pi
+  become: yes
+  gather_facts: yes
+  roles:
+    - device_init
