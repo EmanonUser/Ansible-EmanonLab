@@ -3,8 +3,8 @@ Description=Mount NFS Share
 After=network.target
 
 [Mount]
-What=truenas.local.emanon:/mnt/vault/emanon
-Where=/mnt/vault
+What={{ nfs_server_target }}:{{ nfs_remote_share }}
+Where={{ nfs_mount_dir }}
 Type=nfs
 Options=_netdev,auto
 
