@@ -1,3 +1,4 @@
 ---
 # Vault
+gandi_email: "{{ _gandi_email }}"
 gandi_mail_password: "{{ _gandi_mail_password }}"

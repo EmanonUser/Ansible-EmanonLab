@@ -5,9 +5,9 @@ tls_trust_file /etc/ssl/certs/ca-certificates.crt
 
 account gandi
 host mail.gandi.net
-from notify@emanon.moe
+from {{ gandi_email }}
 auth on
-user notify@emanon.moe
+user {{ gandi_email }}
 password {{ gandi_mail_password }}
 
 account default : gandi
