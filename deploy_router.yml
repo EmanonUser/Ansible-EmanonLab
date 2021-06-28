@@ -4,8 +4,8 @@
   become: yes
   gather_facts: yes
   roles:
-    - router_init
-    - router_packages
+    - device_init
+    - install_packages
     - interfaces
     - frr
     - isc_kea
