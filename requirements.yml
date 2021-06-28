@@ -1,0 +1,4 @@
+---
+# Ansible-galaxy install -r requirements.yml
+collections:
+  - ansible.posix
