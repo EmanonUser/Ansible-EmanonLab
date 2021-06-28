@@ -1,0 +1,38 @@
+---
+_device:
+    router:
+      ipv4_addr:  192.168.5.1
+      ipv4_addr_cidr:  192.168.5.1/24
+      hostname: r
+    brocade:
+      ipv4_addr:  192.168.5.2
+      ipv4_addr_cidr: 192.168.5.2/24
+      hostname: sw
+    arch:
+      ipv4_addr:  192.168.20.20
+      ipv4_addr_cidr: 192.168.20.20/24
+      hostname: arch
+    truenas:
+      ipv4_addr:  192.168.10.25
+      ipv4_addr_cidr: 192.168.10.25/24
+      hostname: arch
+    pi:
+      ipv4_addr:  192.168.10.30
+      ipv4_addr_cidr: 192.168.10.30/24
+      hostname: pi
+
+_ipv4_subnets:
+  - 192.168.1.0/24
+  - 192.168.5.0/24
+  - 192.168.10.0/24
+  - 192.168.20.0/24
+  - 192.168.50.0/24
+  - 192.168.70.0/24
+  - 192.168.100.0/24
+
+
+_domain_name: emanon.moe
+_subdomain_name_1: iwakura
+_subdomain_name_2: lain
+
+_local_domain_name: local.emanon
