@@ -16,4 +16,5 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         target: |
+          .
           ./roles/
