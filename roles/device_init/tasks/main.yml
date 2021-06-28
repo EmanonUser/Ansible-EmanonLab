@@ -11,7 +11,7 @@
       password: "{{ primary_user_password | password_hash('sha512') }}"
       state: present
     when: create_user
-
+  
   - name: Create SSH dir for primary user
     ansible.builtin.file:
       path: /home/{{ primary_user_username }}/.ssh/
