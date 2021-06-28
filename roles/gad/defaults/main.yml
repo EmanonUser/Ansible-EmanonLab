@@ -3,4 +3,4 @@ primary_user_username: "{{ _primary_user_username }}"
 gandi_api_key: "{{ _gandi_api_key }}"
 
 gandi_domain_name: "{{_domain_name }}"
-gandi_subdomain: "{{_subdomain_name }}"
+gandi_subdomain: "{{_subdomain_name_1 }}"
