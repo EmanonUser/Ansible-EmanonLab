@@ -28,4 +28,3 @@
       - gad.service
       - gad.timer
     notify: Enable Gad timer
-
