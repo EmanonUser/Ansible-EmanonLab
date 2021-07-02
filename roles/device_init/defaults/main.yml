@@ -1,5 +1,5 @@
 ---
-primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4iwEp9bq99CuoyWCLceCXwek0d4t+r9nLM6YgMlmy7 emanon@arch
+primary_user_ssh_pubkey: "{{ _primary_user_ssh_pubkey }}"
 create_user: "{{ _create_user }}"
 
 # host_vars vault.yml
