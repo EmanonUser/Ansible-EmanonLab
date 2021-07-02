@@ -93,7 +93,7 @@ _debian_stable_packages:
   - tcpdump
   - zsh
 
-debian_backports_packages:
+_debian_backports_packages:
   - neovim
 
 _kernel_version: 5.10.0-0.bpo.3-amd64

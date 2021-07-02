@@ -19,8 +19,10 @@ _debian_stable_packages:
   - mtr-tiny
   - zsh
   - unzip
-debian_backports_packages:
+
+_debian_backports_packages:
   - neovim
+
 _kernel_upgrade: no
 
 # Role: prometheus_node_exporter
