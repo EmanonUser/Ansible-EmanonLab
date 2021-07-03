@@ -9,6 +9,7 @@
     - firewalld
     - prometheus_node_exporter
     - nfs_share
+    - systemd_timesyncd
     - docker
     - nomad
 
