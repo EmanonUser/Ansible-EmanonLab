@@ -30,7 +30,7 @@ _ipv4_subnets:
   - 192.168.70.0/24
   - 192.168.100.0/24
 
-
+_ntp_server: r.local.emanon
 _domain_name: emanon.moe
 _subdomain_name_1: iwakura
 _subdomain_name_2: lain
