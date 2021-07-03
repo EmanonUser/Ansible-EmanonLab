@@ -1,0 +1,22 @@
+---
+- name: Run jackett docker container
+  community.docker.docker_container:
+    name: jackett
+    image: ghcr.io/linuxserver/jackett
+    state: started
+    restart: yes
+    ports: "{{ jackett_port }}:{{ jackett_port }}"
+    container_default_behavior: no_defaults
+    env:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: "Europe/London"
+      AUTO_UPDATE: "true"
+
+- name: Add firewalld service
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ jackett_port }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: yes

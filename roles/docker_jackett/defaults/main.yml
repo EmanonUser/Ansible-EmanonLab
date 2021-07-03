@@ -1,0 +1,3 @@
+---
+firewalld_zone: "{{ _firewalld_zone }}"
+jackett_port: "{{ _jackett_port }}"
