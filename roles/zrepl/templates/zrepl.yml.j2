@@ -1,0 +1,34 @@
+global:
+  logging:
+    # use syslog instead of stdout because it makes journald happy
+    - type: syslog
+      format: human
+      level: warn
+
+jobs:
+
+# this job takes care of snapshot creation + pruning
+- name: snapjob
+  type: snap
+  filesystems: {
+      "<": true,
+  }
+  # create snapshots with prefix `zrepl_` every 15 minutes
+  snapshotting:
+    type: periodic
+    interval: 15m
+    prefix: zrepl_
+  pruning:
+    keep:
+    # fade-out scheme for snapshots starting with `zrepl_`
+    # - keep all created in the last hour
+    # - then destroy snapshots such that we keep 24 each 1 hour apart
+    # - then destroy snapshots such that we keep 14 each 1 day apart
+    # - then destroy all older snapshots
+    - type: grid
+      grid: 1x1h(keep=all) | 24x1h | 14x1d
+      regex: "^zrepl_.*"
+    # keep all snapshots that don't have the `zrepl_` prefix
+    - type: regex
+      negate: true
+      regex: "^zrepl_.*"

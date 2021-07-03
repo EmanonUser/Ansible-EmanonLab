@@ -1,0 +1,6 @@
+---
+- name: Enable & Restart zrepl service
+  ansible.builtin.systemd:
+    name: zrepl.service
+    enabled: yes
+    state: restarted
