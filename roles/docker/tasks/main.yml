@@ -16,7 +16,7 @@
 
   - name: Install Docker packages
     ansible.builtin.apt:
-      name: [docker-ce, docker-ce-cli, containerd.io]
+      name: [docker-ce, docker-ce-cli, containerd.io, python3-docker]
       update_cache: yes
       state: present
     notify: Enable & Restart docker service
