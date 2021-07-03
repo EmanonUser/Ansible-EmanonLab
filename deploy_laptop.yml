@@ -1,0 +1,10 @@
+---
+- name: Provisioning of the laptop server
+  hosts: laptop 
+  become: yes
+  gather_facts: yes
+  roles:
+    - device_init
+    - install_packages
+    - systemd_timesyncd
+    - zrepl

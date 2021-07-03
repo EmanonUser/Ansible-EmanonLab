@@ -1,0 +1,29 @@
+---
+# Role: Device_init
+_create_user: no
+
+# Role: install_packages
+_debian_stable_packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - curl
+  - gnupg2
+  - lsb-release
+  - dnsutils
+  - ldnsutils
+  - git
+  - tmux
+  - tcpdump
+  - mtr-tiny
+  - zsh
+  - unzip
+
+_debian_backports_packages:
+  - neovim
+
+_kernel_upgrade: no
+
+# Role: systemd-timesyncd
+_ntp_server: pool.ntp.org
