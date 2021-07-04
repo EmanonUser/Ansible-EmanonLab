@@ -2,6 +2,3 @@
 primary_user_username: "{{ _primary_user_username }}"
 debian_stable_packages: "{{ _debian_stable_packages }}"
 debian_backports_packages: "{{ _debian_backports_packages }}"
-
-kernel_version: "{{ _kernel_version }}"
-kernel_upgrade: "{{ _kernel_upgrade }}"

@@ -25,11 +25,3 @@
     owner: emanon
     group: emanon
     mode: u=rw,g=,o=
-
-- name: Upgrade Kernel to "{{ kernel_version }}"
-  ansible.builtin.apt:
-    name:
-          - linux-image-{{ kernel_version }}
-          - linux-headers-{{ kernel_version }}
-  when: kernel_upgrade
-  notify: Reboot to apply Kernel upgrade
