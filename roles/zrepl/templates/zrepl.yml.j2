@@ -3,21 +3,22 @@ global:
     # use syslog instead of stdout because it makes journald happy
     - type: syslog
       format: human
-      level: warn
+      level: info
+
+  monitoring:
+  - type: prometheus
+    listen: ':9811'
 
 jobs:
-
-# this job takes care of snapshot creation + pruning
-- name: snapjob
+- name: fast_snap
   type: snap
   filesystems: {
-      "<": true,
+      "vault/test/data": true,
   }
-  # create snapshots with prefix `zrepl_` every 15 minutes
   snapshotting:
     type: periodic
-    interval: 15m
-    prefix: zrepl_
+    interval: 1m
+    prefix: zrepl_fast_
   pruning:
     keep:
     # fade-out scheme for snapshots starting with `zrepl_`
@@ -26,9 +27,9 @@ jobs:
     # - then destroy snapshots such that we keep 14 each 1 day apart
     # - then destroy all older snapshots
     - type: grid
-      grid: 1x1h(keep=all) | 24x1h | 14x1d
-      regex: "^zrepl_.*"
+      grid: 1x10m(keep=all) | 3x20m
+      regex: "^zrepl_fast_.*"
     # keep all snapshots that don't have the `zrepl_` prefix
     - type: regex
       negate: true
-      regex: "^zrepl_.*"
+      regex: "^zrepl_fast_.*"
