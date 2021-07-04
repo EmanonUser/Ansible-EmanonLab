@@ -1,0 +1,12 @@
+---
+- name: Provisioning of the laptop server
+  hosts: nas 
+  become: yes
+  gather_facts: yes
+  roles:
+    - device_init
+    - install_packages
+    - kernel_upgrade
+    - zfs
+    - zrepl
+    
