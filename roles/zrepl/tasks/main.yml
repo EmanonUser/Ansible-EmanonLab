@@ -1,35 +1,31 @@
 ---
-- name: Install and configure zrepl
-  block:
+- name: Add zrepl repo key
+  ansible.builtin.apt_key:
+    url: https://zrepl.cschwarz.com/apt/apt-key.asc
+    state: present
 
-  tasks:
-    - name: Add zrepl repo key
-      ansible.builtin.apt_key:
-        url: https://zrepl.cschwarz.com/apt/apt-key.asc
-        state: present
+- name: Add zrepl debian source repo
+  ansible.builtin.apt_repository:
+    repo: deb [arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower}} {{ ansible_distribution_release }} main
+    state: present
+    filename: zrepl
 
-    - name: Add zrepl debian source repo
-      ansible.builtin.apt_repository:
-        repo: deb [arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower}} {{ ansible_distribution_release }} main
-        state: present
-        filename: zrepl
+- name: Install zrepl package
+  ansible.builtin.apt:
+    name: zrepl
+    state: present
+    update_cache: yes
 
-    - name: Install zrepl package
-      ansible.builtin.apt:
-        name: zrepl
-        state: present
-        update_cache: yes
-    
-    - name: Disable upgrade of zrepl ( breaking changes )
-      ansible.builtin.dpkg_selections:
-        name: zrepl
-        selection: hold
+- name: Disable upgrade of zrepl ( breaking changes )
+  ansible.builtin.dpkg_selections:
+    name: zrepl
+    selection: hold
 
-    - name: Configure zrepl
-      ansible.builtin.template:
-        src: zrepl.yml.j2
-        dest: /etc/zrepl/zrepl.yml
-        owner: root
-        group: root
-        mode: u=rw,g=,o=
-      notify: Enable & Restart zrepl service
+- name: Configure zrepl
+  ansible.builtin.template:
+    src: zrepl.yml.j2
+    dest: /etc/zrepl/zrepl.yml
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  notify: Enable & Restart zrepl service

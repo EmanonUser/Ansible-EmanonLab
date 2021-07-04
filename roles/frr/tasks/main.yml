@@ -1,62 +1,59 @@
 ---
-- name: Install and configuration of FRRouting
-  block:
+- name: Add FRRouting GPG key
+  ansible.builtin.apt_key:
+    url: https://deb.frrouting.org/frr/keys.asc
+    state: present
 
-    - name: Add FRRouting GPG key
-      ansible.builtin.apt_key:
-        url: https://deb.frrouting.org/frr/keys.asc
-        state: present
+- name: Add FRRouting Debian Repository
+  ansible.builtin.apt_repository:
+    repo: deb https://deb.frrouting.org/frr {{ ansible_distribution_release }} {{ frr_version }}
+    filename: frr
+    state: present
 
-    - name: Add FRRouting Debian Repository
-      ansible.builtin.apt_repository:
-        repo: deb https://deb.frrouting.org/frr {{ ansible_distribution_release }} {{ frr_version }}
-        filename: frr
-        state: present
+- name: Install FRRouting
+  ansible.builtin.apt:
+    name:
+      - frr
+      - frr-pythontools
+    update_cache: yes
+    state: present
 
-    - name: Install FRRouting
-      ansible.builtin.apt:
-        name:
-          - frr
-          - frr-pythontools
-        update_cache: yes
-        state: present
+- name: Configure FRRouting
+  ansible.builtin.template:
+    src: frr.conf.j2
+    dest: /etc/frr/frr.conf
+    owner: frr
+    group: frr
+    mode: u=rw,g=r,o=
+    force: yes
+  notify: Enable & Restart FRRouting service
 
-    - name: Configure FRRouting
-      ansible.builtin.template:
-        src: frr.conf.j2
-        dest: /etc/frr/frr.conf
-        owner: frr
-        group: frr
-        mode: u=rw,g=r,o=
-        force: yes
-      notify: Enable & Restart FRRouting service
+- name: Configure FRRouting Deamons
+  ansible.builtin.template:
+    src: daemons.j2
+    dest: /etc/frr/daemons
+    owner: frr
+    group: frr
+    mode: u=rw,g=r,o=
+    force: yes
+  notify: Enable & Restart FRRouting service
 
-    - name: Configure FRRouting Deamons
-      ansible.builtin.template:
-        src: daemons.j2
-        dest: /etc/frr/daemons
-        owner: frr
-        group: frr
-        mode: u=rw,g=r,o=
-        force: yes
-      notify: Enable & Restart FRRouting service
+- name: Configure FRRouting Vtysh
+  ansible.builtin.template:
+    src: vtysh.conf.j2
+    dest: /etc/frr/vtysh.conf
+    owner: frr
+    group: frr
+    mode: u=rw,g=r,o=
+    force: yes
+  notify: Enable & Restart FRRouting service
 
-    - name: Configure FRRouting Vtysh
-      ansible.builtin.template:
-        src: vtysh.conf.j2
-        dest: /etc/frr/vtysh.conf
-        owner: frr
-        group: frr
-        mode: u=rw,g=r,o=
-        force: yes
-      notify: Enable & Restart FRRouting service
-
-    - name: Configure Debian service list
-      ansible.builtin.blockinfile:
-        path: /etc/services
-        insertafter: "mon 2583/udp"
-        block: "{{ frr_services_port }}"
-        owner: root
-        group: root
-        mode: u=rw,g=r,o=r
-        state: present
+- name: Configure Debian service list
+  ansible.builtin.blockinfile:
+    path: /etc/services
+    insertafter: "mon 2583/udp"
+    block: "{{ frr_services_port }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    state: present

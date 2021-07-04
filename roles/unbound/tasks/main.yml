@@ -1,27 +1,24 @@
 ---
-- name: Install and configure Unbound
-  block:
-
-  - name: Install Unbound from backports
-    ansible.builtin.apt:
-      name: unbound
-      default_release: buster-backports
-      state: present
+- name: Install Unbound from backports
+  ansible.builtin.apt:
+    name: unbound
+    default_release: buster-backports
+    state: present
 
 - name: Configure Unbound
-  ansible.builtin.template:
-    src: unbound.conf.j2
-    dest: /etc/unbound/unbound.conf
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-    force: yes
-  notify: Enable & Restart unbound service
+ansible.builtin.template:
+  src: unbound.conf.j2
+  dest: /etc/unbound/unbound.conf
+  owner: root
+  group: root
+  mode: u=rw,g=r,o=r
+  force: yes
+notify: Enable & Restart unbound service
 
 - name: Config resolv.conf
-  ansible.builtin.copy:
-    src: resolv.conf
-    dest: /etc/resolv.conf
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
+ansible.builtin.copy:
+  src: resolv.conf
+  dest: /etc/resolv.conf
+  owner: root
+  group: root
+  mode: u=rw,g=r,o=r

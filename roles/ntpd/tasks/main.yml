@@ -1,19 +1,16 @@
 ---
-- name: Install and configuration of ntpd server
-  block:
+- name: Install ntpd package
+  ansible.builtin.apt:
+    name: ntp
+    default_release: buster
+    state: present
 
-  - name: Install ntpd package
-    ansible.builtin.apt:
-      name: ntp
-      default_release: buster
-      state: present
-
-  - name: Configure ntpd
-    ansible.builtin.template:
-      src: ntp.conf.j2
-      dest: /etc/ntp.conf
-      owner: root
-      group: root
-      mode: u=rw,g=r,o=r
-      force: yes
-    notify: Enable & Restart ntp service
+- name: Configure ntpd
+  ansible.builtin.template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    force: yes
+  notify: Enable & Restart ntp service

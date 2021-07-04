@@ -1,20 +1,17 @@
 ---
-- name: Install and configure nftables
-  block:
+- name: Install nftables from backports
+  ansible.builtin.apt:
+    name: nftables
+    default_release: buster-backports
+    state: present
 
-  - name: Install nftables from backports
-    ansible.builtin.apt:
-      name: nftables
-      default_release: buster-backports
-      state: present
-
-  - name: Copy nftables config file
-    ansible.builtin.template:
-      src: nftables.conf.j2
-      dest: /etc/nftables.conf
-      owner: root
-      group: root
-      mode: u=rw,g=,o=
-      force: yes
-    register: nftables_config_result
-    notify: Enable & Restart nftables service
+- name: Copy nftables config file
+  ansible.builtin.template:
+    src: nftables.conf.j2
+    dest: /etc/nftables.conf
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+    force: yes
+  register: nftables_config_result
+  notify: Enable & Restart nftables service

@@ -1,52 +1,49 @@
 ---
-- name: Install Hashicorp Nomad
-  block:
+- name: Check if Nomad Binary already exist
+  ansible.builtin.stat:
+    path: /usr/local/bin/nomad
+  register: stat_value
 
-  - name: Check if Nomad Binary already exist
-    ansible.builtin.stat:
-      path: /usr/local/bin/nomad
-    register: stat_value
+- name: Download nomad binary archive
+  ansible.builtin.get_url:
+    url: https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_{{ cpu_architecture }}.zip
+    dest: /home/ansible/nomad_{{ nomad_version }}_linux_{{ cpu_architecture }}.zip
+    owner: ansible
+    group: ansible
+    mode: u=rwx,g=,o=
+  when: not stat_value.stat.exists
 
-  - name: Download nomad binary archive
-    ansible.builtin.get_url:
-      url: https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_{{ cpu_architecture }}.zip
-      dest: /home/ansible/nomad_{{ nomad_version }}_linux_{{ cpu_architecture }}.zip
-      owner: ansible
-      group: ansible
-      mode: u=rwx,g=,o=
-    when: not stat_value.stat.exists
+- name: Decompress Nomad archive
+  ansible.builtin.unarchive:
+    src: /home/ansible/nomad_{{ nomad_version }}_linux_{{ cpu_architecture }}.zip
+    dest: /usr/local/bin
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+    remote_src: yes
+  when: not stat_value.stat.exists
 
-  - name: Decompress Nomad archive
-    ansible.builtin.unarchive:
-      src: /home/ansible/nomad_{{ nomad_version }}_linux_{{ cpu_architecture }}.zip
-      dest: /usr/local/bin
-      owner: root
-      group: root
-      mode: u=rwx,g=rx,o=rx
-      remote_src: yes
-    when: not stat_value.stat.exists
+- name: Delete Nomad archive
+  ansible.builtin.file:
+    path: /home/ansible/nomad_{{ nomad_version }}_linux_{{ cpu_architecture }}.zip
+    state: absent
+  when: not stat_value.stat.exists
 
-  - name: Delete Nomad archive
-    ansible.builtin.file:
-      path: /home/ansible/nomad_{{ nomad_version }}_linux_{{ cpu_architecture }}.zip
-      state: absent
-    when: not stat_value.stat.exists
+# REPO DOESN'T SUPPORT AMD64 YET
+# - name: Add Hashicorp GPG Key
+#   ansible.builtin.apt_key:
+#     url: https://apt.releases.hashicorp.com/gpg
+#     state: present
 
-  # REPO DOESN'T SUPPORT AMD64 YET
-  # - name: Add Hashicorp GPG Key
-  #   ansible.builtin.apt_key:
-  #     url: https://apt.releases.hashicorp.com/gpg
-  #     state: present
+# - name: Add hashicorp Debian Repository
+#   ansible.builtin.apt_repository:
+#     repo: deb [arch={{ cpu_architecture }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main
+#     filename: hashicorp
+#     state: present
 
-  # - name: Add hashicorp Debian Repository
-  #   ansible.builtin.apt_repository:
-  #     repo: deb [arch={{ cpu_architecture }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main
-  #     filename: hashicorp
-  #     state: present
-
-  # - name: Install Nomad
-  #   ansible.builtin.apt:
-  #     name: nomad
-  #     update_cache: yes
-  #     state: present
-  #   notify: Enable & Restart nomad service
+# - name: Install Nomad
+#   ansible.builtin.apt:
+#     name: nomad
+#     update_cache: yes
+#     state: present
+#   notify: Enable & Restart nomad service

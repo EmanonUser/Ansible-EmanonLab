@@ -1,58 +1,55 @@
 ---
-- name: Install and configure Prometheus node-exporter
-  block:
+- name: Create folder
+  ansible.builtin.file:
+    path: /opt/prometheus
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=,o=
+    state: directory
 
-  - name: Create folder
-    ansible.builtin.file:
-      path: /opt/prometheus
-      owner: "{{ primary_user_username }}"
-      group: "{{ primary_user_username }}"
-      mode: u=rwx,g=,o=
-      state: directory
+- name: Check if node_exporter Binary already exist
+  ansible.builtin.stat:
+    path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}/node_exporter
+  register: stat_value
 
-  - name: Check if node_exporter Binary already exist
-    ansible.builtin.stat:
-      path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}/node_exporter
-    register: stat_value
+- name: Download node_exporter binary
+  ansible.builtin.get_url:
+    url: "{{ download_url }}v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz"
+    dest: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
+    checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/sha256sums.txt"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rx,g=,o=
+  when: not stat_value.stat.exists
 
-  - name: Download node_exporter binary
-    ansible.builtin.get_url:
-      url: "{{ download_url }}v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz"
-      dest: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
-      checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/sha256sums.txt"
-      owner: "{{ primary_user_username }}"
-      group: "{{ primary_user_username }}"
-      mode: u=rx,g=,o=
-    when: not stat_value.stat.exists
+- name: Extract node_exporter archive
+  ansible.builtin.unarchive:
+    src: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
+    dest: /opt/prometheus/
+    remote_src: yes
+  when: not stat_value.stat.exists
 
-  - name: Extract node_exporter archive
-    ansible.builtin.unarchive:
-      src: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
-      dest: /opt/prometheus/
-      remote_src: yes
-    when: not stat_value.stat.exists
+- name: Delete archive
+  ansible.builtin.file:
+    path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
+    state: absent
+  when: not stat_value.stat.exists
 
-  - name: Delete archive
-    ansible.builtin.file:
-      path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
-      state: absent
-    when: not stat_value.stat.exists
+- name: Configure node_exporter service file
+  ansible.builtin.template:
+    src: node-exporter.service.j2
+    dest: /etc/systemd/system/node-exporter.service
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+    force: yes
+  notify: Enable & Restart node-exporter service
 
-  - name: Configure node_exporter service file
-    ansible.builtin.template:
-      src: node-exporter.service.j2
-      dest: /etc/systemd/system/node-exporter.service
-      owner: root
-      group: root
-      mode: u=rw,g=,o=
-      force: yes
-    notify: Enable & Restart node-exporter service
-
-  - name: Open firewalld port
-    ansible.posix.firewalld:
-      zone: "{{ firewalld_zone }}"
-      port: 9100/tcp
-      permanent: yes
-      state: enabled
-      immediate: yes
-    when: ansible_host == "pi.local.emanon"
+- name: Open firewalld port
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: 9100/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: ansible_host == "pi.local.emanon"

@@ -1,25 +1,22 @@
 ---
-- name: Install and configure firewalld
-  block:
+- name: Install firewalld from backports
+  ansible.builtin.apt:
+    name: [ 'firewalld', 'python3-firewall' ]
+    default_release: buster-backports
+    state: present
 
-  - name: Install firewalld from backports
-    ansible.builtin.apt:
-      name: [ 'firewalld', 'python3-firewall' ]
-      default_release: buster-backports
-      state: present
+- name: Add primary interface to firewalld home zone
+  ansible.posix.firewalld:
+    interface: eth0
+    zone: home
+    permanent: yes
+    state: enabled
+    immediate: yes
 
-  - name: Add primary interface to firewalld home zone
-    ansible.posix.firewalld:
-      interface: eth0
-      zone: home
-      permanent: yes
-      state: enabled
-      immediate: yes
-
-  - name: Open firewalld ssh port
-    ansible.posix.firewalld:
-      zone: "{{ firewalld_zone }}"
-      service: ssh
-      permanent: yes
-      state: enabled
-      immediate: yes
+- name: Open firewalld ssh port
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    service: ssh
+    permanent: yes
+    state: enabled
+    immediate: yes

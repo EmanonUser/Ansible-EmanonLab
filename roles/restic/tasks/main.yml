@@ -1,65 +1,63 @@
 ---
-- name: Install and configure Restic
-  block:
-  - name: Add Restic User
-    ansible.builtin.user:
-      name: restic
-      create_home: yes
-      shell: /bin/bash
-      comment: Restic user created by Ansible
-      state: present
+- name: Add Restic User
+  ansible.builtin.user:
+    name: restic
+    create_home: yes
+    shell: /bin/bash
+    comment: Restic user created by Ansible
+    state: present
 
-  - name: Create folder
-    ansible.builtin.file:
-      path: /home/restic/bin
-      owner: restic
-      group: restic
-      mode: u=rwx,g=,o=
-      state: directory
+- name: Create folder
+  ansible.builtin.file:
+    path: /home/restic/bin
+    owner: restic
+    group: restic
+    mode: u=rwx,g=,o=
+    state: directory
 
-  - name: Check if Restic Binary already exist
-    ansible.builtin.stat:
-      path: /home/restic/bin/restic
-    register: stat_value
+- name: Check if Restic Binary already exist
+  ansible.builtin.stat:
+    path: /home/restic/bin/restic
+  register: stat_value
 
-  - name: Download Restic binary
-    ansible.builtin.get_url:
-      url: https://github.com/restic/restic/releases/download/v{{ restic_version }}/restic_{{ restic_version }}_linux_amd64.bz2
-      dest: /home/restic/bin/restic_linux_amd64.bz2
-      checksum: "sha256:https://github.com/restic/restic/releases/download/v{{ restic_version }}/SHA256SUMS"
-      owner: restic
-      group: restic
-      mode: u=rx,g=,o=
-    when: not stat_value.stat.exists
+- name: Download Restic binary
+  ansible.builtin.get_url:
+    url: https://github.com/restic/restic/releases/download/v{{ restic_version }}/restic_{{ restic_version }}_linux_amd64.bz2
+    dest: /home/restic/bin/restic_linux_amd64.bz2
+    checksum: "sha256:https://github.com/restic/restic/releases/download/v{{ restic_version }}/SHA256SUMS"
+    owner: restic
+    group: restic
+    mode: u=rx,g=,o=
+  when: not stat_value.stat.exists
 
-  - name: Extract restic archive # Ansible unarchive module have trouble with .bz2
-    ansible.builtin.shell:
-      cmd: bunzip2 restic_linux_amd64.bz2 ; mv restic_linux_amd64 restic
-      chdir: /home/restic/bin
-    when: not stat_value.stat.exists
+- name: Extract restic archive # Ansible unarchive module have trouble with .bz2
+  ansible.builtin.shell:
+    cmd: bunzip2 restic_linux_amd64.bz2 ; mv restic_linux_amd64 restic
+    chdir: /home/restic/bin
+  when: not stat_value.stat.exists
 
-  - name: Set capabilities to Restic binary
-    ansible.builtin.shell:
-      cmd: setcap cap_dac_read_search=+ep restic
-      chdir: /home/restic/bin
-    when: not stat_value.stat.exists
+- name: Set capabilities to Restic binary
+  ansible.builtin.shell:
+    cmd: setcap cap_dac_read_search=+ep restic
+    chdir: /home/restic/bin
+  when: not stat_value.stat.exists
 
-  - name: Configure backup list
-    ansible.builtin.template:
-      src: configs_path.j2
-      dest: /home/restic/bin/configs_path
-      owner: restic
-      group: restic
-      mode: u=rw,g=,o=
-      force: yes
+- name: Configure backup list
+  ansible.builtin.template:
+    src: configs_path.j2
+    dest: /home/restic/bin/configs_path
+    owner: restic
+    group: restic
+    mode: u=rw,g=,o=
+    force: yes
 
-  - name: Configure Restic service
-    ansible.builtin.template:
-      src: "{{ item }}.j2"
-      dest: /etc/systemd/system/{{ item }}
-      owner: restic
-      group: restic
-      mode: u=rw,g=,o=
-      force: yes
-    loop: "{{ restic_services }}"
-    notify: Enable & Restart restic timers
+- name: Configure Restic service
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: /etc/systemd/system/{{ item }}
+    owner: restic
+    group: restic
+    mode: u=rw,g=,o=
+    force: yes
+  loop: "{{ restic_services }}"
+  notify: Enable & Restart restic timers
