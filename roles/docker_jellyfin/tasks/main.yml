@@ -1,0 +1,10 @@
+---
+- name: Run jellyfin docker container
+  community.docker.docker_container:
+    name: jellyfin
+    image: jellyfin/jellyfin
+    port: "{{ jellyfin_ports }}"
+    volume: "{{ jellyfin_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+    container_default_behavior: no_defaults
