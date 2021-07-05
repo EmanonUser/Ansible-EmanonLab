@@ -109,6 +109,7 @@ _unbound_settings:
 
 _unbound_forward_zone:
   - "192.168.10.30"
+  - "9.9.9.9"
 
 _unbound_acces_control:
   - 192.168.5.0/24 allow
@@ -138,3 +139,9 @@ _unbound__static_subdomain:
  - "unifi.local.emanon. 10800 IN A 192.168.10.30"
  - "restic.local.emanon. 10800 IN A 192.168.10.30"
  - "adguard.local.emanon. 10800 IN A 192.168.10.30"
+ - "homelabshp.local.emanon. 10800 IN A 192.168.50.50"
+ - "brocadeshp.local.emanon. 10800 IN A 192.168.50.51"
+ - "supermicroshp.local.emanon. 10800 IN A 192.168.50.52"
+ - "qotomshp.local.emanon. 10800 IN A 192.168.50.53"
+ - "pishp.local.emanon. 10800 IN A 192.168.50.54"
+ - "tmp117shp.local.emanon. 10800 IN A 192.168.50.60"
