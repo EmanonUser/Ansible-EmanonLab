@@ -12,11 +12,13 @@ table ip routing {
 		iifname $WAN udp dport 2000 redirect to :51820 # Wiregard server DNAT
 		iifname $WAN tcp dport 22000 dnat to {{ pi_ipv4_addr }}:22000 # Syncthing DNAT
 		iifname $WAN tcp dport 8000 dnat to {{ arch_ipv4_addr }}:8000 # Temporary web server DNAT
+		# NAT hairpinning iifname $LAN ip daddr {{ subdomain_name_1 }}.{{ domain_name }} tcp dport 1234 dnat to {{ router_static_ip }}:7999
 	}
 	chain postrouting {
 		type nat hook postrouting priority srcnat; policy accept
 		oifname $WAN masquerade # WAN NAT
 		iifname $WG ip saddr 176.16.0.0/24 oifname $LAN masquerade # Wireguard NAT
+		# NAT hairpinning ip saddr 192.168.70.0/24 ip daddr {{ router_static_ip }} tcp dport 1234 masquerade
 	}
 }
 
@@ -65,6 +67,7 @@ table inet firewall {
 		iifname $LAN tcp dport { 9100 } counter accept # Prometheus Node exporter
 		udp dport 51820 ct state new log level notice prefix "New Wireguard connexion: " counter accept
 		tcp dport ssh ct state new log level notice prefix "New SSH connexion: " counter accept
+		# NAT Hairpinning tcp dport 7999 counter accept
 	}
 	chain forward {
 		type filter hook forward priority filter; policy drop;

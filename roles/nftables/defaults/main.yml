@@ -6,3 +6,7 @@ wireguard_interface_name: "{{ _wireguard_interface_name }}"
 arch_ipv4_addr: "{{ _device.arch.ipv4_addr }}"
 pi_ipv4_addr: "{{ _device.pi.ipv4_addr }}"
 brocade_ipv4_addr: "{{ _device.brocade.ipv4_addr }}"
+
+domain_name: "{{ _domain_name }}"
+subdomain_name_1: "{{ _subdomain_name_1 }}"
+router_static_ip: "{{ _device.router.ipv4_addr }}"
