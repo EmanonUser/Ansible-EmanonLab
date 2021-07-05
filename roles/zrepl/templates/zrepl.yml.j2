@@ -10,15 +10,15 @@ global:
     listen: ':9811'
 
 jobs:
-- name: fast_snap
+- name: take_snapshots
   type: snap
   filesystems: {
-      "vault/test/data": true,
+      "<": true,
   }
   snapshotting:
     type: periodic
-    interval: 1m
-    prefix: zrepl_fast_
+    interval: 10m
+    prefix: zrepl_
   pruning:
     keep:
     # fade-out scheme for snapshots starting with `zrepl_`
@@ -27,9 +27,9 @@ jobs:
     # - then destroy snapshots such that we keep 14 each 1 day apart
     # - then destroy all older snapshots
     - type: grid
-      grid: 1x10m(keep=all) | 3x20m
-      regex: "^zrepl_fast_.*"
+      grid: 1x1h(keep=all) | 24x1h | 14x1d
+      regex: "^zrepl_.*"
     # keep all snapshots that don't have the `zrepl_` prefix
     - type: regex
       negate: true
-      regex: "^zrepl_fast_.*"
+      regex: "^zrepl_.*"
