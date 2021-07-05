@@ -1,0 +1,10 @@
+---
+- name: Run adguard home container
+  community.docker.docker_container:
+    name: adguard_home
+    image: adguard/adguardhome
+    ports: "{{ adguard_ports }}"
+    volumes: "{{ adguard_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+    container_default_behavior: no_defaults
