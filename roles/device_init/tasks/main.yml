@@ -29,12 +29,26 @@
     line: "{{ primary_user_username }} ALL=(ALL:ALL) ALL"
     state: present
     validate: /usr/sbin/visudo -cf %s
+    
+- name: Set system-wide umask
+  ansible.builtin.copy:
+    content: umask 0077
+    dest: /etc/profile.d/umask.sh
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+
+- name: Check if debian-backports.list exist
+  ansible.builtin.stat:
+    path: /etc/apt/sources.list.d/buster-backports.list
+  register: value
 
 - name: Add debian-backports repository
   ansible.builtin.apt_repository:
     repo: deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
     filename: "{{ ansible_distribution_release }}-backports"
     state: present
+  when: not value.stat.exists
 
 - name: Update repository & Upgrade packages
   ansible.builtin.apt:
