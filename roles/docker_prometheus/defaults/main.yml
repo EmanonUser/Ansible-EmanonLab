@@ -4,4 +4,6 @@ prometheus_volumes: "{{ _prometheus_volumes }}"
 prometheus_volumes_dir: "{{ _prometheus_volumes_dir }}"
 prometheus_config_dir: "{{ _prometheus_config_dir }}"
 prometheus_config_path: "{{ _prometheus_config_path }}"
+
+prometheus_firewalld_ports: "{{ _prometheus_firewalld_ports }}"
 device: "{{ _device }}"

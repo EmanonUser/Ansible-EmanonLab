@@ -29,3 +29,11 @@
       - "--storage.tsdb.retention=1y"
       - "--web.console.libraries=/usr/share/prometheus/console_libraries"
       - "--web.console.templates=/usr/share/prometheus/consoles"
+
+- name: Open firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ prometheus_firewalld_ports }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
