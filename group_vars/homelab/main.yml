@@ -20,6 +20,31 @@ _device:
       ipv4_addr:  192.168.10.30
       ipv4_addr_cidr: 192.168.10.30/24
       hostname: pi
+    shp1:
+      ipv4_addr: 192.168.50.50
+      ipv4_addr_cidr: 192.168.50.50/24
+      hostname: homelabshp
+    shp2:
+      ipv4_addr: 192.168.50.51
+      ipv4_addr_cidr: 192.168.50.51/24
+      hostname: brocadeshp
+    shp3:
+      ipv4_addr: 192.168.50.52
+      ipv4_addr_cidr: 192.168.50.52/24
+      hostname: supermicroshp
+    shp4:
+      ipv4_addr: 192.168.50.53
+      ipv4_addr_cidr: 192.168.50.53/24
+      hostname: qotomshp
+    shp5:
+      ipv4_addr: 192.168.50.54
+      ipv4_addr_cidr: 192.168.50.54/24
+      hostname: pishp
+    tmp117:
+      ipv4_addr: 192.168.50.60
+      ipv4_addr_cidr: 192.168.50.60/24
+      hostname: tmp117shp
+
 
 _ipv4_subnets:
   - 192.168.1.0/24
