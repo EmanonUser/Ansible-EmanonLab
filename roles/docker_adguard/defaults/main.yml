@@ -1,4 +1,6 @@
 ---
 firewalld_zone: "{{ _firewalld_zone }}"
 adguard_ports: "{{ _adguard_ports }}"
+adguard_firewalld_ports: "{{ _adguard_firewalld_ports }}"
 adguard_volumes: "{{ _adguard_volumes }}"
+adguard_config_path: "{{ _adguard_config_path }}"

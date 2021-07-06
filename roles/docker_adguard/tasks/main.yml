@@ -1,10 +1,27 @@
 ---
+- name: Create adguard volumes dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop: "{{ adguard_config_path }}"
+  # No owner, group or mode becose it cause an error on a nfs share
+  # Create it before docker try to handle it, permission error
+
 - name: Run adguard home container
   community.docker.docker_container:
-    name: adguard_home
+    name: adguardhome_ansible
     image: adguard/adguardhome
     ports: "{{ adguard_ports }}"
     volumes: "{{ adguard_volumes }}"
     restart_policy: unless-stopped
     state: started
     container_default_behavior: no_defaults
+
+- name: Open firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop: "{{ adguard_firewalld_ports }}"
