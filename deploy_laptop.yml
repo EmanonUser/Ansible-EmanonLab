@@ -7,4 +7,5 @@
     - device_init
     - install_packages
     - systemd_timesyncd
+    - open_ssh_server
     - zrepl
