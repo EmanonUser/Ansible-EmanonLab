@@ -1,0 +1,13 @@
+---
+transmission_ports: "{{ _transmission_ports }}"
+transmission_volumes: "{{ _transmission_volumes }}"
+transmission_directories: "{{ _transmission_directories }}"
+
+# Role: docker_transmission
+transmission_openvpn_provider: "{{ _transmission_openvpn_provider }}"
+transmission_openvpn_config: "{{ _transmission_openvpn_config }}"
+transmission_openvpn_username: "{{ _transmission_openvpn_username }}"
+transmission_openvpn_password: "{{ _transmission_openvpn_password }}"
+
+firewalld_zone: "{{ _firewalld_zone }}"
+transmission_firewalld_ports: "{{ _transmission_firewalld_ports }}"

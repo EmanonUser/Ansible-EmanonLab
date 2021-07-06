@@ -1,0 +1,40 @@
+---
+- name: Create transmission volumes dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop: "{{ transmission_directories }}"
+  # No owner, group or mode becose it cause an error on a nfs share
+  # Create it before docker try to handle it, permission error
+
+- name: Run transmission docker container
+  community.docker.docker_container:
+    name: transmission_ansible
+    image: haugene/transmission-openvpn
+    ports: "{{ transmission_ports }}"
+    volumes: "{{ transmission_volumes }}"
+    capabilities: NET_ADMIN
+    log_driver: json-file
+    log_options: max-size=10m
+    restart_policy: unless-stopped
+    state: started
+    container_default_behavior: no_defaults
+    env:
+      OPENVPN_PROVIDER: "{{ transmission_openvpn_provider }}"
+      OPENVPN_CONFIG: "{{ transmission_openvpn_config }}"
+      OPENVPN_USERNAME: "{{ transmission_openvpn_username }}"
+      OPENVPN_PASSWORD: "{{ transmission_openvpn_password }}"
+      LOCAL_NETWORK: "192.168.0.0/16"
+      TRANSMISSION_HOME: "/transmission/home"
+      TRANSMISSION_DOWNLOAD_DIR: "/transmission/completed"
+      TRANSMISSION_INCOMPLETE_DIR: "/transmission/incompleted"
+      TRANSMISSION_WATCH_DIR: "/transmission/watch"
+      TRANSMISSION_WEB_UI: "flood-for-transmission"
+
+- name: Open firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ transmission_firewalld_ports }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
