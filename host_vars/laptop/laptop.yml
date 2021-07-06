@@ -24,30 +24,31 @@ _debian_backports_packages:
   - neovim
 
 _kernel_upgrade: no
+_cpu_architecture: amd64
 
 # Role: systemd-timesyncd
 _ntp_server: pool.ntp.org
 
-docker_volumes_path: /mnt/vault/data/homelab/docker/
+docker_volumes_path: /home/emanon/docker
 # Role: docker_adguard
 _adguard_ports:
   - 3000:3000/tcp
   - 53:53/tcp
 
 _adguard_volumes:
-  - "{{ docker_volumes_path }}adguard/work:/opt/adguardhome/work"
-  - "{{ docker_volumes_path }}adguard/conf:/opt/adguardhome/conf"
+  - "{{ docker_volumes_path }}/adguard/work:/opt/adguardhome/work"
+  - "{{ docker_volumes_path }}/adguard/conf:/opt/adguardhome/conf"
 
 # Role: docker_jellyfin
 jellyfin_ports: 8096:8096/tcp
 jellyfin_volumes: 
-  - "{{ docker_volumes_path }}jellyfin/config:/config"
-  - "{{ docker_volumes_path }}jellyfin/cache:/cache"
-  - "{{ docker_volumes_path }}jellyfin/media:/media"
+  - "{{ docker_volumes_path }}/jellyfin/config:/config"
+  - "{{ docker_volumes_path }}/jellyfin/cache:/cache"
+  - "{{ docker_volumes_path }}/jellyfin/media:/media"
 
 # Role: docker_filebrowser
 filebrowser_ports: 8097:8097/tcp
 filebrowser_volumes:
-  - "{{ docker_volumes_path }}filebrowser/.filebrowser.json:/.filebrowser.json"
-  - "{{ docker_volumes_path }}filebrowser/filebrowser.db:/database.db"
-  - "{{ docker_volumes_path }}filebrowser/files:/srv/files"
+  - "{{ docker_volumes_path }}/filebrowser/.filebrowser.json:/.filebrowser.json"
+  - "{{ docker_volumes_path }}/filebrowser/filebrowser.db:/database.db"
+  - "{{ docker_volumes_path }}/filebrowser/files:/srv/files"
