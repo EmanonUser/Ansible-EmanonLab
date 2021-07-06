@@ -19,7 +19,7 @@
     state: enabled
     immediate: yes
 
-- name: Pause, waiting for grafana 
+- name: Pause, waiting for grafana # noqa 503
   ansible.builtin.pause:
     prompt: Pause the playbook, waiting for grafana to be fully up
     seconds: 15
@@ -50,6 +50,6 @@
     folder: "Env monitoring"
     overwrite: yes
     path: "{{ item }}"
-  loop: 
+  loop:
     - /mnt/vault/data/homelab/docker/grafana/dashboards/tmp117.json
     - /mnt/vault/data/homelab/docker/grafana/dashboards/shp.json

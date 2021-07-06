@@ -29,7 +29,7 @@
     line: "{{ primary_user_username }} ALL=(ALL:ALL) ALL"
     state: present
     validate: /usr/sbin/visudo -cf %s
-    
+
 - name: Set system-wide umask
   ansible.builtin.copy:
     content: umask 0077
