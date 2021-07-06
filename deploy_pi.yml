@@ -6,12 +6,11 @@
   roles:
     - device_init
     - install_packages
+    - systemd_timesyncd
     - firewalld
+    - docker
     - prometheus_node_exporter
     - nfs_share
-    - systemd_timesyncd
-    - docker
-    - nomad
-    - docker_jackett
-
-  # Prometheus, syncthing, haproxy
+    - docker_adguard
+    - docker_prometheus
+    - docker_grafana
