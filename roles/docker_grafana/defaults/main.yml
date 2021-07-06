@@ -1,0 +1,7 @@
+---
+firewalld_zone: "{{ _firewalld_zone }}"
+grafana_ports: "{{ _grafana_ports }}"
+grafana_firewalld_ports: "{{ _grafana_firewalld_ports }}"
+
+grafana_admin_password: "{{ _grafana_admin_password }}"
+grafana_url: "{{ _grafana_url }}"

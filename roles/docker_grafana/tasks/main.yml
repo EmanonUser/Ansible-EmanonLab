@@ -1,0 +1,55 @@
+---
+- name: Run grafana home container
+  community.docker.docker_container:
+    name: grafana_ansible
+    image: grafana/grafana
+    ports: "{{ grafana_ports }}"
+    restart_policy: unless-stopped
+    state: started
+    container_default_behavior: no_defaults
+    env:
+      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_password }}"
+  register: docker_grafana
+
+- name: Open firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ grafana_firewalld_ports }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Pause, waiting for grafana 
+  ansible.builtin.pause:
+    prompt: Pause the playbook, waiting for grafana to be fully up
+    seconds: 15
+  when: docker_grafana.changed
+
+- name: Create prometheus datasource
+  community.grafana.grafana_datasource:
+    name: prometheus
+    url: "{{ grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ grafana_admin_password }}"
+    ds_type: prometheus
+    ds_url: "http://pi.local.emanon:9090"
+
+- name: Create grafana folders
+  community.grafana.grafana_folder:
+    grafana_url: "{{ grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ grafana_admin_password }}"
+    title: "Env monitoring"
+    state: present
+
+- name: Import grafana dashboards
+  community.grafana.grafana_dashboard:
+    grafana_url: "{{ grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ grafana_admin_password }}"
+    folder: "Env monitoring"
+    overwrite: yes
+    path: "{{ item }}"
+  loop: 
+    - /mnt/vault/data/homelab/docker/grafana/dashboards/tmp117.json
+    - /mnt/vault/data/homelab/docker/grafana/dashboards/shp.json
