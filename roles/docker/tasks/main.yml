@@ -18,6 +18,15 @@
     state: present
   notify: Enable & Restart docker service
 
+- name: Configure docker daemon
+  ansible.builtin.copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    force: yes
+
 - name: Add primary user to docker group
   ansible.builtin.user:
     name: "{{ primary_user_username }}"
