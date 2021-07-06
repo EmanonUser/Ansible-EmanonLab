@@ -61,6 +61,7 @@ _jellyfin_volumes: "{{ _jellyfin_volumes }}"
 
 # Role: docker_prometheus
 _prometheus_ports: 9090:9090/tcp
+_prometheus_firewalld_ports: 9090/tcp
 _prometheus_volumes: "{{ docker_volumes_path }}/prometheus:/etc/prometheus"
 _prometheus_config_dir: ["{{ docker_volumes_path }}/prometheus", "{{ docker_volumes_path }}/prometheus/data"]
 _prometheus_config_path: "{{ docker_volumes_path }}/prometheus/prometheus.yml"
@@ -68,5 +69,16 @@ _prometheus_config_path: "{{ docker_volumes_path }}/prometheus/prometheus.yml"
 # Role: docker_grafana
 _grafana_ports: 12001:3000/tcp
 _grafana_firewalld_ports: 12001/tcp
-
 _grafana_url: "http://192.168.10.30:12001"
+
+# Role: docker_transmission
+_transmission_volumes:
+  - "{{ docker_volumes_path }}/transmission/:/transmission"
+  - "/mnt/vault/media:/media"
+_transmission_directories:
+  - "{{ docker_volumes_path }}/transmission/home"
+  - "{{ docker_volumes_path }}/transmission/completed"
+  - "{{ docker_volumes_path }}/transmission/incompleted"
+  - "{{ docker_volumes_path }}/transmission/watch"
+_transmission_ports: 12002:9091/tcp
+_transmission_firewalld_ports: 12002/tcp
