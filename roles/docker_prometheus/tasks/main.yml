@@ -1,0 +1,31 @@
+---
+- name: Create prometheus volumes dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop: "{{ prometheus_config_dir }}"
+  # No owner, group or mode becose it cause an error on a nfs share
+  # Create it before docker try to handle it, permission error
+
+- name: Configuration of prometheus
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: "{{ prometheus_config_path }}"
+  register: conf_change
+
+- name: Run prometheus docker container
+  community.docker.docker_container:
+    name: prometheus_ansible
+    image: prom/prometheus
+    ports: "{{ prometheus_ports }}"
+    volumes: "{{ prometheus_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+    container_default_behavior: no_defaults
+    restart: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/etc/prometheus/data"
+      - "--storage.tsdb.retention=1y"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
