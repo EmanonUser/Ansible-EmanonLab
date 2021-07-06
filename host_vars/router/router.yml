@@ -109,7 +109,6 @@ _unbound_settings:
 
 _unbound_forward_zone:
   - "192.168.10.30"
-  - "9.9.9.9"
 
 _unbound_acces_control:
   - 192.168.5.0/24 allow
