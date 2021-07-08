@@ -6,7 +6,6 @@ homelab:
   hosts:
     router:
       ansible_host: r.local.emanon
-    
     pi:
       ansible_host: pi.local.emanon
     nas:
