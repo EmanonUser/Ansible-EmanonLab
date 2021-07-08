@@ -1,0 +1,121 @@
+---
+# Ansible vars file for non-shared roles, order following deploy_host execution
+# Vars prefix indication their location hos_ = host_vars | grp_ = group_vars | v_host_ = vault in host_vars | v_grp_ = vault in group 
+## Role global ##
+v_host_primary_user_username: "{{ v_primary_user_username }}"
+v_host_primary_user_password: "{{ v_primary_user_password }}" 
+host_cpu_architecture: arm64 # amd64, arm64 etc ...
+host_firewalld_zone: home
+
+## device_init ##
+host_create_user: no
+## device_init ##
+
+## install_packages ##
+host_debian_stable_packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - curl
+  - gnupg2
+  - lsb-release
+  - dnsutils
+  - ldnsutils
+  - git
+  - tmux
+  - tcpdump
+  - mtr-tiny
+  - zsh
+  - unzip
+host_debian_backports_packages:
+  - neovim
+## install_packages ##
+
+## prometheus_node_exporter ##
+host_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/
+host_exporter_version: 1.1.2 # https://github.com/prometheus/node_exporter/releases/
+## prometheus_node_exporter ##
+
+## nfs_share ##
+host_nfs_server_target: "192.168.10.25"
+host_nfs_remote_share: /mnt/vault/emanon
+host_nfs_mount_dir: /mnt/vault
+## nfs_share ##
+
+## Docker global ##
+host_docker_networking:
+  - adguard:
+    name: adguard
+    fulldomain: adguard.local.emanon
+    webui_port: 3000
+  - prometheus:
+    name: prometheus
+    fulldomain: prometheus.local.emanon
+    webui_port: 9090
+  - grafana:
+    name: grafana
+    fulldomain: grafana.local.emanon
+    webui_port: 12001
+  - transmission:
+    name: transmission
+    fulldomain: transmission.local.emanon
+    webui_port: 12002
+docker_volumes_path: /mnt/vault/data/homelab/docker
+## Docker global ##
+
+## docker_adguard ##
+host_docker_adguard_ports:
+  - "{{ host_docker_networking[0].webui_port }}:3000/tcp"
+  - 53:53/udp
+  - 53:53/tcp
+host_docker_adguard_firewalld_ports:
+  - "{{ host_docker_networking[0].webui_port }}/tcp"
+  - 53/udp
+  - 53/tcp
+host_docker_adguard_volumes_path:
+  - "{{ docker_volumes_path }}/adguard/work"
+  - "{{ docker_volumes_path }}/adguard/conf"
+host_docker_adguard_volumes:
+  - "{{ host_docker_adguard_volumes_path[0] }}:/opt/adguardhome/work"
+  - "{{ host_docker_adguard_volumes_path[1] }}:/opt/adguardhome/conf"
+## docker_adguard ##
+
+## docker_prometheus ##
+host_docker_prometheus_ports: "{{ host_docker_networking[1].webui_port }}:9090/tcp"
+host_docker_prometheus_firewalld_ports: "{{ host_docker_networking[1].webui_port }}/tcp"
+host_docker_prometheus_volumes_path: ["{{ docker_volumes_path }}/prometheus", "{{ docker_volumes_path }}/prometheus/data"]
+host_docker_prometheus_volumes: "{{ docker_volumes_path }}/prometheus:/etc/prometheus"
+host_docker_prometheus_config_path: "{{ docker_volumes_path }}/prometheus/prometheus.yml"
+## docker_prometheus ##
+
+## docker_grafana ##
+host_docker_grafana_ports: "{{ host_docker_networking[2].webui_port }}:3000/tcp"
+host_docker_grafana_firewalld_ports: "{{ host_docker_networking[2].webui_port }}/tcp"
+host_grafana_url: "http://{{ host_docker_networking[2].fulldomain }}:{{ host_docker_networking[2].webui_port }}"
+v_host_grafana_admin_password: "{{ v_grafana_admin_password }}"
+## docker_grafana ##
+
+## docker_transmission ##
+host_docker_transmission_ports: "{{ host_docker_networking[3].webui_port }}:9091/tcp"
+host_docker_transmission_firewalld_ports: "{{ host_docker_networking[3].webui_port }}/tcp"
+host_docker_transmission_directories:
+  - "{{ docker_volumes_path }}/transmission/home"
+  - "{{ docker_volumes_path }}/transmission/completed"
+  - "{{ docker_volumes_path }}/transmission/incompleted"
+  - "{{ docker_volumes_path }}/transmission/watch"
+host_docker_transmission_volumes:
+  - "{{ docker_volumes_path }}/transmission/:/transmission"
+  - "{{ host_nfs_mount_dir }}/media:/media"
+host_docker_transmission_openvpn_provider: "{{ v_transmission_openvpn_provider }}"
+host_docker_transmission_openvpn_config: "{{ v_transmission_openvpn_config }}"
+host_docker_transmission_openvpn_username: "{{ v_transmission_openvpn_username }}"
+host_docker_transmission_openvpn_password: "{{ v_transmission_openvpn_password }}"
+## docker_transmission ##
+
+## docker_haproxy ##
+host_docker_haproxy_ports: [443:443/tcp, 80:80/tcp, 8404:8404/tcp]
+host_docker_haproxy_firewalld_ports: [443/tcp, 80/tcp, 8404/tcp]
+host_docker_haproxy_volumes: "{{ docker_volumes_path }}/haproxy:/usr/local/etc/haproxy"
+host_docker_haproxy_config_path: "{{ docker_volumes_path }}/haproxy/haproxy.cfg"
+## docker_haproxy ##

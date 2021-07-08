@@ -1,10 +1,5 @@
 ---
-# group_vars
 primary_user_ssh_pubkey: "{{ grp_primary_user_ssh_pubkey }}"
-
-# host_vars
 create_user: "{{ host_create_user }}"
-
-# host_vars vault
 primary_user_username: "{{ v_host_primary_user_username }}"
 primary_user_password: "{{ v_host_primary_user_password }}" 

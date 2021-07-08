@@ -3,4 +3,5 @@
   ansible.builtin.systemd:
     name: systemd-timesyncd.service
     enabled: yes
+    daemon_reload: yes
     state: restarted

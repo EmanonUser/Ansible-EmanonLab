@@ -3,7 +3,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-  loop: "{{ prometheus_config_dir }}"
+  loop: "{{ prometheus_volumes_path }}"
   # No owner, group or mode becose it cause an error on a nfs share
   # Create it before docker try to handle it, permission error
 

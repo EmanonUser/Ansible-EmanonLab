@@ -1,2 +1,2 @@
 ---
-firewalld_zone: "{{ _firewalld_zone }}"
+firewalld_zone: "{{ host_firewalld_zone }}"

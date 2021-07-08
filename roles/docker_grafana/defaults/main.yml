@@ -1,7 +1,6 @@
 ---
-firewalld_zone: "{{ _firewalld_zone }}"
-grafana_ports: "{{ _grafana_ports }}"
-grafana_firewalld_ports: "{{ _grafana_firewalld_ports }}"
-
-grafana_admin_password: "{{ _grafana_admin_password }}"
-grafana_url: "{{ _grafana_url }}"
+firewalld_zone: "{{ host_firewalld_zone }}"
+grafana_ports: "{{ host_docker_grafana_ports }}"
+grafana_firewalld_ports: "{{ host_docker_grafana_firewalld_ports }}"
+grafana_url: "{{ host_grafana_url }}"
+grafana_admin_password: "{{ v_host_grafana_admin_password }}"

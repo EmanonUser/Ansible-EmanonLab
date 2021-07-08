@@ -1,6 +1,6 @@
 ---
-firewalld_zone: "{{ _firewalld_zone }}"
-adguard_ports: "{{ _adguard_ports }}"
-adguard_firewalld_ports: "{{ _adguard_firewalld_ports }}"
-adguard_volumes: "{{ _adguard_volumes }}"
-adguard_config_path: "{{ _adguard_config_path }}"
+firewalld_zone: "{{ host_firewalld_zone }}"
+adguard_ports: "{{ host_docker_adguard_ports }}"
+adguard_firewalld_ports: "{{ host_docker_adguard_firewalld_ports }}"
+adguard_config_path: "{{ host_docker_adguard_volumes_path }}"
+adguard_volumes: "{{ host_docker_adguard_volumes }}"

@@ -1,9 +1,7 @@
 ---
-prometheus_ports: "{{ _prometheus_ports }}"
-prometheus_volumes: "{{ _prometheus_volumes }}"
-prometheus_volumes_dir: "{{ _prometheus_volumes_dir }}"
-prometheus_config_dir: "{{ _prometheus_config_dir }}"
-prometheus_config_path: "{{ _prometheus_config_path }}"
-
-prometheus_firewalld_ports: "{{ _prometheus_firewalld_ports }}"
-device: "{{ _device }}"
+firewalld_zone: "{{ host_firewalld_zone }}"
+prometheus_ports: "{{ host_docker_prometheus_ports }}"
+prometheus_firewalld_ports: "{{ host_docker_prometheus_firewalld_ports }}"
+prometheus_volumes: "{{ host_docker_prometheus_volumes }}"
+prometheus_volumes_path: "{{ host_docker_prometheus_volumes_path }}"
+prometheus_config_path: "{{ host_docker_prometheus_config_path }}"

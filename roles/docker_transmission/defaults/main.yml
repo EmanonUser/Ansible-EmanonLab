@@ -1,13 +1,10 @@
 ---
-transmission_ports: "{{ _transmission_ports }}"
-transmission_volumes: "{{ _transmission_volumes }}"
-transmission_directories: "{{ _transmission_directories }}"
-
-# Role: docker_transmission
-transmission_openvpn_provider: "{{ _transmission_openvpn_provider }}"
-transmission_openvpn_config: "{{ _transmission_openvpn_config }}"
-transmission_openvpn_username: "{{ _transmission_openvpn_username }}"
-transmission_openvpn_password: "{{ _transmission_openvpn_password }}"
-
-firewalld_zone: "{{ _firewalld_zone }}"
-transmission_firewalld_ports: "{{ _transmission_firewalld_ports }}"
+firewalld_zone: "{{ host_firewalld_zone }}"
+transmission_ports: "{{ host_docker_transmission_ports }}"
+transmission_firewalld_ports: "{{ host_docker_transmission_firewalld_ports }}"
+transmission_directories: "{{ host_docker_transmission_directories }}"
+transmission_volumes: "{{ host_docker_transmission_volumes }}"
+transmission_openvpn_provider: "{{ host_docker_transmission_openvpn_provider }}"
+transmission_openvpn_config: "{{ host_docker_transmission_openvpn_config }}"
+transmission_openvpn_username: "{{ host_docker_transmission_openvpn_username }}"
+transmission_openvpn_password: "{{ host_docker_transmission_openvpn_password }}"
