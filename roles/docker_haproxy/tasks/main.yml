@@ -17,3 +17,13 @@
     state: started
     container_default_behavior: no_defaults
     restart: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
+
+- name: Open firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop: "{{ host_docker_haproxy_firewalld_ports }}"
+  when: ansible_host in grp_firewalld_based_device
