@@ -1,0 +1,92 @@
+---
+grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4iwEp9bq99CuoyWCLceCXwek0d4t+r9nLM6YgMlmy7 emanon@arch
+grp_device:
+    router:
+      ipv4_addr:  192.168.5.1
+      ipv4_addr_cidr:  192.168.5.1/24
+      hostname: r
+      wan_interface: enp1s0
+      lan_interface: [enp2s0, enp3s0]
+    brocade:
+      ipv4_addr:  192.168.5.2
+      ipv4_addr_cidr: 192.168.5.2/24
+      hostname: sw
+    arch:
+      ipv4_addr:  192.168.20.20
+      ipv4_addr_cidr: 192.168.20.20/24
+      hostname: arch
+    truenas:
+      ipv4_addr:  192.168.10.25
+      ipv4_addr_cidr: 192.168.10.25/24
+      hostname: arch
+    aclite:
+      ipv4_addr:  192.168.10.40
+      ipv4_addr_cidr: 192.168.10.40/24
+      hostname: ubnt
+    pi:
+      ipv4_addr:  192.168.10.30
+      ipv4_addr_cidr: 192.168.10.30/24
+      hostname: pi
+    shp1:
+      ipv4_addr: 192.168.50.50
+      ipv4_addr_cidr: 192.168.50.50/24
+      hostname: homelabshp
+    shp2:
+      ipv4_addr: 192.168.50.51
+      ipv4_addr_cidr: 192.168.50.51/24
+      hostname: brocadeshp
+    shp3:
+      ipv4_addr: 192.168.50.52
+      ipv4_addr_cidr: 192.168.50.52/24
+      hostname: supermicroshp
+    shp4:
+      ipv4_addr: 192.168.50.53
+      ipv4_addr_cidr: 192.168.50.53/24
+      hostname: qotomshp
+    shp5:
+      ipv4_addr: 192.168.50.54
+      ipv4_addr_cidr: 192.168.50.54/24
+      hostname: pishp
+    tmp117:
+      ipv4_addr: 192.168.50.60
+      ipv4_addr_cidr: 192.168.50.60/24
+      hostname: tmp117shp
+    printer:
+      ipv4_addr: 192.168.70.5
+      ipv4_addr_cidr: 192.168.70.5/24
+      hostname: printer
+grp_subnet:
+  transit_lan:
+    subnet: "192.168.5.0/24"
+    fnc: transit
+  vlan_10:
+    subnet: "192.168.10.0/24"
+    vlan_id: 10
+    fnc: homelab
+  vlan_20:
+    subnet: "192.168.20.0/24"
+    vlan_id: 20
+    fnc: admin
+  vlan_50:
+    subnet: "192.168.50.0/24"
+    vlan_id: 50
+    fnc: iot
+  vlan_70:
+    subnet: "192.168.70.0/24"
+    vlan_id: 70
+    fnc: guest / wifi
+  vlan_100: 
+    subnet: "192.168.100.0/24"
+    vlan_id: 100
+    fnc: dmz
+  wireguard:
+    subnet: "176.16.0.0/24"
+    fnc: admin vpn
+grp_local_domain: local.emanon
+grp_domain_name: emanon.moe
+grp_subdomain: iwakura
+v_grp_gandi_api_key: "{{ v_gandi_api_key }}"
+v_grp_gandi_email: "{{ v_gandi_email }}"
+v_grp_gandi_email_password: "{{ v_gandi_email_password }}"
+
+grp_firewalld_based_device: [pi.local.emanon, nas.local.emanon]

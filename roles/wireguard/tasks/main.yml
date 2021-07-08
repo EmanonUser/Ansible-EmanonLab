@@ -11,7 +11,7 @@
 - name: Configure Wireguard
   ansible.builtin.template:
     src: wg0.conf.j2
-    dest: /etc/wireguard/wg0.conf
+    dest: /etc/wireguard/{{ wireguard_interface_name }}.conf
     owner: root
     group: root
     mode: u=rw,g=,o=

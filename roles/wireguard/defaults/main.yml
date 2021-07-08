@@ -1,20 +1,8 @@
 ---
-wireguard_server_address: 172.16.0.1/24
-wireguard_server_port: 51820
-wireguard_server_private_key: "{{ _wireguard_server_private_key }}"
-wireguard_server_public_key: "{{ _wireguard_server_public_key }}"
+wireguard_interface_name: "{{ host_wireguard_interface_name }}"
+wireguard_server_address: "{{ host_wireguard_server_address }}"
+wireguard_server_port: "{{ host_wireguard_server_port }}"
+wireguard_server_private_key: "{{ host_wireguard_server_private_key }}"
+wireguard_server_public_key: "{{ host_wireguard_server_public_key }}"
 
-wireguard_peers:
-  - peer_1:
-    name: Arch
-    private_key: "{{ _peer1_private_key }}"
-    public_key: "{{ _peer1_public_key}}"
-    preshared_key: "{{ _peer1_preshared_key}}"
-    ip_address: 172.16.0.2/32
-
-  - peer_2:
-    name: One
-    private_key: "{{ _peer2_private_key }}"
-    public_key: "{{ _peer2_public_key}}"
-    preshared_key: "{{ _peer2_preshared_key}}"
-    ip_address: 172.16.0.3/32
+wireguard_peers: "{{ host_wireguard_peers }}"

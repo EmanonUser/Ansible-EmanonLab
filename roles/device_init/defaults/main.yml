@@ -1,7 +1,10 @@
 ---
-primary_user_ssh_pubkey: "{{ _primary_user_ssh_pubkey }}"
-create_user: "{{ _create_user }}"
+# group_vars
+primary_user_ssh_pubkey: "{{ grp_primary_user_ssh_pubkey }}"
 
-# host_vars vault.yml
-primary_user_username: "{{ _primary_user_username }}"
-primary_user_password: "{{ _primary_user_password }}" 
+# host_vars
+create_user: "{{ host_create_user }}"
+
+# host_vars vault
+primary_user_username: "{{ v_host_primary_user_username }}"
+primary_user_password: "{{ v_host_primary_user_password }}" 

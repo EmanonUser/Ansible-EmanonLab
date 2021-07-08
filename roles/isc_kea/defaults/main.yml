@@ -1,2 +1,3 @@
 ---
-kea_version: "{{ _kea_version }}"
+kea_version: "{{ host_kea_version }}"
+cloudsmith_gpg_key: "{{ host_cloudsmith_gpg_key }}"

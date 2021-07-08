@@ -1,8 +1,7 @@
 ---
 - name: Add Cloudsmith Kea GPG Key
   ansible.builtin.apt_key:
-    url: https://dl.cloudsmith.io/public/isc/{{ kea_version }}/gpg.5DC67B0A74E30739.key
-    # Hardcoded URL due to variable gpg keyname{ kea-1-9 }, TODO: Add regardless of the name gpg.*.key
+    url: https://dl.cloudsmith.io/public/isc/{{ kea_version }}/{{ cloudsmith_gpg_key }}
     state: present
 
 - name: Add Cloudsmith isc-Kea Debian Repository

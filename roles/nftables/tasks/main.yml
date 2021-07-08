@@ -5,7 +5,7 @@
     default_release: buster-backports
     state: present
 
-- name: Copy nftables config file
+- name: Template nftables config file
   ansible.builtin.template:
     src: nftables.conf.j2
     dest: /etc/nftables.conf

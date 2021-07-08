@@ -1,6 +1,6 @@
 ---
-frr_version: "{{ _frr_version }}"
-frr_daemons: "{{ _frr_daemons }}"
+frr_version: "{{ host_frr_version }}"
+frr_daemons: "{{ host_frr_daemons }}"
 frr_services_port: |
   zebrasrv      	2600/tcp                 # zebra service
   zebra         	2601/tcp                 # zebra vty
@@ -20,5 +20,5 @@ frr_services_port: |
   fabricd       	2618/tcp                 # fabricd vty
   vrrpd         	2619/tcp                 # vrrpd vty
 
-frr_ospf_router_id: "{{ _device.router.ipv4_addr }}"
-brocade_static_ip: "{{ _device.brocade.ipv4_addr }}"
+frr_ospf_router_id: "{{ grp_device.router.ipv4_addr }}"
+brocade_static_ip: "{{ grp_device.brocade.ipv4_addr }}"

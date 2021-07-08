@@ -1,0 +1,133 @@
+---
+# Ansible vars file for non-shared roles, order following deploy_host execution
+# Vars prefix indication their location hos_ = host_vars | grp_ = group_vars | v_host_ = vault in host_vars | v_grp_ = vault in group 
+## Role global ##
+v_host_primary_user_username: "{{ v_primary_user_username }}"
+v_host_primary_user_password: "{{ v_primary_user_password }}" 
+host_cpu_architecture: amd64 # amd64, arm64 etc ...
+host_wireguard_interface_name: wg0
+## Role global ##
+
+## device_init ##
+host_create_user: no
+## device_init ##
+
+## install_packages ##
+host_debian_stable_packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - dnsutils
+  - ldnsutils
+  - conntrack
+  - git
+  - msmtp
+  - tcpdump
+  - zsh
+host_debian_backports_packages:
+  - neovim
+## install_packages ##
+
+## interfaces ##
+host_lacp_interface: bond0
+## interfaces ##
+
+## frr ##
+host_frr_version: frr-7  ## https://deb.frrouting.org/
+host_frr_daemons:
+  - bgpd=no
+  - ospfd=yes
+  - ospf6d=no
+  - ripd=no
+  - ripngd=no
+  - isisd=no
+  - pimd=no
+  - ldpd=no
+  - nhrpd=no
+  - eigrpd=no
+  - babeld=no
+  - sharpd=no
+  - pbrd=no
+  - bfdd=no
+  - fabricd=no
+  - vrrpd=no
+## frr ##
+
+## isc_kea ##
+host_kea_version: kea-1-9  ## https://cloudsmith.io/~isc/repos/
+host_cloudsmith_gpg_key: gpg.5DC67B0A74E30739.key ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-1-9/signing/
+## isc_kea ##
+
+## wireguard ##
+host_wireguard_server_address: 172.16.0.1/24
+host_wireguard_server_port: 51820
+host_wireguard_server_private_key: "{{ v_wireguard_server_private_key }}"
+host_wireguard_server_public_key: "{{ v_wireguard_server_public_key }}"
+host_wireguard_peers:
+  - peer_1:
+    name: Arch
+    private_key: "{{ v_peer1_private_key }}"
+    public_key: "{{ v_peer1_public_key }}"
+    preshared_key: "{{ v_peer1_preshared_key }}"
+    ip_address: 172.16.0.2/32
+
+  - peer_2:
+    name: One
+    private_key: "{{ v_peer2_private_key }}"
+    public_key: "{{ v_peer2_public_key }}"
+    preshared_key: "{{ v_peer2_preshared_key }}"
+    ip_address: 172.16.0.3/32
+## wireguard ##
+
+## unbound ##
+host_unbound_settings:
+  port: "53"
+  ipv4: "yes"
+  ipv6: "no"
+  udp: "yes"
+  tcp: "yes"
+host_unbound_forward_zone:  ["{{ grp_device.pi.ipv4_addr }}"]
+host_unbound_acces_control:  
+  - "{{ grp_subnet.transit_lan.subnet }} allow"
+  - "{{ grp_subnet.vlan_10.subnet }} allow"
+  - "{{ grp_subnet.vlan_20.subnet }} allow"
+  - "{{ grp_subnet.vlan_50.subnet }} allow"
+  - "{{ grp_subnet.vlan_70.subnet }} allow"
+  - "{{ grp_subnet.vlan_100.subnet }} allow"
+  - "{{ grp_subnet.wireguard.subnet }} allow"
+base_list_unbound_static_subdomain:
+  - "{{ grp_device.router.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.router.ipv4_addr }}"
+  - "{{ grp_device.brocade.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.brocade.ipv4_addr }}"
+  - "{{ grp_device.truenas.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.truenas.ipv4_addr }}"
+  - "{{ grp_device.aclite.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.aclite.ipv4_addr }}"
+  - "{{ grp_device.arch.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.arch.ipv4_addr }}"
+  - "{{ grp_device.pi.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.pi.ipv4_addr }}"
+  - "{{ grp_device.shp1.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.shp1.ipv4_addr }}"
+  - "{{ grp_device.shp2.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.shp2.ipv4_addr }}"
+  - "{{ grp_device.shp3.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.shp3.ipv4_addr }}"
+  - "{{ grp_device.shp4.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.shp4.ipv4_addr }}"
+  - "{{ grp_device.shp5.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.shp5.ipv4_addr }}"
+  - "{{ grp_device.tmp117.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.tmp117.ipv4_addr }}"
+  - "{{ grp_device.printer.hostname }}.{{ grp_local_domain }}. 10800 IN A {{ grp_device.printer.ipv4_addr }}"
+base_list_docker_sudomain:
+  - "adguard.{{ grp_local_domain }}. 10800 IN A {{ grp_device.pi.ipv4_addr }}"
+  - "grafana.{{ grp_local_domain }}. 10800 IN A {{ grp_device.pi.ipv4_addr }}"
+  - "prometheus.{{ grp_local_domain }}. 10800 IN A {{ grp_device.pi.ipv4_addr }}"
+  - "transmission.{{ grp_local_domain }}. 10800 IN A {{ grp_device.pi.ipv4_addr }}"
+host_unbound_static_subdomain: "{{ base_list_unbound_static_subdomain }}+{{ base_list_docker_sudomain }}"
+host_unbound_local_zone: "{{ grp_local_domain }}."
+## unbound ##
+
+## prometheus_node_exporter ##
+host_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/
+host_exporter_version: 1.1.2 # https://github.com/prometheus/node_exporter/releases/
+## prometheus_node_exporter ##
+
+## ntpd ##
+host_ntpd_interfaces_ip: ["127.0.0.1", "{{ grp_device.router.ipv4_addr }}"]
+host_ntpd_upstream_server: 
+  - 0.debian.pool.ntp.org
+  - pool.ntp.org
+  - ntp.midway.ovh
+## ntpd ##

@@ -1,10 +1,10 @@
 ---
 unbound_interfaces_ip:
-  - "{{ _device.router.ipv4_addr }}"
+  - "{{ grp_device.router.ipv4_addr }}"
   - "127.0.0.1"
 
-unbound_settings: "{{ _unbound_settings }}"
-unbound_forward_zone: "{{ _unbound_forward_zone }}"
-unbound_acces_control: "{{ _unbound_acces_control }}"
-unbound_local_zone: "{{ _unbound_local_zone }}"
-unbound__static_subdomain: "{{ _unbound__static_subdomain }}"
+unbound_settings: "{{ host_unbound_settings }}"
+unbound_forward_zone: "{{ host_unbound_forward_zone }}"
+unbound_acces_control: "{{ host_unbound_acces_control }}"
+unbound_local_zone: "{{ host_unbound_local_zone }}"
+unbound_static_subdomain: "{{ host_unbound_static_subdomain }}"

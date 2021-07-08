@@ -1,6 +1,6 @@
 ---
-primary_user_username: "{{ _primary_user_username }}"
-download_url: "{{ _download_url }}"
-node_exporter_version: "{{ _node_exporter_version }}"
-cpu_architecture: "{{ _cpu_architecture }}"
-firewalld_zone: "{{ _firewalld_zone }}"
+primary_user_username: "{{ v_host_primary_user_username }}"
+download_url: "{{ host_exporter_download_url }}"
+node_exporter_version: "{{ host_exporter_version }}"
+cpu_architecture: "{{ host_cpu_architecture }}"
+firewalld_zone: "{{ host_firewalld_zone }}"
