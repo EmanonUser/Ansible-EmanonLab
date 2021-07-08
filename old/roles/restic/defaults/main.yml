@@ -1,6 +1,6 @@
 ---
-restic_version: "{{ _restic_version }}"
-restic_backup_paths: "{{ _restic_backup_paths }}"
+restic_version: "{{ host_restic_version }}"
+restic_backup_paths: "{{ host_restic_backup_paths }}"
 restic_services: "{{ _restic_services }}"
 
 # secret

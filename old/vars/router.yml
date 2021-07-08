@@ -1,0 +1,147 @@
+---
+# Role: Device_init
+_create_user: no
+
+# Role: [nftables, interfaces]
+_WAN_interface_name: enp1s0
+_LAN_interface_name:
+  - enp2s0
+  - enp3s0
+
+_LACP_interface_name: bond0
+_wireguard_interface_name: wg0
+
+
+# Role: frr
+_frr_version: frr-7
+_frr_daemons:
+  - bgpd=no
+  - ospfd=yes
+  - ospf6d=no
+  - ripd=no
+  - ripngd=no
+  - isisd=no
+  - pimd=no
+  - ldpd=no
+  - nhrpd=no
+  - eigrpd=no
+  - babeld=no
+  - sharpd=no
+  - pbrd=no
+  - bfdd=no
+  - fabricd=no
+  - vrrpd=no
+
+# Role: isc_kea
+_kea_version: kea-1-9
+
+# Role: ntpd
+_ntp_pool_server:
+  - 0.debian.pool.ntp.org
+  - 1.debian.pool.ntp.org
+  - 2.debian.pool.ntp.org
+  - 3.debian.pool.ntp.org
+
+# Role: prometheus_node_exporter
+_download_url: https://github.com/prometheus/node_exporter/releases/download/
+_node_exporter_version: 1.1.2
+_cpu_architecture: amd64
+  
+# Role: restic
+_restic_version: 0.12.0 # https://github.com/restic/restic/releases/download/v0.12.0/restic_0.12.0_linux_amd64.bz2
+_restic_backup_paths: 
+  - /etc/frr
+  - /etc/kea
+  - /etc/unbound
+  - /etc/nftables.conf
+  - /etc/network/interfaces
+  - /etc/hosts
+  - /etc/hostname
+  - /etc/wireguard
+  - /etc/sshguard
+  - /home/emanon/.ssh
+  - /etc/brocade
+  - /home/restic/.msmtprc
+  - /etc/ntp.conf
+  - /etc/systemd/system/restic-deb.env
+  - /etc/systemd/system/restic-deb.service
+  - /etc/systemd/system/restic-deb.timer
+  - /etc/systemd/system/restic.env
+  - /etc/systemd/system/restic.service
+  - /etc/systemd/system/restic.timer
+
+_restic_services:
+  - restic.service
+  - restic.timer
+  - restic.env
+  - restic-deb.service
+  - restic-deb.timer
+  - restic-deb.env
+
+
+# Role: install_packages
+_debian_stable_packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - dnsutils
+  - ldnsutils
+  - conntrack
+  - git
+  - msmtp
+  - tcpdump
+  - zsh
+
+_debian_backports_packages:
+  - neovim
+
+_kernel_version: 5.10.0-0.bpo.3-amd64
+_kernel_upgrade: no
+
+# Role: unbound
+_unbound_settings:
+  port: "53"
+  ipv4: "yes"
+  ipv6: "no"
+  udp: "yes"
+  tcp: "yes"
+
+_unbound_forward_zone:
+  - "192.168.10.30"
+
+_unbound_acces_control:
+  - 192.168.5.0/24 allow
+  - 192.168.10.0/24 allow
+  - 192.168.20.0/24 allow
+  - 192.168.50.0/24 allow
+  - 192.168.70.0/24 allow
+  - 192.168.100.0/24 allow
+  - 176.16.0.0/24 allow
+
+_unbound_local_zone: "local.emanon."
+_unbound__static_subdomain:
+ - "r.local.emanon. 10800 IN A 192.168.5.1"
+ - "sw.local.emanon. 10800 IN A 192.168.5.2"
+ - "truenas.local.emanon. 10800 IN A 192.168.10.25"
+ - "pi.local.emanon. 10800 IN A 192.168.10.30"
+ - "ubnt.local.emanon. 10800 IN A 192.168.10.40"
+ - "printer.local.emanon. 10800 IN A 192.168.70.5"
+ - "arch.local.emanon. 10800 IN A 192.168.20.20"
+ - "prometheus.local.emanon. 10800 IN A 192.168.10.30"
+ - "grafana.local.emanon. 10800 IN A 192.168.10.30"
+ - "jackett.local.emanon. 10800 IN A 192.168.10.30"
+ - "sonarr.local.emanon. 10800 IN A 192.168.10.30"
+ - "radarr.local.emanon. 10800 IN A 192.168.10.30"
+ - "transmission.local.emanon. 10800 IN A 192.168.10.30"
+ - "syncthing.local.emanon. 10800 IN A 192.168.10.30"
+ - "unifi.local.emanon. 10800 IN A 192.168.10.30"
+ - "restic.local.emanon. 10800 IN A 192.168.10.30"
+ - "adguard.local.emanon. 10800 IN A 192.168.10.30"
+ - "haproxy.local.emanon. 10800 IN A 192.168.10.30"
+ - "homelabshp.local.emanon. 10800 IN A 192.168.50.50"
+ - "brocadeshp.local.emanon. 10800 IN A 192.168.50.51"
+ - "supermicroshp.local.emanon. 10800 IN A 192.168.50.52"
+ - "qotomshp.local.emanon. 10800 IN A 192.168.50.53"
+ - "pishp.local.emanon. 10800 IN A 192.168.50.54"
+ - "tmp117shp.local.emanon. 10800 IN A 192.168.50.60"
