@@ -18,6 +18,7 @@
     permanent: yes
     state: enabled
     immediate: yes
+  when: ansible_host in grp_firewalld_based_device
 
 - name: Pause, waiting for grafana # noqa 503
   ansible.builtin.pause:

@@ -37,3 +37,4 @@
     permanent: yes
     state: enabled
     immediate: yes
+  when: ansible_host in grp_firewalld_based_device
