@@ -1,0 +1,19 @@
+---
+- name: Configure haproxy.cfg
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: "{{ haproxy_config_path }}"
+  register: conf_change
+
+- name: Run Haproxy docker container
+  community.docker.docker_container:
+    name: haproxy_ansible
+    image: haproxy
+    ports: "{{ haproxy_ports }}"
+    volumes: "{{ haproxy_volumes }}"
+    sysctls: 
+      net.ipv4.ip_unprivileged_port_start: 0
+    restart_policy: unless-stopped
+    state: started
+    container_default_behavior: no_defaults
+    restart: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
