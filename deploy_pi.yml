@@ -15,3 +15,4 @@
     - docker_prometheus
     - docker_grafana
     - docker_transmission
+    - docker_haproxy
