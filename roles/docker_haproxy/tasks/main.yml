@@ -11,7 +11,7 @@
     image: haproxy
     ports: "{{ haproxy_ports }}"
     volumes: "{{ haproxy_volumes }}"
-    sysctls: 
+    sysctls:
       net.ipv4.ip_unprivileged_port_start: 0
     restart_policy: unless-stopped
     state: started
