@@ -18,7 +18,7 @@ grp_device:
     truenas:
       ipv4_addr:  192.168.10.25
       ipv4_addr_cidr: 192.168.10.25/24
-      hostname: arch
+      hostname: truenas 
     aclite:
       ipv4_addr:  192.168.10.40
       ipv4_addr_cidr: 192.168.10.40/24
