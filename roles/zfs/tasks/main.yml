@@ -17,29 +17,45 @@
     default_release: buster-backports
     state: present
 
-- name: Create file-disk
-  ansible.builtin.command:
-    cmd: truncate -s 4G /root/1.img /root/2.img
-
-- name: Create file-disk
-  ansible.builtin.command:
-    cmd: zpool create vault mirror /root/1.img /root/2.img -o failmode=continue
-
-- name: Copy encryption key
-  ansible.builtin.copy:
-    src: encryption_key
-    dest: /root/key
+- name: Configure automatic zpool scrubing
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: /etc/systemd/system/{{ item }}
     owner: root
     group: root
-    mode: u=r,g=,o=
-    force: yes
+    mode: u=rw,g=,o=
+  loop: [zpool-scrub@.service, zpool-scrub@.timer]
+  notify: Enable zpool(s) scrub timer(s)
 
-- name: Create Vault datasets
-  community.general.zfs:
-    name: vault/encrypted
-    state: present
-    extra_zfs_properties:
-      compression: zstd
-      encryption: aes-256-gcm
-      keyformat: hex
-      keylocation: file:///root/key
+
+# - name: Configure automatique pool scrubing
+#   ansible.builtin.template:
+  
+
+###### Testing community.general.zfs ######
+# - name: Create file-disk
+#   ansible.builtin.command:
+#     cmd: truncate -s 4G /root/1.img /root/2.img
+
+# - name: Create file-disk
+#   ansible.builtin.command:
+#     cmd: zpool create vault mirror /root/1.img /root/2.img -o failmode=continue
+
+# - name: Copy encryption key
+#   ansible.builtin.copy:
+#     src: encryption_key
+#     dest: /root/key
+#     owner: root
+#     group: root
+#     mode: u=r,g=,o=
+#     force: yes
+
+# - name: Create Vault datasets
+#   community.general.zfs:
+#     name: vault/encrypted
+#     state: present
+#     extra_zfs_properties:
+#       compression: zstd
+#       encryption: aes-256-gcm
+#       keyformat: hex
+#       keylocation: file:///root/key

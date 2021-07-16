@@ -1,0 +1,3 @@
+---
+zfs_zpool_names: "{{ host_zfs_zpool_names }}"
+systemd_OnCalendar_scrubing_timer: "{{ host_systemd_OnCalendar_scrubing_timer }}" # https://www.freedesktop.org/software/systemd/man/systemd.time.html

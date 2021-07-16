@@ -1,0 +1,9 @@
+[Unit]
+Description=Scheduled zpool %I scrubing service timer
+
+[Timer]
+OnCalendar={{ systemd_OnCalendar_scrubing_timer }}
+Unit=zpool-scrub@%i.service
+
+[Install]
+WantedBy=multi-user.target

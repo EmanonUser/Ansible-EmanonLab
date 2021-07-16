@@ -1,0 +1,14 @@
+[Unit]
+Description=ZFS zpool %I scrubing service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/zpool scrub %i
+ProtectHome=read-only
+ProtectSystem=full
+ProtectControlGroups=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+
+[Install]
+WantedBy=multi-user.target
