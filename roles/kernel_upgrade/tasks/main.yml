@@ -7,6 +7,6 @@
   when: kernel_upgrade
 
 - name: Reboot to apply Kernel upgrade
-  reboot:
+  ansible.builtin.reboot:
     reboot_timeout: 300
   when: kernel_upgrade
