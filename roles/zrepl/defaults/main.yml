@@ -1,2 +1,2 @@
 ---
-cpu_architecture: "{{ _cpu_architecture }}"
+cpu_architecture: "{{ host_cpu_architecture }}"

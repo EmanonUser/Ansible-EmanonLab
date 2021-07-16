@@ -1,0 +1,35 @@
+---
+## Role global ##
+v_host_primary_user_username: "{{ v_primary_user_username }}"
+v_host_primary_user_password: "{{ v_primary_user_password }}" 
+host_cpu_architecture: amd64 # amd64, arm64 etc ...
+
+## device_init ##
+host_create_user: no
+## device_init ##
+
+## install_packages ##
+host_debian_stable_packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - curl
+  - gnupg2
+  - lsb-release
+  - dnsutils
+  - ldnsutils
+  - git
+  - tmux
+  - tcpdump
+  - mtr-tiny
+  - zsh
+  - unzip
+host_debian_backports_packages:
+  - neovim
+## install_packages ##
+
+## zfs ##
+host_zfs_zpool_names: [vault]
+host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00
+## zfs ##
