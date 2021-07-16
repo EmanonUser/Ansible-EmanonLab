@@ -8,9 +8,11 @@
 - name: Set permissions
   ansible.builtin.file:
     path: /opt/gandi-automatic-dns
-    owner: "{{ primary_user_username }}"
-    group: "{{ primary_user_username }}"
-    mode: u=rx,g=,o=
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    recurse: yes
+    state: directory
 
 - name: Install systemd service files
   ansible.builtin.template:
