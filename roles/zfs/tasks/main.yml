@@ -28,10 +28,6 @@
   notify: Enable zpool(s) scrub timer(s)
 
 
-# - name: Configure automatique pool scrubing
-#   ansible.builtin.template:
-  
-
 ###### Testing community.general.zfs ######
 # - name: Create file-disk
 #   ansible.builtin.command:
