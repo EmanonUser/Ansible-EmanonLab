@@ -29,6 +29,11 @@ host_debian_backports_packages:
   - neovim
 ## install_packages ##
 
+## kernel_upgrade ##
+host_kernel_version: 5.10.0-0.bpo.4-amd64 # https://packages.debian.org/search?keywords=linux-image+bpo+amd64&searchon=names&section=all&suite=buster-backports
+host_kernel_upgrade: no
+## kernel_upgrade ##
+
 ## zfs ##
 host_zfs_zpool_names: [vault]
 host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00

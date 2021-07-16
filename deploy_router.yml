@@ -6,6 +6,7 @@
   roles:
     - device_init
     - install_packages
+    - kernel_upgrade
     - interfaces
     - frr
     - isc_kea
