@@ -4,5 +4,4 @@ wireguard_server_address: "{{ host_wireguard_server_address }}"
 wireguard_server_port: "{{ host_wireguard_server_port }}"
 wireguard_server_private_key: "{{ host_wireguard_server_private_key }}"
 wireguard_server_public_key: "{{ host_wireguard_server_public_key }}"
-
 wireguard_peers: "{{ host_wireguard_peers }}"
