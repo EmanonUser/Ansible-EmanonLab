@@ -65,7 +65,8 @@ host_cloudsmith_gpg_key: gpg.5DC67B0A74E30739.key ## For kea-1-9 https://cloudsm
 ## isc_kea ##
 
 ## wireguard ##
-host_wireguard_server_address: 172.16.0.1/24
+host_wireguard_subnet: "172.16.0"
+host_wireguard_server_address: "{{ host_wireguard_subnet }}.1/24"
 host_wireguard_server_port: 51820
 host_wireguard_server_private_key: "{{ v_wireguard_server_private_key }}"
 host_wireguard_server_public_key: "{{ v_wireguard_server_public_key }}"
@@ -75,19 +76,21 @@ host_wireguard_peers:
     private_key: "{{ v_peer1_private_key }}"
     public_key: "{{ v_peer1_public_key }}"
     preshared_key: "{{ v_peer1_preshared_key }}"
-    ip_address: 172.16.0.2/32
+    ip_address: "{{ host_wireguard_subnet }}.2/32"
 
   - peer_2:
     name: One
     private_key: "{{ v_peer2_private_key }}"
     public_key: "{{ v_peer2_public_key }}"
     preshared_key: "{{ v_peer2_preshared_key }}"
+    ip_address: "{{ host_wireguard_subnet }}.3/32"
+  
   - peer_3:
     name: W10
     private_key: "{{ v_peer3_private_key }}"
     public_key: "{{ v_peer3_public_key }}"
     preshared_key: "{{ v_peer3_preshared_key }}"
-    ip_address: "{{ host_wireguard_network }}.4/32"
+    ip_address: "{{ host_wireguard_subnet }}.4/32"
 ## wireguard ##
 
 ## unbound ##
