@@ -55,7 +55,7 @@ table inet firewall {
 	chain input {
 		type filter hook input priority filter; policy drop;
 		jump input_filter
-		icmp type echo-request icmp sequence 21 log level notice prefix "Lain Server KeepAlive Ping: " counter accept # Keepalive Ping from lain every 15m
+		icmp type echo-request icmp sequence {{ echo_request_count }} log level notice prefix "Lain Server isAlive Ping: " counter accept # isAlive echo-request from lain.emanon.moe
 		ct state { established, related } counter accept
 		iifname { "lo" } accept
 		ip protocol icmp counter accept
