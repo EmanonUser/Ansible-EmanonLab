@@ -18,4 +18,3 @@
     - sshguard
     - prometheus_node_exporter
     - nftables
-    - open_ssh_server
