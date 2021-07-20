@@ -8,5 +8,6 @@
     - install_packages
     - kernel_upgrade
     - systemd_timesyncd
+    - isAlive
     - zfs
     - zrepl
