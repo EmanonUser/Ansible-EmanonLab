@@ -1,0 +1,10 @@
+[Unit]
+Description=Periodic echo-request timer to {{ echo_request_target }}
+
+[Timer]
+OnStartupSec=1m
+OnUnitActiveSec={{ echo_request_interval }}
+Unit=isAlive.service
+
+[Install]
+WantedBy=multi-users.target

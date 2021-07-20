@@ -1,0 +1,9 @@
+- name: Configure periodic echo request
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: /etc/systemd/system/{{ item }}
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  loop: [isAlive.service, isAlive.timer]
+  notify: Enable isAlive timer
