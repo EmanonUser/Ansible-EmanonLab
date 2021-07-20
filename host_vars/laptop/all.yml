@@ -3,6 +3,8 @@
 v_host_primary_user_username: "{{ v_primary_user_username }}"
 v_host_primary_user_password: "{{ v_primary_user_password }}" 
 host_cpu_architecture: amd64 # amd64, arm64 etc ...
+host_echo_request_count: "21" # isAlive, nftables
+## Role global ##
 
 ## device_init ##
 host_create_user: no
@@ -33,6 +35,11 @@ host_debian_backports_packages:
 host_kernel_version: 5.10.0-0.bpo.4-amd64 # https://packages.debian.org/search?keywords=linux-image+bpo+amd64&searchon=names&section=all&suite=buster-backports
 host_kernel_upgrade: no
 ## kernel_upgrade ##
+
+## isAlive ##
+host_echo_request_target: iwakura.emanon.moe
+host_echo_request_interval: 15m
+## isAlive ##
 
 ## zfs ##
 host_zfs_zpool_names: [vault]
