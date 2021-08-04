@@ -28,6 +28,7 @@ host_debian_stable_packages:
   - msmtp
   - tcpdump
   - zsh
+  - socat
 host_debian_backports_packages:
   - neovim
 ## install_packages ##
