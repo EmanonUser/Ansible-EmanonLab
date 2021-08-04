@@ -3,6 +3,7 @@
   ansible.builtin.git:
     repo: https://github.com/brianhp2/gandi-automatic-dns.git
     dest: /opt/gandi-automatic-dns
+    force: yes
     clone: yes
 
 - name: Set permissions
