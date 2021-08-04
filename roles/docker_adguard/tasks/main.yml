@@ -10,7 +10,7 @@
 - name: Run adguard home container
   community.docker.docker_container:
     name: adguardhome_ansible
-    image: adguard/adguardhome
+    image: adguard/adguardhome:{{ adguard_image_version }}
     ports: "{{ adguard_ports }}"
     volumes: "{{ adguard_volumes }}"
     restart_policy: unless-stopped

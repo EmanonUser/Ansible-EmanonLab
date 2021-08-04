@@ -2,7 +2,7 @@
 - name: Run grafana home container
   community.docker.docker_container:
     name: grafana_ansible
-    image: grafana/grafana
+    image: grafana/grafana:{{ grafana_image_version }}
     ports: "{{ grafana_ports }}"
     restart_policy: unless-stopped
     state: started

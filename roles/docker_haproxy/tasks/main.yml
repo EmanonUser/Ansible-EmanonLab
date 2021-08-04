@@ -8,7 +8,7 @@
 - name: Run Haproxy docker container
   community.docker.docker_container:
     name: haproxy_ansible
-    image: haproxy
+    image: haproxy:{{ haproxy_image_version }}
     ports: "{{ haproxy_ports }}"
     volumes: "{{ haproxy_volumes }}"
     sysctls:

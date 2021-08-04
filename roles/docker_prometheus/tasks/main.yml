@@ -16,7 +16,7 @@
 - name: Run prometheus docker container
   community.docker.docker_container:
     name: prometheus_ansible
-    image: prom/prometheus
+    image: prom/prometheus:{{ prometheus_image_version }}
     ports: "{{ prometheus_ports }}"
     volumes: "{{ prometheus_volumes }}"
     restart_policy: unless-stopped

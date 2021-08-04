@@ -10,7 +10,7 @@
 - name: Run transmission docker container
   community.docker.docker_container:
     name: transmission_ansible
-    image: haugene/transmission-openvpn
+    image: haugene/transmission-openvpn:{{ transmission_image_version }}
     ports: "{{ transmission_ports }}"
     volumes: "{{ transmission_volumes }}"
     capabilities: NET_ADMIN
