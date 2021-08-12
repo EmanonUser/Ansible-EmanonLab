@@ -18,7 +18,7 @@
 - name: Download CoreDNS archive
   ansible.builtin.get_url:
     url: https://github.com/coredns/coredns/releases/download/v{{ coreDNS_version }}/coredns_{{ coreDNS_version }}_linux_{{ cpu_architecture }}.tgz
-    checksum: sha256:https://github.com/coredns/coredns/releases/download/v{{ coreDNS_version }}/coredns_{{ coreDNS_version }}_linux_{{ cpu_architecture }}.tgz.sha256
+    checksum: sha256:https://github.com/coredns/coredns/releases/download/v{{ coreDNS_version }}/coredns_{{ coreDNS_version }}_linux_{{ cpu_architecture }}.tgz.sha256 # noqa 204
     dest: "{{ coreDNS_path }}/coredns_{{ coreDNS_version }}.tgz"
     owner: coredns
     group: coredns
