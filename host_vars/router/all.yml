@@ -146,3 +146,14 @@ host_ntpd_upstream_server:
   - pool.ntp.org
   - ntp.midway.ovh
 ## ntpd ##
+
+## coredns ##
+host_coreDNS_path: /opt/coredns
+host_coreDNS_version: "1.8.4"
+host_coreDNS_docker_local_subdomain:
+  - adguard
+  - prometheus
+  - grafana
+  - transmission
+  - haproxy
+## coredns ##

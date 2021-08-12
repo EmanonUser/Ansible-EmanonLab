@@ -1,0 +1,28 @@
+(snip) {
+    bind 127.0.0.1
+    bind 192.168.5.1
+    whoami
+    any
+    minimal
+    log
+    cache 300
+    errors {
+        consolidate 120s ".* i/o timeout$"
+        consolidate 30s "^Failed to .+"
+    }
+    prometheus 192.168.5.1:9053
+}
+
+.:53 {
+    import snip
+    forward . 192.168.10.30:53 {
+        except example.org
+        health_check 5s
+        prefer_udp
+    }
+}
+
+local.emanon:53 {
+    import snip
+    hosts hosts.local.emanon
+}

@@ -1,0 +1,6 @@
+{% for key, value in grp_device.items() %}
+{{ value.ipv4_addr }} {{ value.hostname }}.{{ grp_local_domain }} {{ value.hostname }}
+{% endfor %}
+{% for docker_local_subdomain in coreDNS_docker_local_subdomain%}
+{{ grp_device.pi.ipv4_addr }} {{ docker_local_subdomain }}.{{ grp_local_domain }} {{ docker_local_subdomain }}
+{% endfor %}

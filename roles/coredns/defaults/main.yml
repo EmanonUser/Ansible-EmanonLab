@@ -1,0 +1,5 @@
+---
+cpu_architecture: "{{ host_cpu_architecture }}"
+coreDNS_path: "{{ host_coreDNS_path }}"
+coreDNS_version: "{{ host_coreDNS_version }}"
+coreDNS_docker_local_subdomain: "{{ host_coreDNS_docker_local_subdomain }}"
