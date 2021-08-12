@@ -50,7 +50,7 @@ grp_device:
     tmp117:
       ipv4_addr: 192.168.50.60
       ipv4_addr_cidr: 192.168.50.60/24
-      hostname: tmp117shp
+      hostname: tmp117
     printer:
       ipv4_addr: 192.168.70.5
       ipv4_addr_cidr: 192.168.70.5/24
