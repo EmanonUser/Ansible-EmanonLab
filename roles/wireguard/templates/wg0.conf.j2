@@ -3,11 +3,11 @@ Address = {{ wireguard_server_address }}
 ListenPort = {{ wireguard_server_port }}
 PrivateKey = {{ wireguard_server_private_key }}
 
-{% for peer in wireguard_peers %}
+{% for peer_name, peer_value in wireguard_peers.items() %}
 [Peer]
-# {{ peer.name }}
-PublicKey =  {{ peer.public_key }}
-PresharedKey = {{ peer.preshared_key }}
-AllowedIPs = {{ peer.ip_address }}
+# {{ peer_name }}
+PublicKey =  {{ peer_value.public_key }}
+PresharedKey = {{ peer_value.preshared_key }}
+AllowedIPs = {{ peer_value.ip_address }}
 
 {% endfor %}
