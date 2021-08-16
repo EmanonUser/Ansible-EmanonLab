@@ -4,6 +4,9 @@ Description=ZFS zpool %I scrubing service
 [Service]
 Type=oneshot
 ExecStart=/usr/sbin/zpool scrub %i
+Nice=19
+IOSchedulingClass=idle
+KillSignal=SIGINT
 ProtectHome=read-only
 ProtectSystem=full
 ProtectControlGroups=yes
