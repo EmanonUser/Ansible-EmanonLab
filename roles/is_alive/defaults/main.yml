@@ -1,4 +1,5 @@
 ---
+primary_user_username: "{{ v_primary_user_username }}"
 echo_request_target: "{{ host_echo_request_target }}"
 echo_request_interval: "{{ host_echo_request_interval }}"
 echo_request_count: "{{ host_echo_request_count }}"
