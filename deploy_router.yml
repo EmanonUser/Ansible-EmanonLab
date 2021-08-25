@@ -11,7 +11,7 @@
     - frr
     - isc_kea
     - wireguard
-    - unbound
+    - coredns
     - gad
     - msmtp
     - ntpd
