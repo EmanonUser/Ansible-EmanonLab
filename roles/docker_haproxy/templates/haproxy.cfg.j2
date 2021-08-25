@@ -28,12 +28,12 @@ frontend lain-frontend
 	bind :::80
 	bind :::443
 
-{% for containers in docker_networking %}
-use_backend {{ containers.name }}-backend if { hdr(host) -i {{ containers.fulldomain }} }
+{% for service, value in docker_networking.items() %}
+use_backend {{ service }}-backend if { hdr(host) -i {{ value.fulldomain }} }
 {% endfor %}
 
-{% for containers in docker_networking %}
-backend {{ containers.name }}-backend
-	server srv 192.168.10.30:{{ containers.webui_port }} check
+{% for service, value in docker_networking.items() %}
+backend {{ service }}-backend
+	server srv 192.168.10.30:{{ value.webui_port }} check
 
 {% endfor %}

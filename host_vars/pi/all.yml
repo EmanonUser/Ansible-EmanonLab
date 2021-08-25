@@ -45,20 +45,16 @@ host_nfs_mount_dir: /mnt/vault
 
 ## Docker global ##
 host_docker_networking:
-  - adguard:
-    name: adguard
+  adguard:
     fulldomain: adguard.local.emanon
     webui_port: 3000
-  - prometheus:
-    name: prometheus
+  prometheus:
     fulldomain: prometheus.local.emanon
     webui_port: 9090
-  - grafana:
-    name: grafana
+  grafana:
     fulldomain: grafana.local.emanon
     webui_port: 12001
-  - transmission:
-    name: transmission
+  transmission:
     fulldomain: transmission.local.emanon
     webui_port: 12002
 docker_volumes_path: /mnt/vault/data/homelab/docker
@@ -66,11 +62,11 @@ docker_volumes_path: /mnt/vault/data/homelab/docker
 
 ## docker_adguard ##
 host_docker_adguard_ports:
-  - "{{ host_docker_networking[0].webui_port }}:3000/tcp"
+  - "{{ host_docker_networking.adguard.webui_port }}:3000/tcp"
   - 53:53/udp
   - 53:53/tcp
 host_docker_adguard_firewalld_ports:
-  - "{{ host_docker_networking[0].webui_port }}/tcp"
+  - "{{ host_docker_networking.adguard.webui_port }}/tcp"
   - 53/udp
   - 53/tcp
 host_docker_adguard_volumes_path:
@@ -83,8 +79,8 @@ host_docker_adguard_image_version: v0.106.3
 ## docker_adguard ##
 
 ## docker_prometheus ##
-host_docker_prometheus_ports: "{{ host_docker_networking[1].webui_port }}:9090/tcp"
-host_docker_prometheus_firewalld_ports: "{{ host_docker_networking[1].webui_port }}/tcp"
+host_docker_prometheus_ports: "{{ host_docker_networking.prometheus.webui_port }}:9090/tcp"
+host_docker_prometheus_firewalld_ports: "{{ host_docker_networking.prometheus.webui_port }}/tcp"
 host_docker_prometheus_volumes_path: ["{{ docker_volumes_path }}/prometheus", "{{ docker_volumes_path }}/prometheus/data"]
 host_docker_prometheus_volumes: "{{ docker_volumes_path }}/prometheus:/etc/prometheus"
 host_docker_prometheus_config_path: "{{ docker_volumes_path }}/prometheus/prometheus.yml"
@@ -92,16 +88,16 @@ host_docker_prometheus_image_version: v2.28.1
 ## docker_prometheus ##
 
 ## docker_grafana ##
-host_docker_grafana_ports: "{{ host_docker_networking[2].webui_port }}:3000/tcp"
-host_docker_grafana_firewalld_ports: "{{ host_docker_networking[2].webui_port }}/tcp"
-host_grafana_url: "http://{{ host_docker_networking[2].fulldomain }}:{{ host_docker_networking[2].webui_port }}"
+host_docker_grafana_ports: "{{ host_docker_networking.grafana.webui_port }}:3000/tcp"
+host_docker_grafana_firewalld_ports: "{{ host_docker_networking.grafana.webui_port }}/tcp"
+host_grafana_url: "http://{{ host_docker_networking.grafana.fulldomain }}:{{ host_docker_networking.grafana.webui_port }}"
 host_docker_grafana_image_version: 8.0.5
 v_host_grafana_admin_password: "{{ v_grafana_admin_password }}"
 ## docker_grafana ##
 
 ## docker_transmission ##
-host_docker_transmission_ports: "{{ host_docker_networking[3].webui_port }}:9091/tcp"
-host_docker_transmission_firewalld_ports: "{{ host_docker_networking[3].webui_port }}/tcp"
+host_docker_transmission_ports: "{{ host_docker_networking.transmission.webui_port }}:9091/tcp"
+host_docker_transmission_firewalld_ports: "{{ host_docker_networking.transmission.webui_port }}/tcp"
 host_docker_transmission_directories:
   - "{{ docker_volumes_path }}/transmission/home"
   - "{{ docker_volumes_path }}/transmission/completed"
