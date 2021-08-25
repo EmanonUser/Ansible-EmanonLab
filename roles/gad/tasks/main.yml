@@ -1,18 +1,27 @@
 ---
-- name: Install Gandi Automatic DNS
-  ansible.builtin.git:
-    repo: https://github.com/brianhp2/gandi-automatic-dns.git
-    dest: /opt/gandi-automatic-dns
-    force: yes
-    clone: yes
+- name: Download Gandi Automatic DNS archive
+  ansible.builtin.get_url:
+    url: https://github.com/brianhp2/gandi-automatic-dns/archive/refs/tags/v{{ gad_version }}.tar.gz
+    dest: "{{ gad_path }}/gad_{{ gad_version }}.tar.gz"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=,o=
+
+- name: Unarchive CoreDNS binary
+  ansible.builtin.unarchive:
+    src: "{{ gad_path }}/gad_{{ gad_version }}.tar.gz"
+    dest: "{{ gad_path }}"
+    remote_src: yes
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rx,g=,o=
 
 - name: Set permissions
   ansible.builtin.file:
-    path: /opt/gandi-automatic-dns
-    owner: emanon
-    group: emanon
+    path: "{{ gad_path }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
-    recurse: yes
     state: directory
 
 - name: Install systemd service files
