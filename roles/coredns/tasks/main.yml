@@ -7,7 +7,7 @@
     comment: CoreDNS user created by Ansible
     state: present
 
-- name: Create CoreDNS dir
+- name: Create CoreDNS directory
   ansible.builtin.file:
     path: "{{ coreDNS_path }}"
     owner: coredns
