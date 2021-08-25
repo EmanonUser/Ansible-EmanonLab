@@ -1,6 +1,6 @@
 (snip) {
     bind 127.0.0.1
-    bind 192.168.5.1
+    bind {{ coreDNS_ip }}
     whoami
     any
     minimal
@@ -10,19 +10,20 @@
         consolidate 120s ".* i/o timeout$"
         consolidate 30s "^Failed to .+"
     }
-    prometheus 192.168.5.1:9053
 }
 
-.:53 {
+local.emanon:{{ coreDNS_port }} {
     import snip
-    forward . 192.168.10.30:53 {
+    file /opt/coredns/master.db
+}
+
+.:{{ coreDNS_port }} {
+    import snip
+    prometheus {{ coreDNS_ip }}:{{ coreDNS_prometheus_port }}
+    forward . {{ coreDNS_dns_toforward_ip }}:53 {
         except example.org
+        except local.emanon
         health_check 5s
         prefer_udp
     }
-}
-
-local.emanon:53 {
-    import snip
-    hosts hosts.local.emanon
 }

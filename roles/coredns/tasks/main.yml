@@ -45,8 +45,8 @@
 
 - name: Configure CoreDNS local-zone file
   ansible.builtin.template:
-    src: hosts.local.emanon.j2
-    dest: "{{ coreDNS_path }}/hosts.local.emanon"
+    src: master.db.j2
+    dest: "{{ coreDNS_path }}/master.db"
     owner: coredns
     group: coredns
     mode: u=rw,g=,o=
