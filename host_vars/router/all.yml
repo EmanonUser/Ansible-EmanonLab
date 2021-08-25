@@ -117,3 +117,8 @@ host_coreDNS_docker_local_subdomain:
   - transmission
   - haproxy
 ## coredns ##
+
+## gad ##
+host_gad_path: /opt
+host_gad_version: "1.4.2"
+## gad ##
