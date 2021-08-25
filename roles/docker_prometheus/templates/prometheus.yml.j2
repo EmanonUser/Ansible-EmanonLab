@@ -43,6 +43,11 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
     - targets: ['192.168.50.60:9100']
+  
+  - job_name: 'coredns'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['192.168.5.1:9353']
 
   - job_name: 'SHP10'
     scrape_interval: 5s
