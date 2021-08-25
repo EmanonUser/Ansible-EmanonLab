@@ -155,5 +155,4 @@ host_coreDNS_docker_local_subdomain:
   - grafana
   - transmission
   - haproxy
-host_coreDNS_local_subdomain:
 ## coredns ##
