@@ -40,7 +40,7 @@
     dest: "{{ coreDNS_path }}/Corefile"
     owner: coredns
     group: coredns
-    mode: u=rw,g=,o=
+    mode: u=r,g=,o=
   notify: Enable & Restart CoreDNS service
 
 - name: Configure CoreDNS local-zone file
@@ -49,7 +49,7 @@
     dest: "{{ coreDNS_path }}/master.db"
     owner: coredns
     group: coredns
-    mode: u=rw,g=,o=
+    mode: u=r,g=,o=
   notify: Enable & Restart CoreDNS service
 
 - name: Configure CoreDNS systemd service
