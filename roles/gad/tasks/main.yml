@@ -18,7 +18,7 @@
 
 - name: Set permissions
   ansible.builtin.file:
-    path: "{{ gad_path }}"
+    path: "{{ gad_path }}/gandi-automatic-dns-{{ gad_version }}"
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
