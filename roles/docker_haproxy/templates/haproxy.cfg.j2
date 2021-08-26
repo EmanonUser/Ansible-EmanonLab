@@ -34,6 +34,6 @@ use_backend {{ service }}-backend if { hdr(host) -i {{ value.fulldomain }} }
 
 {% for service, value in docker_networking.items() %}
 backend {{ service }}-backend
-	server srv 192.168.10.30:{{ value.webui_port }} check
+	server srv {{ grp_device.pi.ipv4_addr }}:{{ value.webui_port }} check
 
 {% endfor %}
