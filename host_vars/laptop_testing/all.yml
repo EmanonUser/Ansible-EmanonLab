@@ -1,0 +1,57 @@
+---
+## Role global ##
+v_host_primary_user_username: "{{ v_primary_user_username }}"
+v_host_primary_user_password: "{{ v_primary_user_password }}" 
+host_cpu_architecture: amd64 # amd64, arm64 etc ...
+## Role global ##
+
+## device_init ##
+host_debian_stable_packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - curl
+  - gnupg2
+  - lsb-release
+  - dnsutils
+  - ldnsutils
+  - git
+  - tmux
+  - tcpdump
+  - mtr-tiny
+  - ldnsutils
+  - neofetch
+  - neovim
+  - zsh
+  - unzip
+  - htop
+  - vnstat
+  - acl
+## device_init ##
+
+## firewalld ##
+host_firewalld_primary_interface: enp1s0
+host_firewalld_zone: home
+## firewalld ##
+
+## isAlive ##
+host_echo_request_target: iwakura.emanon.moe
+host_echo_request_interval: 15m
+host_echo_request_count: "21" 
+## isAlive ##
+
+## zfs ##
+host_zfs_zpool_names: [vault]
+host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00
+## zfs ##
+
+## podman_jellyfin ##
+host_podman_base_dir: /vault/data/podman/
+host_podman_jellyfin_ports: 8096:8096
+host_podman_firewalld_ports: 8096/tcp
+host_podman_jellyfin_volumes:
+  - "{{ host_podman_base_dir }}jellyfin/cache:/cache"
+  - "{{ host_podman_base_dir }}jellyfin/config:/config"
+  - "{{ host_podman_base_dir }}jellyfin/media:/media"
+## podman_jellyfin ##
