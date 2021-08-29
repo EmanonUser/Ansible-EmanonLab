@@ -12,9 +12,8 @@
 
 - name: Install ZFS packages
   ansible.builtin.apt:
-    name: [dpkg-dev, "linux-headers-{{ ansible_kernel }}", zfs-dkms, zfsutils-linux]
+    name: [dpkg-dev, linux-headers-amd64, zfs-dkms, zfsutils-linux]
     update_cache: yes
-    default_release: buster-backports
     state: present
 
 - name: Configure automatic zpool scrubing
