@@ -25,6 +25,9 @@ host_debian_stable_packages:
   - tmux
   - tcpdump
   - mtr-tiny
+  - ldnutils
+  - neofetch
+  - acl
   - zsh
   - unzip
 host_debian_backports_packages:
