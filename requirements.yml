@@ -1,7 +1,8 @@
 ---
-# Ansible-galaxy install -r requirements.yml
+# ansible-galaxy install -r requirements.yml
 collections:
   - ansible.posix
   - community.docker
   - community.general
   - community.grafana
+  - containers.podman
