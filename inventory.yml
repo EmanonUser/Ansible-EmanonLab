@@ -18,3 +18,5 @@ secondarylab:
   hosts:
     laptop:
       ansible_host: lain.emanon.moe
+    laptop_testing:
+      ansible_host: 192.168.122.19
