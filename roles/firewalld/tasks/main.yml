@@ -1,9 +1,9 @@
 ---
-- name: Install firewalld from backports
+- name: Install firewalld
   ansible.builtin.apt:
     name: [ 'firewalld', 'python3-firewall' ]
-    default_release: buster-backports
     state: present
+  notify: Enable & Restart firewalld service
 
 - name: Add primary interface to firewalld home zone
   ansible.posix.firewalld:
