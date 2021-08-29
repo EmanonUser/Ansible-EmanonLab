@@ -1,0 +1,15 @@
+---
+- name: Install podman
+  ansible.builtin.apt:
+    name: podman
+    state: present
+  notify: Enable & Restart podman service
+
+- name: Add docker.io to podman register
+  ansible.builtin.lineinfile:
+    path: /etc/containers/registries.conf.d/docker.io.conf
+    line: unqualified-search-registries = ["docker.io"]
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    create: yes

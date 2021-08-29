@@ -1,0 +1,6 @@
+---
+- name: Enable & Restart podman service
+  ansible.builtin.systemd:
+    name: podman.service
+    enabled: yes
+    state: restarted
