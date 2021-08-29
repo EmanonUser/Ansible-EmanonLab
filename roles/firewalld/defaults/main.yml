@@ -1,2 +1,3 @@
 ---
+firewalld_primary_interface: "{{ host_firewalld_primary_interface }}"
 firewalld_zone: "{{ host_firewalld_zone }}"

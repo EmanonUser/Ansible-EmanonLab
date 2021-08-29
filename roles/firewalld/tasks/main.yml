@@ -7,8 +7,8 @@
 
 - name: Add primary interface to firewalld home zone
   ansible.posix.firewalld:
-    interface: eth0
-    zone: home
+    interface: "{{ firewalld_primary_interface }}"
+    zone: "{{ firewalld_zone }}"
     permanent: yes
     state: enabled
     immediate: yes
