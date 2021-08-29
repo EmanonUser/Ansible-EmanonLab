@@ -1,0 +1,19 @@
+---
+- name: Run jellyfin podman container
+  containers.podman.podman_container:
+    name: jellyfin_ansible
+    image: jellyfin/jellyfin
+    ports: "{{ jellyfin_ports }}"
+    volume: "{{ jellyfin_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+    label: "io.containers.autoupdate=image"
+  become_user: emanon
+
+- name: Open firewalld port(s)
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ podman_firewalld_ports }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
