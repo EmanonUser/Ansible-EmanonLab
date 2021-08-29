@@ -1,5 +1,6 @@
 ---
 primary_user_ssh_pubkey: "{{ grp_primary_user_ssh_pubkey }}"
-create_user: "{{ host_create_user }}"
 primary_user_username: "{{ v_host_primary_user_username }}"
 primary_user_password: "{{ v_host_primary_user_password }}" 
+debian_stable_packages: "{{ host_debian_stable_packages }}"
+use_starship: yes

@@ -1,0 +1,9 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=10000
+bindkey -e
+# End of lines configured by zsh-newuser-install
+
+autoload -Uz compinit
+compinit
