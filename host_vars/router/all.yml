@@ -29,7 +29,7 @@ host_debian_stable_packages:
   - tcpdump
   - zsh
   - socat
-host_debian_backports_packages:
+  - acl
   - neovim
 ## install_packages ##
 

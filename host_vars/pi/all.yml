@@ -30,7 +30,7 @@ host_debian_stable_packages:
   - unzip
 host_debian_backports_packages:
   - neovim
-## install_packages ##
+  - acl
 
 ## prometheus_node_exporter ##
 host_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/
