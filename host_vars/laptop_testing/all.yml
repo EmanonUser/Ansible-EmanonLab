@@ -64,6 +64,7 @@ host_podman_networking:
     public: no
     direct_access: yes
 host_podman_volumes_path: /vault/data/podman
+host_podman_media_path: /vault/media
 host_podman_firewalld_zone: home
 ########## Podman ##########
 
@@ -78,7 +79,7 @@ host_podman_jellyfin_directories:
 host_podman_jellyfin_volumes:
   - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache"
   - "{{ host_podman_volumes_path }}/jellyfin/config:/config"
-  - "{{ host_podman_volumes_path }}/jellyfin/media:/media"
+  - "{{ host_podman_media_path }}:/media"
 ## podman_jellyfin ##
 
 ## podman_transmission ##
@@ -86,7 +87,6 @@ host_podman_transmission_image: docker.io/haugene/transmission-openvpn
 host_podman_transmission_image_version: "3.7"
 host_podman_transmission_ports: "{{ host_podman_networking.transmission.webui_port }}:9091"
 host_podman_transmission_firewalld_ports: "{{ host_podman_networking.transmission.webui_port }}/tcp"
-host_podman_media_path: /vault/media
 host_podman_transmission_directories:
   - "{{ host_podman_volumes_path }}/transmission/home"
   - "{{ host_podman_volumes_path }}/transmission/completed"
