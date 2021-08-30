@@ -31,6 +31,10 @@ host_debian_stable_packages:
 host_debian_backports_packages:
   - neovim
   - acl
+## firewalld ##
+host_firewalld_primary_interface: eth0
+host_firewalld_zone: home
+## firewalld ##
 
 ## prometheus_node_exporter ##
 host_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/
