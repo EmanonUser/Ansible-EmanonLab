@@ -1,4 +1,13 @@
 ---
+- name: Create jellyfin volumes dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+  loop: "{{ podman_jellyfin_directories }}"
+
 - name: Run jellyfin podman container
   containers.podman.podman_container:
     name: jellyfin_ansible
