@@ -12,10 +12,7 @@ host_echo_request_count: "21"
 ## Role global ##
 
 ## device_init ##
-host_create_user: no
-## device_init ##
-
-## install_packages ##
+use_starship: no
 host_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
@@ -29,9 +26,10 @@ host_debian_stable_packages:
   - tcpdump
   - zsh
   - socat
+  - mtr-tiny
   - acl
   - neovim
-## install_packages ##
+## device_init ##
 
 ## kernel_upgrade ##
 host_kernel_version: 5.10.0-0.bpo.4-amd64 # https://packages.debian.org/search?keywords=linux-image+bpo+amd64&searchon=names&section=all&suite=buster-backports
