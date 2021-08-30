@@ -16,5 +16,5 @@
 
 - name: loginctl lingering primary user
   ansible.builtin.file:
-    path: "/var/lib/systemd/linger/{{ primary_user_username}}"
+    path: "/var/lib/systemd/linger/{{ primary_user_username }}"
     state: touch
