@@ -1,0 +1,44 @@
+---
+- name: Create filebrowser dir(s)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+  loop: "{{ podman_filebrowser_directories }}"
+
+- name: Import filebrowser base config
+  ansible.builtin.copy:
+    src: filebrowser.json
+    dest: "{{ podman_filebrowser_files.config }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rw,g=,o=
+
+- name: Create filebrowser empty database
+  ansible.builtin.copy:
+    content: ""
+    dest: "{{ podman_filebrowser_files.database }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rw,g=,o=
+
+- name: Run filebrowser docker container
+  containers.podman.podman_container:
+    name: filebrowser_ansible
+    image: "{{ host_podman_filebrowser_image }}:{{ host_podman_filebrowser_image_version }}"
+    publish: "{{ podman_filebrowser_ports }}"
+    volumes: "{{ host_podman_filebrowser_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+  become_user: "{{ primary_user_username }}"
+
+- name: Open firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_filebrowser_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: podman_networking.transmission.direct_access

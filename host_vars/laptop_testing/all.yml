@@ -101,3 +101,20 @@ host_podman_transmission_env_openvpn_username: "{{ v_transmission_openvpn_userna
 host_podman_transmission_env_openvpn_password: "{{ v_transmission_openvpn_password }}"
 host_podman_transmission_env_download_dir: "{{ host_podman_media_path }}"
 ## podman_transmission ##
+
+## podman_filebrowser ##
+host_podman_filebrowser_image: docker.io/filebrowser/filebrowser
+host_podman_filebrowser_image_version: "v2"
+host_podman_filebrowser_ports: "{{ host_podman_networking.filebrowser.webui_port }}:2500"
+host_podman_filebrowser_firewalld_ports: "{{ host_podman_networking.filebrowser.webui_port }}/tcp"
+host_podman_filebrowser_directories: 
+  - "{{ host_podman_volumes_path }}/filebrowser"
+  - "{{ host_podman_files_path }}"
+host_podman_filebrowser_files:
+  config: "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json"
+  database: "{{ host_podman_volumes_path }}/filebrowser/database.db"
+host_podman_filebrowser_volumes:
+  - "{{ host_podman_volumes_path }}/filebrowser/database.db:/database.db"
+  - "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json:/.filebrowser.json"
+  - "{{ host_podman_files_path }}:/srv"
+## podman_filebrowser ##

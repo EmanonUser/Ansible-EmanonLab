@@ -1,0 +1,10 @@
+---
+primary_user_username: "{{ v_host_primary_user_username }}"
+podman_filebrowser_image: "{{ host_podman_filebrowser_image }}"
+podman_filebrowser_image_version: "{{ host_podman_filebrowser_image_version }}"
+podman_filebrowser_ports: "{{ host_podman_filebrowser_ports }}"
+podman_filebrowser_firewalld_ports: "{{ host_podman_filebrowser_firewalld_ports }}"
+podman_firewalld_zone: "{{ host_podman_firewalld_zone }}"
+podman_filebrowser_directories: "{{ host_podman_filebrowser_directories }}"
+podman_filebrowser_files: "{{ host_podman_filebrowser_files }}"
+podman_filebrowser_volumes: "{{ host_podman_filebrowser_volumes }}"
