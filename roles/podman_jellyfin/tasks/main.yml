@@ -2,18 +2,19 @@
 - name: Run jellyfin podman container
   containers.podman.podman_container:
     name: jellyfin_ansible
-    image: jellyfin/jellyfin
-    ports: "{{ jellyfin_ports }}"
-    volume: "{{ jellyfin_volumes }}"
+    image: "{{ podman_jellyfin_image }}:{{ podman_jellyfin_image_version }}"
+    ports: "{{ podman_jellyfin_ports }}"
+    volume: "{{ podman_jellyfin_volumes }}"
     restart_policy: unless-stopped
     state: started
     label: "io.containers.autoupdate=image"
-  become_user: emanon
+  become_user: "{{ primary_user_username }}"
 
 - name: Open firewalld port(s)
   ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
+    zone: "{{ podman_firewalld_zone }}"
     port: "{{ podman_firewalld_ports }}"
-    permanent: yes
     state: enabled
+    permanent: yes
     immediate: yes
+  when: podman_networking.jellyfin.direct_access

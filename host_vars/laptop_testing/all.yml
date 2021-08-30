@@ -66,12 +66,14 @@ host_podman_networking:
 host_podman_volumes_path: /vault/data/podman
 host_podman_firewalld_zone: home
 ########## Podman ##########
+
 ## podman_jellyfin ##
-host_podman_base_dir: /vault/data/podman/
-host_podman_jellyfin_ports: 8096:8096
-host_podman_firewalld_ports: 8096/tcp
+host_podman_jellyfin_image: docker.io/jellyfin/jellyfin
+host_podman_jellyfin_image_version: "latest"
+host_podman_jellyfin_ports: "{{ host_podman_networking.jellyfin.webui_port }}:8096"
+host_podman_firewalld_ports: "{{ host_podman_networking.jellyfin.webui_port }}/tcp"
 host_podman_jellyfin_volumes:
-  - "{{ host_podman_base_dir }}jellyfin/cache:/cache"
-  - "{{ host_podman_base_dir }}jellyfin/config:/config"
-  - "{{ host_podman_base_dir }}jellyfin/media:/media"
+  - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache"
+  - "{{ host_podman_volumes_path }}/jellyfin/config:/config"
+  - "{{ host_podman_volumes_path }}/jellyfin/media:/media"
 ## podman_jellyfin ##

@@ -1,5 +1,9 @@
 ---
-jellyfin_ports: "{{ host_podman_jellyfin_ports }}"
-jellyfin_volumes: "{{ host_podman_jellyfin_volumes }}"
-firewalld_zone: "{{ host_firewalld_zone }}"
+primary_user_username: "{{ v_primary_user_username }}"
+podman_jellyfin_image: "{{ host_podman_jellyfin_image }}"
+podman_jellyfin_image_version: "{{ host_podman_jellyfin_image_version }}"
+podman_jellyfin_ports: "{{ host_podman_jellyfin_ports }}"
+podman_jellyfin_volumes: "{{ host_podman_jellyfin_volumes }}"
+podman_firewalld_zone: "{{ host_podman_firewalld_zone }}"
 podman_firewalld_ports: "{{ host_podman_firewalld_ports }}"
+podman_networking: "{{ host_podman_networking }}"
