@@ -53,10 +53,10 @@
     shell: /usr/bin/zsh
   when: use_starship
 
-- name: Install starship.rs
-  ansible.builtin.command:
-    cmd: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -f
-  when: use_starship
+# - name: Install starship.rs
+#   ansible.builtin.command:
+#     cmd: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -f
+#   when: use_starship
 
 - name: Configure .zshrc for primary user and root
   ansible.builtin.copy:
