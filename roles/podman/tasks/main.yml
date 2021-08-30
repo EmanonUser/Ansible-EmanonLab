@@ -13,3 +13,8 @@
     group: root
     mode: u=rw,g=r,o=r
     create: yes
+
+- name: loginctl lingering primary user
+  ansible.builtin.file:
+    path: "/var/lib/systemd/linger/{{ primary_user_username}}"
+    state: touch
