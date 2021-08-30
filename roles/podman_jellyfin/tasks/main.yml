@@ -12,7 +12,7 @@
   containers.podman.podman_container:
     name: jellyfin_ansible
     image: "{{ podman_jellyfin_image }}:{{ podman_jellyfin_image_version }}"
-    ports: "{{ podman_jellyfin_ports }}"
+    publish: "{{ podman_jellyfin_ports }}"
     volume: "{{ podman_jellyfin_volumes }}"
     restart_policy: unless-stopped
     state: started
