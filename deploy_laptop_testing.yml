@@ -4,12 +4,13 @@
   become: yes
   gather_facts: yes
   roles:
-    #- device_init
-    #- firewalld
-    #- podman
-    #- systemd_timesyncd
-    #- is_alive
-    #- zfs
-    #- zrepl
+    - device_init
+    - firewalld
+    - podman
+    - systemd_timesyncd
+    - is_alive
+    - zfs
+    - zrepl
     - podman_jellyfin
     - podman_transmission
+    - podman_filebrowser

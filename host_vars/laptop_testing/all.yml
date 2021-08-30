@@ -65,6 +65,7 @@ host_podman_networking:
     direct_access: yes
 host_podman_volumes_path: /vault/data/podman
 host_podman_media_path: /vault/media
+host_podman_files_path: /vault/files
 host_podman_firewalld_zone: home
 ########## Podman ##########
 
