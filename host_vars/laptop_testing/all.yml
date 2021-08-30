@@ -46,6 +46,26 @@ host_zfs_zpool_names: [vault]
 host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00
 ## zfs ##
 
+########## Podman ##########
+host_podman_networking:
+  jellyfin:
+    fulldomain: jellyfin.emanon.moe
+    webui_port: 25101
+    public: yes
+    direct_access: no
+  filebrowser:
+    fulldomain: file.emanon.moe
+    webui_port: 25102
+    public: yes
+    direct_access: no
+  transmission:
+    fulldomain: transmission.emanon.moe
+    webui_port: 25103
+    public: no
+    direct_access: yes
+host_podman_volumes_path: /vault/data/podman
+host_podman_firewalld_zone: home
+########## Podman ##########
 ## podman_jellyfin ##
 host_podman_base_dir: /vault/data/podman/
 host_podman_jellyfin_ports: 8096:8096
