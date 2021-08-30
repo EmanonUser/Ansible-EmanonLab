@@ -5,7 +5,6 @@
   gather_facts: yes
   roles:
     - device_init
-    - install_packages
     - systemd_timesyncd
     - firewalld
     - docker
