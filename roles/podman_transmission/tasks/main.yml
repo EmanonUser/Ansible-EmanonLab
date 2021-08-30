@@ -1,0 +1,44 @@
+---
+- name: Create transmission volumes dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+  loop: "{{ podman_transmission_directories }}"
+  # No owner, group or mode becose it cause an error on a nfs share
+  # Create it before docker try to handle it, permission error
+
+- name: Run transmission docker container
+  containers.podman.podman_container:
+    name: transmission_ansible
+    image: "{{ podman_transmission_image }}:{{ podman_transmission_image_version }}"
+    publish : "{{ podman_transmission_ports }}"
+    volumes: "{{ podman_transmission_volumes }}"
+    log_driver: k8s-file
+    log_options: max_size=10m
+    restart_policy: unless-stopped
+    state: started
+    privileged: yes
+    env:
+      OPENVPN_PROVIDER: "{{ podman_transmission_openvpn_provider }}"
+      OPENVPN_CONFIG: "{{ podman_transmission_openvpn_config }}"
+      OPENVPN_USERNAME: "{{ podman_transmission_openvpn_username }}"
+      OPENVPN_PASSWORD: "{{ podman_transmission_openvpn_password }}"
+      LOCAL_NETWORK: "192.168.0.0/16"
+      TRANSMISSION_HOME: "/transmission/home"
+      TRANSMISSION_DOWNLOAD_DIR: "{{ podman_media_path }}"
+      #TRANSMISSION_INCOMPLETE_DIR: "/transmission/incompleted"
+      TRANSMISSION_WATCH_DIR: "/transmission/watch"
+      TRANSMISSION_WEB_UI: "flood-for-transmission"
+  become_user: "{{ primary_user_username }}"
+
+- name: Open firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_transmission_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: podman_networking.transmission.direct_access
