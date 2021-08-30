@@ -52,12 +52,12 @@ host_podman_networking:
     fulldomain: jellyfin.emanon.moe
     webui_port: 25101
     public: yes
-    direct_access: no
+    direct_access: yes
   filebrowser:
     fulldomain: file.emanon.moe
     webui_port: 25102
     public: yes
-    direct_access: no
+    direct_access: yes
   transmission:
     fulldomain: transmission.emanon.moe
     webui_port: 25103
