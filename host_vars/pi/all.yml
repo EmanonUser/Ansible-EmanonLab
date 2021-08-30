@@ -5,13 +5,9 @@
 v_host_primary_user_username: "{{ v_primary_user_username }}"
 v_host_primary_user_password: "{{ v_primary_user_password }}" 
 host_cpu_architecture: arm64 # amd64, arm64 etc ...
-host_firewalld_zone: home
 
 ## device_init ##
-host_create_user: no
-## device_init ##
-
-## install_packages ##
+use_starship: no
 host_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
@@ -28,9 +24,10 @@ host_debian_stable_packages:
   - mtr-tiny
   - zsh
   - unzip
-host_debian_backports_packages:
   - neovim
   - acl
+## device_init ##
+
 ## firewalld ##
 host_firewalld_primary_interface: eth0
 host_firewalld_zone: home
