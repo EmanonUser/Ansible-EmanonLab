@@ -56,17 +56,7 @@
 - name: Install starship.rs
   ansible.builtin.command:
     cmd: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -f
-
-- name: Create .config/nvim dir(s) for primary user and root
-  ansible.builtin.file:
-    path: "{{ item.path }}"
-    owner: "{{ item.user }}"
-    group: "{{ item.user }}"
-    mode: u=rwx,g=,o=
-    state: directory
-  loop:
-    - { path: "/home/{{ primary_user_username }}/.config/nvim", user: "{{ primary_user_username }}" }
-    - { path: "/root/.config/nvim", user: "root" }
+  when: use_starship
 
 - name: Configure .zshrc for primary user and root
   ansible.builtin.copy:
@@ -78,6 +68,18 @@
   loop:
     - { path: "/home/{{ primary_user_username }}/.zshrc", user: "{{ primary_user_username }}" }
     - { path: "/root/.zshrc", user: "root" }
+  when: use_starship
+
+- name: Create .config/nvim dir(s) for primary user and root
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: u=rwx,g=,o=
+    state: directory
+  loop:
+    - { path: "/home/{{ primary_user_username }}/.config/nvim", user: "{{ primary_user_username }}" }
+    - { path: "/root/.config/nvim", user: "root" }
 
 - name: Configure neovim
   ansible.builtin.copy:
