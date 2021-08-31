@@ -15,6 +15,9 @@
     create: yes
 
 - name: loginctl lingering primary user
-  ansible.builtin.file:
-    path: "/var/lib/systemd/linger/{{ primary_user_username }}"
-    state: touch
+  ansible.builtin.copy:
+    dest: "/var/lib/systemd/linger/{{ primary_user_username }}"
+    content: ""
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
