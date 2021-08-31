@@ -42,3 +42,12 @@
     immediate: yes
     state: enabled
   when: podman_networking.transmission.direct_access
+
+- name: Close transmission firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_transmission_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when: not podman_networking.transmission.direct_access
