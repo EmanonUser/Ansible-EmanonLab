@@ -1,0 +1,6 @@
+---
+- name: Enable & Restart HAproxy service
+  ansible.builtin.systemd:
+    name: haproxy.service
+    enabled: yes
+    state: restarted

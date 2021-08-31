@@ -1,0 +1,6 @@
+---
+haproxy_firewalld_zone: "home"
+haproxy_firewalld_ports:
+  - 80/tcp
+  - 443/tcp
+podman_networking: "{{ host_podman_networking }}"
