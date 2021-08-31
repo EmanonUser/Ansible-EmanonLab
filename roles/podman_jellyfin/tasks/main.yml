@@ -19,7 +19,7 @@
     label: "io.containers.autoupdate=image"
   become_user: "{{ primary_user_username }}"
 
-- name: Open firewalld port(s)
+- name: Open jellyfin firewalld port(s)
   ansible.posix.firewalld:
     zone: "{{ podman_firewalld_zone }}"
     port: "{{ podman_firewalld_ports }}"

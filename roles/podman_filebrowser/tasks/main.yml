@@ -36,7 +36,7 @@
     state: started
   become_user: "{{ primary_user_username }}"
 
-- name: Open firewalld ports
+- name: Open filebrowser firewalld ports
   ansible.posix.firewalld:
     zone: "{{ podman_firewalld_zone }}"
     port: "{{ podman_filebrowser_firewalld_ports }}"
