@@ -14,7 +14,7 @@
   containers.podman.podman_container:
     name: transmission_ansible
     image: "{{ podman_transmission_image }}:{{ podman_transmission_image_version }}"
-    publish : "{{ podman_transmission_ports }}"
+    publish: "{% if podman_networking.transmission.direct_access %}{{ podman_transmission_ports }}{% else %}127.0.0.1:{{ podman_transmission_ports }}{% endif %}"
     volumes: "{{ podman_transmission_volumes }}"
     log_driver: k8s-file
     log_options: max_size=10m

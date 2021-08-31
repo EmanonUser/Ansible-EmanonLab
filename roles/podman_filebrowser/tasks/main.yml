@@ -28,7 +28,7 @@
   containers.podman.podman_container:
     name: filebrowser_ansible
     image: "{{ host_podman_filebrowser_image }}:{{ host_podman_filebrowser_image_version }}"
-    publish: "{{ podman_filebrowser_ports }}"
+    publish: "{% if podman_networking.filebrowser.direct_access %}{{ podman_filebrowser_ports }}{% else %}127.0.0.1:{{ podman_filebrowser_ports }}{% endif %}"
     volumes: "{{ host_podman_filebrowser_volumes }}"
     restart_policy: unless-stopped
     state: started
