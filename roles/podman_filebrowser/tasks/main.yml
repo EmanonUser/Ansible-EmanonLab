@@ -15,6 +15,7 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rw,g=,o=
+    force: no
 
 - name: Create filebrowser empty database
   ansible.builtin.copy:
@@ -23,6 +24,7 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rw,g=,o=
+    force: no
 
 - name: Run filebrowser docker container
   containers.podman.podman_container:
