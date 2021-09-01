@@ -6,3 +6,4 @@ collections:
   - community.general
   - community.grafana
   - containers.podman
+  - community.crypto
