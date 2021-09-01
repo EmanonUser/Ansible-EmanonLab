@@ -1,6 +1,5 @@
 ---
-haproxy_firewalld_zone: "home"
-haproxy_firewalld_ports:
-  - 80/tcp
-  - 443/tcp
+haproxy_firewalld_zone: "{{ host_haproxy_firewalld_zone }}"
+haproxy_firewalld_ports: "{{ host_haproxy_firewalld_ports }}"
 podman_networking: "{{ host_podman_networking }}"
+haproxy_acme_server_port: "{{ host_haproxy_acme_server_port }}"
