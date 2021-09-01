@@ -14,3 +14,8 @@
     - podman_jellyfin
     - podman_transmission
     - podman_filebrowser
+    - haproxy
+    - acme
+
+
+# sudo zpool create vault /home/emanon/a.zfs; sudo zfs create vault/files; sudo zfs create vault/media; sudo zfs create vault/data; sudo chown emanon:emanon -R /vault
