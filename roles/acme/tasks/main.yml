@@ -1,0 +1,115 @@
+---
+- name: Install cryptography python3 module
+  ansible.builtin.apt:
+    name: python3-cryptography
+    state: present
+
+- name: Create let's encrypt dir(s)
+  ansible.builtin.file:
+    path: "{{ acme_letsencrypt_base_path }}/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  loop: ["account", "keys", "csrs", "certs"]
+
+- name: Create dir for acme challenge
+  ansible.builtin.file:
+    path: "{{ acme_http_server_path }}/.well-known/acme-challenge"
+    state: directory
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=,o=
+
+- name: Create python3 http server service file
+  ansible.builtin.template:
+    src: python-http-server.service.j2
+    dest: /etc/systemd/system/python-http-server.service
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+
+- name: Generate account private key
+  community.crypto.openssl_privatekey:
+    path: "{{ acme_letsencrypt_dirs.account }}/account.key"
+    type: RSA
+    size: 4096
+
+- name: Generate domain private key
+  community.crypto.openssl_privatekey:
+    path: "{{ acme_letsencrypt_dirs.mykeys }}/{{ item.fqdn }}.key"
+    type: RSA
+    size: 4096
+  loop: "{{ acme_domain_name }}"
+
+- name: Generate an OpenSSL Certificate Signing Request
+  community.crypto.openssl_csr:
+    path: "{{ acme_letsencrypt_dirs.csrs }}/{{ item.fqdn }}.csr"
+    privatekey_path: "{{ acme_letsencrypt_dirs.mykeys }}/{{ item.fqdn }}.key"
+    common_name: "{{ item.fqdn }}"
+  loop: "{{ acme_domain_name }}"
+
+- name: "Start Let's Encrypt http-01 challenge(s)"
+  community.crypto.acme_certificate:
+    acme_directory: "{{ acme_directory }}"
+    acme_version: "{{ acme_version }}"
+    account_key_src: "{{ acme_letsencrypt_dirs.account }}/account.key"
+    account_email: "{{ acme_email }}"
+    challenge: "{{ acme_challenge_type }}"
+    csr: "{{ acme_letsencrypt_dirs.csrs }}/{{ item.fqdn }}.csr"
+    dest: "{{ acme_letsencrypt_dirs.certs }}/{{ item.fqdn }}.crt"
+    fullchain_dest: "{{ acme_letsencrypt_dirs.certs }}/fullchain.{{ item.fqdn }}.crt"
+    remaining_days: 30
+    terms_agreed: 1
+    force: yes
+  register: "acme_challenge_result"
+  loop: "{{ acme_domain_name }}"
+
+- name: all
+  debug:
+    msg: "{{ acme_challenge_result['results'] }}"
+
+- name: resource_name_1
+  debug:
+    msg: "{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource'] }}"
+  loop: "{{ acme_domain_name }}"
+
+- name: resource_value_1
+  debug:
+    msg: "{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource_value'] }}"
+  loop: "{{ acme_domain_name }}"
+
+- name: Place files for http-01 challenge(s)
+  ansible.builtin.copy:
+    dest: "{{ acme_http_server_path }}/{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource'] }}"
+    content: "{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource_value'] }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rw,g=r=,o=r
+  loop: "{{ acme_domain_name }}"
+
+- name: Start python3 http server
+  ansible.builtin.systemd:
+    name: python-http-server.service
+    enabled: no
+    daemon_reload: yes
+    state: started
+
+- name: "Complete Let's Encrypt http-01 challenge(s)"
+  community.crypto.acme_certificate:
+    acme_directory: "{{ acme_directory }}"
+    acme_version: "{{ acme_version }}"
+    account_key_src: "{{ acme_letsencrypt_dirs.account }}/account.key"
+    account_email: "{{ acme_email }}"
+    challenge: "{{ acme_challenge_type }}"
+    csr: "{{ acme_letsencrypt_dirs.csrs }}/{{ item.fqdn }}.csr"
+    dest: "{{ acme_letsencrypt_dirs.certs }}/{{ item.fqdn }}.crt"
+    fullchain_dest: "{{ acme_letsencrypt_dirs.certs }}/fullchain.{{ item.fqdn }}.crt"
+    data: "{{ acme_challenge_result['results'][item.index] }}"
+  loop: "{{ acme_domain_name }}"
+
+- name: Stop python3 http server
+  ansible.builtin.systemd:
+    name: python-http-server.service
+    enabled: no
+    state: stoped

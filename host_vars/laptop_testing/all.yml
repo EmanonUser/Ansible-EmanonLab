@@ -127,3 +127,21 @@ host_haproxy_firewalld_ports:
   - 80/tcp
   - 443/tcp
 ## haproxy ##
+
+## acme ##
+host_acme_directory: https://acme-v02.api.letsencrypt.org/directory
+host_acme_version: 2
+host_acme_challenge_type: http-01
+host_acme_email: moemanon@pm.me
+host_acme_letsencrypt_base_path: /etc/letsencrypt
+host_acme_letsencrypt_dirs:
+  account: "{{ host_acme_letsencrypt_base_path }}/account"
+  mykeys: "{{ host_acme_letsencrypt_base_path }}/keys"
+  csrs: "{{ host_acme_letsencrypt_base_path }}/csrs"
+  certs: "{{ host_acme_letsencrypt_base_path }}/certs"
+host_acme_domain_name:
+  - { fqdn: "test1.emanon.moe", index: 0 }
+  - { fqdn: "test2.emanon.moe", index: 1 }
+host_acme_http_server_path: /srv/ansible_acme
+host_acme_server_port: "{{ host_haproxy_acme_server_port }}"
+## acme ##
