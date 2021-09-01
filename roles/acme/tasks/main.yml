@@ -112,4 +112,4 @@
   ansible.builtin.systemd:
     name: python-http-server.service
     enabled: no
-    state: stoped
+    state: stopped
