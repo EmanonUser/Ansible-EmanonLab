@@ -7,8 +7,6 @@
     group: emanon
     mode: u=rwx,g=,o=
   loop: "{{ podman_transmission_directories }}"
-  # No owner, group or mode becose it cause an error on a nfs share
-  # Create it before docker try to handle it, permission error
 
 - name: Run transmission docker container
   containers.podman.podman_container:
