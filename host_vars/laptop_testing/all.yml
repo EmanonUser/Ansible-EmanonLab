@@ -49,20 +49,20 @@ host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00
 ########## Podman ##########
 host_podman_networking:
   jellyfin:
-    fulldomain: jellyfin.emanon.moe
+    fulldomain: jellyfin.local.iwakura
     webui_port: 25101
     public: yes
-    direct_access: yes
+    direct_access: no
   filebrowser:
-    fulldomain: file.emanon.moe
+    fulldomain: file.local.iwakura
     webui_port: 25102
     public: yes
-    direct_access: yes
+    direct_access: no
   transmission:
-    fulldomain: transmission.emanon.moe
+    fulldomain: transmission.local.iwakura
     webui_port: 25103
     public: no
-    direct_access: yes
+    direct_access: no
 host_podman_volumes_path: /vault/data/podman
 host_podman_media_path: /vault/media
 host_podman_files_path: /vault/files
