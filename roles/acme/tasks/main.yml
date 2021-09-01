@@ -87,6 +87,7 @@
     group: "{{ primary_user_username }}"
     mode: u=rw,g=r=,o=r
   loop: "{{ acme_domain_name }}"
+  when: acme_challenge_result['results'][item.index]['authorizations'][item.fqdn]['challenges'][0]['status'] == "pending"
 
 - name: Start python3 http server
   ansible.builtin.systemd:
@@ -94,6 +95,9 @@
     enabled: no
     daemon_reload: yes
     state: started
+  loop: "{{ acme_domain_name }}"
+  when: acme_challenge_result['results'][item.index]['authorizations'][item.fqdn]['challenges'][0]['status'] == "pending"
+
 
 - name: "Complete Let's Encrypt http-01 challenge(s)"
   community.crypto.acme_certificate:
@@ -107,6 +111,7 @@
     fullchain_dest: "{{ acme_letsencrypt_dirs.certs }}/fullchain.{{ item.fqdn }}.crt"
     data: "{{ acme_challenge_result['results'][item.index] }}"
   loop: "{{ acme_domain_name }}"
+  when: acme_challenge_result['results'][item.index]['authorizations'][item.fqdn]['challenges'][0]['status'] == "pending"
 
 - name: Stop python3 http server
   ansible.builtin.systemd:
