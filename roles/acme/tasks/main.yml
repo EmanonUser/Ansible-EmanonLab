@@ -69,15 +69,15 @@
   debug:
     msg: "{{ acme_challenge_result['results'] }}"
 
-- name: resource_name_1
-  debug:
-    msg: "{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource'] }}"
-  loop: "{{ acme_domain_name }}"
+# - name: resource_name_1
+#   debug:
+#     msg: "{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource'] }}"
+#   loop: "{{ acme_domain_name }}"
 
-- name: resource_value_1
-  debug:
-    msg: "{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource_value'] }}"
-  loop: "{{ acme_domain_name }}"
+# - name: resource_value_1
+#   debug:
+#     msg: "{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource_value'] }}"
+#   loop: "{{ acme_domain_name }}"
 
 - name: Place files for http-01 challenge(s)
   ansible.builtin.copy:
@@ -98,6 +98,9 @@
   loop: "{{ acme_domain_name }}"
   when: acme_challenge_result['results'][item.index]['authorizations'][item.fqdn]['challenges'][0]['status'] == "pending"
 
+# - name: pause
+#   pause:
+#     minutes: 50
 
 - name: "Complete Let's Encrypt http-01 challenge(s)"
   community.crypto.acme_certificate:
