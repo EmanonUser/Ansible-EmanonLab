@@ -59,4 +59,7 @@ grp_local_domain: local.emanon
 grp_domain_name: emanon.moe
 grp_subdomain: iwakura
 grp_local_ntp_server: "{{ grp_device.router.ipv4_addr }}"
+grp_gandi_api_key: "{{ v_gandi_api_key }}"
+grp_gandi_email: "{{ v_gandi_email }}"
+grp_gandi_email_password: "{{ v_gandi_email_password }}"
 grp_firewalld_based_device: [pi.local.emanon]
