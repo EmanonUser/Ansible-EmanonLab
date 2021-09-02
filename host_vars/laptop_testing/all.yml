@@ -32,7 +32,7 @@ host_debian_stable_packages:
 
 ## firewalld ##
 host_firewalld_primary_interface: enp1s0
-host_firewalld_zone: home
+host_firewalld_zone: dmz
 ## firewalld ##
 
 ## isAlive ##

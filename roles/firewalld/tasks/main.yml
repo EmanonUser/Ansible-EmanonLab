@@ -5,18 +5,26 @@
     state: present
   notify: Enable & Restart firewalld service
 
-- name: Add primary interface to firewalld home zone
-  ansible.posix.firewalld:
-    interface: "{{ firewalld_primary_interface }}"
-    zone: "{{ firewalld_zone }}"
-    permanent: yes
-    state: enabled
-    immediate: yes
-
-- name: Open firewalld ssh port
+- name: Make sure ssh firewalld service is authorized
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     service: ssh
-    permanent: yes
     state: enabled
+    permanent: yes
+    immediate: yes
+
+- name: Authorized dhcpv6-client firewalld service
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    service: dhcpv6-client
+    state: enabled
+    permanent: yes
+    immediate: yes
+
+- name: Add primary interface to firewalld zone
+  ansible.posix.firewalld:
+    interface: "{{ firewalld_primary_interface }}"
+    zone: "{{ firewalld_zone }}"
+    state: enabled
+    permanent: yes
     immediate: yes
