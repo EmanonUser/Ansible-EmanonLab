@@ -1,3 +1,0 @@
----
-jellyfin_ports: "{{ _jellyfin_ports }}"
-jellyfin_volumes: "{{ _jellyfin_volumes }}"
