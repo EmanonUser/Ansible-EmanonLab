@@ -15,6 +15,7 @@ jobs:
       # replace "master" with any valid ref
       uses: ansible/ansible-lint-action@master
       with:
+        args: "--exclude=playbook/vars"
         target: |
           groups_vars/
           hosts_vars/
@@ -22,3 +23,5 @@ jobs:
           deploy_router.yml
           deploy_pi.yml
           deploy_laptop.tml
+
+        
