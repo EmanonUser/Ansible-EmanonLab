@@ -15,7 +15,7 @@ jobs:
       # replace "master" with any valid ref
       uses: ansible/ansible-lint-action@master
       with:
-        args: "--exclude=playbook/vars/vault.yml"
+        args: "--exclude=./playbook/vars"
         target: |
           groups_vars/
           hosts_vars/
