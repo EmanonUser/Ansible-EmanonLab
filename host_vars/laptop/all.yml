@@ -3,6 +3,9 @@
 v_host_primary_user_username: "{{ v_primary_user_username }}"
 v_host_primary_user_password: "{{ v_primary_user_password }}" 
 host_cpu_architecture: amd64 # amd64, arm64 etc ...
+host_zfs_primary_pool:
+  name: vault
+  path: "/{{ host_zfs_primary_pool.name }}"
 ## Role global ##
 
 ## device_init ##
@@ -42,7 +45,8 @@ host_echo_request_count: "21"
 ## isAlive ##
 
 ## zfs ##
-host_zfs_zpool_names: [vault]
+host_zfs_zpool_names:
+  - "{{ host_zfs_primary_pool.name }}"
 host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00
 ## zfs ##
 
@@ -63,9 +67,9 @@ host_podman_networking:
     webui_port: 25103
     public: no
     direct_access: no
-host_podman_volumes_path: /vault/data/podman
-host_podman_media_path: /vault/media
-host_podman_files_path: /vault/files
+host_podman_volumes_path: "{{ host_zfs_primary_pool.path }}/data/podman"
+host_podman_media_path: "{{ host_zfs_primary_pool.path }}/media"
+host_podman_files_path: "{{ host_zfs_primary_pool.path }}/files"
 host_podman_firewalld_zone: home
 ########## Podman ##########
 
