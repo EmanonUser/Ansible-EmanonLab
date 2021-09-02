@@ -1,0 +1,20 @@
+- name: Create gandi DNS records
+  hosts: localhost
+  tasks:
+
+    - name: Include vault vars from ./vars
+      ansible.builtin.include_vars:
+        dir: vars/
+        extensions: ["yml"]
+    
+    # https://docs.ansible.com/ansible/latest/collections/community/general/gandi_livedns_module.html
+    - name:
+      community.general.gandi_livedns:
+        domain: "{{ domain_name }}"
+        record: test4
+        type: A
+        values:
+        - 127.0.0.1
+        ttl: 300
+        api_key: "{{ v_gandi_api_key }}"
+        state: present
