@@ -22,4 +22,3 @@ jobs:
           ./deploy_router.yml
           ./deploy_pi.yml
           ./deploy_laptop.tml
-          ./playbook/*.yml
