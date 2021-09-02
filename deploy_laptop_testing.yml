@@ -16,6 +16,7 @@
     - podman_filebrowser
     - haproxy
     - acme
+    - gad
 
 
-# sudo zpool create vault /home/emanon/a.zfs; sudo zfs create vault/files; sudo zfs create vault/media; sudo zfs create vault/data; sudo chown emanon:emanon -R /vault
+# sudo zpool create vault /home/emanon/a.zfs; sudo zfs create vault/files; sudo zfs create vault/media; sudo zfs create vault/data; sudo chown emanon:emanon #-R /vault
