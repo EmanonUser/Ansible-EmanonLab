@@ -1,9 +1,0 @@
----
-- name: Enable & Restart restic timers
-  ansible.builtin.systemd:
-    name: "{{ item }}"
-    enabled: yes
-    state: restarted
-  loop:
-    - restic.timer
-    - restic-deb.timer

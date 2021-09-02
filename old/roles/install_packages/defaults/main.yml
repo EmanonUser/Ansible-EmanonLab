@@ -1,4 +1,0 @@
----
-primary_user_username: "{{ v_host_primary_user_username }}"
-debian_stable_packages: "{{ host_debian_stable_packages }}"
-debian_backports_packages: "{{ host_debian_backports_packages }}"
