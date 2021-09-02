@@ -4,6 +4,6 @@ grp_local_domain: .home
 grp_domain_name: emanon.moe
 grp_subdomain: test1
 grp_local_ntp_server: pool.ntp.org
-v_grp_gandi_api_key: "{{ v_gandi_api_key }}"
-v_grp_gandi_email: "{{ v_gandi_email }}"
-v_grp_gandi_email_password: "{{ v_gandi_email_password }}"
+grp_gandi_api_key: "{{ v_gandi_api_key }}"
+grp_gandi_email: "{{ v_gandi_email }}"
+grp_gandi_email_password: "{{ v_gandi_email_password }}"
