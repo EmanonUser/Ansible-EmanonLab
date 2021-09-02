@@ -24,5 +24,3 @@ jobs:
           deploy_laptop.yml
         
         args: "--exclude=playbook/vars/vault.yml"
-
-        
