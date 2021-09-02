@@ -6,9 +6,9 @@
       ansible.builtin.include_vars:
         dir: vars/
         extensions: ["yml"]
-    
+
     # https://docs.ansible.com/ansible/latest/collections/community/general/gandi_livedns_module.html
-    - name:
+    - name: Call Gandi LiveDNS API to register the record
       community.general.gandi_livedns:
         domain: "{{ domain_name }}"
         record: test4
