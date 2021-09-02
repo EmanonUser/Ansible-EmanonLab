@@ -145,3 +145,9 @@ host_acme_domain_name:
 host_acme_http_server_path: /srv/ansible_acme
 host_acme_server_port: "{{ host_haproxy_acme_server_port }}"
 ## acme ##
+
+## gad ##
+host_gad_path: /opt
+host_gad_version: "1.4.2"
+host_gad_use_ipv6: no
+## gad ##
