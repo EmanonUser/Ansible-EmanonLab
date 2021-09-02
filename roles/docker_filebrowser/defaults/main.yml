@@ -1,4 +1,0 @@
----
-primary_user_username: "{{ _primary_user_username }}"
-filebrowser_ports: "{{ _filebrowser_ports }}"
-filebrowser_volumes: "{{ _filebrowser_volumes }}"
