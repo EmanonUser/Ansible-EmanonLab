@@ -21,7 +21,8 @@ jobs:
           roles/
           deploy_router.yml
           deploy_pi.yml
-          deploy_laptop.tml
+          deploy_laptop.yml
+        
         args: "--exclude=playbook/vars/vault.yml"
 
         
