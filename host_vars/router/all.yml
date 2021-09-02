@@ -31,11 +31,6 @@ host_debian_stable_packages:
   - neovim
 ## device_init ##
 
-## kernel_upgrade ##
-host_kernel_version: 5.10.0-0.bpo.4-amd64 # https://packages.debian.org/search?keywords=linux-image+bpo+amd64&searchon=names&section=all&suite=buster-backports
-host_kernel_upgrade: no
-## kernel_upgrade ##
-
 ## interfaces ##
 host_lacp_interface: bond0
 ## interfaces ##
