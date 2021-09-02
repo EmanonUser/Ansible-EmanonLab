@@ -16,9 +16,9 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         target: |
-          ./groups_vars/
-          ./hosts_vars/
-          ./roles/
-          ./deploy_router.yml
-          ./deploy_pi.yml
-          ./deploy_laptop.tml
+          groups_vars/
+          hosts_vars/
+          roles/
+          deploy_router.yml
+          deploy_pi.yml
+          deploy_laptop.tml
