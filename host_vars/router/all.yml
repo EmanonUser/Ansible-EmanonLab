@@ -119,4 +119,5 @@ host_coreDNS_docker_local_subdomain:
 ## gad ##
 host_gad_path: /opt
 host_gad_version: "1.4.2"
+host_gad_use_ipv6: no
 ## gad ##
