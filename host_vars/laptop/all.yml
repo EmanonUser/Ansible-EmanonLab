@@ -122,10 +122,8 @@ host_podman_filebrowser_volumes:
 
 ## haproxy ##
 host_haproxy_acme_server_port: "27767"
-host_haproxy_firewalld_zone: "home"
-host_haproxy_firewalld_ports:
-  - 80/tcp
-  - 443/tcp
+host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
+host_haproxy_firewalld_ports: ["80/tcp", "443/tcp"]
 ## haproxy ##
 
 ## acme ##
