@@ -12,6 +12,13 @@
     group: root
     mode: u=rw,g=,o=
 
+- name: Check if ssl certificates softlinks already exist
+  ansible.builtin.find:
+    path: "/etc/haproxy/ssl"
+    file_type: link
+    patterns: "*.pem*"
+  register: find_res
+
 - name: Configure HAproxy
   ansible.builtin.template:
     src: haproxy.cfg.j2
@@ -21,7 +28,14 @@
     mode: u=rw,g=,o=
   notify: Enable & Restart HAproxy service
 
-- name: Open firewalld port(s)
+- name: Remove HAproxy ssl cert frontend since none are present
+  ansible.builtin.lineinfile:
+    path: /etc/haproxy/haproxy.cfg
+    state: absent
+    search_string: "ssl crt"
+  when: find_res.matched == 0
+
+- name: Open firewalld service(s)
   ansible.posix.firewalld:
     zone: "{{ haproxy_firewalld_zone }}"
     service: "{{ item }}"
