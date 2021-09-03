@@ -143,8 +143,8 @@ host_acme_letsencrypt_dirs:
   csrs: "{{ host_acme_letsencrypt_base_path }}/csrs"
   certs: "{{ host_acme_letsencrypt_base_path }}/certs"
 host_acme_domain_name:
-  - { fqdn: "test1.emanon.moe", index: 0 }
-  - { fqdn: "test2.emanon.moe", index: 1 }
+  - { fqdn: "jellyfin.emanon.moe", index: 0 }
+  - { fqdn: "file.emanon.moe", index: 1 }
 host_acme_http_server_path: /srv/ansible_acme
 host_acme_server_port: "{{ host_haproxy_acme_server_port }}"
 ## acme ##
