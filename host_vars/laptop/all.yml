@@ -78,7 +78,7 @@ host_podman_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_jellyfin_image: docker.io/jellyfin/jellyfin
 host_podman_jellyfin_image_version: "latest"
 host_podman_jellyfin_ports: "{{ host_podman_networking.jellyfin.webui_port }}:8096"
-host_podman_firewalld_ports: "{{ host_podman_networking.jellyfin.webui_port }}/tcp"
+host_podman_jellyfin_firewalld_ports: "{{ host_podman_networking.jellyfin.webui_port }}"
 host_podman_jellyfin_directories:
  - "{{ host_podman_volumes_path }}/jellyfin/cache"
  - "{{ host_podman_volumes_path }}/jellyfin/config"
