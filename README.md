@@ -9,4 +9,5 @@ TODO:
     - config zshrc correctly
     - handle laptop lid in logind
     - Install starship the right way when it will be available
-         
+    - zfs config
+    - rework, zrepl, zfs
