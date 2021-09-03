@@ -71,7 +71,7 @@ host_podman_networking:
 host_podman_volumes_path: "{{ host_zfs_primary_pool.path }}/data/podman"
 host_podman_media_path: "{{ host_zfs_primary_pool.path }}/media"
 host_podman_files_path: "{{ host_zfs_primary_pool.path }}/files"
-host_podman_firewalld_zone: home
+host_podman_firewalld_zone: "{{ host_firewalld_zone }}"
 ########## Podman ##########
 
 ## podman_jellyfin ##
