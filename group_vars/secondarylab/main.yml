@@ -7,3 +7,16 @@ grp_local_ntp_server: pool.ntp.org
 grp_gandi_api_key: "{{ v_gandi_api_key }}"
 grp_gandi_email: "{{ v_gandi_email }}"
 grp_gandi_email_password: "{{ v_gandi_email_password }}"
+grp_device:
+    srv:
+      ipv4_addr:  192.168.1.50
+      ipv4_addr_cidr:  192.168.1.50/24
+      hostname: srv
+    arch:
+      ipv4_addr:  192.168.1.20
+      ipv4_addr_cidr: 192.168.1.20/24
+      hostname: arch
+    one:
+      ipv4_addr:  192.168.1.30
+      ipv4_addr_cidr: 192.168.1.30/24
+      hostname: arch
