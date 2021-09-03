@@ -10,7 +10,7 @@ jobs:
   type: snap
   filesystems: {
       "<": true,
-      "vault/files": false,
+      "tank/files": false,
   }
   snapshotting:
     type: periodic
@@ -28,7 +28,7 @@ jobs:
 - name: zrepl_snap_files
   type: snap
   filesystems: {
-      "vault/files": true,
+      "tank/files": true,
   }
   snapshotting:
     type: periodic
