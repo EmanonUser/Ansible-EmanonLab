@@ -64,20 +64,7 @@
     force: yes
   register: "acme_challenge_result"
   loop: "{{ acme_domain_name }}"
-
-- name: all
-  debug:
-    msg: "{{ acme_challenge_result['results'] }}"
-
-# - name: resource_name_1
-#   debug:
-#     msg: "{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource'] }}"
-#   loop: "{{ acme_domain_name }}"
-
-# - name: resource_value_1
-#   debug:
-#     msg: "{{ acme_challenge_result['results'][item.index]['challenge_data'][item.fqdn]['http-01']['resource_value'] }}"
-#   loop: "{{ acme_domain_name }}"
+  ignore_errors: yes
 
 - name: Place files for http-01 challenge(s)
   ansible.builtin.copy:
@@ -88,6 +75,7 @@
     mode: u=rw,g=r=,o=r
   loop: "{{ acme_domain_name }}"
   when: acme_challenge_result['results'][item.index]['authorizations'][item.fqdn]['challenges'][0]['status'] == "pending"
+  ignore_errors: yes
 
 - name: Start python3 http server
   ansible.builtin.systemd:
@@ -97,10 +85,7 @@
     state: started
   loop: "{{ acme_domain_name }}"
   when: acme_challenge_result['results'][item.index]['authorizations'][item.fqdn]['challenges'][0]['status'] == "pending"
-
-# - name: pause
-#   pause:
-#     minutes: 50
+  ignore_errors: yes
 
 - name: "Complete Let's Encrypt http-01 challenge(s)"
   community.crypto.acme_certificate:
@@ -115,6 +100,7 @@
     data: "{{ acme_challenge_result['results'][item.index] }}"
   loop: "{{ acme_domain_name }}"
   when: acme_challenge_result['results'][item.index]['authorizations'][item.fqdn]['challenges'][0]['status'] == "pending"
+  ignore_errors: yes
 
 - name: Stop python3 http server
   ansible.builtin.systemd:
