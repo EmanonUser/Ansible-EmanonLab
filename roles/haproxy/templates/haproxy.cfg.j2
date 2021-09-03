@@ -34,17 +34,9 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-cache main-cache
-	total-max-size 512
-	max-object-size 10000
-	max-age 60
-
 frontend main-frontend
 	bind :::80 interface {{ ansible_default_ipv4.interface }}
-	bind :::443 interface {{ ansible_default_ipv4.interface }} #ssl crt /etc/haproxy/ssl/ alpn h2,http/1.1
-	#http-request redirect scheme https unless { ssl_fc } || { hdr(host) -i lain.emanon.moe }
-	http-request cache-use main-cache unless { hdr(host) -i file.emanon.moe }
-	http-response cache-store main-cache
+	bind :::443 interface {{ ansible_default_ipv4.interface }} ssl crt /etc/haproxy/ssl/ alpn h2,http/1.1
 	http-response set-header X-Frame-Options SAMEORIGIN
 	http-response set-header X-XSS-Protection "1;mode=block"
 	http-response set-header Referrer-Policy "no-referrer,same-origin,strict-origin,strict-origin-when-cross-origin"

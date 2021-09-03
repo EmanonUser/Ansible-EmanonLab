@@ -6,7 +6,7 @@
 
 - name: Configure haproxy
   ansible.builtin.template:
-    src: haproxy-{{ inventory_hostname }}.cfg.j2 }}
+    src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
     owner: haproxy
     group: haproxy
