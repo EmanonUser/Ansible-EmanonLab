@@ -35,7 +35,7 @@ host_debian_stable_packages:
 ## device_init ##
 
 ## firewalld ##
-host_firewalld_primary_interface: enp1s0
+host_firewalld_primary_interface: enp3s0
 host_firewalld_zone: dmz
 ## firewalld ##
 
