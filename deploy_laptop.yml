@@ -9,6 +9,7 @@
     - podman
     - systemd_timesyncd
     - is_alive
+    - gad
     - zfs
     - zrepl
     - podman_jellyfin
