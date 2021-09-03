@@ -92,7 +92,7 @@ host_podman_jellyfin_volumes:
 host_podman_transmission_image: docker.io/haugene/transmission-openvpn
 host_podman_transmission_image_version: "3.7"
 host_podman_transmission_ports: "{{ host_podman_networking.transmission.webui_port }}:9091"
-host_podman_transmission_firewalld_ports: "{{ host_podman_networking.transmission.webui_port }}/tcp"
+host_podman_transmission_firewalld_ports: "{{ host_podman_networking.transmission.webui_port }}"
 host_podman_transmission_directories:
   - "{{ host_podman_volumes_path }}/transmission/home"
   - "{{ host_podman_volumes_path }}/transmission/completed"
@@ -112,7 +112,7 @@ host_podman_transmission_env_download_dir: "{{ host_podman_media_path }}"
 host_podman_filebrowser_image: docker.io/filebrowser/filebrowser
 host_podman_filebrowser_image_version: "v2"
 host_podman_filebrowser_ports: "{{ host_podman_networking.filebrowser.webui_port }}:2500"
-host_podman_filebrowser_firewalld_ports: "{{ host_podman_networking.filebrowser.webui_port }}/tcp"
+host_podman_filebrowser_firewalld_ports: "{{ host_podman_networking.filebrowser.webui_port }}"
 host_podman_filebrowser_directories: 
   - "{{ host_podman_volumes_path }}/filebrowser"
   - "{{ host_podman_files_path }}"
