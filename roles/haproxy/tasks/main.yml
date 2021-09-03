@@ -1,10 +1,10 @@
 ---
-- name: Install haproxy
+- name: Install HAproxy
   ansible.builtin.apt:
     name: haproxy
     state: present
 
-- name: Configure haproxy
+- name: Configure HAproxy
   ansible.builtin.template:
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
