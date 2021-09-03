@@ -1,5 +1,5 @@
 [Service]
-Type=simple
+Type=oneshot
 User=gandi
 Group=gandi
 EnvironmentFile=/etc/systemd/system/gad.env
@@ -7,7 +7,6 @@ ExecStart=sh -c '/opt/gandi-automatic-dns-{{ gad_version }}/gad -5 -v -a $API_KE
 {% if gad_use_ipv6 %}
 ExecStart=sh -c '/opt/gandi-automatic-dns-{{ gad_version }}/gad -5 -6 -v -a $API_KEY -d {{ gandi_domain_name }} -r {{ gandi_subdomain }}'
 {% endif %}
-RuntimeMaxSec=240
 
 [Install]
 WantedBy=multi-user.target
