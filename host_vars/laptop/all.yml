@@ -125,12 +125,6 @@ host_podman_filebrowser_volumes:
   - "{{ host_podman_files_path }}:/srv"
 ## podman_filebrowser ##
 
-## haproxy ##
-host_haproxy_acme_server_port: "27767"
-host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
-host_haproxy_firewalld_ports: ["80/tcp", "443/tcp"]
-## haproxy ##
-
 ## acme ##
 host_acme_directory: https://acme-v02.api.letsencrypt.org/directory
 host_acme_version: 2
@@ -148,6 +142,14 @@ host_acme_domain_name:
 host_acme_http_server_path: /srv/ansible_acme
 host_acme_server_port: "{{ host_haproxy_acme_server_port }}"
 ## acme ##
+
+## haproxy ##
+host_haproxy_acme_server_port: "27767"
+host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
+host_haproxy_firewalld_services: ["http", "https"]
+host_haproxy_domain_name: "{{ host_acme_domain_name }}"
+host_haproxy_letsencrypt_base_path: "{{ host_acme_letsencrypt_base_path }}"
+## haproxy ##
 
 ## gad ##
 host_gad_path: /opt
