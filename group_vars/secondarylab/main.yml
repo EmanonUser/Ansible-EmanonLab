@@ -2,7 +2,7 @@
 grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4iwEp9bq99CuoyWCLceCXwek0d4t+r9nLM6YgMlmy7 emanon@arch
 grp_local_domain: .home
 grp_domain_name: emanon.moe
-grp_subdomain: test1
+grp_subdomain: lain
 grp_local_ntp_server: pool.ntp.org
 grp_gandi_api_key: "{{ v_gandi_api_key }}"
 grp_gandi_email: "{{ v_gandi_email }}"
