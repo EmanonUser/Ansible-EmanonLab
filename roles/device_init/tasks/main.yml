@@ -45,7 +45,7 @@
     dest: /etc/zsh/zprofile
     owner: root
     group: root
-    mode: u=rw,g=,o=
+    mode: u=rw,g=r,o=r
 
 - name: Set zsh for root
   ansible.builtin.user:
