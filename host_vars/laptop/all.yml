@@ -154,5 +154,5 @@ host_haproxy_letsencrypt_base_path: "{{ host_acme_letsencrypt_base_path }}"
 ## gad ##
 host_gad_path: /opt
 host_gad_version: "1.4.2"
-host_gad_use_ipv6: no
+host_gad_use_ipv6: yes
 ## gad ##
