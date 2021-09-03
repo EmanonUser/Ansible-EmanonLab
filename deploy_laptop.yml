@@ -1,6 +1,6 @@
 ---
 - name: Provisioning of the laptop server
-  hosts: laptop_testing
+  hosts: laptop
   become: yes
   gather_facts: yes
   roles:
