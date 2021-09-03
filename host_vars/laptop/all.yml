@@ -57,17 +57,17 @@ host_podman_networking:
     fulldomain: jellyfin.emanon.moe
     webui_port: 25101
     public: yes
-    direct_access: no
+    lan_access: no
   filebrowser:
     fulldomain: file.emanon.moe
     webui_port: 25102
     public: yes
-    direct_access: no
+    lan_access: no
   transmission:
     fulldomain: transmission.emanon.moe
     webui_port: 25103
     public: no
-    direct_access: yes
+    lan_access: yes
 host_podman_volumes_path: "{{ host_zfs_primary_pool.path }}/data/podman"
 host_podman_media_path: "{{ host_zfs_primary_pool.path }}/media"
 host_podman_files_path: "{{ host_zfs_primary_pool.path }}/files"
