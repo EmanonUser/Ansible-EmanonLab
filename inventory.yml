@@ -15,4 +15,4 @@ secondarylab:
     ansible_ssh_private_key_file: /home/emanon/.ssh/AnsibleMaster_key_ed25519
   hosts:
     laptop:
-      ansible_host: 192.168.122.19 #lain.emanon.moe
+      ansible_host: lain.emanon.moe
