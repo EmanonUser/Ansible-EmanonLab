@@ -107,3 +107,25 @@
     name: python-http-server.service
     enabled: no
     state: stopped
+
+- name: Create symlink for fullchain certs
+  ansible.builtin.file:
+    src: "{{ acme_letsencrypt_base_path }}/certs/fullchain.{{ item.fqdn }}.crt"
+    dest: "/etc/haproxy/ssl/{{ item.fqdn }}.pem"
+    owner: root
+    group: root
+    state: link
+    mode: u=rw,g=,o=
+  loop: "{{ acme_domain_name }}"
+  ignore_errors: yes
+
+- name: Create symlink for privkey
+  ansible.builtin.file:
+    src: "{{ acme_letsencrypt_base_path }}/keys/{{ item.fqdn }}.key"
+    dest: "/etc/haproxy/ssl/{{ item.fqdn }}.pem.key"
+    owner: root
+    group: root
+    state: link
+    mode: u=rw,g=,o=
+  loop: "{{ acme_domain_name }}"
+  ignore_errors: yes
