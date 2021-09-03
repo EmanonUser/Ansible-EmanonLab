@@ -16,8 +16,8 @@
 - name: Open firewalld port(s)
   ansible.posix.firewalld:
     zone: "{{ haproxy_firewalld_zone }}"
-    port: "{{ item }}"
+    service: "{{ item }}"
     state: enabled
     permanent: yes
     immediate: yes
-  loop: "{{ haproxy_firewalld_ports }}"
+  loop: "{{ haproxy_firewalld_services }}"
