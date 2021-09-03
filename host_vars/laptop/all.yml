@@ -31,6 +31,7 @@ host_debian_stable_packages:
   - htop
   - vnstat
   - acl
+  - rsync
 ## device_init ##
 
 ## firewalld ##
