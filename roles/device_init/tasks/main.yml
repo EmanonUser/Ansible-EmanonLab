@@ -53,10 +53,24 @@
     shell: /usr/bin/zsh
   when: use_starship
 
-# - name: Install starship.rs
-#   ansible.builtin.command:
-#     cmd: sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -f
-#   when: use_starship
+- name: Get starship.rs archives
+  ansible.builtin.get_url:
+    url: https://github.com/starship/starship/releases/download/v{{ starship_version }}/starship-x86_64-unknown-linux-gnu.tar.gz
+    dest: /usr/local/bin/starship.tar.gz
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rw,g=,o=
+  when: use_starship
+
+- name: Unarchive starship.rs
+  ansible.builtin.unarchive:
+    src: /usr/local/bin/starship.tar.gz
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=rx,o=rx
+  when: use_starship
 
 - name: Configure .zshrc for primary user and root
   ansible.builtin.copy:

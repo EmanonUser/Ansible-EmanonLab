@@ -32,6 +32,8 @@ host_debian_stable_packages:
   - vnstat
   - acl
   - rsync
+host_use_starship: yes
+host_starship_version: "0.57.0" # https://github.com/starship/starship/releases
 ## device_init ##
 
 ## firewalld ##
