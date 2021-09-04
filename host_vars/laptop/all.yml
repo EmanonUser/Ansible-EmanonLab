@@ -150,6 +150,8 @@ host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
 host_haproxy_firewalld_services: ["http", "https"]
 host_haproxy_domain_name: "{{ host_acme_domain_name }}"
 host_haproxy_letsencrypt_base_path: "{{ host_acme_letsencrypt_base_path }}"
+host_haproxy_stats: yes
+host_haproxy_stats_port: "8404"
 ## haproxy ##
 
 ## gad ##
