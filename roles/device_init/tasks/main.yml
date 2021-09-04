@@ -70,6 +70,14 @@
     - { path: "/root/.zshrc", user: "root" }
   when: use_starship
 
+- name: Fetch zsh-completions plugin from github
+  ansible.builtin.git:
+    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+    dest: "{{ item }}"
+  loop:
+    - "/home/{{ primary_user_username }}/.zsh/zsh-autosuggestions"
+    - "/root/.zsh/zsh-autosuggestions"
+
 - name: Create .config/nvim dir(s) for primary user and root
   ansible.builtin.file:
     path: "{{ item.path }}"
