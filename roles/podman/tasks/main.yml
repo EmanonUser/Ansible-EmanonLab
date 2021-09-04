@@ -21,3 +21,13 @@
     owner: root
     group: root
     mode: u=rw,g=,o=
+
+- name: Check if podman-completion exist
+  ansible.builtin.stat:
+    path: "/usr/local/share/zsh/site-functions/_podman"
+  register: res
+
+- name: Generate podman-completion
+  ansible.builtin.command:
+    cmd: podman completion zsh -f "/usr/local/share/zsh/site-functions/_podman"
+  when: not res.stat.exists
