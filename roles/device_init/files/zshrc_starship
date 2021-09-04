@@ -1,10 +1,15 @@
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
-SAVEHIST=10000
-bindkey -e
-# End of lines configured by zsh-newuser-install
-
+SAVEHIST=50000
+setopt autocd extendedglob nomatch notify
+unsetopt beep
+bindkey -v
+zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
 compinit
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+export EDITOR=/usr/bin/vim
+export SYSTEMD_EDITOR=/usr/bin/vim
+alias ll="ls -lh"
+alias la="ls -lhd .*"
 eval "$(starship init zsh)"
