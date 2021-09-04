@@ -4,8 +4,8 @@ v_host_primary_user_username: "{{ v_primary_user_username }}"
 v_host_primary_user_password: "{{ v_primary_user_password }}" 
 host_cpu_architecture: amd64 # amd64, arm64 etc ...
 host_zfs_primary_pool:
-  name: vault
-  path: "/{{ host_zfs_primary_pool.name }}"
+  name: [tank]
+  path: "/tank"
 ## Role global ##
 
 ## device_init ##
@@ -46,8 +46,7 @@ host_echo_request_count: "21"
 ## isAlive ##
 
 ## zfs ##
-host_zfs_zpool_names:
-  - "{{ host_zfs_primary_pool.name }}"
+host_zfs_zpool_names: [tank]
 host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00
 ## zfs ##
 
