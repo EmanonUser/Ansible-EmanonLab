@@ -26,7 +26,7 @@
       OPENVPN_PASSWORD: "{{ podman_transmission_openvpn_password }}"
       LOCAL_NETWORK: "192.168.0.0/16"
       TRANSMISSION_HOME: "/transmission/home"
-      TRANSMISSION_DOWNLOAD_DIR: "{{ podman_media_path }}"
+      TRANSMISSION_DOWNLOAD_DIR: "/media"
       #TRANSMISSION_INCOMPLETE_DIR: "/transmission/incompleted"
       TRANSMISSION_WATCH_DIR: "/transmission/watch"
       TRANSMISSION_WEB_UI: "flood-for-transmission"
