@@ -12,4 +12,3 @@ export EDITOR=/usr/bin/vim
 export SYSTEMD_EDITOR=/usr/bin/vim
 alias ll="ls -lh"
 alias la="ls -lhd .*"
-eval "$(init zsh)"
