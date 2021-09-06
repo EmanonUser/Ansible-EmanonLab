@@ -128,10 +128,10 @@ host_podman_filebrowser_volumes:
   - "{{ host_podman_files_path }}:/srv"
 ## podman_filebrowser ##
 
-## acme ##
+## acme_dns ##
 host_acme_directory: https://acme-v02.api.letsencrypt.org/directory
 host_acme_version: 2
-host_acme_challenge_type: http-01
+host_acme_challenge_type: dns-01
 host_acme_email: moemanon@pm.me
 host_acme_letsencrypt_base_path: /etc/letsencrypt
 host_acme_letsencrypt_dirs:
@@ -139,12 +139,13 @@ host_acme_letsencrypt_dirs:
   mykeys: "{{ host_acme_letsencrypt_base_path }}/keys"
   csrs: "{{ host_acme_letsencrypt_base_path }}/csrs"
   certs: "{{ host_acme_letsencrypt_base_path }}/certs"
+host_acme_domain: "{{ grp_domain_name }}"
 host_acme_domain_name:
-  - { fqdn: "jellyfin.emanon.moe", index: 0 }
-  - { fqdn: "file.emanon.moe", index: 1 }
-host_acme_http_server_path: /srv/ansible_acme
-host_acme_server_port: "{{ host_haproxy_acme_server_port }}"
-## acme ##
+  #- { fqdn: "filebrowser.{{ host_acme_domain }}", index: 0, domain: ".{{ host_acme_domain }}" }
+  #- { fqdn: "jellyfin.{{ host_acme_domain }}", index: 1, domain: ".{{ host_acme_domain }}" }
+  - { fqdn: "*.{{ host_acme_domain }}", index: 0, domain: ".{{ host_acme_domain }}" }
+host_acme_gandi_api_key: "{{ v_gandi_api_key }}"
+## acme_dns ##
 
 ## haproxy ##
 host_haproxy_acme_server_port: "27767"
