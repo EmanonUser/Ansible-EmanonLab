@@ -4,17 +4,17 @@
   become: yes
   gather_facts: yes
   roles:
-    - device_init
+     - device_init
      - starship
-    - firewalld
-    - podman
-    - systemd_timesyncd
-    - is_alive
-    - gad
-    - zfs
-    - zrepl
-    - podman_jellyfin
-    - podman_transmission
-    - podman_filebrowser
-    - haproxy
-    - acme
+     - firewalld
+     - podman
+     - systemd_timesyncd
+     - is_alive
+     - gad
+     - zfs
+     - zrepl
+     - podman_jellyfin
+     - podman_transmission
+     - podman_filebrowser
+     - haproxy
+    - acme_dns
