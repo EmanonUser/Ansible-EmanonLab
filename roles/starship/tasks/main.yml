@@ -17,4 +17,3 @@
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=rx,o=rx
   when: use_starship
-  
