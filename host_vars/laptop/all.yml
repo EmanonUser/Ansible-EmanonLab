@@ -88,6 +88,7 @@ host_podman_jellyfin_volumes:
   - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache"
   - "{{ host_podman_volumes_path }}/jellyfin/config:/config"
   - "{{ host_podman_media_path }}:/media"
+  - "/tank/misc:/misc"
 ## podman_jellyfin ##
 
 ## podman_transmission ##
