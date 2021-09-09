@@ -1,0 +1,10 @@
+---
+primary_user_username: "{{ v_host_primary_user_username }}"
+podman_kuma_image: "{{ host_podman_kuma_image }}"
+podman_kuma_image_version: "{{ host_podman_kuma_image_version }}"
+podman_kuma_ports: "{{ host_podman_kuma_ports }}"
+podman_kuma_firewalld_ports: "{{ host_podman_kuma_firewalld_ports }}"
+podman_kuma_directory: "{{ host_podman_kuma_directory }}"
+podman_kuma_volumes: "{{ host_podman_kuma_volumes }}"
+podman_firewalld_zone: "{{ host_podman_firewalld_zone }}"
+podman_networking: "{{ host_podman_networking }}"

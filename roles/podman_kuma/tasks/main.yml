@@ -1,0 +1,42 @@
+---
+- name: Create kuma data volume dir
+  ansible.builtin.file:
+    path: "{{ podman_kuma_directory }}"
+    state: directory
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+
+- name: Run kuma podman container
+  containers.podman.podman_container:
+    name: kuma_ansible
+    image: "{{ podman_kuma_image }}:{{ podman_kuma_image_version }}"
+    publish: "{% if podman_networking.kuma.lan_access %}{{ podman_kuma_ports }}{% else %}127.0.0.1:{{ podman_kuma_ports }}{% endif %}" # noqa 204
+    volumes: "{{ podman_kuma_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+  become_user: "{{ primary_user_username }}"
+
+- name: Open kuma firewalld ports to admin devices
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_kuma_firewalld_ports }} protocol=tcp accept"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop:
+    - "{{ grp_device.arch.ipv4_addr }}"
+    - "{{ grp_device.one.ipv4_addr }}"
+  when: podman_networking.kuma.lan_access
+
+- name: Close kuma firewalld ports to admin devices
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_kuma_firewalld_ports }} protocol=tcp accept"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  loop:
+    - "{{ grp_device.arch.ipv4_addr }}"
+    - "{{ grp_device.one.ipv4_addr }}"
+  when: not podman_networking.kuma.lan_access
