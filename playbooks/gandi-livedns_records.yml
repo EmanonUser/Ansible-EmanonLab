@@ -11,10 +11,10 @@
     - name: Call Gandi LiveDNS API to register the record
       community.general.gandi_livedns:
         domain: "{{ domain_name }}"
-        record: test4
-        type: A
+        record: kuma
+        type: CNAME
         values:
-        - 127.0.0.1
+          - iwakura
         ttl: 300
         api_key: "{{ v_gandi_api_key }}"
         state: present
