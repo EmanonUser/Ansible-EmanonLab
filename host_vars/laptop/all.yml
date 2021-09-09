@@ -140,10 +140,11 @@ host_acme_letsencrypt_dirs:
   mykeys: "{{ host_acme_letsencrypt_base_path }}/keys"
   csrs: "{{ host_acme_letsencrypt_base_path }}/csrs"
   certs: "{{ host_acme_letsencrypt_base_path }}/certs"
+host_acme_domain: emanon.moe
 host_acme_domain_name:
-  #- { fqdn: "filebrowser.{{ host_acme_domain }}", index: 0, domain: ".{{ host_acme_domain }}" }
-  #- { fqdn: "jellyfin.{{ host_acme_domain }}", index: 1, domain: ".{{ host_acme_domain }}" }
-  - { fqdn: "*.{{ host_acme_domain }}", index: 0, domain: ".{{ host_acme_domain }}" }
+  - { fqdn: "file.{{ host_acme_domain }}", index: 0, domain: ".{{ host_acme_domain }}" }
+  - { fqdn: "jellyfin.{{ host_acme_domain }}", index: 1, domain: ".{{ host_acme_domain }}" }
+  - { fqdn: "kuma.{{ host_acme_domain }}", index: 2, domain: ".{{ host_acme_domain }}" }
 host_acme_gandi_api_key: "{{ v_gandi_api_key }}"
 ## acme_dns ##
 
