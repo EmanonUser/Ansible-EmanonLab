@@ -70,6 +70,11 @@ host_podman_networking:
     webui_port: 25103
     public: no
     lan_access: yes
+  kuma:
+    fulldomain: kuma.emanon.moe
+    webui_port: 25104
+    public: yes
+    lan_access: no
 host_podman_volumes_path: "{{ host_zfs_primary_pool.path }}/data/podman"
 host_podman_media_path: "{{ host_zfs_primary_pool.path }}/media"
 host_podman_files_path: "{{ host_zfs_primary_pool.path }}/files"
@@ -128,6 +133,15 @@ host_podman_filebrowser_volumes:
   - "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json:/.filebrowser.json"
   - "{{ host_podman_files_path }}:/srv"
 ## podman_filebrowser ##
+
+## podman_kuma ##
+host_podman_kuma_image: docker.io/louislam/uptime-kuma
+host_podman_kuma_image_version: 1.5.3-alpine
+host_podman_kuma_ports: "{{ host_podman_networking.kuma.webui_port }}:3001"
+host_podman_kuma_firewalld_ports: "{{ host_podman_networking.kuma.webui_port }}"
+host_podman_kuma_directory: "{{ host_podman_volumes_path }}/kuma"
+host_podman_kuma_volumes: "{{ host_podman_volumes_path }}/kuma:/app/data"
+## podman_kuma ##
 
 ## acme_dns ##
 host_acme_directory: https://acme-v02.api.letsencrypt.org/directory
