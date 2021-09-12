@@ -10,6 +10,8 @@ compinit
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 export EDITOR=/usr/bin/vim
 export SYSTEMD_EDITOR=/usr/bin/vim
-alias ll="ls -lh"
-alias la="ls -lhd .*"
+alias ls="ls --color"
+alias ll="ls --color --group-directories-first -lh"
+alias la="ls --color -lhd .*"
+alias grep="grep --color"
 eval "$(starship init zsh)"
