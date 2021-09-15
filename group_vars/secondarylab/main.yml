@@ -1,5 +1,5 @@
 ---
-grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4iwEp9bq99CuoyWCLceCXwek0d4t+r9nLM6YgMlmy7 emanon@arch
+grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch
 grp_local_domain: .home
 grp_domain_name: emanon.moe
 grp_subdomain: lain
