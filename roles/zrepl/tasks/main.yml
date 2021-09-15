@@ -6,8 +6,7 @@
 
 - name: Add zrepl debian source repo
   ansible.builtin.apt_repository:
-    #repo: deb [arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} main
-    repo: deb [arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} buster main
+    repo: deb [arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} main
     state: present
     filename: zrepl
 
@@ -28,5 +27,5 @@
     dest: /etc/zrepl/zrepl.yml
     owner: root
     group: root
-    mode: u=rw,g=,o=
+    mode: u=rw,g=r,o=r
   notify: Enable & Restart zrepl service
