@@ -5,7 +5,6 @@
       - wireguard
       - wireguard-dkms
       - wireguard-tools
-    default_release: buster-backports
     state: present
 
 - name: Configure Wireguard

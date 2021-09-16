@@ -2,7 +2,6 @@
 - name: Install ifenslave
   ansible.builtin.apt:
     name: ifenslave
-    default_release: buster
     state: present
 
 - name: Remove old setup
