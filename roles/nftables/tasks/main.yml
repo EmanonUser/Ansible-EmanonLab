@@ -2,7 +2,6 @@
 - name: Install nftables from backports
   ansible.builtin.apt:
     name: nftables
-    default_release: buster-backports
     state: present
 
 - name: Template nftables config file

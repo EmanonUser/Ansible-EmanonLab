@@ -2,6 +2,5 @@
 - name: Install sshguard
   ansible.builtin.apt:
     name: sshguard
-    default_release: buster-backports
     state: present
   notify: Enable & Restart sshguard service
