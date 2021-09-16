@@ -65,9 +65,9 @@ backend letsencrypt-backend
 
 {% if haproxy_stats %}
 frontend stats
-    bind :::8404 interface {{ ansible_default_ipv4.interface }}
-    stats enable
-    stats uri /stats
-    stats refresh 10s
-    stats admin if LOCALHOST
+	bind :::8404 interface {{ ansible_lo.device }}
+	stats enable
+	stats uri /stats
+	stats refresh 10s
+	stats admin if TRUE
 {% endif %}
