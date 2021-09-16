@@ -16,6 +16,15 @@
     update_cache: yes
     state: present
 
+- name: Configure ZFS dkms kernel module
+  ansible.builtin.template:
+    src: zfs.conf.j2
+    dest: /etc/modprobe.d/zfs.conf
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+
+
 - name: Configure automatic zpool scrubing
   ansible.builtin.template:
     src: "{{ item }}.j2"

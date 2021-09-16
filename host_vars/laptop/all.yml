@@ -51,6 +51,7 @@ host_echo_request_count: "21"
 ## zfs ##
 host_zfs_zpool_names: [tank]
 host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00
+host_zfs_arc_max: 3006477000  # Bytes
 ## zfs ##
 
 ########## Podman ##########
