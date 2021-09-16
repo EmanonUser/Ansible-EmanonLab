@@ -1,13 +1,13 @@
 ---
 - name: Remove standards backports
   ansible.builtin.apt_repository:
-    repo: deb http://deb.debian.org/debian buster-backports main
+    repo: deb http://deb.debian.org/debian {{ ansible_os_family | lower  }}-backports main
     state: absent
 
 - name: Add backports contrib for repository OpenZFS
   ansible.builtin.apt_repository:
-    repo: deb http://deb.debian.org/debian buster-backports main contrib
-    filename: buster-backports
+    repo: deb http://deb.debian.org/debian {{ ansible_os_family | lower  }}-backports main contrib
+    filename: "{{ ansible_os_family | lower  }}-backports"
     state: present
 
 - name: Install ZFS packages
