@@ -32,6 +32,28 @@
     key: "{{ primary_user_ssh_pubkey }}"
     state: present
 
+- name: Enable SSH PubkeyAuthentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#PubkeyAuthentication|^PubkeyAuthentication"
+    line: PubkeyAuthentication yes
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    state: present
+  notify: Restart ssh service
+
+- name: Disable SSH PasswordAuthentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#PasswordAuthentication|^PasswordAuthentication"
+    line: PasswordAuthentication no
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    state: present
+  notify: Restart ssh service
+
 - name: Add primary user to sudoers
   ansible.builtin.lineinfile:
     path: /etc/sudoers
