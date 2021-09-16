@@ -47,10 +47,6 @@
   register: "acme_challenge_result"
   loop: "{{ acme_domain_name }}"
 
-- name: debug
-  debug:
-    msg: "{{ acme_challenge_result }}"
-
 - name: Call Gandi LiveDNS API to register the TXT record
   community.general.gandi_livedns:
     domain: "{{ acme_domain }}"
