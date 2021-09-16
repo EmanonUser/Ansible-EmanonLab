@@ -5,7 +5,7 @@ v_host_primary_user_password: "{{ v_primary_user_password }}"
 host_cpu_architecture: amd64 # amd64, arm64 etc ...
 host_zfs_primary_pools:
   tank:
-  path: "/tank"
+    path: "/tank"
 ## Role global ##
 
 ## device_init ##
