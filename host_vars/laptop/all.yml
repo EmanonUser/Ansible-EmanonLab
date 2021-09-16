@@ -94,7 +94,7 @@ host_podman_jellyfin_volumes:
   - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache"
   - "{{ host_podman_volumes_path }}/jellyfin/config:/config"
   - "{{ host_podman_media_path }}:/media"
-  - "/tank/misc:/misc"
+  - "{{ host_zfs_primary_pools.tank.path }}/misc:/misc"
 ## podman_jellyfin ##
 
 ## podman_transmission ##
@@ -110,7 +110,7 @@ host_podman_transmission_directories:
 host_podman_transmission_volumes:
   - "{{ host_podman_volumes_path }}/transmission/:/transmission"
   - "{{ host_podman_media_path }}:/media"
-  - "/tank/misc:/misc"
+  - "{{ host_zfs_primary_pools.tank.path }}/misc:/misc"
 host_podman_transmission_env_openvpn_provider: "{{ v_transmission_openvpn_provider }}"
 host_podman_transmission_env_openvpn_config: "{{ v_transmission_openvpn_config }}"
 host_podman_transmission_env_openvpn_username: "{{ v_transmission_openvpn_username }}"
