@@ -3,8 +3,8 @@
 v_host_primary_user_username: "{{ v_primary_user_username }}"
 v_host_primary_user_password: "{{ v_primary_user_password }}" 
 host_cpu_architecture: amd64 # amd64, arm64 etc ...
-host_zfs_primary_pool:
-  name: [tank]
+host_zfs_primary_pools:
+  tank:
   path: "/tank"
 ## Role global ##
 
@@ -49,7 +49,7 @@ host_echo_request_count: "21"
 ## isAlive ##
 
 ## zfs ##
-host_zfs_zpool_names: [tank]
+host_zfs_zpool_names: "{% for pool, value in host_zfs_primary_pools %}{{ pool }}{% endif %}"
 host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00
 host_zfs_arc_max: 3006477000  # Bytes
 ## zfs ##
@@ -76,9 +76,9 @@ host_podman_networking:
     webui_port: 25104
     public: yes
     lan_access: no
-host_podman_volumes_path: "{{ host_zfs_primary_pool.path }}/data/podman"
-host_podman_media_path: "{{ host_zfs_primary_pool.path }}/media"
-host_podman_files_path: "{{ host_zfs_primary_pool.path }}/files"
+host_podman_volumes_path: "{{ host_zfs_primary_pools.tank.path }}/data/podman"
+host_podman_media_path: "{{ host_zfs_primary_pools.tank.path }}/media"
+host_podman_files_path: "{{ host_zfs_primary_pools.tank.path }}/files"
 host_podman_firewalld_zone: "{{ host_firewalld_zone }}"
 ########## Podman ##########
 
