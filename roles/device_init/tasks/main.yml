@@ -94,7 +94,7 @@
   loop:
     - { path: "/home/{{  primary_user_username }}/.config/nvim/init.vim", user: "{{ primary_user_username }}" }
     - { path: "/root/.config/nvim/init.vim", user: "root" }
-  
+
 - name: Disable laptop lid suspend
   ansible.builtin.lineinfile:
     path: /etc/systemd/logind.conf
