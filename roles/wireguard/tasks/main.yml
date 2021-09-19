@@ -1,5 +1,5 @@
 ---
-- name: Install Wireguard from backports
+- name: Install Wireguard
   ansible.builtin.apt:
     name:
       - wireguard
