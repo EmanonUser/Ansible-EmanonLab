@@ -1,6 +1,0 @@
----
-- name: Enable & Restart unbound service
-  ansible.builtin.systemd:
-    name: unbound.service
-    enabled: yes
-    state: restarted
