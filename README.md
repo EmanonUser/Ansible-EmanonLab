@@ -6,3 +6,4 @@ TODO:
     - Use template for kea
     - full check
     - Upgrade router & pi to bullseye
+    - Update zrepl
