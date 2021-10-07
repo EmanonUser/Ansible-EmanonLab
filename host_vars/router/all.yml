@@ -57,8 +57,8 @@ host_frr_daemons:
 ## frr ##
 
 ## isc_kea ##
-host_kea_version: kea-1-9  ## https://cloudsmith.io/~isc/repos/
-host_cloudsmith_gpg_key: gpg.5DC67B0A74E30739.key ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-1-9/signing/
+host_kea_version: kea-2-0  ## https://cloudsmith.io/~isc/repos/
+host_cloudsmith_gpg_key: gpg.8029D4AFA58CBB5E.key ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-1-9/signing/
 ## isc_kea ##
 
 ## wireguard ##
