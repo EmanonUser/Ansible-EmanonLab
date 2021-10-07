@@ -1,0 +1,11 @@
+---
+- name: Remove debian repo
+  become: yes
+  hosts: all
+  vars:
+    repo: "deb https://dl.cloudsmith.io/public/isc/kea-1-9/deb/debian buster main"
+  tasks:
+  - name: Remove Debian Repository
+    ansible.builtin.apt_repository:
+      repo: "{{ repo }}"
+      state: absent
