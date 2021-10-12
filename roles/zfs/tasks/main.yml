@@ -19,6 +19,10 @@
     group: root
     mode: u=rw,g=,o=
 
+- name: Load ZFS kernel module
+  community.general.modprobe:
+    name: zfs
+    state: present
 
 - name: Configure automatic zpool scrubing
   ansible.builtin.template:
