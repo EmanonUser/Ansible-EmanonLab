@@ -34,31 +34,34 @@
   loop: [zpool-scrub@.service, zpool-scrub@.timer]
   notify: Enable zpool(s) scrub timer(s)
 
+# - name: Create ZFS dataset encryption key(s)
+#   ansible.builtin.shell:
+#     chdir: /root
+#     executable: /bin/bash
+#     creates: "{{ item }}.key"
+#     cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ item }}.key 
+#   loop: [one, two]
 
-###### Testing community.general.zfs ######
-# - name: Create file-disk
-#   ansible.builtin.command:
-#     cmd: truncate -s 4G /root/1.img /root/2.img
-
-# - name: Create file-disk
-#   ansible.builtin.command:
-#     cmd: zpool create vault mirror /root/1.img /root/2.img -o failmode=continue
-
-# - name: Copy encryption key
-#   ansible.builtin.copy:
-#     src: encryption_key
-#     dest: /root/key
+# - name: Set permissions for dataset encryption key(s)
+#   ansible.builtin.file:
+#     path: /root/{{ item }}.key
 #     owner: root
 #     group: root
 #     mode: u=r,g=,o=
-#     force: yes
+#     state: file
+#   loop: [one, two]
 
-# - name: Create Vault datasets
+# - name: Create ZFS dataset(s)
 #   community.general.zfs:
-#     name: vault/encrypted
+#     name: tank/{{ item }}
 #     state: present
 #     extra_zfs_properties:
-#       compression: zstd
+#       compression: lz4
 #       encryption: aes-256-gcm
 #       keyformat: hex
-#       keylocation: file:///root/key
+#       keylocation: file:///root/{{ item }}.key
+#       atime: off
+#       aclmode: passthrough
+#       acltype: posix
+#       dnodesize: auto
+#   loop: [one, two]
