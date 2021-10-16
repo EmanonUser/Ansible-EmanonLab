@@ -17,8 +17,8 @@ jobs:
       with:
         args: "--exclude playbooks/vars/vault.yml"
         targets: |
-          groups_vars/
-          hosts_vars/
+          group_vars/
+          host_vars/
           playbooks/
           roles/
           deploy_router.yml
