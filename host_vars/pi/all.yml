@@ -58,6 +58,9 @@ host_docker_networking:
   transmission:
     fulldomain: transmission.local.emanon
     webui_port: 12002
+  homeassistant:
+    fulldomain: homeassistant.local.emanon
+    webui_port: 12003
 docker_volumes_path: /mnt/vault/data/homelab/docker
 ## Docker global ##
 
@@ -121,3 +124,11 @@ host_docker_haproxy_volumes: "{{ docker_volumes_path }}/haproxy:/usr/local/etc/h
 host_docker_haproxy_config_path: "{{ docker_volumes_path }}/haproxy/haproxy.cfg"
 host_docker_haproxy_image_version: 2.5-dev2-alpine
 ## docker_haproxy ##
+
+## docker_homeassistant ##
+host_docker_homeassistant_ports: "{{ host_docker_networking.homeassistant.webui_port }}:8123/tcp"
+host_docker_homeassistant_firewalld_ports: "{{ host_docker_networking.homeassistant.webui_port }}/tcp"
+host_docker_homeassistant_volume: "{{ docker_volumes_path }}/home_assistant:/config"
+host_docker_homeassistant_volumes_path: "{{ docker_volumes_path }}/home_assistant"
+host_docker_homeassistant_image_version: stable
+## docker_homeassistant ##
