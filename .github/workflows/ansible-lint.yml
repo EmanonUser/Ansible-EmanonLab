@@ -19,7 +19,10 @@ jobs:
         targets: |
           groups_vars/
           hosts_vars/
+          playbooks/
           roles/
           deploy_router.yml
           deploy_pi.yml
           deploy_laptop.yml
+          inventory.yml
+          requirements.yml
