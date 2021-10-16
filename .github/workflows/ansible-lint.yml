@@ -16,7 +16,7 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         args: "--exclude playbooks/vars/vault.yml"
-        target: |
+        targets: |
           groups_vars/
           hosts_vars/
           roles/
