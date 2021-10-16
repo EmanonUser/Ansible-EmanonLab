@@ -110,6 +110,7 @@ host_coreDNS_docker_local_subdomain:
   - grafana
   - transmission
   - haproxy
+  - homeassistant
 ## coredns ##
 
 ## gad ##
