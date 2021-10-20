@@ -1,12 +1,15 @@
 ---
 - name: Add zrepl repo key
-  ansible.builtin.apt_key:
+  ansible.builtin.get_url:
     url: https://zrepl.cschwarz.com/apt/apt-key.asc
-    state: present
+    dest: /usr/share/keyrings/zrepl-archive-keyring.asc
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
 
 - name: Add zrepl debian source repo
   ansible.builtin.apt_repository:
-    repo: deb [arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} main
+    repo: deb [signed-by=/usr/share/keyrings/zrepl-archive-keyring.asc arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} main
     state: present
     filename: zrepl
 
