@@ -1,0 +1,11 @@
+---
+primary_user_username: "{{ v_host_primary_user_username }}"
+podman_homeassistant_image: "{{ host_podman_homeassistant_image }}"
+podman_homeassistant_image_version: "{{ host_podman_homeassistant_image_version }}"
+podman_homeassistant_ports: "{{ host_podman_homeassistant_ports }}"
+podman_homeassistant_firewalld_ports: "{{ host_podman_homeassistant_firewalld_ports }}"
+podman_homeassistant_directories: "{{ host_podman_homeassistant_directories }}"
+podman_homeassistant_volumes: "{{ host_podman_homeassistant_volumes }}"
+podman_homeassistant_config_path: "{{ host_podman_homeassistant_config_path }}"
+podman_firewalld_zone: "{{ host_podman_firewalld_zone }}"
+podman_networking: "{{ host_podman_networking }}"
