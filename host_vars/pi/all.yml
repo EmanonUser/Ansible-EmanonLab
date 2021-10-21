@@ -20,6 +20,7 @@ host_debian_stable_packages:
   - ldnsutils
   - git
   - tmux
+  - htop
   - tcpdump
   - mtr-tiny
   - zsh
