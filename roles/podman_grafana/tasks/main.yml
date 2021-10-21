@@ -1,0 +1,63 @@
+---
+- name: Run grafana podman container
+  containers.podman.podman_container:
+    name: grafana_ansible
+    image: "{{ podman_grafana_image }}:{{ podman_grafana_image_version }}"
+    publish: "{{ podman_grafana_ports }}"
+    restart_policy: unless-stopped
+    state: started
+    env:
+      GF_SECURITY_ADMIN_PASSWORD: "{{ podman_grafana_admin_password }}"
+  become_user: "{{ primary_user_username }}"
+  register: podman_grafana_res
+
+- name: Open grafana webui firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_grafana_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: podman_networking.grafana.lan_access
+
+- name: Close grafana webui firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_grafana_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when: not podman_networking.grafana.lan_access
+
+- name: Pause, waiting for grafana # noqa 503
+  ansible.builtin.pause:
+    prompt: Pause the playbook, waiting for grafana to be fully up
+    seconds: 15
+  when: podman_grafana_res.changed
+
+- name: Create prometheus datasource
+  community.grafana.grafana_datasource:
+    name: prometheus
+    grafana_url: "{{ podman_grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ podman_grafana_admin_password }}"
+    ds_type: prometheus
+    ds_url: "http://{{ grp_device.pi.ipv4_addr }}:{{ podman_networking.prometheus.webui_port }}"
+
+- name: Create grafana folders
+  community.grafana.grafana_folder:
+    grafana_url: "{{ podman_grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ podman_grafana_admin_password }}"
+    title: "Env monitoring"
+    state: present
+
+- name: Import grafana dashboards
+  community.grafana.grafana_dashboard:
+    grafana_url: "{{ podman_grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ podman_grafana_admin_password }}"
+    folder: "Env monitoring"
+    overwrite: yes
+    path: "{{ item }}"
+  loop: "{{ podman_grafana_dashboards_path }}"
