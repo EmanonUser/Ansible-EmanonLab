@@ -7,7 +7,8 @@ v_host_primary_user_password: "{{ v_primary_user_password }}"
 host_cpu_architecture: arm64 # amd64, arm64 etc ...
 
 ## device_init ##
-use_starship: no
+host_use_starship: yes
+host_starship_version: "0.58.0" # https://github.com/starship/starship/releases
 host_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
