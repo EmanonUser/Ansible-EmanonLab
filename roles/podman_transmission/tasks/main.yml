@@ -8,7 +8,7 @@
     mode: u=rwx,g=,o=
   loop: "{{ podman_transmission_directories }}"
 
-- name: Run transmission docker container
+- name: Run transmission podman container
   containers.podman.podman_container:
     name: transmission_ansible
     image: "{{ podman_transmission_image }}:{{ podman_transmission_image_version }}"
