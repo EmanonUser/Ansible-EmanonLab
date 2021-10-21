@@ -1,7 +1,0 @@
----
-firewalld_zone: "{{ host_firewalld_zone }}"
-homeassistant_ports: "{{ host_docker_homeassistant_ports }}"
-homeassistant_firewalld_ports: "{{ host_docker_homeassistant_firewalld_ports }}"
-homeassistant_volume: "{{ host_docker_homeassistant_volume }}"
-homeassistant_volumes_path: "{{ host_docker_homeassistant_volumes_path }}"
-homeassistant_image_version: "{{ host_docker_homeassistant_image_version }}"
