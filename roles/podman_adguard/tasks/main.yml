@@ -1,0 +1,49 @@
+---
+- name: Create adguard volume directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ podman_adguard_directories }}"
+
+- name: Run adguard podman container
+  containers.podman.podman_container:
+    name: adguard_ansible
+    image: "{{ podman_adguard_image }}:{{ podman_adguard_image_version }}"
+    publish: "{{ host_podman_adguard_ports }}"
+    volume: "{{ podman_adguard_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+    label: "io.containers.autoupdate=image"
+  become_user: "{{ primary_user_username }}"
+
+- name: Open adguard dns firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ item }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop:
+    - "{{ podman_adguard_firewalld_ports[1] }}"
+    - "{{ podman_adguard_firewalld_ports[2] }}"
+
+- name: Open adguard webui firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_adguard_firewalld_ports[0] }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: podman_networking.adguard.lan_access
+
+- name: Close adguard webui firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_adguard_firewalld_ports[0] }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when: not podman_networking.adguard.lan_access
