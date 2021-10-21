@@ -39,7 +39,7 @@
     permanent: yes
     immediate: yes
     state: enabled
-  when: 
+  when:
     - podman_networking.prometheus.lan_access
     - ansible_host == 'pi.local.emanon'
 
@@ -50,7 +50,7 @@
     permanent: yes
     immediate: yes
     state: disabled
-  when: 
+  when:
     - not podman_networking.prometheus.lan_access
     - ansible_host == 'pi.local.emanon'
 
@@ -64,7 +64,7 @@
   loop:
     - "{{ grp_device.arch.ipv4_addr }}"
     - "{{ grp_device.one.ipv4_addr }}"
-  when: 
+  when:
      - podman_networking.transmission.lan_access
      - ansible_host == 'lain.emanon.moe'
 
@@ -78,6 +78,6 @@
   loop:
     - "{{ grp_device.arch.ipv4_addr }}"
     - "{{ grp_device.one.ipv4_addr }}"
-  when: 
+  when:
     - not podman_networking.transmission.lan_access
     - ansible_host == 'lain.emanon.moe'
