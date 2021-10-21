@@ -1,0 +1,11 @@
+---
+primary_user_username: "{{ v_host_primary_user_username }}"
+podman_prometheus_image: "{{ host_podman_prometheus_image }}"
+podman_prometheus_image_version: "{{ host_podman_prometheus_image_version }}"
+podman_prometheus_ports: "{{ host_podman_prometheus_ports }}"
+podman_prometheus_firewalld_ports: "{{ host_podman_prometheus_firewalld_ports }}"
+podman_prometheus_directories: "{{ host_podman_prometheus_directories }}"
+podman_prometheus_volumes: "{{ host_podman_prometheus_volumes }}"
+podman_prometheus_config_path: "{{ host_podman_prometheus_config_path }}"
+podman_firewalld_zone: "{{ host_podman_firewalld_zone }}"
+podman_networking: "{{ host_podman_networking }}"

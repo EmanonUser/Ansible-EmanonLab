@@ -1,0 +1,51 @@
+---
+- name: Create prometheus volume directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ podman_prometheus_directories }}"
+
+- name: Configure prometheus TSDB
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: "{{ podman_prometheus_config_path }}"
+  register: conf_change
+
+- name: Run prometheus podman container
+  containers.podman.podman_container:
+    name: prometheus_ansible
+    image: "{{ podman_prometheus_image }}:{{ podman_prometheus_image_version }}"
+    publish: "{{ podman_prometheus_ports }}"
+    volume: "{{ podman_prometheus_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+    recreate: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
+    label: "io.containers.autoupdate=image"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/etc/prometheus/data"
+      - "--storage.tsdb.retention=1y"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+  become_user: "{{ primary_user_username }}"
+
+- name: Open prometheus firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_prometheus_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: podman_networking.prometheus.lan_access
+
+- name: Close prometheus firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_prometheus_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when: not podman_networking.prometheus.lan_access
