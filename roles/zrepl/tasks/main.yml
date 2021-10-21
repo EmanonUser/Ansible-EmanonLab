@@ -9,7 +9,7 @@
 
 - name: Add zrepl debian source repo
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/zrepl-archive-keyring.asc arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} main
+    repo: deb [signed-by=/usr/share/keyrings/zrepl-archive-keyring.asc arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} main # noqa 204
     state: present
     filename: zrepl
 
