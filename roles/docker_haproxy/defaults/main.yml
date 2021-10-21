@@ -1,8 +1,0 @@
----
-firewalld_zone: "{{ host_firewalld_zone }}"
-docker_networking: "{{ host_docker_networking }}"
-haproxy_ports: "{{ host_docker_haproxy_ports }}"
-haproxy_firewalld_ports: "{{ host_docker_haproxy_firewalld_ports }}"
-haproxy_volumes: "{{ host_docker_haproxy_volumes }}"
-haproxy_config_path: "{{ host_docker_haproxy_config_path }}"
-haproxy_image_version: "{{ host_docker_haproxy_image_version }}"
