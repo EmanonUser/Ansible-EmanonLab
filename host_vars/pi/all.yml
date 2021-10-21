@@ -46,43 +46,36 @@ host_nfs_remote_share: /mnt/vault/emanon
 host_nfs_mount_dir: /mnt/vault
 ## nfs_share ##
 
-## Docker global ##
-host_docker_networking:
+########## Podman ##########
+host_podman_networking:
   adguard:
     fulldomain: adguard.local.emanon
-    webui_port: 3000
-  prometheus:
-    fulldomain: prometheus.local.emanon
-    webui_port: 9090
-  grafana:
-    fulldomain: grafana.local.emanon
-    webui_port: 12001
+    webui_port: 4001
+    lan_access: no
   transmission:
     fulldomain: transmission.local.emanon
-    webui_port: 12002
+    webui_port: 4002
+    lan_access: no
+  prometheus:
+    fulldomain: prometheus.local.emanon
+    webui_port: 4003
+    lan_access: no
+  grafana:
+    fulldomain: grafana.local.emanon
+    webui_port: 4004
+    lan_access: no
   homeassistant:
     fulldomain: homeassistant.local.emanon
-    webui_port: 12003
-docker_volumes_path: /mnt/vault/data/homelab/docker
-## Docker global ##
+    webui_port: 4005
+    lan_access: no
+  haproxy:
+    fulldomain: haproxy.local.emanon
+    webui_port: 80
+    lan_access: yes
 
-## docker_adguard ##
-host_docker_adguard_ports:
-  - "{{ host_docker_networking.adguard.webui_port }}:3000/tcp"
-  - 53:53/udp
-  - 53:53/tcp
-host_docker_adguard_firewalld_ports:
-  - "{{ host_docker_networking.adguard.webui_port }}/tcp"
-  - 53/udp
-  - 53/tcp
-host_docker_adguard_volumes_path:
-  - "{{ docker_volumes_path }}/adguard/work"
-  - "{{ docker_volumes_path }}/adguard/conf"
-host_docker_adguard_volumes:
-  - "{{ host_docker_adguard_volumes_path[0] }}:/opt/adguardhome/work"
-  - "{{ host_docker_adguard_volumes_path[1] }}:/opt/adguardhome/conf"
-host_docker_adguard_image_version: v0.106.3
-## docker_adguard ##
+host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
+host_podman_firewalld_zone: "{{ host_firewalld_zone }}"
+########## Podman ##########
 
 ## docker_prometheus ##
 host_docker_prometheus_ports: "{{ host_docker_networking.prometheus.webui_port }}:9090/tcp"
