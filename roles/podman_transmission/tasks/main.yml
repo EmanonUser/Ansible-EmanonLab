@@ -64,7 +64,9 @@
   loop:
     - "{{ grp_device.arch.ipv4_addr }}"
     - "{{ grp_device.one.ipv4_addr }}"
-  when: podman_networking.transmission.lan_access
+  when: 
+     - podman_networking.transmission.lan_access
+     - ansible_host == 'lain.emanon.moe'
 
 - name: Close transmission firewalld ports to admin devices
   ansible.posix.firewalld:
@@ -76,4 +78,6 @@
   loop:
     - "{{ grp_device.arch.ipv4_addr }}"
     - "{{ grp_device.one.ipv4_addr }}"
-  when: not podman_networking.transmission.lan_access
+  when: 
+    - not podman_networking.transmission.lan_access
+    - ansible_host == 'lain.emanon.moe'
