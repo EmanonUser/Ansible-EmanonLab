@@ -1,7 +1,11 @@
 ---
+- name: Determine starship url
+  ansible.builtin.set_fact:
+    libc: "{% if ansible_architecture == 'x86_64' %}gnu{% elif ansible_architecture == 'aarch64' %}musl{% endif %}"
+
 - name: Get starship.rs archives
   ansible.builtin.get_url:
-    url: https://github.com/starship/starship/releases/download/v{{ starship_version }}/starship-x86_64-unknown-linux-gnu.tar.gz
+    url: https://github.com/starship/starship/releases/download/v{{ starship_version }}/starship-{{ ansible_architecture }}-unknown-linux-{{ libc }}.tar.gz
     dest: /usr/local/bin/starship.tar.gz
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
