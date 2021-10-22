@@ -19,7 +19,7 @@ local.emanon:{{ coreDNS_port }} {
 .:{{ coreDNS_port }} {
     import snip
     prometheus {{ coreDNS_ip }}:{{ coreDNS_prometheus_port }}
-    forward . {{ coreDNS_forwardto }}:53 {
+    forward . {{ coreDNS_forwardto }}:10053 {
         except example.org
         except local.emanon
         health_check 5s
