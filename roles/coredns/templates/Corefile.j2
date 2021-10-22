@@ -22,6 +22,7 @@ local.emanon:{{ coreDNS_port }} {
     forward . {{ coreDNS_forwardto }}:10053 {
         except example.org
         except local.emanon
+        except in-addr.arpa
         health_check 5s
         prefer_udp
     }
