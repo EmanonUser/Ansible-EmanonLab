@@ -143,7 +143,7 @@ host_podman_grafana_dashboards_path:
 ## podman_homeassistant ##
 host_podman_homeassistant_image: ghcr.io/home-assistant/home-assistant
 host_podman_homeassistant_image_version: "2021.10.5"
-host_podman_homeassistant_ports: "{% if host_podman_networking.homeassistant.lan_access %}{{ host_podman_networking.homeassistant.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.homeassistant.webui_port }}{% endif %}:3000/tcp"
+host_podman_homeassistant_ports: "{% if host_podman_networking.homeassistant.lan_access %}{{ host_podman_networking.homeassistant.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
 host_podman_homeassistant_firewalld_ports: "{{ host_podman_networking.homeassistant.webui_port }}/tcp"
 host_podman_homeassistant_directories: "{{ host_podman_volumes_path }}/home_assistant"
 host_podman_homeassistant_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
