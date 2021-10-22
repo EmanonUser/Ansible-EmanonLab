@@ -67,10 +67,6 @@ host_podman_networking:
   homeassistant:
     fulldomain: homeassistant.local.emanon
     webui_port: 4005
-    lan_access: no
-  haproxy:
-    fulldomain: haproxy.local.emanon
-    webui_port: 80
     lan_access: yes
 
 host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
