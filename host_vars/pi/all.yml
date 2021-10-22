@@ -55,7 +55,7 @@ host_podman_networking:
   transmission:
     fulldomain: transmission.local.emanon
     webui_port: 4002
-    lan_access: no
+    lan_access: yes
   prometheus:
     fulldomain: prometheus.local.emanon
     webui_port: 4003
