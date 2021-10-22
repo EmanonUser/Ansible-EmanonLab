@@ -1,0 +1,50 @@
+(snip) {
+    bind 127.0.0.1
+    bind {{ coreDNS_ip }}
+    any
+    minimal
+    log
+    cache 300
+    errors {
+        consolidate 120s ".* i/o timeout$"
+        consolidate 30s "^Failed to .+"
+    }
+}
+
+local.emanon:{{ coreDNS_port }} {
+    import snip
+    file /opt/coredns/master.db
+}
+
+.:{{ coreDNS_port }} {
+    import snip
+    forward . 127.0.0.1:5301 127.0.0.1:5302 {
+        policy random
+        except example.org
+        except local.emanon
+        health_check 5s
+        prefer_udp
+    }
+}
+
+.:5301 {
+    prometheus {{ coreDNS_ip }}:{{ coreDNS_prometheus_port }}
+    forward . tls://9.9.9.9 {
+        tls_servername dns.quad9.net
+        except example.org
+        except local.emanon
+        health_check 5s
+    }
+    cache 30
+}
+
+.:5302 {
+    prometheus {{ coreDNS_ip }}:{{ coreDNS_prometheus_port }}
+    forward . tls://1.1.1.1 tls://1.0.0.1 {
+        tls_servername cloudflare-dns.com
+        except example.org
+        except local.emanon
+        health_check 5s
+    }
+    cache 30
+}
