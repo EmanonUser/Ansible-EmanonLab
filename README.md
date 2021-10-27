@@ -7,3 +7,5 @@ TODO:
     - full check
     - Upgrade router & pi to bullseye
     - Update zrepl
+    - Rework gad.service
+    - Add isAlive to router
