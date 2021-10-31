@@ -11,6 +11,7 @@
     - wireguard
     - coredns
     - gad
+    - is_alive
     - msmtp
     - ntpd
     - sshguard

@@ -118,6 +118,12 @@ host_gad_version: "1.4.2"
 host_gad_use_ipv6: no
 ## gad ##
 
+## isAlive ##
+host_is_alive_echo_request_target: lain.emanon.moe
+host_is_alive_echo_request_interval: 15m
+host_is_alive_echo_request_count: "21" 
+## isAlive ##
+
 ## nftables ##
 host_nftables_echo_request_count: "{{ host_is_alive_echo_request_count }}"
 ## nftables ##
