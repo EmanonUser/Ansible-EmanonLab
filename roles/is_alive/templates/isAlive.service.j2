@@ -1,12 +1,12 @@
 [Unit]
-Description=Periodic echo-request service to {{ echo_request_target }}
+Description=Periodic echo-request service to {{ is_alive_echo_request_target }}
 After=network-pre.target
 
 [Service]
 Type=simple
 User={{ primary_user_username }}
 Group={{ primary_user_username }}
-ExecStart=/usr/bin/ping -c {{ echo_request_count }} {{ echo_request_target }}
+ExecStart=/usr/bin/ping -c {{ is_alive_echo_request_count }} {{ is_alive_echo_request_target }}
 AmbientCapabilities=CAP_NET_RAW
 ProtectHome=read-only
 ProtectSystem=full

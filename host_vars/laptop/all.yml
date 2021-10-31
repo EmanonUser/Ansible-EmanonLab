@@ -43,9 +43,9 @@ host_firewalld_zone: dmz
 ## firewalld ##
 
 ## isAlive ##
-host_echo_request_target: iwakura.emanon.moe
-host_echo_request_interval: 15m
-host_echo_request_count: "21" 
+host_is_alive_echo_request_target: iwakura.emanon.moe
+host_is_alive_echo_request_interval: 15m
+host_is_alive_echo_request_count: "21" 
 ## isAlive ##
 
 ## zfs ##
