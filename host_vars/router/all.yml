@@ -15,6 +15,8 @@
 
 # If a variables is used in multiples roles at the same time the prefix will be host_Origin-role_role_ and will be defined only on the origin role
 # Variables that do not belong to a role will be placed in the Roleless section
+# Add comment to external variables, variables that depend a third party apt gpg key etc
+# Verbose is cool, use verbose names even when it become extra long
 
 v_host_primary_user_username: "{{ v_primary_user_username }}"
 v_host_primary_user_password: "{{ v_primary_user_password }}" 
