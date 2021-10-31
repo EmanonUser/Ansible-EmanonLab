@@ -13,4 +13,4 @@ subdomain_name: "{{ grp_subdomain }}"
 router_static_ip: "{{ grp_device.router.ipv4_addr }}"
 
 LACP_interface_name: "{{ host_lacp_interface }}"
-echo_request_count: "{{ host_echo_request_count }}"
+echo_request_count: "{{ host_nftables_echo_request_count }}"

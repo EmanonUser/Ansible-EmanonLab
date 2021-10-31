@@ -8,7 +8,6 @@ host_cpu_architecture: amd64 # amd64, arm64 etc ...
 host_wireguard_interface_name: wg0
 host_wireguard_subnet: "172.16.0"
 host_wireguard_server_port: 51820
-host_echo_request_count: "21"
 ## Role global ##
 
 ## device_init ##
@@ -118,3 +117,7 @@ host_gad_path: /opt
 host_gad_version: "1.4.2"
 host_gad_use_ipv6: no
 ## gad ##
+
+## nftables ##
+host_nftables_echo_request_count: "{{ host_is_alive_echo_request_count }}"
+## nftables ##
