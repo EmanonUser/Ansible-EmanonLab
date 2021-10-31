@@ -5,9 +5,6 @@
 v_host_primary_user_username: "{{ v_primary_user_username }}"
 v_host_primary_user_password: "{{ v_primary_user_password }}" 
 host_cpu_architecture: amd64 # amd64, arm64 etc ...
-host_wireguard_interface_name: wg0
-host_wireguard_subnet: "172.16.0"
-host_wireguard_server_port: 51820
 ## Role global ##
 
 ## device_init ##
@@ -61,6 +58,9 @@ host_cloudsmith_gpg_key: gpg.8029D4AFA58CBB5E.key ## For kea-1-9 https://cloudsm
 ## isc_kea ##
 
 ## wireguard ##
+host_wireguard_interface_name: wg0
+host_wireguard_subnet: "172.16.0"
+host_wireguard_server_port: 51820
 host_wireguard_server_address: "{{ host_wireguard_subnet }}.1/24"
 host_wireguard_server_private_key: "{{ v_wireguard_server_private_key }}"
 host_wireguard_server_public_key: "{{ v_wireguard_server_public_key }}"
@@ -125,5 +125,8 @@ host_is_alive_echo_request_count: "21"
 ## isAlive ##
 
 ## nftables ##
+host_nftables_wireguard_interface_name: "{{ host_wireguard_interface_name }}"
+host_nftables_wireguard_subnet: "{{ host_wireguard_subnet }}"
+host_nftables_wireguard_server_port: "{{ host_wireguard_server_port }}"
 host_nftables_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count }}"
 ## nftables ##

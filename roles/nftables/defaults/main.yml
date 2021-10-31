@@ -1,8 +1,8 @@
 ---
 WAN_interface_name: "{{ grp_device.router.wan_interface }}"
-wireguard_interface_name: "{{ host_wireguard_interface_name }}"
-wireguard_subnet: "{{ host_wireguard_subnet }}"
-wireguard_server_port: "{{ host_wireguard_server_port }}"
+wireguard_interface_name: "{{ host_nftables_wireguard_interface_name }}"
+wireguard_subnet: "{{ host_nftables_wireguard_subnet }}"
+wireguard_server_port: "{{ host_nftables_wireguard_server_port }}"
 
 arch_ipv4_addr: "{{ grp_device.arch.ipv4_addr }}"
 pi_ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
