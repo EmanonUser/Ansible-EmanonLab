@@ -125,5 +125,5 @@ host_is_alive_echo_request_count: "21"
 ## isAlive ##
 
 ## nftables ##
-host_nftables_echo_request_count: "{{ host_is_alive_echo_request_count }}"
+host_nftables_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count }}"
 ## nftables ##
