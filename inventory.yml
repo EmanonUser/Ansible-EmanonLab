@@ -3,16 +3,23 @@ homelab:
   vars:
     ansible_user: ansible
     ansible_ssh_private_key_file: /home/emanon/.ssh/AnsibleMaster_key_ed25519
+
   hosts:
     router:
       ansible_host: r.local.emanon
+      inventory_cpu_architecture: amd64 # amd64, arm64 etc ...
+
     pi:
       ansible_host: pi.local.emanon
+      inventory_cpu_architecture: arm64
+
 
 secondarylab:
   vars:
     ansible_user: ansible
     ansible_ssh_private_key_file: /home/emanon/.ssh/AnsibleMaster_key_ed25519
+
   hosts:
     laptop:
       ansible_host: lain.emanon.moe
+      inventory_cpu_architecture: amd64

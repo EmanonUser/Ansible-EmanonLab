@@ -1,5 +1,5 @@
 ---
-cpu_architecture: "{{ host_cpu_architecture }}"
+cpu_architecture: "{{ host_coredns_cpu_architecture }}"
 coreDNS_path: "{{ host_coreDNS_path }}"
 coreDNS_version: "{{ host_coreDNS_version }}"
 coreDNS_ip: "{{ grp_device.router.ipv4_addr }}"

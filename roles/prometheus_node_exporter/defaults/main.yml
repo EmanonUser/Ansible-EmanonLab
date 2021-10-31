@@ -2,5 +2,5 @@
 primary_user_username: "{{ v_host_primary_user_username }}"
 download_url: "{{ host_exporter_download_url }}"
 node_exporter_version: "{{ host_exporter_version }}"
-cpu_architecture: "{{ host_cpu_architecture }}"
+cpu_architecture: "{{ host_prometheus_node_exporter_cpu_architecture }}"
 firewalld_zone: "{{ host_firewalld_zone }}"

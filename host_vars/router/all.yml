@@ -4,7 +4,6 @@
 ## Role global ##
 v_host_primary_user_username: "{{ v_primary_user_username }}"
 v_host_primary_user_password: "{{ v_primary_user_password }}" 
-host_cpu_architecture: amd64 # amd64, arm64 etc ...
 ## Role global ##
 
 ## device_init ##
@@ -85,6 +84,7 @@ host_wireguard_peers:
 ## wireguard ##
 
 ## prometheus_node_exporter ##
+host_prometheus_node_exporter_cpu_architecture: "{{ inventory_cpu_architecture }}"
 host_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/
 host_exporter_version: 1.1.2 # https://github.com/prometheus/node_exporter/releases/
 ## prometheus_node_exporter ##
@@ -98,6 +98,7 @@ host_ntpd_upstream_server:
 ## ntpd ##
 
 ## coredns ##
+host_coredns_cpu_architecture: "{{ inventory_cpu_architecture }}"
 host_coreDNS_path: /opt/coredns
 host_coreDNS_version: "1.8.4"
 host_coreDNS_port: "53"
