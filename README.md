@@ -7,7 +7,6 @@ TODO:
     - full check
     - Upgrade router
     - Update zrepl
-    - Rework gad.service
     - Add isAlive to router
     - Update method for zfs contrib repo
     - Rework nftables
