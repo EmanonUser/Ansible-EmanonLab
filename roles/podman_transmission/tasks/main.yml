@@ -40,6 +40,7 @@
     immediate: yes
     state: enabled
   when:
+    - podman_networking.prometheus.lan_access is defined
     - podman_networking.prometheus.lan_access
     - ansible_host == 'pi.local.emanon'
 
@@ -51,6 +52,7 @@
     immediate: yes
     state: disabled
   when:
+    - podman_networking.prometheus.lan_access is defined
     - not podman_networking.prometheus.lan_access
     - ansible_host == 'pi.local.emanon'
 
@@ -65,8 +67,9 @@
     - "{{ grp_device.arch.ipv4_addr }}"
     - "{{ grp_device.one.ipv4_addr }}"
   when:
-     - podman_networking.transmission.lan_access
-     - ansible_host == 'lain.emanon.moe'
+    - podman_networking.transmission.lan_access is defined
+    - podman_networking.transmission.lan_access
+    - ansible_host == 'lain.emanon.moe'
 
 - name: Close transmission firewalld ports to admin devices
   ansible.posix.firewalld:
@@ -79,5 +82,6 @@
     - "{{ grp_device.arch.ipv4_addr }}"
     - "{{ grp_device.one.ipv4_addr }}"
   when:
+    - podman_networking.transmission.lan_access is defined
     - not podman_networking.transmission.lan_access
     - ansible_host == 'lain.emanon.moe'
