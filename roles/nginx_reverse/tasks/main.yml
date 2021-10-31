@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     name: nginx
     state: present
-  
+
 - name: Configure reverse proxy(s)
   ansible.builtin.template:
     src: reverse_template.conf.j2
