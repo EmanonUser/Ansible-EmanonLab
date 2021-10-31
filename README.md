@@ -9,3 +9,6 @@ TODO:
     - Update zrepl
     - Rework gad.service
     - Add isAlive to router
+    - Update method for zfs contrib repo
+    - Rework nftables
+    - Link all multi-role vars name to the first role
