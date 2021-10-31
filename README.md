@@ -11,3 +11,5 @@ TODO:
     - Update method for zfs contrib repo
     - Rework nftables
     - Link all multi-role vars name to the first role
+    - Rename all handlers with proper conventions
+    - Add handlers apt update && apt upgrade after version update
