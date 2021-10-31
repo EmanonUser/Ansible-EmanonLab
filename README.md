@@ -5,7 +5,7 @@ TODO:
  
     - Use template for kea
     - full check
-    - Upgrade router & pi to bullseye
+    - Upgrade router
     - Update zrepl
     - Rework gad.service
     - Add isAlive to router

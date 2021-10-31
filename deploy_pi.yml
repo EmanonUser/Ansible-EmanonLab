@@ -5,14 +5,15 @@
   gather_facts: yes
   roles:
     - device_init
+    - starship
     - systemd_timesyncd
     - firewalld
-    - docker
+    - podman
     - prometheus_node_exporter
     - nfs_share
-    - docker_adguard
-    - docker_prometheus
-    - docker_grafana
-    - docker_transmission
-    - docker_homeassistant
-    - docker_haproxy
+    - podman_adguard
+    - podman_transmission
+    - podman_prometheus
+    - podman_grafana
+    # - podman_homeassistant
+    - nginx_reverse
