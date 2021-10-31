@@ -1,0 +1,13 @@
+{% for key, value in host_podman_networking.items() %}
+server {
+  listen 80;
+  listen [::]:80;
+
+  server_name {{ value.fulldomain }};
+
+  location / {
+      proxy_pass http://localhost:{{ value.webui_port }}/;
+  }
+}
+
+{% endfor %}
