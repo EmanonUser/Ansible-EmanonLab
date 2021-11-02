@@ -13,3 +13,4 @@ TODO:
     - Link all multi-role vars name to the first role
     - Rename all handlers with proper conventions
     - Add handlers apt update && apt upgrade after version update
+    - Update role CoreDNS --> Coredns, remove docker ?? variable
