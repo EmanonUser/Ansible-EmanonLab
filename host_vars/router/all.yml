@@ -18,9 +18,10 @@
 # Add comment to external variables, variables that depend a third party apt gpg key etc
 # Verbose is cool, use verbose names even when it become extra long
 
-v_host_primary_user_username: "{{ v_primary_user_username }}"
-v_host_primary_user_password: "{{ v_primary_user_password }}" 
-## Role global ##
+## Roleless ##
+host_primary_user_username: "{{ host_vault_primary_user_username }}"
+host_primary_user_password: "{{ host_vault_primary_user_password }}"
+## Roleless ##
 
 ## device_init ##
 use_starship: no

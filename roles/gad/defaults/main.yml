@@ -1,5 +1,5 @@
 ---
-primary_user_username: "{{ v_host_primary_user_username }}"
+primary_user_username: "{{ host_primary_user_username }}"
 gandi_api_key: "{{ grp_gandi_api_key }}"
 gandi_domain_name: "{{ grp_domain_name }}"
 gandi_subdomain: "{{ grp_subdomain }}"

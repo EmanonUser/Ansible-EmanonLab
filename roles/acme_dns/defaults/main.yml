@@ -1,5 +1,5 @@
 ---
-primary_user_username: "{{ v_host_primary_user_username }}"
+primary_user_username: "{{ host_primary_user_username }}"
 acme_directory: "{{ host_acme_directory }}"
 acme_version: "{{ host_acme_version }}"
 acme_challenge_type: "{{ host_acme_challenge_type }}"

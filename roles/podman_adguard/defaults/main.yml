@@ -1,5 +1,5 @@
 ---
-primary_user_username: "{{ v_host_primary_user_username }}"
+primary_user_username: "{{ host_primary_user_username }}"
 podman_adguard_image: "{{ host_podman_adguard_image }}"
 podman_adguard_image_version: "{{ host_podman_adguard_image_version }}"
 podman_adguard_ports: "{{ host_podman_adguard_ports }}"
