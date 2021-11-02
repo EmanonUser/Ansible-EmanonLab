@@ -18,15 +18,17 @@
 # Add comment to external variables, variables that depend a third party apt gpg key etc
 # Verbose is cool, use verbose names even when it become extra long
 
-## Role global ##
-v_host_primary_user_username: "{{ v_primary_user_username }}"
-v_host_primary_user_password: "{{ v_primary_user_password }}" 
-host_cpu_architecture: arm64 # amd64, arm64 etc ...
+## Roleless ##
+host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
+host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
+host_roleless_cpu_architecture: arm64 # amd64, arm64 etc ...
+## Roleless ##
 
 ## device_init ##
-host_use_starship: yes
-host_starship_version: "0.58.0" # https://github.com/starship/starship/releases
-host_debian_stable_packages:
+host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
+host_device_init_use_starship: yes
+host_device_init_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
   - ca-certificates
@@ -47,14 +49,21 @@ host_debian_stable_packages:
   - acl
 ## device_init ##
 
+## starship ##
+host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_starship_version: "0.58.0" # https://github.com/starship/starship/releases
+## starship ##
+
 ## firewalld ##
 host_firewalld_primary_interface: eth0
 host_firewalld_zone: home
 ## firewalld ##
 
 ## prometheus_node_exporter ##
-host_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/
-host_exporter_version: 1.1.2 # https://github.com/prometheus/node_exporter/releases/
+host_prometheus_node_exporter_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_prometheus_node_exporter_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
+host_prometheus_node_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/
+host_prometheus_node_exporter_version: 1.1.2 # https://github.com/prometheus/node_exporter/releases/
 ## prometheus_node_exporter ##
 
 ## nfs_share ##
@@ -85,12 +94,13 @@ host_podman_networking:
     fulldomain: homeassistant.local.emanon
     webui_port: 4005
     lan_access: yes
-
+host_podman_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
 host_podman_firewalld_zone: "{{ host_firewalld_zone }}"
 ########## Podman ##########
 
 ## podman_adguard ##
+host_podman_adguard_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_adguard_image: docker.io/adguard/adguardhome
 host_podman_adguard_image_version: v0.106.3
 host_podman_adguard_ports:
@@ -110,6 +120,7 @@ host_podman_adguard_volumes:
 ## podman_adguard ##
 
 ## podman_transmission ##
+host_podman_transmission_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_transmission_image: docker.io/haugene/transmission-openvpn
 host_podman_transmission_image_version: "4.0"
 host_podman_transmission_ports: "{% if host_podman_networking.transmission.lan_access %}{{ host_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
@@ -122,14 +133,15 @@ host_podman_transmission_directories:
 host_podman_transmission_volumes:
    - "{{ host_podman_volumes_path }}/transmission:/transmission"
    - "/mnt/vault/media:/media"
-host_podman_transmission_env_openvpn_provider: "{{ v_transmission_openvpn_provider }}"
-host_podman_transmission_env_openvpn_config: "{{ v_transmission_openvpn_config }}"
-host_podman_transmission_env_openvpn_username: "{{ v_transmission_openvpn_username }}"
-host_podman_transmission_env_openvpn_password: "{{ v_transmission_openvpn_password }}"
+host_podman_transmission_env_openvpn_provider: "{{ host_vault_transmission_openvpn_provider }}"
+host_podman_transmission_env_openvpn_config: "{{ host_vault_transmission_openvpn_config }}"
+host_podman_transmission_env_openvpn_username: "{{ host_vault_transmission_openvpn_username }}"
+host_podman_transmission_env_openvpn_password: "{{ host_vault_transmission_openvpn_password }}"
 host_podman_transmission_env_download_dir: "/media"
 ## podman_transmission ##
 
 ## podman_prometheus ##
+host_podman_prometheus_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_prometheus_image: docker.io/prom/prometheus
 host_podman_prometheus_image_version: v2.30.3
 host_podman_prometheus_ports: "{% if host_podman_networking.prometheus.lan_access %}{{ host_podman_networking.prometheus.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.prometheus.webui_port }}{% endif %}:9090/tcp"
@@ -142,18 +154,20 @@ host_podman_prometheus_config_path: "{{ host_podman_volumes_path }}/prometheus/p
 ## podman_prometheus ##
 
 ## podman_grafana ##
+host_podman_grafana_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_grafana_image: docker.io/grafana/grafana
 host_podman_grafana_image_version: "8.2.2"
 host_podman_grafana_ports: "{% if host_podman_networking.grafana.lan_access %}{{ host_podman_networking.grafana.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
 host_podman_grafana_firewalld_ports: "{{ host_podman_networking.grafana.webui_port }}/tcp"
 host_podman_grafana_url: "http://127.0.0.1:{{ host_podman_networking.grafana.webui_port }}"
-host_grafana_admin_password: "{{ v_grafana_admin_password }}"
+host_grafana_admin_password: "{{ host_vault_grafana_admin_password }}"
 host_podman_grafana_dashboards_path: 
   - "{{ host_podman_volumes_path }}/grafana/dashboards/shp.json"
   - "{{ host_podman_volumes_path }}/grafana/dashboards/tmp117.json"
 ## podman_grafana ##
 
 ## podman_homeassistant ##
+host_podman_homeassistant_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_homeassistant_image: ghcr.io/home-assistant/home-assistant
 host_podman_homeassistant_image_version: "2021.10.5"
 host_podman_homeassistant_ports: "{% if host_podman_networking.homeassistant.lan_access %}{{ host_podman_networking.homeassistant.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
@@ -162,13 +176,3 @@ host_podman_homeassistant_directories: "{{ host_podman_volumes_path }}/home_assi
 host_podman_homeassistant_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
 host_podman_homeassistant_config_path: "{{ host_podman_volumes_path }}/home_assistant/configuration.yaml"
 ## podman_homeassistant ##
-
-## podman_haproxy ##
-host_podman_haproxy_image: docker.io/haproxy
-host_podman_haproxy_image_version: 2.5-dev10-alpine
-host_podman_haproxy_ports: "{% if host_podman_networking.haproxy.lan_access %}{{ host_podman_networking.haproxy.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.haproxy.webui_port }}{% endif %}:80/tcp"
-host_podman_haproxy_firewalld_ports: "{{ host_podman_networking.haproxy.webui_port }}/tcp"
-host_podman_haproxy_directories: "{{ host_podman_volumes_path }}/haproxy"
-host_podman_haproxy_volumes: "{{ host_podman_volumes_path }}/haproxy:/usr/local/etc/haproxy"
-host_podman_haproxy_config_path: "{{ host_podman_volumes_path }}/haproxy/haproxy.cfg"
-## podman_haproxy ##

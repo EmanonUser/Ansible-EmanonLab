@@ -1,5 +1,5 @@
 ---
-primary_user_username: "{{ host_primary_user_username }}"
+primary_user_username: "{{ host_podman_prometheus_roleless_primary_user_username }}"
 podman_prometheus_image: "{{ host_podman_prometheus_image }}"
 podman_prometheus_image_version: "{{ host_podman_prometheus_image_version }}"
 podman_prometheus_ports: "{{ host_podman_prometheus_ports }}"
