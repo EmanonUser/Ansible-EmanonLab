@@ -22,7 +22,7 @@
     remote_src: yes
     owner: gandi
     group: gandi
-    mode: u=rx,g=,o=
+    mode: u=rwx,g=,o=
 
 - name: Set permissions
   ansible.builtin.file:
