@@ -1,4 +1,23 @@
 ---
+# Ansible-Emanonlab, variables conventions
+# snake_case
+# prefix define origin
+  # host_
+  # grp_
+  # host_vault_
+  # grp_vault_
+
+# All variables must follow those path: 
+##  host_vars/*/vault.yml --> host_vars/*/all.yml --> roles/*/default/main.yml  ##          Secret host variables
+##  group_vars/*/vault.yml --> group_vars/*/all.yml --> roles/*/default/main.yml  ##        Secret group variables
+##  host_vars/*/all.yml --> roles/*/default/main.yml  ##                                    Standards host variables
+##  group_vars/*/all.yml --> roles/*/default/main.yml  ##                                   Standards group variables
+
+# If a variables is used in multiples roles at the same time the prefix will be host_Origin-role_role_ and will be defined only on the origin role
+# Variables that do not belong to a role will be placed in the Roleless section
+# Add comment to external variables, variables that depend a third party apt gpg key etc
+# Verbose is cool, use verbose names even when it become extra long
+
 grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch
 grp_local_domain: .home
 grp_domain_name: emanon.moe
