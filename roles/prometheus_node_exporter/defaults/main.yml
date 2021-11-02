@@ -1,5 +1,5 @@
 ---
-primary_user_username: "{{ host_primary_user_username }}"
+primary_user_username: "{{ host_prometheus_node_exporter_roleless_primary_user_username }}"
 download_url: "{{ host_prometheus_node_exporter_download_url }}"
 node_exporter_version: "{{ host_prometheus_node_exporter_version }}"
 cpu_architecture: "{{ host_prometheus_node_exporter_roleless_cpu_architecture }}"

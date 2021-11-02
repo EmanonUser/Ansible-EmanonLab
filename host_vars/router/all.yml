@@ -19,12 +19,14 @@
 # Verbose is cool, use verbose names even when it become extra long
 
 ## Roleless ##
-host_primary_user_username: "{{ host_vault_primary_user_username }}"
-host_primary_user_password: "{{ host_vault_primary_user_password }}"
+host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
+host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
 host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
 ## Roleless ##
 
 ## device_init ##
+host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
 host_device_init_use_starship: no
 host_device_init_debian_stable_packages:
   - debian-keyring
@@ -102,6 +104,7 @@ host_wireguard_peers:
 ## wireguard ##
 
 ## prometheus_node_exporter ##
+host_prometheus_node_exporter_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_prometheus_node_exporter_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
 host_prometheus_node_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/
 host_prometheus_node_exporter_version: 1.1.2 # https://github.com/prometheus/node_exporter/releases/
@@ -132,16 +135,18 @@ host_coredns_docker_local_subdomain:
 ## coredns ##
 
 ## gad ##
+host_gad_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_gad_path: /opt
 host_gad_version: "1.4.2"
 host_gad_use_ipv6: no
 ## gad ##
 
-## isAlive ##
+## is_alive ##
+host_is_alive_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_is_alive_echo_request_target: lain.emanon.moe
 host_is_alive_echo_request_interval: 15m
 host_is_alive_echo_request_count: "21" 
-## isAlive ##
+## is_alive ##
 
 ## nftables ##
 host_nftables_wireguard_interface_name: "{{ host_wireguard_interface_name }}"

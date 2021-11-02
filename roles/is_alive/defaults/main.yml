@@ -1,5 +1,5 @@
 ---
-primary_user_username: "{{ v_primary_user_username }}"
+primary_user_username: "{{ host_is_alive_roleless_primary_user_username }}"
 is_alive_echo_request_target: "{{ host_is_alive_echo_request_target }}"
 is_alive_echo_request_interval: "{{ host_is_alive_echo_request_interval }}"
 is_alive_echo_request_count: "{{ host_is_alive_echo_request_count }}"
