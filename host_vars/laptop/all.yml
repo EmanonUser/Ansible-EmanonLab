@@ -18,17 +18,17 @@
 # Add comment to external variables, variables that depend a third party apt gpg key etc
 # Verbose is cool, use verbose names even when it become extra long
 
-## Role global ##
-v_host_primary_user_username: "{{ v_primary_user_username }}"
-v_host_primary_user_password: "{{ v_primary_user_password }}" 
-host_cpu_architecture: amd64 # amd64, arm64 etc ...
-host_zfs_primary_pools:
-  tank:
-    path: "/tank"
-## Role global ##
+## Roleless ##
+host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
+host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
+host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
+## Roleless ##
 
 ## device_init ##
-host_debian_stable_packages:
+host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
+host_device_init_use_starship: yes
+host_device_init_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
   - ca-certificates
@@ -52,26 +52,37 @@ host_debian_stable_packages:
   - acl
   - rsync
   - aria2
-host_use_starship: yes
-host_starship_version: "0.57.0" # https://github.com/starship/starship/releases
 ## device_init ##
+
+## starship ##
+host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_starship_version: "0.58.0" # https://github.com/starship/starship/releases
+## starship ##
 
 ## firewalld ##
 host_firewalld_primary_interface: enp3s0
 host_firewalld_zone: dmz
 ## firewalld ##
 
-## isAlive ##
+## is_alive ##
+host_is_alive_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_is_alive_echo_request_target: iwakura.emanon.moe
 host_is_alive_echo_request_interval: 15m
 host_is_alive_echo_request_count: "21" 
-## isAlive ##
+## is_alive ##
 
 ## zfs ##
+host_zfs_primary_pools:
+  tank:
+    path: "/tank"
 host_zfs_zpool_names: "{% for pool, value in host_zfs_primary_pools %}{{ pool }}{% endif %}"
-host_systemd_OnCalendar_scrubing_timer: Thu 00:00:00
+host_zfs_systemd_OnCalendar_scrubing_timer: Thu 00:00:00 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
 host_zfs_arc_max: 3006477000  # Bytes
 ## zfs ##
+
+## zrepl ##
+host_zrepl_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
+## zrepl ##
 
 ########## Podman ##########
 host_podman_networking:
@@ -95,6 +106,8 @@ host_podman_networking:
     webui_port: 25104
     public: yes
     lan_access: no
+
+host_podman_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_volumes_path: "{{ host_zfs_primary_pools.tank.path }}/data/podman"
 host_podman_media_path: "{{ host_zfs_primary_pools.tank.path }}/media"
 host_podman_files_path: "{{ host_zfs_primary_pools.tank.path }}/files"
@@ -102,6 +115,7 @@ host_podman_firewalld_zone: "{{ host_firewalld_zone }}"
 ########## Podman ##########
 
 ## podman_jellyfin ##
+host_podman_jellyfin_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_jellyfin_image: docker.io/jellyfin/jellyfin
 host_podman_jellyfin_image_version: "latest"
 host_podman_jellyfin_ports: "{{ host_podman_networking.jellyfin.webui_port }}:8096"
@@ -117,6 +131,7 @@ host_podman_jellyfin_volumes:
 ## podman_jellyfin ##
 
 ## podman_transmission ##
+host_podman_transmission_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_transmission_image: docker.io/haugene/transmission-openvpn
 host_podman_transmission_image_version: "3.7"
 host_podman_transmission_ports: "{% if host_podman_networking.transmission.lan_access %}{{ host_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
@@ -130,14 +145,15 @@ host_podman_transmission_volumes:
   - "{{ host_podman_volumes_path }}/transmission/:/transmission"
   - "{{ host_podman_media_path }}:/media"
   - "{{ host_zfs_primary_pools.tank.path }}/misc:/misc"
-host_podman_transmission_env_openvpn_provider: "{{ v_transmission_openvpn_provider }}"
-host_podman_transmission_env_openvpn_config: "{{ v_transmission_openvpn_config }}"
-host_podman_transmission_env_openvpn_username: "{{ v_transmission_openvpn_username }}"
-host_podman_transmission_env_openvpn_password: "{{ v_transmission_openvpn_password }}"
+host_podman_transmission_env_openvpn_provider: "{{ host_vault_transmission_openvpn_provider }}"
+host_podman_transmission_env_openvpn_config: "{{ host_vault_transmission_openvpn_config }}"
+host_podman_transmission_env_openvpn_username: "{{ host_vault_transmission_openvpn_username }}"
+host_podman_transmission_env_openvpn_password: "{{ host_vault_transmission_openvpn_password }}"
 host_podman_transmission_env_download_dir: "{{ host_podman_media_path }}"
 ## podman_transmission ##
 
 ## podman_filebrowser ##
+host_podman_filebrowser_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_filebrowser_image: docker.io/filebrowser/filebrowser
 host_podman_filebrowser_image_version: "v2"
 host_podman_filebrowser_ports: "{{ host_podman_networking.filebrowser.webui_port }}:2500"
@@ -155,6 +171,7 @@ host_podman_filebrowser_volumes:
 ## podman_filebrowser ##
 
 ## podman_kuma ##
+host_podman_kuma_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_kuma_image: docker.io/louislam/uptime-kuma
 host_podman_kuma_image_version: 1.5.3-alpine
 host_podman_kuma_ports: "{{ host_podman_networking.kuma.webui_port }}:3001"
@@ -164,6 +181,7 @@ host_podman_kuma_volumes: "{{ host_podman_volumes_path }}/kuma:/app/data"
 ## podman_kuma ##
 
 ## acme_dns ##
+host_acme_dns_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_acme_directory: https://acme-v02.api.letsencrypt.org/directory
 host_acme_version: 2
 host_acme_challenge_type: dns-01
@@ -180,7 +198,7 @@ host_acme_domain_name:
   # - { fqdn: "file.{{ host_acme_domain }}", index: 0, domain: ".{{ host_acme_domain }}" }
   # - { fqdn: "jellyfin.{{ host_acme_domain }}", index: 1, domain: ".{{ host_acme_domain }}" }
   # - { fqdn: "kuma.{{ host_acme_domain }}", index: 2, domain: ".{{ host_acme_domain }}" }
-host_acme_gandi_api_key: "{{ v_gandi_api_key }}"
+host_acme_gandi_api_key: "{{ host_vault_gandi_api_key }}"
 ## acme_dns ##
 
 ## haproxy ##
@@ -194,6 +212,7 @@ host_haproxy_stats_port: "8404"
 ## haproxy ##
 
 ## gad ##
+host_gad_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_gad_path: /opt
 host_gad_version: "1.4.2"
 host_gad_use_ipv6: yes

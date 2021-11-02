@@ -1,5 +1,5 @@
 ---
-primary_user_username: "{{ host_primary_user_username }}"
+primary_user_username: "{{ host_podman_kuma_roleless_primary_user_username }}"
 podman_kuma_image: "{{ host_podman_kuma_image }}"
 podman_kuma_image_version: "{{ host_podman_kuma_image_version }}"
 podman_kuma_ports: "{{ host_podman_kuma_ports }}"

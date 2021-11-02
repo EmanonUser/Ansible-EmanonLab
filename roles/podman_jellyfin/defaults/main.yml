@@ -1,5 +1,5 @@
 ---
-primary_user_username: "{{ host_primary_user_username }}"
+primary_user_username: "{{ host_podman_jellyfin_roleless_primary_user_username }}"
 podman_jellyfin_image: "{{ host_podman_jellyfin_image }}"
 podman_jellyfin_image_version: "{{ host_podman_jellyfin_image_version }}"
 podman_jellyfin_ports: "{{ host_podman_jellyfin_ports }}"
