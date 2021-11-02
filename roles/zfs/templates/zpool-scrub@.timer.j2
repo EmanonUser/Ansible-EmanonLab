@@ -2,7 +2,7 @@
 Description=Scheduled zpool %I scrubing service timer
 
 [Timer]
-OnCalendar={{ systemd_OnCalendar_scrubing_timer }}
+OnCalendar={{ systemd_on_calendar_scrubing_timer }}
 Persistent=true
 AccuracySec=1h
 Unit=zpool-scrub@%i.service
