@@ -125,7 +125,7 @@ host_coredns_version: "1.8.4"
 host_coredns_port: "53"
 host_coredns_prometheus_port: "9353"
 host_coredns_forwardto: "{{ grp_device.pi.ipv4_addr }}"
-host_coredns_docker_local_subdomain:
+host_coredns_containers_local_subdomain:
   - adguard
   - prometheus
   - grafana

@@ -3,6 +3,6 @@ local.emanon.        IN  SOA r.local.emanon. moemanon.pm.me. 12 7200 3600 120960
 {{ device.hostname }}.{{ grp_local_domain }}.        IN A {{ device.ipv4_addr }}
 {% endfor %}
 
-{% for subdomain in  coredns_docker_local_subdomain %}
+{% for subdomain in  coredns_containers_local_subdomain %}
 {{ subdomain }}.{{ grp_local_domain }}.        IN CNAME   {{ grp_device.pi.hostname }}.{{ grp_local_domain }}.
 {% endfor %}
