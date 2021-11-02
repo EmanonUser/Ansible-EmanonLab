@@ -9,7 +9,7 @@
 
 - name: Create CoreDNS directory
   ansible.builtin.file:
-    path: "{{ coreDNS_path }}"
+    path: "{{ coredns_path }}"
     owner: coredns
     group: coredns
     mode: u=rwx,g=,o=
@@ -17,9 +17,9 @@
 
 - name: Download CoreDNS archive
   ansible.builtin.get_url:
-    url: https://github.com/coredns/coredns/releases/download/v{{ coreDNS_version }}/coredns_{{ coreDNS_version }}_linux_{{ cpu_architecture }}.tgz
-    checksum: sha256:https://github.com/coredns/coredns/releases/download/v{{ coreDNS_version }}/coredns_{{ coreDNS_version }}_linux_{{ cpu_architecture }}.tgz.sha256 # noqa 204
-    dest: "{{ coreDNS_path }}/coredns_{{ coreDNS_version }}.tgz"
+    url: https://github.com/coredns/coredns/releases/download/v{{ coredns_version }}/coredns_{{ coredns_version }}_linux_{{ cpu_architecture }}.tgz
+    checksum: sha256:https://github.com/coredns/coredns/releases/download/v{{ coredns_version }}/coredns_{{ coredns_version }}_linux_{{ cpu_architecture }}.tgz.sha256 # noqa 204
+    dest: "{{ coredns_path }}/coredns_{{ coredns_version }}.tgz"
     owner: coredns
     group: coredns
     mode: u=rwx,g=,o=
@@ -27,8 +27,8 @@
 
 - name: Unarchive CoreDNS binary
   ansible.builtin.unarchive:
-    src: "{{ coreDNS_path }}/coredns_{{ coreDNS_version }}.tgz"
-    dest: "{{ coreDNS_path }}"
+    src: "{{ coredns_path }}/coredns_{{ coredns_version }}.tgz"
+    dest: "{{ coredns_path }}"
     remote_src: yes
     owner: coredns
     group: coredns
@@ -37,7 +37,7 @@
 - name: Configure CoreDNS
   ansible.builtin.template:
     src: Corefile.j2
-    dest: "{{ coreDNS_path }}/Corefile"
+    dest: "{{ coredns_path }}/Corefile"
     owner: coredns
     group: coredns
     mode: u=rwx,g=,o=
@@ -46,7 +46,7 @@
 - name: Configure CoreDNS local-zone file
   ansible.builtin.template:
     src: master.db.j2
-    dest: "{{ coreDNS_path }}/master.db"
+    dest: "{{ coredns_path }}/master.db"
     owner: coredns
     group: coredns
     mode: u=r,g=,o=

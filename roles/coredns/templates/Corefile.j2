@@ -1,6 +1,6 @@
 (snip) {
     bind 127.0.0.1
-    bind {{ coreDNS_ip }}
+    bind {{ coredns_ip }}
     any
     minimal
     log
@@ -11,15 +11,15 @@
     }
 }
 
-local.emanon:{{ coreDNS_port }} {
+local.emanon:{{ coredns_port }} {
     import snip
     file /opt/coredns/master.db
 }
 
-.:{{ coreDNS_port }} {
+.:{{ coredns_port }} {
     import snip
-    prometheus {{ coreDNS_ip }}:{{ coreDNS_prometheus_port }}
-    forward . {{ coreDNS_forwardto }}:10053 {
+    prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
+    forward . {{ coredns_forwardto }}:10053 {
         except example.org
         except local.emanon
         except in-addr.arpa
