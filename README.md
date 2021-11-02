@@ -14,3 +14,4 @@ TODO:
     - Rename all handlers with proper conventions
     - Add handlers apt update && apt upgrade after version update
     - Update role CoreDNS --> Coredns, remove docker ?? variable
+    - zfs default not in snake_case
