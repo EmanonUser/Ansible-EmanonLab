@@ -1,4 +1,3 @@
 ---
-primary_user_username: "{{ host_primary_user_username }}"
-use_starship: "{{ host_device_init_use_starship }}"
+primary_user_username: "{{ host_starship_roleless_primary_user_username }}"
 starship_version: "{{ host_starship_version }}"

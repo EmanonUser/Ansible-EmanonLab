@@ -10,7 +10,6 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rw,g=,o=
-  when: use_starship
 
 - name: Unarchive starship.rs
   ansible.builtin.unarchive:
@@ -20,4 +19,3 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=rx,o=rx
-  when: use_starship
