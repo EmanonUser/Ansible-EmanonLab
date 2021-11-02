@@ -25,8 +25,8 @@ host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
 ## Roleless ##
 
 ## device_init ##
-use_starship: no
-host_debian_stable_packages:
+host_device_init_use_starship: no
+host_device_init_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
   - ca-certificates
@@ -45,7 +45,7 @@ host_debian_stable_packages:
 ## device_init ##
 
 ## interfaces ##
-host_lacp_interface: bond0
+host_interfaces_lacp_interface: bond0
 ## interfaces ##
 
 ## frr ##
@@ -70,8 +70,8 @@ host_frr_daemons:
 ## frr ##
 
 ## isc_kea ##
-host_kea_version: kea-2-0  ## https://cloudsmith.io/~isc/repos/
-host_cloudsmith_gpg_key: gpg.8029D4AFA58CBB5E.key ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-1-9/signing/
+host_isc_kea_version: kea-2-0  ## https://cloudsmith.io/~isc/repos/
+host_isc_kea_cloudsmith_gpg_key: gpg.8029D4AFA58CBB5E.key ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-1-9/signing/
 ## isc_kea ##
 
 ## wireguard ##
