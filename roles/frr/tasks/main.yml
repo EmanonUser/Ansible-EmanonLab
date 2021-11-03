@@ -29,7 +29,7 @@
     mode: u=rw,g=r,o=
     force: yes
   notify: Reload FRRouting service
-  
+
 - name: Configure FRRouting Deamons
   ansible.builtin.template:
     src: daemons.j2
