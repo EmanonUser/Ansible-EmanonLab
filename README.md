@@ -11,3 +11,4 @@ TODO:
     - Rename all handlers with proper conventions
     - Add handlers apt update && apt upgrade after version update
     - smartd role
+    - remove grp_firewalld_based_device
