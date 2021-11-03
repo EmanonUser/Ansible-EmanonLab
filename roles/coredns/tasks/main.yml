@@ -23,6 +23,7 @@
     owner: coredns
     group: coredns
     mode: u=rwx,g=,o=
+    timeout: 30
   notify: ["Enable CoreDNS service", "Restart CoreDNS service"]
 
 - name: Unarchive CoreDNS binary

@@ -20,6 +20,7 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rx,g=,o=
+    timeout: 30
   when: not stat_value.stat.exists
 
 - name: Extract node_exporter archive

@@ -14,6 +14,7 @@
     owner: gandi
     group: gandi
     mode: u=rwx,g=,o=
+    timeout: 30
 
 - name: Unarchive CoreDNS binary
   ansible.builtin.unarchive:
@@ -45,7 +46,6 @@
     - gad4.service
     - gad4.timer
   notify: Enable gad4 timer
-
 
 - name: Install systemd gad6 service files
   ansible.builtin.template:

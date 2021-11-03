@@ -6,6 +6,7 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
+    timeout: 30
 
 - name: Add zrepl debian source repo
   ansible.builtin.apt_repository:
