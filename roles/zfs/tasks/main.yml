@@ -1,7 +1,15 @@
 ---
-- name: Add contrib stable repository for OpenZFS
+- name: Remove debian stable repository
   ansible.builtin.apt_repository:
-    repo: deb http://deb.debian.org/debian {{ ansible_distribution_release  }} main contrib
+    repo: "{{ item }}"
+    state: absent
+  loop:
+    - deb http://deb.debian.org/debian/ {{ ansible_distribution_release  }} main
+    - deb-src http://deb.debian.org/debian/ {{ ansible_distribution_release  }} main
+
+- name: Add debian contrib stable repository for OpenZFS
+  ansible.builtin.apt_repository:
+    repo: deb http://deb.debian.org/debian/ {{ ansible_distribution_release  }} main contrib
     filename: "{{ ansible_distribution_release  }}-contrib"
     state: present
 
