@@ -3,7 +3,7 @@
   ansible.builtin.systemd:
     name: ntp.service
     enabled: yes
-  
+
 - name: Start ntp service
   ansible.builtin.systemd:
     name: ntp.service

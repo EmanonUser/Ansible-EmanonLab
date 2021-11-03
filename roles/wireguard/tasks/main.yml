@@ -14,7 +14,7 @@
     owner: root
     group: root
     mode: u=rw,g=,o=
-  notify: 
-    - Enable wireguard service 
+  notify:
+    - Enable wireguard service
     - Start wireguard service
     - Restart wireguard service
