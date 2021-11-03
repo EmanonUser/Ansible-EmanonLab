@@ -1,7 +1,14 @@
 ---
-- name: Enable Gad timer
+- name: Enable gad4 timer
   ansible.builtin.systemd:
-    name: gad.timer
-    state: restarted
+    name: gad4.timer
+    state: started
+    daemon-reload: yes
+    enabled: yes
+
+- name: Enable gad6 timer
+  ansible.builtin.systemd:
+    name: gad6.timer
+    state: started
     daemon-reload: yes
     enabled: yes
