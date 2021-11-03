@@ -43,7 +43,6 @@
     owner: root
     group: root
     mode: u=rw,g=,o=
-    force: yes
   notify: 
     - Daemon-reload node-exporter service
     - Enable node-exporter service
