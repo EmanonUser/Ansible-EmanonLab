@@ -10,6 +10,7 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rw,g=,o=
+    timeout: 30
 
 - name: Unarchive starship.rs
   ansible.builtin.unarchive:
