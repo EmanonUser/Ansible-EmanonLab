@@ -1,6 +1,23 @@
 ---
-- name: Enable & Restart FRRouting service
+- name: Enable FRRouting service
   ansible.builtin.systemd:
     name: frr.service
     enabled: yes
-    state: restarted
+
+- name: Start FRRouting service
+  ansible.builtin.systemd:
+    name: frr.service
+    state: started
+
+- name: Reload FRRouting service
+  ansible.builtin.systemd:
+    name: frr.service
+    state: reloaded
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Apt upgrade
+  ansible.builtin.apt:
+    upgrade: yes
