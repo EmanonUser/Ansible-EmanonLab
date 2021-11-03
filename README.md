@@ -7,7 +7,7 @@ TODO:
     - full check
     - Upgrade router
     - Update zrepl
-    - Update method for zfs contrib repo
     - Rework nftables
     - Rename all handlers with proper conventions
     - Add handlers apt update && apt upgrade after version update
+    - smartd role
