@@ -121,7 +121,7 @@ host_ntpd_upstream_server:
 ## coredns ##
 host_coredns_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
 host_coredns_path: /opt/coredns
-host_coredns_version: "1.8.4"
+host_coredns_version: "1.8.6"
 host_coredns_port: "53"
 host_coredns_prometheus_port: "9353"
 host_coredns_forwardto: "{{ grp_device.pi.ipv4_addr }}"
