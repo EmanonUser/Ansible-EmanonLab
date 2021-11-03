@@ -1,6 +1,10 @@
 ---
-- name: Enable & Restart firewalld service
+- name: Enable firewalld service
   ansible.builtin.systemd:
     name: firewalld.service
     enabled: yes
-    state: restarted
+
+- name: Start firewalld service
+  ansible.builtin.systemd:
+    name: firewalld.service
+    state: started

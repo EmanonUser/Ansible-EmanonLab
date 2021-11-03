@@ -1,15 +1,15 @@
 ---
-- name: Enable FRRouting service
+- name: Enable frrouting service
   ansible.builtin.systemd:
     name: frr.service
     enabled: yes
 
-- name: Start FRRouting service
+- name: Start frrouting service
   ansible.builtin.systemd:
     name: frr.service
     state: started
 
-- name: Reload FRRouting service
+- name: Reload frrRouting service
   ansible.builtin.systemd:
     name: frr.service
     state: reloaded

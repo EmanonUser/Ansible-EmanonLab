@@ -18,7 +18,7 @@
       - frr-pythontools
     update_cache: yes
     state: present
-  notify: ["Enable FRRouting service", "Start FRRouting service"]
+  notify: ["Enable frrouting service", "Start frrouting service"]
 
 - name: Configure FRRouting
   ansible.builtin.template:
@@ -28,7 +28,7 @@
     group: frr
     mode: u=rw,g=r,o=
     force: yes
-  notify: Reload FRRouting service
+  notify: Reload frrouting service
 
 - name: Configure FRRouting Deamons
   ansible.builtin.template:
@@ -38,7 +38,7 @@
     group: frr
     mode: u=rw,g=r,o=
     force: yes
-  notify: Reload FRRouting service
+  notify: Reload frrouting service
 
 - name: Configure FRRouting Vtysh
   ansible.builtin.template:
@@ -48,7 +48,7 @@
     group: frr
     mode: u=rw,g=r,o=
     force: yes
-  notify: Reload FRRouting service
+  notify: Reload frrouting service
 
 - name: Configure Debian service list
   ansible.builtin.blockinfile:

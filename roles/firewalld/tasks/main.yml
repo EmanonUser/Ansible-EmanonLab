@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     name: [ 'firewalld', 'python3-firewall' ]
     state: present
-  notify: Enable & Restart firewalld service
+  notify: ["Enable firewalld service","Start firewalld service"]
 
 - name: Make sure ssh firewalld service is authorized
   ansible.posix.firewalld:

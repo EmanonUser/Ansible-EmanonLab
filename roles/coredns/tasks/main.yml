@@ -24,7 +24,7 @@
     group: coredns
     mode: u=rwx,g=,o=
     timeout: 30
-  notify: ["Enable CoreDNS service", "Restart CoreDNS service"]
+  notify: ["Enable coredns service", "Restart coredns service"]
 
 - name: Unarchive CoreDNS binary
   ansible.builtin.unarchive:
@@ -34,7 +34,7 @@
     owner: coredns
     group: coredns
     mode: u=rx,g=,o=
-  notify: ["Enable CoreDNS service", "Restart CoreDNS service"]
+  notify: ["Enable coredns service", "Restart coredns service"]
 
 - name: Configure CoreDNS
   ansible.builtin.template:
@@ -43,7 +43,7 @@
     owner: coredns
     group: coredns
     mode: u=rwx,g=,o=
-  notify: Restart CoreDNS service
+  notify: Restart coredns service
 
 - name: Configure CoreDNS local-zone file
   ansible.builtin.template:
@@ -52,7 +52,7 @@
     owner: coredns
     group: coredns
     mode: u=r,g=,o=
-  notify: Restart CoreDNS service
+  notify: Restart coredns service
 
 - name: Configure CoreDNS systemd service
   ansible.builtin.template:
@@ -61,4 +61,4 @@
     owner: root
     group: root
     mode: u=rw,g=,o=
-  notify: Daemon-reload CoreDNS service
+  notify: Daemon-reload coredns service
