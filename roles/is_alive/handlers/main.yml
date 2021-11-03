@@ -1,7 +1,19 @@
 ---
+- name: Daemon-reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
 - name: Enable isAlive timer
   ansible.builtin.systemd:
     name: isAlive.timer
     enabled: yes
-    daemon_reload: yes
+
+- name: Start isAlive timer
+  ansible.builtin.systemd:
+    name: isAlive.timer
+    state: started
+
+- name: Restart isAlive timer
+  ansible.builtin.systemd:
+    name: isAlive.timer
     state: restarted

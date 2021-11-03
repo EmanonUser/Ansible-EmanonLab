@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name: ntp
     state: present
+  notify: Enable ntp service
 
 - name: Configure ntpd
   ansible.builtin.template:
@@ -11,5 +12,4 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-    force: yes
-  notify: Enable & Restart ntp service
+  notify: Start ntp service

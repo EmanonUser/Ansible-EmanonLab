@@ -6,4 +6,7 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-  notify: Enable & Restart systemd-timesyncd service
+  notify: 
+    - Enable systemd-timesyncd service
+    - Start systemd-timesyncd service
+    - Restart systemd-timesyncd service

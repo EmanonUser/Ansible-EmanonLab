@@ -1,6 +1,23 @@
 ---
-- name: Enable & Restart zrepl service
+- name: Enable zrepl service
   ansible.builtin.systemd:
     name: zrepl.service
     enabled: yes
+
+- name: Start zrepl service
+  ansible.builtin.systemd:
+    name: zrepl.service
+    state: started
+
+- name: Restart zrepl service
+  ansible.builtin.systemd:
+    name: zrepl.service
     state: restarted
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Apt upgrade
+  ansible.builtin.apt:
+    upgrade: yes

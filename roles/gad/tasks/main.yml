@@ -45,7 +45,11 @@
     - gad.env
     - gad4.service
     - gad4.timer
-  notify: Enable gad4 timer
+  notify:
+    - Daemon-reload systemd
+    - Enable gad4 timer
+    - Start gad4 timer
+    - Restart gad4 timer
 
 - name: Install systemd gad6 service files
   ansible.builtin.template:
@@ -60,4 +64,8 @@
     - gad6.service
     - gad6.timer
   when: gad_use_ipv6
-  notify: Enable gad6 timer
+  notify: 
+    - Daemon-reload systemd
+    - Enable gad6 timer
+    - Start gad6 timer
+    - Restart gad6 timer

@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     name: podman
     state: present
-  notify: Enable & Restart podman service
+  notify: ["Enable podman service", "Start podman service"]
 
 - name: Add docker.io to podman register
   ansible.builtin.lineinfile:

@@ -40,7 +40,11 @@
     group: root
     mode: u=rw,g=,o=
   loop: [zpool-scrub@.service, zpool-scrub@.timer]
-  notify: Enable zpool(s) scrub timer(s)
+  notify:
+    - Daemon-reload systemd
+    - Enable zpool(s)-scrub timer(s)
+    - Start zpool(s)-scrub timer(s)
+    - Restart zpool(s)-scrub timer(s)
 
 # - name: Create ZFS dataset encryption key(s)
 #   ansible.builtin.shell:

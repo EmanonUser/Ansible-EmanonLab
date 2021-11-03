@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name: haproxy
     state: present
+  notify: Enable haproxy service
 
 - name: Create HAproxy ssl dir
   ansible.builtin.file:
@@ -19,7 +20,7 @@
     owner: haproxy
     group: haproxy
     mode: u=rw,g=,o=
-  notify: Enable & Restart HAproxy service
+  notify: Reload haproxy service
 
 - name: Open firewalld service(s)
   ansible.posix.firewalld:

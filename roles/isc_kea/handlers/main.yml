@@ -1,6 +1,23 @@
 ---
-- name: Enable & Restart Kea-dhcp4 service
+- name: Enable kea-dhcp4 service
   ansible.builtin.systemd:
     name: isc-kea-dhcp4-server.service
     enabled: yes
-    state: restarted
+
+- name: Start kea-dhcp4 service
+  ansible.builtin.systemd:
+    name: isc-kea-dhcp4-server.service
+    state: started
+  
+- name: Reload kea-dhcp4 service
+  ansible.builtin.systemd:
+    name: isc-kea-dhcp4-server.service
+    state: reloaded
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Apt upgrade
+  ansible.builtin.apt:
+    upgrade: yes

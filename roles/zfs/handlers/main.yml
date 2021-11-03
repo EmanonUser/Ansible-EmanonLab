@@ -1,8 +1,22 @@
 ---
-- name: Enable zpool(s) scrub timer(s)
+- name: Daemon-reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Enable zpool(s)-scrub timer(s)
   ansible.builtin.systemd:
     name: "zpool-scrub@{{ item }}.timer"
     enabled: yes
-    daemon_reload: yes
+  loop: "{{ zfs_zpool_names }}"
+
+- name: Start zpool(s)-scrub timer(s)
+  ansible.builtin.systemd:
+    name: "zpool-scrub@{{ item }}.timer"
+    state: started
+  loop: "{{ zfs_zpool_names }}"
+
+- name: Restart zpool(s)-scrub timer(s)
+  ansible.builtin.systemd:
+    name: "zpool-scrub@{{ item }}.timer"
     state: restarted
   loop: "{{ zfs_zpool_names }}"

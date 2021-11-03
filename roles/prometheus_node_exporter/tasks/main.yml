@@ -44,7 +44,11 @@
     group: root
     mode: u=rw,g=,o=
     force: yes
-  notify: Enable & Restart node-exporter service
+  notify: 
+    - Daemon-reload node-exporter service
+    - Enable node-exporter service
+    - Start node-exporter service
+    - Restart node-exporter service
 
 - name: Open firewalld port
   ansible.posix.firewalld:

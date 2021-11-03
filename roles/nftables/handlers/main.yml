@@ -1,6 +1,15 @@
 ---
-- name: Enable & Restart nftables service
+- name: Enable nftables service
   ansible.builtin.systemd:
     name: nftables.service
     enabled: yes
+
+- name: Start nftables service
+  ansible.builtin.systemd:
+    name: nftables.service
+    state: started
+
+- name: Restart nftables service
+  ansible.builtin.systemd:
+    name: nftables.service
     state: restarted

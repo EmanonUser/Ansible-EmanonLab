@@ -3,4 +3,7 @@
   ansible.builtin.apt:
     name: sshguard
     state: present
-  notify: Enable & Restart sshguard service
+  notify:
+    - Enable sshguard service
+    - Start sshguard service
+    - Restart sshguard service

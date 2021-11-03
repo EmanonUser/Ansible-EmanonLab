@@ -6,4 +6,8 @@
     group: root
     mode: u=rw,g=,o=
   loop: [isAlive.service, isAlive.timer]
-  notify: Enable isAlive timer
+  notify:
+    - Daemon-reload systemd
+    - Enable isAlive timer
+    - Start isAlive timer
+    - Restart isAlive timer

@@ -11,5 +11,8 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-    force: yes
-  notify: Enable & Restart mnt-vault mount
+  notify:
+    - Daemon-reload systemd
+    - Enable mnt-vault.mount service
+    - Start mnt-vault.mount service
+    - Restart mnt-vault.mount service

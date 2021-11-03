@@ -9,6 +9,7 @@
     repo: deb https://dl.cloudsmith.io/public/isc/{{ kea_version }}/deb/debian {{ ansible_distribution_release }}  main
     filename: isc-{{ kea_version }}
     state: present
+  notify: ["Apt update", "Apt upgrade"]
 
 - name: Install isc-Kea dhcp server (IPv4 only (for now))
   ansible.builtin.apt:
@@ -18,7 +19,7 @@
       - isc-kea-doc
     update_cache: yes
     state: present
-
+  notify: ["Enable kea-dhcp4 service", "Start kea-dhcp4 service"]
 
   # TODO: Use the template module to add pools, ip reservations etc...
 - name: Configure isc-Kea-dhcp4-server
@@ -29,5 +30,4 @@
     group: _kea
     mode: u=r,g=,o=
     force: yes
-  register: kea_config_result
-  notify: Enable & Restart Kea-dhcp4 service
+  notify: Reload kea-dhcp4 servicee

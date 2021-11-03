@@ -1,6 +1,10 @@
 ---
-- name: Enable & Restart ntp service
+- name: Enable ntp service
   ansible.builtin.systemd:
     name: ntp.service
-    state: restarted
     enabled: yes
+  
+- name: Start ntp service
+  ansible.builtin.systemd:
+    name: ntp.service
+    state: started

@@ -1,7 +1,15 @@
 ---
-- name: Enable & Restart systemd-timesyncd service
+- name: Enable systemd-timesyncd service
   ansible.builtin.systemd:
     name: systemd-timesyncd.service
     enabled: yes
-    daemon_reload: yes
+
+- name: Start systemd-timesyncd service
+  ansible.builtin.systemd:
+    name: systemd-timesyncd.service
+    state: started
+
+- name: Restart systemd-timesyncd service
+  ansible.builtin.systemd:
+    name: systemd-timesyncd.service
     state: restarted
