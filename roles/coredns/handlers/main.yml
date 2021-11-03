@@ -1,7 +1,13 @@
 ---
-- name: Enable & Restart CoreDNS service
+- name: Daemon-reload CoreDNS service
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Enable CoreDNS service
   ansible.builtin.systemd:
     name: coredns.service
     enabled: yes
-    daemon_reload: yes
+
+- name: Restart CoreDNS service
+  ansible.builtin.systemd:
     state: restarted
