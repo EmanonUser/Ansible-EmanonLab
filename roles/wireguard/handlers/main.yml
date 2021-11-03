@@ -1,6 +1,15 @@
 ---
-- name: Enable & Restart wireguard service
+- name: Enable wireguard service
   ansible.builtin.systemd:
     name: wg-quick@{{ wireguard_interface_name }}.service
     enabled: yes
+
+- name: Start wireguard service
+  ansible.builtin.systemd:
     name: wg-quick@{{ wireguard_interface_name }}.service
+    state: started
+
+- name: Restart wireguard service
+  ansible.builtin.systemd:
+    name: wg-quick@{{ wireguard_interface_name }}.service
+    state: restarted

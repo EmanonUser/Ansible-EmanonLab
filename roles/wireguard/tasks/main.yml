@@ -9,9 +9,12 @@
 
 - name: Configure Wireguard
   ansible.builtin.template:
-    src: wg0.conf.j2
+    src: wireguard_router.conf.j2
     dest: /etc/wireguard/{{ wireguard_interface_name }}.conf
     owner: root
     group: root
     mode: u=rw,g=,o=
-  notify: Enable & Restart wireguard service
+  notify: 
+    - Enable wireguard service 
+    - Start wireguard service
+    - Restart wireguard service
