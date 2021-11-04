@@ -82,4 +82,3 @@ grp_local_ntp_server: "{{ grp_device.router.ipv4_addr }}"
 grp_gandi_api_key: "{{ grp_vault_gandi_api_key }}"
 grp_gandi_email: "{{ grp_vault_gandi_email }}"
 grp_gandi_email_password: "{{ grp_vault_gandi_email_password }}"
-grp_firewalld_based_device: [pi.local.emanon]
