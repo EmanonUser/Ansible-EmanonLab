@@ -11,8 +11,7 @@
     owner: root
     group: root
     mode: u=rw,g=,o=
-    force: yes
-  register: nftables_config_result
+    validate: nft -c -f %s
   notify:
     - Enable nftables service
     - Start nftables service
