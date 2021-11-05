@@ -173,7 +173,7 @@ host_podman_filebrowser_volumes:
 ## podman_kuma ##
 host_podman_kuma_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_kuma_image: docker.io/louislam/uptime-kuma
-host_podman_kuma_image_version: 1.5.3-alpine
+host_podman_kuma_image_version: 1.10.0-alpine
 host_podman_kuma_ports: "{{ host_podman_networking.kuma.webui_port }}:3001"
 host_podman_kuma_firewalld_ports: "{{ host_podman_networking.kuma.webui_port }}"
 host_podman_kuma_directory: "{{ host_podman_volumes_path }}/kuma"
