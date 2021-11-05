@@ -5,6 +5,7 @@
   gather_facts: yes
   roles:
     - device_init
+    - fstrim
     - interfaces
     - frr
     - isc_kea
