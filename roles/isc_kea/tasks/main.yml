@@ -29,4 +29,5 @@
     owner: _kea
     group: _kea
     mode: u=rw,g=,o=
+    validate: /usr/sbin/kea-dhcp4 -t %s
   notify: Reload kea-dhcp4 service
