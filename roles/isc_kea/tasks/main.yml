@@ -24,7 +24,7 @@
   # TODO: Use the template module to add pools, ip reservations etc...
 - name: Configure isc-Kea-dhcp4-server
   ansible.builtin.copy:
-    src: kea-dhcp4.conf
+    src: kea-dhcp4.conf.json
     dest: /etc/kea/kea-dhcp4.conf
     owner: _kea
     group: _kea
