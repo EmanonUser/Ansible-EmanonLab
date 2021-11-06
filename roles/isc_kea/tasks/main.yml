@@ -28,4 +28,5 @@
     dest: /etc/kea/kea-dhcp4.conf
     owner: _kea
     group: _kea
+    mode: u=rw,g=,o=
   notify: Reload kea-dhcp4 service
