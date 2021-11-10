@@ -161,7 +161,9 @@ host_podman_grafana_ports: "{% if host_podman_networking.grafana.lan_access %}{{
 host_podman_grafana_firewalld_ports: "{{ host_podman_networking.grafana.webui_port }}/tcp"
 host_podman_grafana_url: "http://127.0.0.1:{{ host_podman_networking.grafana.webui_port }}"
 host_grafana_admin_password: "{{ host_vault_grafana_admin_password }}"
-host_podman_grafana_dashboards_path: 
+host_podman_grafana_dashboards_path:
+ - "{{ host_podman_volumes_path }}/grafana/dashboards/coredns.json"
+host_podman_grafana_env_dashboards_path: 
   - "{{ host_podman_volumes_path }}/grafana/dashboards/shp.json"
   - "{{ host_podman_volumes_path }}/grafana/dashboards/tmp117.json"
 ## podman_grafana ##
