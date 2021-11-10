@@ -11,7 +11,7 @@
   containers.podman.podman_container:
     name: kuma_ansible
     image: "{{ podman_kuma_image }}:{{ podman_kuma_image_version }}"
-    publish: "{% if podman_networking.kuma.lan_access %}{{ podman_kuma_ports }}{% else %}127.0.0.1:{{ podman_kuma_ports }}{% endif %}" # noqa 204
+    publish: "{{ podman_kuma_ports }}" # noqa 204
     volumes: "{{ podman_kuma_volumes }}"
     restart_policy: unless-stopped
     state: started
