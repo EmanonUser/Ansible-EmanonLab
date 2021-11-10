@@ -71,6 +71,7 @@
     dest: "{{ acme_letsencrypt_dirs.certs }}/{{ item.fqdn }}.crt"
     fullchain_dest: "{{ acme_letsencrypt_dirs.certs }}/fullchain.{{ item.fqdn }}.crt"
     data: "{{ acme_challenge_result['results'][item.index] }}"
+    force: yes # Does not always renew, it will be forced when let's encrypt cert_days < remaining_days then will write the new certificates
   loop: "{{ acme_domain_name }}"
   when: acme_challenge_result['results'][item.index]['challenge_data'] is defined
 
