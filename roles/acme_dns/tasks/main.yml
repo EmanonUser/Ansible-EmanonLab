@@ -93,7 +93,6 @@
     state: link
     mode: u=rw,g=,o=
   loop: "{{ acme_domain_name }}"
-  ignore_errors: yes
 
 - name: Create symlink for privkey
   ansible.builtin.file:
@@ -104,4 +103,3 @@
     state: link
     mode: u=rw,g=,o=
   loop: "{{ acme_domain_name }}"
-  ignore_errors: yes
