@@ -198,7 +198,6 @@ host_acme_domain_name:
   # - { fqdn: "file.{{ host_acme_domain }}", index: 0, domain: ".{{ host_acme_domain }}" }
   # - { fqdn: "jellyfin.{{ host_acme_domain }}", index: 1, domain: ".{{ host_acme_domain }}" }
   # - { fqdn: "kuma.{{ host_acme_domain }}", index: 2, domain: ".{{ host_acme_domain }}" }
-host_acme_gandi_api_key: "{{ host_vault_gandi_api_key }}"
 ## acme_dns ##
 
 ## haproxy ##
