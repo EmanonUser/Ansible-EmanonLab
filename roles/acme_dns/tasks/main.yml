@@ -86,7 +86,7 @@
   loop: "{{ acme_domain_name }}"
   when: acme_challenge_result['results'][item.index]['challenge_data'] is defined
 
-- name: Create symlink for fullchain certs
+- name: Create symlink for haproxy's fullchain certs
   ansible.builtin.file:
     src: "{{ acme_letsencrypt_base_path }}/certs/fullchain.{{ item.fqdn }}.crt"
     dest: "/etc/haproxy/ssl/{{ item.fqdn }}.pem"
@@ -96,7 +96,7 @@
     mode: u=rw,g=,o=
   loop: "{{ acme_domain_name }}"
 
-- name: Create symlink for privkey
+- name: Create symlink for haproxy's privkey
   ansible.builtin.file:
     src: "{{ acme_letsencrypt_base_path }}/keys/{{ item.fqdn }}.key"
     dest: "/etc/haproxy/ssl/{{ item.fqdn }}.pem.key"
