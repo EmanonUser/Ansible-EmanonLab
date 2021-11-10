@@ -74,6 +74,7 @@
     force: yes # Does not always renew, it will be forced when let's encrypt cert_days < remaining_days then will write the new certificates
   loop: "{{ acme_domain_name }}"
   when: acme_challenge_result['results'][item.index]['challenge_data'] is defined
+  notify: Reload haproxy service
 
 - name: Call Gandi LiveDNS API to delete the TXT record
   community.general.gandi_livedns:
