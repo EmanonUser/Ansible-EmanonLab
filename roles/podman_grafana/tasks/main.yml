@@ -42,7 +42,7 @@
     url_username: "admin"
     url_password: "{{ podman_grafana_admin_password }}"
     ds_type: prometheus
-    ds_url: "http://{{ grp_device.pi.ipv4_addr }}:{{ podman_networking.prometheus.webui_port }}"
+    ds_url: "http://{{ podman_networking.prometheus.fulldomain }}"
 
 - name: Create grafana folders
   community.grafana.grafana_folder:
