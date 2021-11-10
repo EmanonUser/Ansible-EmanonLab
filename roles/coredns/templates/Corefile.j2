@@ -13,6 +13,7 @@
 
 local.emanon:{{ coredns_port }} {
     import snip
+    prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
     file /opt/coredns/master.db
 }
 
