@@ -26,7 +26,7 @@
     mode: u=rw,g=,o=
     force: no
 
-- name: Run filebrowser docker container
+- name: Run filebrowser podman container
   containers.podman.podman_container:
     name: filebrowser_ansible
     image: "{{ podman_filebrowser_image }}:{{ podman_filebrowser_image_version }}"
