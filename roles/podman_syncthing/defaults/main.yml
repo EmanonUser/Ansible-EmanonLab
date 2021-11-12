@@ -1,0 +1,10 @@
+---
+primary_user_username: "{{ host_podman_syncthing_roleless_primary_user_username }}"
+podman_syncthing_image: "{{ host_podman_syncthing_image }}"
+podman_syncthing_image_version: "{{ host_podman_syncthing_image_version }}"
+podman_syncthing_ports: "{{ host_podman_syncthing_ports }}"
+podman_syncthing_firewalld_ports: "{{ host_podman_syncthing_firewalld_ports }}"
+podman_firewalld_zone: "{{ host_podman_firewalld_zone }}"
+podman_syncthing_directories: "{{ host_podman_syncthing_directories }}"
+podman_syncthing_volumes: "{{ host_podman_syncthing_volumes }}"
+podman_networking: "{{ host_podman_networking }}"

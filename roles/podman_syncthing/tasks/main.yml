@@ -1,0 +1,39 @@
+---
+- name: Create syncthing dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+  loop: "{{ podman_syncthing_directories }}"
+
+- name: Run syncthing podman container
+  containers.podman.podman_container:
+    name: syncthing_ansible
+    image: "{{ podman_syncthing_image }}:{{ podman_syncthing_image_version }}"
+    publish: "{{ podman_syncthing_ports }}"
+    volumes: "{{ podman_syncthing_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+  become_user: "{{ primary_user_username }}"
+
+- name: Open syncthing webui firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ item }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop: "{{ podman_syncthing_firewalld_ports }}"
+  when: podman_networking.syncthing.lan_access
+
+- name: Close syncthing webui firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ item }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  loop: "{{ podman_syncthing_firewalld_ports }}"
+  when: not podman_networking.syncthing.lan_access
