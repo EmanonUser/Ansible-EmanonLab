@@ -29,9 +29,9 @@
 - name: Run filebrowser docker container
   containers.podman.podman_container:
     name: filebrowser_ansible
-    image: "{{ host_podman_filebrowser_image }}:{{ host_podman_filebrowser_image_version }}"
+    image: "{{ podman_filebrowser_image }}:{{ podman_filebrowser_image_version }}"
     publish: "{{ podman_filebrowser_ports }}"
-    volumes: "{{ host_podman_filebrowser_volumes }}"
+    volumes: "{{ podman_filebrowser_volumes }}"
     restart_policy: unless-stopped
     state: started
   become_user: "{{ primary_user_username }}"
