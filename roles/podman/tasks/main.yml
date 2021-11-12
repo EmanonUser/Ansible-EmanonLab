@@ -8,7 +8,7 @@
 - name: Add docker.io to podman register
   ansible.builtin.lineinfile:
     path: /etc/containers/registries.conf.d/docker.io.conf
-    line: unqualified-search-registries = ["docker.io"]
+    line: unqualified-search-registries = ["docker.io", "quay.io"]
     owner: root
     group: root
     mode: u=rw,g=r,o=r
