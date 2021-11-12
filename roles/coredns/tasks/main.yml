@@ -51,7 +51,7 @@
     dest: "{{ coredns_path }}/master.db"
     owner: coredns
     group: coredns
-    mode: u=r,g=,o=
+    mode: u=rwx,g=,o=
   notify: Restart coredns service
 
 - name: Configure CoreDNS systemd service
