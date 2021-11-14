@@ -13,6 +13,7 @@
 
 local.emanon:{{ coredns_port }} {
     import snip
+    prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
     file /opt/coredns/master.db
 }
 
@@ -22,6 +23,7 @@ local.emanon:{{ coredns_port }} {
         policy random
         except example.org
         except local.emanon
+        except in-addr.arpa
         health_check 5s
         prefer_udp
     }
@@ -31,8 +33,6 @@ local.emanon:{{ coredns_port }} {
     prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
     forward . tls://9.9.9.9 {
         tls_servername dns.quad9.net
-        except example.org
-        except local.emanon
         health_check 5s
     }
     cache 30
@@ -42,8 +42,6 @@ local.emanon:{{ coredns_port }} {
     prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
     forward . tls://1.1.1.1 tls://1.0.0.1 {
         tls_servername cloudflare-dns.com
-        except example.org
-        except local.emanon
         health_check 5s
     }
     cache 30
