@@ -91,7 +91,7 @@ host_podman_networking:
     webui_port: 4004
     lan_access: no
   homeassistant:
-    fulldomain: homeassistant.local.emanon
+    fulldomain: hass.local.emanon
     webui_port: 4005
     lan_access: yes
   syncthing:
