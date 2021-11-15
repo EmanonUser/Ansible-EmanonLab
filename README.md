@@ -14,3 +14,4 @@ TODO:
     - pi hosts var, centralise zfs data paths
     - podman_firewalld_zone, is not unique to each role
     - coredns, use podman_networking to generate zone file
+    - Rename all handlers with role dependate name, even if there will be executed multiple times
