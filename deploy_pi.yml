@@ -16,4 +16,5 @@
     - podman_prometheus
     - podman_grafana
     - podman_homeassistant
+    - podman_syncthing
     - nginx_reverse
