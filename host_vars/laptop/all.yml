@@ -118,7 +118,9 @@ host_podman_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_jellyfin_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_jellyfin_image: docker.io/jellyfin/jellyfin
 host_podman_jellyfin_image_version: "latest"
-host_podman_jellyfin_ports: "{% if host_podman_networking.jellyfin.lan_access %}{{ host_podman_networking.jellyfin.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
+host_podman_jellyfin_ports: 
+  - "{% if host_podman_networking.jellyfin.lan_access %}[::]{{ host_podman_networking.jellyfin.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
+  - "{% if host_podman_networking.jellyfin.lan_access %}[::]:{{ host_podman_networking.jellyfin.webui_port }}{% else %}[::1]:{{ host_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
 host_podman_jellyfin_firewalld_ports: "{{ host_podman_networking.jellyfin.webui_port }}"
 host_podman_jellyfin_directories:
  - "{{ host_podman_volumes_path }}/jellyfin/cache"
@@ -134,7 +136,9 @@ host_podman_jellyfin_volumes:
 host_podman_transmission_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_transmission_image: docker.io/haugene/transmission-openvpn
 host_podman_transmission_image_version: "4.0"
-host_podman_transmission_ports: "{% if host_podman_networking.transmission.lan_access %}{{ host_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
+host_podman_transmission_ports: 
+  - "{% if host_podman_networking.transmission.lan_access %}[::]:{{ host_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
+  - "{% if host_podman_networking.transmission.lan_access %}[::]:{{ host_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ host_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
 host_podman_transmission_firewalld_ports: "{{ host_podman_networking.transmission.webui_port }}"
 host_podman_transmission_directories:
   - "{{ host_podman_volumes_path }}/transmission/home"
@@ -156,7 +160,9 @@ host_podman_transmission_env_download_dir: "{{ host_podman_media_path }}"
 host_podman_filebrowser_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_filebrowser_image: docker.io/filebrowser/filebrowser
 host_podman_filebrowser_image_version: "v2"
-host_podman_filebrowser_ports: "{% if host_podman_networking.filebrowser.lan_access %}{{ host_podman_networking.filebrowser.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
+host_podman_filebrowser_ports: 
+  - "{% if host_podman_networking.filebrowser.lan_access %}[::]{{ host_podman_networking.filebrowser.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
+  - "{% if host_podman_networking.filebrowser.lan_access %}[::]:{{ host_podman_networking.filebrowser.webui_port }}{% else %}[::1]:{{ host_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
 host_podman_filebrowser_firewalld_ports: "{{ host_podman_networking.filebrowser.webui_port }}"
 host_podman_filebrowser_directories: 
   - "{{ host_podman_volumes_path }}/filebrowser"
@@ -174,7 +180,9 @@ host_podman_filebrowser_volumes:
 host_podman_kuma_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_kuma_image: docker.io/louislam/uptime-kuma
 host_podman_kuma_image_version: 1.10.0-alpine
-host_podman_kuma_ports: "{% if host_podman_networking.kuma.lan_access %}{{ host_podman_networking.kuma.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
+host_podman_kuma_ports: 
+  - "{% if host_podman_networking.kuma.lan_access %}[::]{{ host_podman_networking.kuma.webui_port }}{% else %}127.0.0.1:{{ host_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
+  - "{% if host_podman_networking.kuma.lan_access %}[::]:{{ host_podman_networking.kuma.webui_port }}{% else %}[::1]:{{ host_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
 host_podman_kuma_firewalld_ports: "{{ host_podman_networking.kuma.webui_port }}"
 host_podman_kuma_directory: "{{ host_podman_volumes_path }}/kuma"
 host_podman_kuma_volumes: "{{ host_podman_volumes_path }}/kuma:/app/data"
