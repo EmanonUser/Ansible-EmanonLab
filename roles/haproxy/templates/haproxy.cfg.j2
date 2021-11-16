@@ -55,13 +55,13 @@ use_backend letsencrypt-backend if letsencrypt-acl
 {% for service, value in podman_networking.items() %}
 {% if value.public %}
 backend {{ service }}-backend
-	server srv 127.0.0.1:{{ value.webui_port }} check
+	server srv localhost:{{ value.webui_port }} check
 
 {% endif %}
 {% endfor %}
 
 backend letsencrypt-backend
-    server letsencrypt 127.0.0.1:{{ haproxy_acme_server_port }}
+    server letsencrypt localhost:{{ haproxy_acme_server_port }}
 
 {% if haproxy_stats %}
 frontend stats
