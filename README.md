@@ -15,3 +15,4 @@ TODO:
     - podman_firewalld_zone, is not unique to each role
     - coredns, use podman_networking to generate zone file
     - Rename all handlers with role dependate name, even if there will be executed multiple times
+    - ip:port:port/proto binding for others podman container(s)
