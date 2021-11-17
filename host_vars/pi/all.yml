@@ -92,9 +92,10 @@ host_podman_adguard_firewalld_ports:
   - "{{ grp_podman_networking.adguard.webui_port }}/tcp"
   - "10053/udp"
   - "10053/tcp"
+host_podman_adguard_volumes_path: "{{ host_podman_volumes_path }}"
 host_podman_adguard_directories:
-  - "{{ host_podman_volumes_path }}/adguard/work"
-  - "{{ host_podman_volumes_path }}/adguard/conf"
+  - "{{ host_podman_adguard_volumes_path }}/adguard/work"
+  - "{{ host_podman_adguard_volumes_path }}/adguard/conf"
 host_podman_adguard_volumes:
   - "{{ host_podman_adguard_directories[0] }}:/opt/adguardhome/work"
   - "{{ host_podman_adguard_directories[1] }}:/opt/adguardhome/conf"
@@ -109,13 +110,14 @@ host_podman_transmission_ports:
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
 host_podman_transmission_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_transmission_firewalld_ports: "{{ grp_podman_networking.transmission.webui_port }}"
+host_podman_transmission_volumes_path: "{{ host_podman_volumes_path }}"
 host_podman_transmission_directories:
-  - "{{ host_podman_volumes_path }}/transmission/home"
-  - "{{ host_podman_volumes_path }}/transmission/completed"
-  - "{{ host_podman_volumes_path }}/transmission/incompleted"
-  - "{{ host_podman_volumes_path }}/transmission/watch"
+  - "{{ host_podman_transmission_volumes_path }}/transmission/home"
+  - "{{ host_podman_transmission_volumes_path }}/transmission/completed"
+  - "{{ host_podman_transmission_volumes_path }}/transmission/incompleted"
+  - "{{ host_podman_transmission_volumes_path }}/transmission/watch"
 host_podman_transmission_volumes:
-   - "{{ host_podman_volumes_path }}/transmission:/transmission"
+   - "{{ host_podman_transmission_volumes_path }}/transmission:/transmission"
    - "/mnt/vault/media:/media"
 host_podman_transmission_env_openvpn_provider: "{{ host_vault_podman_transmission_openvpn_provider }}"
 host_podman_transmission_env_openvpn_config: "{{ host_vault_podman_transmission_openvpn_config }}"
@@ -133,11 +135,12 @@ host_podman_prometheus_ports:
   - "{% if grp_podman_networking.prometheus.lan_access %}[::]:{{ grp_podman_networking.prometheus.webui_port }}{% else %}[::1]:{{ grp_podman_networking.prometheus.webui_port }}{% endif %}:9090/tcp"
 host_podman_prometheus_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_prometheus_firewalld_ports: "{{ grp_podman_networking.prometheus.webui_port }}/tcp"
+host_podman_prometheus_volumes_path: "{{ host_podman_volumes_path }}"
 host_podman_prometheus_directories:
- - "{{ host_podman_volumes_path }}/prometheus"
- - "{{ host_podman_volumes_path }}/prometheus/data"
-host_podman_prometheus_volumes: "{{ host_podman_volumes_path }}/prometheus:/etc/prometheus"
-host_podman_prometheus_config_path: "{{ host_podman_volumes_path }}/prometheus/prometheus.yml"
+ - "{{ host_podman_prometheus_volumes_path }}/prometheus"
+ - "{{ host_podman_prometheus_volumes_path }}/prometheus/data"
+host_podman_prometheus_volumes: "{{ host_podman_prometheus_volumes_path }}/prometheus:/etc/prometheus"
+host_podman_prometheus_config_path: "{{ host_podman_prometheus_volumes_path }}/prometheus/prometheus.yml"
 ## podman_prometheus ##
 
 ## podman_grafana ##
@@ -149,13 +152,14 @@ host_podman_grafana_ports:
   - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}[::1]:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
 host_podman_grafana_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_grafana_firewalld_ports: "{{ grp_podman_networking.grafana.webui_port }}/tcp"
+host_podman_grafana_volumes_path: "{{ host_podman_volumes_path }}"
+host_podman_grafana_dashboards_path:
+ - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/coredns.json"
+host_podman_grafana_env_dashboards_path: 
+  - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/shp.json"
+  - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/tmp117.json"
 host_podman_grafana_url: "http://127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}"
 host_podman_grafana_admin_password: "{{ host_vault_grafana_admin_password }}"
-host_podman_grafana_dashboards_path:
- - "{{ host_podman_volumes_path }}/grafana/dashboards/coredns.json"
-host_podman_grafana_env_dashboards_path: 
-  - "{{ host_podman_volumes_path }}/grafana/dashboards/shp.json"
-  - "{{ host_podman_volumes_path }}/grafana/dashboards/tmp117.json"
 ## podman_grafana ##
 
 ## podman_homeassistant ##
@@ -167,9 +171,10 @@ host_podman_homeassistant_ports:
   - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}[::1]:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
 host_podman_homeassistant_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_homeassistant_firewalld_ports: "{{ grp_podman_networking.homeassistant.webui_port }}/tcp"
-host_podman_homeassistant_directories: "{{ host_podman_volumes_path }}/home_assistant"
-host_podman_homeassistant_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
-host_podman_homeassistant_config_path: "{{ host_podman_volumes_path }}/home_assistant/configuration.yaml"
+host_podman_homeassistant_volumes_path: "{{ host_podman_volumes_path }}"
+host_podman_homeassistant_directories: "{{ host_podman_homeassistant_volumes_path }}/home_assistant"
+host_podman_homeassistant_volumes: "{{ host_podman_homeassistant_volumes_path }}/home_assistant:/config"
+host_podman_homeassistant_config_path: "{{ host_podman_homeassistant_volumes_path }}/home_assistant/configuration.yaml"
 ## podman_homeassistant ##
 
 ## podman_syncthing ##
@@ -188,11 +193,12 @@ host_podman_syncthing_firewalld_ports:
   - "22000/tcp"
   - "22000/udp"
   - "21027/udp"
+host_podman_syncthing_volumes_path: "{{ host_podman_volumes_path }}"
 host_podman_syncthing_directories: 
-  - "{{ host_podman_volumes_path }}/syncthing"
-  - "{{ host_podman_volumes_path }}/syncthing/config"
+  - "{{ host_podman_syncthing_volumes_path }}/syncthing"
+  - "{{ host_podman_syncthing_volumes_path }}/syncthing/config"
 host_podman_syncthing_volumes:
-  - "{{ host_podman_volumes_path }}/syncthing/config:/config"
+  - "{{ host_podman_syncthing_volumes_path }}/syncthing/config:/config"
   - "/mnt/vault/data/homelab/keepassxc:/data"
 ## podman_syncthing ##
 
@@ -205,7 +211,8 @@ host_podman_flame_ports:
   - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}[::1]:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
 host_podman_flame_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_flame_firewalld_ports: "{{ grp_podman_networking.flame.webui_port }}/tcp"
-host_podman_flame_directories: "{{ host_podman_volumes_path }}/flame"
-host_podman_flame_volumes: "{{ host_podman_volumes_path }}/flame:/app/data"
+host_podman_flame_volumes_path: "{{ host_podman_volumes_path }}"
+host_podman_flame_directories: "{{ host_podman_flame_volumes_path }}/flame"
+host_podman_flame_volumes: "{{ host_podman_flame_volumes_path }}/flame:/app/data"
 host_podman_flame_password: "{{ host_vault_podman_flame_password }}"
 ## podman_flame ##
