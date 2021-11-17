@@ -21,7 +21,7 @@
 
 - name: Open adguard dns firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_adguard_firewalld_zone }}"
     port: "{{ item }}"
     permanent: yes
     immediate: yes
@@ -32,7 +32,7 @@
 
 - name: Open adguard webui firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_adguard_firewalld_zone }}"
     port: "{{ podman_adguard_firewalld_ports[0] }}"
     permanent: yes
     immediate: yes
@@ -41,7 +41,7 @@
 
 - name: Close adguard webui firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_adguard_firewalld_zone }}"
     port: "{{ podman_adguard_firewalld_ports[0] }}"
     permanent: yes
     immediate: yes

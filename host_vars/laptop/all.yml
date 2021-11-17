@@ -89,7 +89,6 @@ host_podman_roleless_primary_user_username: "{{ host_roleless_primary_user_usern
 host_podman_volumes_path: "{{ host_zfs_primary_pools.tank.path }}/data/podman"
 host_podman_media_path: "{{ host_zfs_primary_pools.tank.path }}/media"
 host_podman_files_path: "{{ host_zfs_primary_pools.tank.path }}/files"
-host_podman_firewalld_zone: "{{ host_firewalld_zone }}"
 ########## Podman ##########
 
 ## podman_jellyfin ##
@@ -99,6 +98,7 @@ host_podman_jellyfin_image_version: "latest"
 host_podman_jellyfin_ports: 
   - "{% if grp_podman_networking.jellyfin.lan_access %}[::]{{ grp_podman_networking.jellyfin.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
   - "{% if grp_podman_networking.jellyfin.lan_access %}[::]:{{ grp_podman_networking.jellyfin.webui_port }}{% else %}[::1]:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
+host_podman_jellyfin_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_jellyfin_firewalld_ports: "{{ grp_podman_networking.jellyfin.webui_port }}"
 host_podman_jellyfin_directories:
  - "{{ host_podman_volumes_path }}/jellyfin/cache"
@@ -117,6 +117,7 @@ host_podman_transmission_image_version: "4.0"
 host_podman_transmission_ports: 
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
+host_podman_transmission_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_transmission_firewalld_ports: "{{ grp_podman_networking.transmission.webui_port }}"
 host_podman_transmission_directories:
   - "{{ host_podman_volumes_path }}/transmission/home"
@@ -141,6 +142,7 @@ host_podman_filebrowser_image_version: "v2"
 host_podman_filebrowser_ports: 
   - "{% if grp_podman_networking.filebrowser.lan_access %}[::]{{ grp_podman_networking.filebrowser.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
   - "{% if grp_podman_networking.filebrowser.lan_access %}[::]:{{ grp_podman_networking.filebrowser.webui_port }}{% else %}[::1]:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
+host_podman_filebrowser_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_filebrowser_firewalld_ports: "{{ grp_podman_networking.filebrowser.webui_port }}"
 host_podman_filebrowser_directories: 
   - "{{ host_podman_volumes_path }}/filebrowser"
@@ -161,6 +163,7 @@ host_podman_kuma_image_version: 1.10.0-alpine
 host_podman_kuma_ports: 
   - "{% if grp_podman_networking.kuma.lan_access %}[::]{{ grp_podman_networking.kuma.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
   - "{% if grp_podman_networking.kuma.lan_access %}[::]:{{ grp_podman_networking.kuma.webui_port }}{% else %}[::1]:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
+host_podman_kuma_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_kuma_firewalld_ports: "{{ grp_podman_networking.kuma.webui_port }}"
 host_podman_kuma_directory: "{{ host_podman_volumes_path }}/kuma"
 host_podman_kuma_volumes: "{{ host_podman_volumes_path }}/kuma:/app/data"

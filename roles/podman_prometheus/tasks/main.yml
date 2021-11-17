@@ -34,7 +34,7 @@
 
 - name: Open prometheus firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_prometheus_firewalld_zone }}"
     port: "{{ podman_prometheus_firewalld_ports }}"
     permanent: yes
     immediate: yes
@@ -43,7 +43,7 @@
 
 - name: Close prometheus firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_prometheus_firewalld_zone }}"
     port: "{{ podman_prometheus_firewalld_ports }}"
     permanent: yes
     immediate: yes

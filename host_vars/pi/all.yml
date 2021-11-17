@@ -64,6 +64,7 @@ host_prometheus_node_exporter_roleless_primary_user_username: "{{ host_roleless_
 host_prometheus_node_exporter_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
 host_prometheus_node_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/
 host_prometheus_node_exporter_version: 1.1.2 # https://github.com/prometheus/node_exporter/releases/
+host_prometheus_node_exporter_firewalld_zone: "{{ host_firewalld_zone }}"
 ## prometheus_node_exporter ##
 
 ## nfs_share ##
@@ -75,7 +76,6 @@ host_nfs_mount_dir: /mnt/vault
 ########## Podman ##########
 host_podman_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
-host_podman_firewalld_zone: "{{ host_firewalld_zone }}"
 ########## Podman ##########
 
 ## podman_adguard ##
@@ -87,6 +87,7 @@ host_podman_adguard_ports:
   - "{% if grp_podman_networking.adguard.lan_access %}[::]:{{ grp_podman_networking.adguard.webui_port }}{% else %}[::1]:{{ grp_podman_networking.adguard.webui_port }}{% endif %}:3000/tcp"
   - "10053:53/udp"
   - "10053:53/tcp"
+host_podman_adguard_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_adguard_firewalld_ports:
   - "{{ grp_podman_networking.adguard.webui_port }}/tcp"
   - "10053/udp"
@@ -106,6 +107,7 @@ host_podman_transmission_image_version: "4.0"
 host_podman_transmission_ports: 
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
+host_podman_transmission_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_transmission_firewalld_ports: "{{ grp_podman_networking.transmission.webui_port }}"
 host_podman_transmission_directories:
   - "{{ host_podman_volumes_path }}/transmission/home"
@@ -129,6 +131,7 @@ host_podman_prometheus_image_version: v2.30.3
 host_podman_prometheus_ports: 
   - "{% if grp_podman_networking.prometheus.lan_access %}[::]:{{ grp_podman_networking.prometheus.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.prometheus.webui_port }}{% endif %}:9090/tcp"
   - "{% if grp_podman_networking.prometheus.lan_access %}[::]:{{ grp_podman_networking.prometheus.webui_port }}{% else %}[::1]:{{ grp_podman_networking.prometheus.webui_port }}{% endif %}:9090/tcp"
+host_podman_prometheus_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_prometheus_firewalld_ports: "{{ grp_podman_networking.prometheus.webui_port }}/tcp"
 host_podman_prometheus_directories:
  - "{{ host_podman_volumes_path }}/prometheus"
@@ -144,6 +147,7 @@ host_podman_grafana_image_version: "8.2.2"
 host_podman_grafana_ports: 
   - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
   - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}[::1]:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
+host_podman_grafana_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_grafana_firewalld_ports: "{{ grp_podman_networking.grafana.webui_port }}/tcp"
 host_podman_grafana_url: "http://127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}"
 host_podman_grafana_admin_password: "{{ host_vault_grafana_admin_password }}"
@@ -161,6 +165,7 @@ host_podman_homeassistant_image_version: "2021.10.5"
 host_podman_homeassistant_ports: 
   - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
   - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}[::1]:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
+host_podman_homeassistant_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_homeassistant_firewalld_ports: "{{ grp_podman_networking.homeassistant.webui_port }}/tcp"
 host_podman_homeassistant_directories: "{{ host_podman_volumes_path }}/home_assistant"
 host_podman_homeassistant_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
@@ -177,6 +182,7 @@ host_podman_syncthing_ports:
   - "22000:22000/tcp"
   - "22000:22000/udp"
   - "21027:21027/udp"
+host_podman_syncthing_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_syncthing_firewalld_ports: 
   - "{{ grp_podman_networking.syncthing.webui_port }}/tcp"
   - "22000/tcp"
@@ -197,6 +203,7 @@ host_podman_flame_image_version: "multiarch2.0.0"
 host_podman_flame_ports:
   - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
   - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}[::1]:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
+host_podman_flame_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_flame_firewalld_ports: "{{ grp_podman_networking.flame.webui_port }}/tcp"
 host_podman_flame_directories: "{{ host_podman_volumes_path }}/flame"
 host_podman_flame_volumes: "{{ host_podman_volumes_path }}/flame:/app/data"

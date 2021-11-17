@@ -13,7 +13,7 @@
 
 - name: Open grafana webui firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_grafana_firewalld_zone }}"
     port: "{{ podman_grafana_firewalld_ports }}"
     permanent: yes
     immediate: yes
@@ -22,7 +22,7 @@
 
 - name: Close grafana webui firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_grafana_firewalld_zone }}"
     port: "{{ podman_grafana_firewalld_ports }}"
     permanent: yes
     immediate: yes

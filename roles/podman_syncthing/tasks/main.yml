@@ -20,7 +20,7 @@
 
 - name: Open syncthing webui firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_syncthing_firewalld_zone }}"
     port: "{{ item }}"
     permanent: yes
     immediate: yes
@@ -30,7 +30,7 @@
 
 - name: Close syncthing webui firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_syncthing_firewalld_zone }}"
     port: "{{ item }}"
     permanent: yes
     immediate: yes

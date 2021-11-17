@@ -22,7 +22,7 @@
 
 - name: Open homeassistant webui firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_homeassistant_firewalld_zone }}"
     port: "{{ podman_homeassistant_firewalld_ports }}"
     permanent: yes
     immediate: yes
@@ -31,7 +31,7 @@
 
 - name: Close homeassistant webui firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_homeassistant_firewalld_zone }}"
     port: "{{ podman_homeassistant_firewalld_ports }}"
     permanent: yes
     immediate: yes

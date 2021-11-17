@@ -34,7 +34,7 @@
 
 - name: Open transmission firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_transmission_firewalld_zone }}"
     port: "{{ podman_prometheus_firewalld_ports }}"
     permanent: yes
     immediate: yes
@@ -46,7 +46,7 @@
 
 - name: Close transmission firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_transmission_firewalld_zone }}"
     port: "{{ podman_prometheus_firewalld_ports }}"
     permanent: yes
     immediate: yes
@@ -58,7 +58,7 @@
 
 - name: Open transmission firewalld ports to admin devices
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_transmission_firewalld_zone }}"
     rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_transmission_firewalld_ports }} protocol=tcp accept"
     permanent: yes
     immediate: yes
@@ -73,7 +73,7 @@
 
 - name: Close transmission firewalld ports to admin devices
   ansible.posix.firewalld:
-    zone: "{{ podman_firewalld_zone }}"
+    zone: "{{ podman_transmission_firewalld_zone }}"
     rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_transmission_firewalld_ports }} protocol=tcp accept"
     permanent: yes
     immediate: yes

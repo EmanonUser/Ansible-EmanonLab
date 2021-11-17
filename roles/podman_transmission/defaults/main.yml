@@ -11,5 +11,5 @@ podman_transmission_openvpn_provider: "{{ host_podman_transmission_env_openvpn_p
 podman_transmission_openvpn_config: "{{ host_podman_transmission_env_openvpn_config }}"
 podman_transmission_openvpn_username: "{{ host_podman_transmission_env_openvpn_username }}"
 podman_transmission_openvpn_password: "{{ host_podman_transmission_env_openvpn_password }}"
-podman_firewalld_zone: "{{ host_podman_firewalld_zone }}"
+podman_transmission_firewalld_zone: "{{ host_podman_transmission_firewalld_zone }}"
 podman_networking: "{{ grp_podman_networking }}"
