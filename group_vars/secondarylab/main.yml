@@ -39,3 +39,25 @@ grp_device:
       ipv4_addr:  192.168.1.30
       ipv4_addr_cidr: 192.168.1.30/24
       hostname: arch
+
+grp_podman_networking:
+  jellyfin:
+    fulldomain: jellyfin.emanon.moe
+    webui_port: 25101
+    public: yes
+    lan_access: no
+  filebrowser:
+    fulldomain: file.emanon.moe
+    webui_port: 25102
+    public: yes
+    lan_access: no
+  transmission:
+    fulldomain: transmission.emanon.moe
+    webui_port: 25103
+    public: no
+    lan_access: yes
+  kuma:
+    fulldomain: kuma.emanon.moe
+    webui_port: 25104
+    public: yes
+    lan_access: no
