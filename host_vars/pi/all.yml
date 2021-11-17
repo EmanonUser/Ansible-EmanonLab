@@ -140,10 +140,10 @@ host_podman_transmission_directories:
 host_podman_transmission_volumes:
    - "{{ host_podman_volumes_path }}/transmission:/transmission"
    - "/mnt/vault/media:/media"
-host_podman_transmission_env_openvpn_provider: "{{ host_vault_transmission_openvpn_provider }}"
-host_podman_transmission_env_openvpn_config: "{{ host_vault_transmission_openvpn_config }}"
-host_podman_transmission_env_openvpn_username: "{{ host_vault_transmission_openvpn_username }}"
-host_podman_transmission_env_openvpn_password: "{{ host_vault_transmission_openvpn_password }}"
+host_podman_transmission_env_openvpn_provider: "{{ host_vault_podman_transmission_openvpn_provider }}"
+host_podman_transmission_env_openvpn_config: "{{ host_vault_podman_transmission_openvpn_config }}"
+host_podman_transmission_env_openvpn_username: "{{ host_vault_podman_transmission_openvpn_username }}"
+host_podman_transmission_env_openvpn_password: "{{ host_vault_podman_transmission_openvpn_password }}"
 host_podman_transmission_env_download_dir: "/media"
 ## podman_transmission ##
 
@@ -171,7 +171,7 @@ host_podman_grafana_ports:
   - "{% if host_podman_networking.grafana.lan_access %}[::]:{{ host_podman_networking.grafana.webui_port }}{% else %}[::1]:{{ host_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
 host_podman_grafana_firewalld_ports: "{{ host_podman_networking.grafana.webui_port }}/tcp"
 host_podman_grafana_url: "http://127.0.0.1:{{ host_podman_networking.grafana.webui_port }}"
-host_grafana_admin_password: "{{ host_vault_grafana_admin_password }}"
+host_podman_grafana_admin_password: "{{ host_vault_grafana_admin_password }}"
 host_podman_grafana_dashboards_path:
  - "{{ host_podman_volumes_path }}/grafana/dashboards/coredns.json"
 host_podman_grafana_env_dashboards_path: 
