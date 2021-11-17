@@ -77,31 +77,31 @@ grp_device:
 
 grp_podman_networking:
   adguard:
-    fulldomain: adguard.local.emanon
+    fulldomain: "adguard.{{ grp_local_domain }}"
     webui_port: 4001
     lan_access: no
   transmission:
-    fulldomain: transmission.local.emanon
+    fulldomain: "transmission.{{ grp_local_domain }}"
     webui_port: 4002
     lan_access: yes
   prometheus:
-    fulldomain: prometheus.local.emanon
+    fulldomain: "prometheus.{{ grp_local_domain }}"
     webui_port: 4003
     lan_access: no
   grafana:
-    fulldomain: grafana.local.emanon
+    fulldomain: "grafana.{{ grp_local_domain }}"
     webui_port: 4004
     lan_access: no
   homeassistant:
-    fulldomain: hass.local.emanon
+    fulldomain: "hass.{{ grp_local_domain }}"
     webui_port: 4005
     lan_access: yes
   syncthing:
-    fulldomain: syncthing.local.emanon
+    fulldomain: "syncthing.{{ grp_local_domain }}"
     webui_port: 4006
     lan_access: no
   flame:
-    fulldomain: flame.local.emanon
+    fulldomain: "flame.{{ grp_local_domain }}"
     webui_port: 4007
     lan_access: yes
 
