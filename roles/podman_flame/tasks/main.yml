@@ -1,0 +1,38 @@
+---
+- name: Create flame volume directory
+  ansible.builtin.file:
+    path: "{{ podman_flame_directories }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+
+- name: Run flame podman container
+  containers.podman.podman_container:
+    name: flame_ansible
+    image: "{{ podman_flame_image }}:{{ podman_flame_image_version }}"
+    publish: "{{ podman_flame_ports }}"
+    volume: "{{ podman_flame_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+    env:
+      PASSWORD: "{{ podman_flame_password }}"
+  become_user: "{{ primary_user_username }}"
+
+- name: Open flame firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_flame_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: podman_networking.flame.lan_access
+
+- name: Close flame firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_firewalld_zone }}"
+    port: "{{ podman_flame_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when: not podman_networking.flame.lan_access

@@ -1,0 +1,12 @@
+---
+primary_user_username: "{{ host_podman_flame_roleless_primary_user_username }}"
+podman_flame_image: "{{ host_podman_flame_image }}"
+podman_flame_image_version: "{{ host_podman_flame_image_version }}"
+podman_flame_ports: "{{ host_podman_flame_ports }}"
+podman_flame_firewalld_ports: "{{ host_podman_flame_firewalld_ports }}"
+podman_flame_directories: "{{ host_podman_flame_directories }}"
+podman_flame_volumes: "{{ host_podman_flame_volumes }}"
+podman_flame_config_path: "{{ host_podman_flame_config_path }}"
+podman_flame_password: "{{ host_podman_flame_password }}"
+podman_firewalld_zone: "{{ host_podman_firewalld_zone }}"
+podman_networking: "{{ host_podman_networking }}"
