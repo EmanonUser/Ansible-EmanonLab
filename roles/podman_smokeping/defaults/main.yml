@@ -1,0 +1,10 @@
+---
+primary_user_username: "{{ host_podman_smokeping_roleless_primary_user_username }}"
+podman_smokeping_image: "{{ host_podman_smokeping_image }}"
+podman_smokeping_image_version: "{{ host_podman_smokeping_image_version }}"
+podman_smokeping_ports: "{{ host_podman_smokeping_ports }}"
+podman_smokeping_firewalld_ports: "{{ host_podman_smokeping_firewalld_ports }}"
+podman_smokeping_directories: "{{ host_podman_smokeping_directories }}"
+podman_smokeping_volumes: "{{ host_podman_smokeping_volumes }}"
+podman_smokeping_firewalld_zone: "{{ host_podman_smokeping_firewalld_zone }}"
+podman_networking: "{{ grp_podman_networking }}"
