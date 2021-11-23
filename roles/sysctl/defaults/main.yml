@@ -1,0 +1,2 @@
+---
+sysctl_entries: "{{ host_sysctl_entries }}"
