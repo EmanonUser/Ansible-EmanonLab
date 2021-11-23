@@ -6,6 +6,7 @@
   roles:
     - device_init
     - fstrim
+    - sysctl
     - interfaces
     - frr
     - isc_kea
