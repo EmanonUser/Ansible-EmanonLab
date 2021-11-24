@@ -94,7 +94,7 @@ host_podman_files_path: "{{ host_zfs_primary_pools.tank.path }}/files"
 ## podman_jellyfin ##
 host_podman_jellyfin_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_jellyfin_image: docker.io/jellyfin/jellyfin
-host_podman_jellyfin_image_version: "latest"
+host_podman_jellyfin_image_version: "latest" # https://hub.docker.com/r/jellyfin/jellyfin/tags
 host_podman_jellyfin_ports: 
   - "{% if grp_podman_networking.jellyfin.lan_access %}[::]{{ grp_podman_networking.jellyfin.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
   - "{% if grp_podman_networking.jellyfin.lan_access %}[::]:{{ grp_podman_networking.jellyfin.webui_port }}{% else %}[::1]:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
@@ -114,7 +114,7 @@ host_podman_jellyfin_volumes:
 ## podman_transmission ##
 host_podman_transmission_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_transmission_image: docker.io/haugene/transmission-openvpn
-host_podman_transmission_image_version: "4.0"
+host_podman_transmission_image_version: "4.0"  # https://hub.docker.com/r/haugene/transmission-openvpn/tags
 host_podman_transmission_ports: 
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
@@ -140,7 +140,7 @@ host_podman_transmission_env_download_dir: "{{ host_podman_media_path }}"
 ## podman_filebrowser ##
 host_podman_filebrowser_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_filebrowser_image: docker.io/filebrowser/filebrowser
-host_podman_filebrowser_image_version: "v2"
+host_podman_filebrowser_image_version: "v2" # https://hub.docker.com/r/filebrowser/filebrowser/tags
 host_podman_filebrowser_ports: 
   - "{% if grp_podman_networking.filebrowser.lan_access %}[::]{{ grp_podman_networking.filebrowser.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
   - "{% if grp_podman_networking.filebrowser.lan_access %}[::]:{{ grp_podman_networking.filebrowser.webui_port }}{% else %}[::1]:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
@@ -162,7 +162,7 @@ host_podman_filebrowser_volumes:
 ## podman_kuma ##
 host_podman_kuma_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_kuma_image: docker.io/louislam/uptime-kuma
-host_podman_kuma_image_version: 1.10.0-alpine
+host_podman_kuma_image_version: 1.10.2-alpine # https://hub.docker.com/r/louislam/uptime-kuma/tags
 host_podman_kuma_ports: 
   - "{% if grp_podman_networking.kuma.lan_access %}[::]{{ grp_podman_networking.kuma.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
   - "{% if grp_podman_networking.kuma.lan_access %}[::]:{{ grp_podman_networking.kuma.webui_port }}{% else %}[::1]:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
