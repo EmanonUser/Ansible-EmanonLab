@@ -14,3 +14,5 @@ TODO:
     - pi hosts var, centralise zfs data paths
     - Rename all handlers with role dependate name, even if there will be executed multiple times
     - ip:port:port/proto binding for others podman container(s)
+    - fix/complete nginx_reverse
+    - fix podman_syncthing firewalld ports tasks, separate gui from commom ports
