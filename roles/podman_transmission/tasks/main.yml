@@ -59,13 +59,15 @@
 - name: Open transmission firewalld ports to admin devices
   ansible.posix.firewalld:
     zone: "{{ podman_transmission_firewalld_zone }}"
-    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_transmission_firewalld_ports }} protocol=tcp accept"
+    rich_rule: "rule family={{ item.familly }} source address={{ item.source }} port port={{ podman_transmission_firewalld_ports }} protocol=tcp accept"
     permanent: yes
     immediate: yes
     state: enabled
   loop:
-    - "{{ grp_device.arch.ipv4_addr }}"
-    - "{{ grp_device.one.ipv4_addr }}"
+    - { familly: "ipv4", source: "{{ grp_device.arch.ipv4_addr }}" }
+    - { familly: "ipv4", source: "{{ grp_device.one.ipv4_addr }}" }
+    - { familly: "ipv6", source: "{{ grp_device.arch.ipv6_addr_global }}" }
+    # - { familly: "ipv6", source: "{{ grp_device.arch.ipv6_addr_link }}" }
   when:
     - podman_networking.transmission.lan_access is defined
     - podman_networking.transmission.lan_access
@@ -74,13 +76,15 @@
 - name: Close transmission firewalld ports to admin devices
   ansible.posix.firewalld:
     zone: "{{ podman_transmission_firewalld_zone }}"
-    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_transmission_firewalld_ports }} protocol=tcp accept"
+    rich_rule: "rule family={{ item.familly }} source address={{ item.source }} port port={{ podman_transmission_firewalld_ports }} protocol=tcp accept"
     permanent: yes
     immediate: yes
     state: disabled
   loop:
-    - "{{ grp_device.arch.ipv4_addr }}"
-    - "{{ grp_device.one.ipv4_addr }}"
+    - { familly: "ipv4", source: "{{ grp_device.arch.ipv4_addr }}" }
+    - { familly: "ipv4", source: "{{ grp_device.one.ipv4_addr }}" }
+    - { familly: "ipv6", source: "{{ grp_device.arch.ipv6_addr_global }}" }
+    # - { familly: "ipv6", source: "{{ grp_device.arch.ipv6_addr_link }}" }
   when:
     - podman_networking.transmission.lan_access is defined
     - not podman_networking.transmission.lan_access

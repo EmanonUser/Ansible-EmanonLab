@@ -34,6 +34,8 @@ grp_device:
     arch:
       ipv4_addr:  192.168.1.20
       ipv4_addr_cidr: 192.168.1.20/24
+      ipv6_addr_global: "2a01:cb10:1cf:9c00:662:675:1f84:26ce"
+      ipv6_addr_link: "fe80::6ffb:4f6f:711c:eeaa"
       hostname: arch
     one:
       ipv4_addr:  192.168.1.30
