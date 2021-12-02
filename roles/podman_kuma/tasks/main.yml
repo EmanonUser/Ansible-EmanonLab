@@ -11,7 +11,7 @@
   containers.podman.podman_container:
     name: kuma_ansible
     image: "{{ podman_kuma_image }}:{{ podman_kuma_image_version }}"
-    publish: "{{ podman_kuma_ports }}" # noqa 204
+    publish: "{{ podman_kuma_ports }}"
     volumes: "{{ podman_kuma_volumes }}"
     restart_policy: unless-stopped
     state: started
@@ -20,23 +20,19 @@
 - name: Open kuma firewalld ports to admin devices
   ansible.posix.firewalld:
     zone: "{{ podman_kuma_firewalld_zone }}"
-    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_kuma_firewalld_ports }} protocol=tcp accept"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: enabled
-  loop:
-    - "{{ grp_device.arch.ipv4_addr }}"
-    - "{{ grp_device.one.ipv4_addr }}"
+  loop: "{{ podman_kuma_firewalld_rich_rules }}"
   when: podman_networking.kuma.lan_access
 
 - name: Close kuma firewalld ports to admin devices
   ansible.posix.firewalld:
     zone: "{{ podman_kuma_firewalld_zone }}"
-    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_kuma_firewalld_ports }} protocol=tcp accept"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: disabled
-  loop:
-    - "{{ grp_device.arch.ipv4_addr }}"
-    - "{{ grp_device.one.ipv4_addr }}"
+  loop: "{{ podman_kuma_firewalld_rich_rules }}"
   when: not podman_networking.kuma.lan_access

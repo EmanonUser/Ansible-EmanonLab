@@ -39,23 +39,19 @@
 - name: Open filebrowser firewalld ports to admin devices
   ansible.posix.firewalld:
     zone: "{{ podman_filebrowser_firewalld_zone }}"
-    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_filebrowser_firewalld_ports }} protocol=tcp accept"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: enabled
-  loop:
-    - "{{ grp_device.arch.ipv4_addr }}"
-    - "{{ grp_device.one.ipv4_addr }}"
+  loop: "{{ podman_filebrowser_firewalld_rich_rules }}"
   when: podman_networking.filebrowser.lan_access
 
 - name: Close filebrowser firewalld ports to admin devices
   ansible.posix.firewalld:
     zone: "{{ podman_filebrowser_firewalld_zone }}"
-    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ podman_filebrowser_firewalld_ports }} protocol=tcp accept"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: disabled
-  loop:
-    - "{{ grp_device.arch.ipv4_addr }}"
-    - "{{ grp_device.one.ipv4_addr }}"
+  loop: "{{ podman_filebrowser_firewalld_rich_rules }}"
   when: not podman_networking.filebrowser.lan_access

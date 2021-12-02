@@ -34,23 +34,19 @@
 - name: Open HAproxy stats firewalld ports to admin devices
   ansible.posix.firewalld:
     zone: "{{ haproxy_firewalld_zone }}"
-    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ haproxy_stats_port }} protocol=tcp accept"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: enabled
-  loop:
-    - "{{ grp_device.arch.ipv4_addr }}"
-    - "{{ grp_device.one.ipv4_addr }}"
+  loop: "{{ haproxy_firewalld_rich_rules }}"
   when: haproxy_stats
 
 - name: Close HAproxy stats firewalld ports to admin devices
   ansible.posix.firewalld:
     zone: "{{ haproxy_firewalld_zone }}"
-    rich_rule: "rule family=ipv4 source address={{ item }} port port={{ haproxy_stats_port }} protocol=tcp accept"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: disabled
-  loop:
-    - "{{ grp_device.arch.ipv4_addr }}"
-    - "{{ grp_device.one.ipv4_addr }}"
+  loop: "{{ haproxy_firewalld_rich_rules }}"
   when: not haproxy_stats
