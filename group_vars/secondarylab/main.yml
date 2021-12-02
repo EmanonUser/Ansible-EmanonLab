@@ -30,16 +30,20 @@ grp_device:
     srv:
       ipv4_addr:  192.168.1.50
       ipv4_addr_cidr:  192.168.1.50/24
+      ipv6_addr_link: 2a01:cb10:1cf:9c00:ca60:ff:fe1f:a52f
+      ipv6_addr_global: fe80::ca60:ff:fe1f:a52f
       hostname: srv
     arch:
       ipv4_addr:  192.168.1.20
       ipv4_addr_cidr: 192.168.1.20/24
-      ipv6_addr_global: "2a01:cb10:1cf:9c00:662:675:1f84:26ce"
       ipv6_addr_link: "fe80::6ffb:4f6f:711c:eeaa"
+      ipv6_addr_global: "2a01:cb10:1cf:9c00:662:675:1f84:26ce"
       hostname: arch
     one:
       ipv4_addr:  192.168.1.30
       ipv4_addr_cidr: 192.168.1.30/24
+      # ipv6 are generated with random mac for the link local + privacy extension for the global
+      # android does not support statefull dhcpv6, and the livebox 5 is not capable of delegating prefix anyway
       hostname: arch
 
 grp_podman_networking:
