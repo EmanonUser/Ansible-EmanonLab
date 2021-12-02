@@ -27,13 +27,13 @@
     immediate: yes
     state: enabled
   loop:
-    - "{{ podman_adguard_firewalld_ports[1] }}"
-    - "{{ podman_adguard_firewalld_ports[2] }}"
+    - "{{ podman_adguard_firewalld_ports.dns_udp }}"
+    - "{{ podman_adguard_firewalld_ports.dns_tcp }}"
 
 - name: Open adguard webui firewalld ports
   ansible.posix.firewalld:
     zone: "{{ podman_adguard_firewalld_zone }}"
-    port: "{{ podman_adguard_firewalld_ports[0] }}"
+    port: "{{ podman_adguard_firewalld_ports.webui }}"
     permanent: yes
     immediate: yes
     state: enabled
@@ -42,7 +42,7 @@
 - name: Close adguard webui firewalld ports
   ansible.posix.firewalld:
     zone: "{{ podman_adguard_firewalld_zone }}"
-    port: "{{ podman_adguard_firewalld_ports[0] }}"
+    port: "{{ podman_adguard_firewalld_ports.webui }}"
     permanent: yes
     immediate: yes
     state: disabled
