@@ -9,6 +9,13 @@
     name: "{{ debian_stable_packages }}"
     state: present
 
+- name: Set root password
+  ansible.builtin.user:
+    name: root
+    comment: Password updated by ansible
+    password: "{{ root_user_password | password_hash('sha512') }}"
+    state: present
+
 - name: Add primary user
   ansible.builtin.user:
     name: "{{ primary_user_username }}"

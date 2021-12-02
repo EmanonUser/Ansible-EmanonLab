@@ -27,6 +27,7 @@ host_roleless_cpu_architecture: arm64 # amd64, arm64 etc ...
 ## device_init ##
 host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
+host_device_init_root_user_password: "{{ host_vault_device_init_root_user_password }}"
 host_device_init_use_starship: yes
 host_device_init_debian_stable_packages:
   - debian-keyring
