@@ -14,7 +14,7 @@
         record: he
         type: CNAME
         values:
-          - lain
+          - lain.emanon.moe
         ttl: 300
         api_key: "{{ v_gandi_api_key }}"
         state: present
