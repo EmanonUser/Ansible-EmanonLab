@@ -229,3 +229,16 @@ host_gad_path: /opt
 host_gad_version: "1.4.2"
 host_gad_use_ipv6: yes
 ## gad ##
+
+## samba_server ##
+host_samba_server_users:
+  - { username: emanon_samba, password: "{{ host_vault_emanon_samba_password }}" }
+  - { username: maeyo, password: "{{ host_vault_maeyo_password }}" }
+host_samba_server_network: { ipv4: "192.168.1.0/24", ipv6: "2a01:cb10:1cf:9c00::/64" }
+host_samba_server_firewalld_zone: "{{ host_firewalld_zone }}"
+host_samba_server_firewalld_rich_rules:
+  - { family: ipv4, source: "{{ host_samba_server_network.ipv4 }}", port: "445", proto: tcp }
+  - { family: ipv6, source: "{{ host_samba_server_network.ipv6 }}", port: "445", proto: tcp }
+  - { family: ipv4, source: "{{ host_samba_server_network.ipv4 }}", port: "139", proto: tcp }
+  - { family: ipv6, source: "{{ host_samba_server_network.ipv6 }}", port: "139", proto: tcp }
+## samba_server ##
