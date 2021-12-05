@@ -3,7 +3,7 @@
 flush ruleset
 
 define WAN = {{ WAN_interface_name }}
-define LAN = {{ LACP_interface_name }}
+define LAN = {{ lacp_interface_name }}
 define WG = {{ wireguard_interface_name }}
 
 table ip routing {
