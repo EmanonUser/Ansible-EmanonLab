@@ -20,3 +20,4 @@
     - podman_kuma
     - haproxy
     - acme_dns
+    - samba_server
