@@ -60,8 +60,8 @@ table inet firewall {
 		iifname { "lo" } accept
 		ip protocol icmp counter accept
 		ip6 nexthdr icmpv6 counter accept
-		icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } accept
-		icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } accept
+		iifname $LAN icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } accept
+		iifname $LAN icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } accept
 		iifname $LAN ip saddr {{ brocade_ipv4_addr }} ip protocol ospf counter accept # Accept OSPFv2 from brocade
 		iifname $LAN udp dport { 53, 67, 123 } counter accept # DNS server & DHCP server & NTP server for LAN
 		iifname $LAN tcp dport { 9100, 9353 } counter accept # Prometheus Node exporter for LAN
