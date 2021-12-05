@@ -39,7 +39,7 @@
     immediate: yes
     state: enabled
   loop: "{{ haproxy_firewalld_rich_rules }}"
-  when: 
+  when:
     - haproxy_stats
     - inventory_hostname == "laptop"
 
@@ -51,6 +51,6 @@
     immediate: yes
     state: disabled
   loop: "{{ haproxy_firewalld_rich_rules }}"
-  when: 
+  when:
     - not haproxy_stats
     - inventory_hostname == "laptop"
