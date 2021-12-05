@@ -44,24 +44,6 @@
     ds_type: prometheus
     ds_url: "http://{{ podman_networking.prometheus.fulldomain }}"
 
-- name: Create grafana folders
-  community.grafana.grafana_folder:
-    grafana_url: "{{ podman_grafana_url }}"
-    url_username: "admin"
-    url_password: "{{ podman_grafana_admin_password }}"
-    title: "Env monitoring"
-    state: present
-
-- name: Import grafana env dashboards
-  community.grafana.grafana_dashboard:
-    grafana_url: "{{ podman_grafana_url }}"
-    url_username: "admin"
-    url_password: "{{ podman_grafana_admin_password }}"
-    folder: "Env monitoring"
-    path: "{{ item }}"
-    overwrite: yes
-  loop: "{{ podman_grafana_env_dashboards_path }}"
-
 - name: Import grafana base dashboards
   community.grafana.grafana_dashboard:
     grafana_url: "{{ podman_grafana_url }}"

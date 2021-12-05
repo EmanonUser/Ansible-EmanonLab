@@ -113,7 +113,7 @@ host_podman_transmission_ports:
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
 host_podman_transmission_firewalld_zone: "{{ host_firewalld_zone }}"
-host_podman_transmission_firewalld_ports: "{{ grp_podman_networking.transmission.webui_port }}"
+host_podman_transmission_firewalld_ports: "{{ grp_podman_networking.transmission.webui_port }}/tcp"
 host_podman_transmission_volumes_path: "{{ host_podman_volumes_path }}"
 host_podman_transmission_directories:
   - "{{ host_podman_transmission_volumes_path }}/transmission/home"
@@ -158,8 +158,7 @@ host_podman_grafana_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_grafana_firewalld_ports: "{{ grp_podman_networking.grafana.webui_port }}/tcp"
 host_podman_grafana_volumes_path: "{{ host_podman_volumes_path }}"
 host_podman_grafana_dashboards_path:
- - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/coredns.json"
-host_podman_grafana_env_dashboards_path: 
+  - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/coredns.json"
   - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/shp.json"
   - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/tmp117.json"
 host_podman_grafana_url: "http://127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}"
