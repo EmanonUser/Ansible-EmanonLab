@@ -17,4 +17,4 @@
   notify:
     - Enable wireguard service
     - Start wireguard service
-    - Restart wireguard service
+    - Reload wireguard service

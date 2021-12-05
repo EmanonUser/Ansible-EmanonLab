@@ -9,7 +9,7 @@
     name: wg-quick@{{ wireguard_interface_name }}.service
     state: started
 
-- name: Restart wireguard service
+- name: Reload wireguard service
   ansible.builtin.systemd:
     name: wg-quick@{{ wireguard_interface_name }}.service
-    state: restarted
+    state: reloaded
