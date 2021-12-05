@@ -21,13 +21,16 @@
 ## Roleless ##
 host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
 host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
+host_roleless_primary_user_password_salt: "{{ host_vault_roleless_primary_user_password_salt }}"
 host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
 ## Roleless ##
 
 ## device_init ##
 host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
+host_device_init_roleless_primary_user_password_salt: "{{ host_roleless_primary_user_password_salt }}"
 host_device_init_root_user_password: "{{ host_vault_device_init_root_user_password }}"
+host_device_init_root_user_password_salt: "{{ host_vault_device_init_root_user_password_salt }}"
 host_device_init_use_starship: no
 host_device_init_debian_stable_packages:
   - debian-keyring

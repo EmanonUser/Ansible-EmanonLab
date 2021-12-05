@@ -13,7 +13,7 @@
   ansible.builtin.user:
     name: root
     comment: Password updated by ansible
-    password: "{{ root_user_password | password_hash('sha512') }}"
+    password: "{{ root_user_password | password_hash('sha512', root_user_password_salt) }}"
     state: present
 
 - name: Add primary user
@@ -22,7 +22,7 @@
     create_home: yes
     shell: /usr/bin/zsh
     comment: Primary user created by Ansible
-    password: "{{ primary_user_password | password_hash('sha512') }}"
+    password: "{{ primary_user_password | password_hash('sha512', primary_user_password_salt) }}"
     state: present
 
 - name: Create SSH dir for primary user
