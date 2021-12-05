@@ -59,6 +59,7 @@ host_sysctl_entries:
 
 ## interfaces ##
 host_interfaces_lacp_interface: bond0
+host_interfaces_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count }}"
 ## interfaces ##
 
 ## frr ##
