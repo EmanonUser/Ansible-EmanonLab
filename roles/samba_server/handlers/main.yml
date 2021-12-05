@@ -1,0 +1,15 @@
+---
+- name: Enable smbd service
+  ansible.builtin.systemd:
+    name: smbd.service
+    enabled: yes
+
+- name: Start smbd service
+  ansible.builtin.systemd:
+    name: smbd.service
+    state: started
+
+- name: Restart smbd service
+  ansible.builtin.systemd:
+    name: smbd.service
+    state: restarted

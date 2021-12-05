@@ -1,0 +1,5 @@
+---
+samba_server_users: "{{ host_samba_server_users }}"
+samba_server_network: "{{ host_samba_server_network }}"
+samba_server_firewalld_zone: "{{ host_samba_server_firewalld_zone }}"
+samba_server_firewalld_rich_rules: "{{ host_samba_server_firewalld_rich_rules }}"
