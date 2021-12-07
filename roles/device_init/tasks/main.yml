@@ -98,6 +98,7 @@
   ansible.builtin.git:
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
     dest: "{{ item }}"
+    umask: "022"
   loop:
     - "/home/{{ primary_user_username }}/.zsh/zsh-autosuggestions"
     - "/root/.zsh/zsh-autosuggestions"
