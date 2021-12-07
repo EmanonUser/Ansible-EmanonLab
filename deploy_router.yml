@@ -6,6 +6,7 @@
   roles:
     - device_init
     - fstrim
+    - starship
     - sysctl
     - interfaces
     - frr
