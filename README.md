@@ -5,7 +5,6 @@ TODO:
  
     - Use template for kea
     - full check
-    - Upgrade router
     - Update zrepl
     - Rework nftables
     - smartd role
