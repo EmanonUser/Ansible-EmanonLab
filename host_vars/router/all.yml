@@ -138,7 +138,7 @@ host_ntpd_upstream_server:
 ## coredns ##
 host_coredns_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
 host_coredns_path: /opt/coredns
-host_coredns_version: "1.8.6"
+host_coredns_version: "1.8.6" # https://github.com/coredns/coredns/releases
 host_coredns_port: "53"
 host_coredns_prometheus_port: "9353"
 host_coredns_forwardto: "{{ grp_device.pi.ipv4_addr }}"
@@ -154,7 +154,7 @@ host_coredns_containers_local_subdomain:
 ## gad ##
 host_gad_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_gad_path: /opt
-host_gad_version: "1.4.2"
+host_gad_version: "1.4.2" # https://github.com/brianreumere/gandi-automatic-dns/releases
 host_gad_use_ipv6: no
 ## gad ##
 
