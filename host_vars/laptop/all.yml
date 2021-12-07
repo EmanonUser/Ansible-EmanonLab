@@ -60,7 +60,7 @@ host_device_init_debian_stable_packages:
 
 ## starship ##
 host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_starship_version: "0.58.0" # https://github.com/starship/starship/releases
+host_starship_version: "1.0.0" # https://github.com/starship/starship/releases
 ## starship ##
 
 ## firewalld ##
