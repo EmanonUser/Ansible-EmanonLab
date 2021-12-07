@@ -141,6 +141,7 @@ host_podman_transmission_volumes:
   - "{{ host_podman_transmission_volumes_path }}/transmission/:/transmission"
   - "{{ host_podman_media_path }}:/media"
   - "{{ host_zfs_primary_pools.tank.path }}/misc:/misc"
+  - "{{ host_zfs_primary_pools.tank.path }}/files:/files"
 host_podman_transmission_env_openvpn_provider: "{{ host_vault_transmission_openvpn_provider }}"
 host_podman_transmission_env_openvpn_config: "{{ host_vault_transmission_openvpn_config }}"
 host_podman_transmission_env_openvpn_username: "{{ host_vault_transmission_openvpn_username }}"
