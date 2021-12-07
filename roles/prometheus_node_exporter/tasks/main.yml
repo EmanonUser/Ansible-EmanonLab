@@ -44,7 +44,7 @@
     group: root
     mode: u=rw,g=,o=
   notify:
-    - Daemon-reload node-exporter service
+    - Daemon-reload systemd
     - Enable node-exporter service
     - Start node-exporter service
     - Restart node-exporter service
