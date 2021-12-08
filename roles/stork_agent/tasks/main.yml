@@ -1,0 +1,27 @@
+- name: Add Cloudsmith Stork GPG Key
+  ansible.builtin.apt_key:
+    url: https://dl.cloudsmith.io/public/isc/stork/{{ stork_agent_cloudsmith_gpg_key }}
+    state: present
+
+- name: Add Cloudsmith Stork Debian Repository
+  ansible.builtin.apt_repository:
+    repo: deb https://dl.cloudsmith.io/public/isc/stork/deb/debian {{ ansible_distribution_release }}  main
+    filename: stork
+    state: present
+  notify: ["Apt update", "Apt upgrade"]
+
+- name: Install stork agent
+  ansible.builtin.apt:
+    name: isc-stork-agent
+    update_cache: yes
+    state: present
+  notify: ["Enable stork-agent service", "Start stork-agent service"]
+
+- name: Template stork agent environnement file
+  ansible.builtin.template:
+    src: agent.env.j2
+    dest: /etc/stork/agent.env
+    owner: stork-agent
+    group: stork-agent
+    mode: u=rw,g=,o=
+  notify: Reload stork-agent service
