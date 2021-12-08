@@ -60,9 +60,6 @@ backend {{ service }}-backend
 {% endif %}
 {% endfor %}
 
-backend letsencrypt-backend
-    server letsencrypt localhost:{{ haproxy_acme_server_port }}
-
 {% if haproxy_stats %}
 frontend stats
 	bind :::8404 interface {{ ansible_default_ipv4.interface }}
