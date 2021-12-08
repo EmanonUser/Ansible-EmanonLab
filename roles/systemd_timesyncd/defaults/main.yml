@@ -1,2 +1,2 @@
 ---
-ntp_server: "{{ grp_local_ntp_server }}"
+ntp_server: "{{ grp_ntp_server }}"
