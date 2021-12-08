@@ -11,6 +11,7 @@
     - interfaces
     - frr
     - isc_kea
+    - stork_agent
     - wireguard
     - coredns
     - gad
