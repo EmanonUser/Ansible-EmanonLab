@@ -33,46 +33,67 @@ grp_device:
     arch:
       ipv4_addr:  192.168.20.20
       ipv4_addr_cidr: 192.168.20.20/24
+      hw_addr: "00:d8:61:57:9c:fb"
       hostname: arch
     truenas:
       ipv4_addr:  192.168.10.25
       ipv4_addr_cidr: 192.168.10.25/24
-      hostname: truenas 
+      hw_addr: "ac:1f:6b:77:cf:b8"
+      hostname: truenas
+    ipmi:
+      ipv4_addr:  192.168.10.26
+      ipv4_addr_cidr: 192.168.10.26/24
+      hw_addr: "ac:1f:6b:77:c8:78"
+      hostname: ipmi 
     aclite:
       ipv4_addr:  192.168.10.40
       ipv4_addr_cidr: 192.168.10.40/24
+      hw_addr: "b4:fb:e4:90:49:50"
       hostname: ubnt
     pi:
       ipv4_addr:  192.168.10.30
       ipv4_addr_cidr: 192.168.10.30/24
+      hw_addr: dc:a6:32:25:7f:cc
       hostname: pi
     shp1:
       ipv4_addr: 192.168.50.50
       ipv4_addr_cidr: 192.168.50.50/24
+      hw_addr: "a4:cf:12:d7:91:6d"
       hostname: homelabshp
     shp2:
       ipv4_addr: 192.168.50.51
       ipv4_addr_cidr: 192.168.50.51/24
+      hw_addr: "a4:cf:12:d7:8f:48"
       hostname: brocadeshp
     shp3:
       ipv4_addr: 192.168.50.52
       ipv4_addr_cidr: 192.168.50.52/24
+      hw_addr: "e8:db:84:89:1b:35"
       hostname: supermicroshp
     shp4:
       ipv4_addr: 192.168.50.53
       ipv4_addr_cidr: 192.168.50.53/24
+      hw_addr: "e8:db:84:89:24:61"
       hostname: qotomshp
     shp5:
       ipv4_addr: 192.168.50.54
       ipv4_addr_cidr: 192.168.50.54/24
+      hw_addr: "e8:db:84:88:3a:fa"
       hostname: pishp
+    hs110:
+      ipv4_addr: 192.168.50.55
+      ipv4_addr_cidr: 192.168.50.55/24
+      hw_addr: "50:c7:bf:0a:f3:44"
+      hostname: hs110
     tmp117:
       ipv4_addr: 192.168.50.60
       ipv4_addr_cidr: 192.168.50.60/24
+      hw_addr: "c8:2b:96:09:17:b0"
       hostname: tmp117
     printer:
       ipv4_addr: 192.168.70.5
       ipv4_addr_cidr: 192.168.70.5/24
+      hw_addr: "00:21:5a:e5:51:f9"
       hostname: printer
 
 grp_podman_networking:
