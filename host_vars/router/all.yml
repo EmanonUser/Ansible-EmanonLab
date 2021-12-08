@@ -173,9 +173,12 @@ host_nftables_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count 
 ## nftables ##
 
 ## isc_kea ##
-host_isc_kea_dns_server:
-host_isc_kea_domain_search:
-host_isc_kea_ntp_server: 
+host_isc_kea_dns_servers: 
+  - "{{ grp_dns_server }}"
+host_isc_kea_ntp_servers: 
+  - "{{ grp_ntp_server }}"
+host_isc_kea_domains_search: 
+  - "{{ grp_local_domain }}"
 host_isc_kea_dhcp4:
   - subnet: 192.168.10.0/24
     routers: 192.168.10.1

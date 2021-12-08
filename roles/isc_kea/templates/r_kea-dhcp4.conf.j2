@@ -43,15 +43,15 @@
     "option-data": [
       {
         "name": "domain-name-servers",
-        "data": "{{ isc_kea_dns_server }}"
+        "data": "{% for dns_server in isc_kea_dns_servers %}{{ dns_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
       },
       {
         "name": "domain-search",
-        "data": "{{ isc_kea_domain_search }}"
+        "data": "{% for domain in isc_kea_domains_search %}{{ domain }}{% if not loop.last %}, {% endif %}{% endfor %}"
       },
       {
         "name": "ntp-servers",
-        "data": "{{ isc_kea_ntp_server }}"
+        "data": "{% for ntp_server in isc_kea_ntp_servers %}{{ ntp_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
       }
     ],
     "host-reservation-identifiers": [
