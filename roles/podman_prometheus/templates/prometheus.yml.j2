@@ -67,3 +67,8 @@ scrape_configs:
     - targets: ['192.168.50.54:80']
       labels:
         shp_device: 'Raspberry'
+    
+  - job_name: 'kea'
+    scrape_interval: 10s
+    static_configs:
+    - targets: ['192.168.5.1:6764']
