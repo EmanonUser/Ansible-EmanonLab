@@ -212,7 +212,6 @@ host_acme_dns_domain_name:
 ## acme_dns ##
 
 ## haproxy ##
-host_haproxy_acme_server_port: "27767"
 host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
 host_haproxy_firewalld_services: ["http", "https"]
 host_haproxy_domain_name: "{{ host_acme_domain_name }}"
