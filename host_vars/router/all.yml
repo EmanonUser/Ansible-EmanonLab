@@ -172,6 +172,9 @@ host_isc_kea_ntp_servers:
   - "{{ grp_ntp_server }}"
 host_isc_kea_domains_search: 
   - "{{ grp_local_domain }}"
+host_isc_kea_ctrl_agent_address: 127.0.0.1
+host_isc_kea_ctrl_agent_port: 8000
+
 host_isc_kea_dhcp4:
   - subnet: 192.168.10.0/24
     routers: 192.168.10.1
