@@ -10,3 +10,4 @@ TODO:
     - smartd role
     - pi hosts var, centralise zfs data paths
     - fix/complete nginx_reverse
+    - verify if grp_ is overused in host_, instead of defaults/main.yml
