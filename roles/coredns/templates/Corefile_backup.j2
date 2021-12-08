@@ -31,6 +31,7 @@ local.emanon:{{ coredns_port }} {
 
 .:5301 {
     prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
+    bind 127.0.0.1 ::1
     forward . tls://9.9.9.9 {
         tls_servername dns.quad9.net
         health_check 5s
@@ -40,6 +41,7 @@ local.emanon:{{ coredns_port }} {
 
 .:5302 {
     prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
+    bind 127.0.0.1 ::1
     forward . tls://1.1.1.1 tls://1.0.0.1 {
         tls_servername cloudflare-dns.com
         health_check 5s
