@@ -249,5 +249,18 @@ host_isc_kea_dhcp4:
       - start: 192.168.100.100
         end: 192.168.100.200
     reservations: []
-
 ## isc_kea ##
+
+## stork_agent ##
+host_stork_agent_cloudsmith_gpg_key: gpg.77F64EC28053D1FB.key
+host_stork_agent_address: "{{ grp_device.router.ipv4_addr }}"
+host_stork_agent_port: 6763
+host_stork_agent_listen_stork_only: false
+host_stork_agent_listen_prometheus_only: true
+host_stork_agent_prometheus_kea_exporter_address: "{{ grp_device.router.ipv4_addr }}"
+host_stork_agent_prometheus_kea_exporter_port: 6764
+host_stork_agent_prometheus_kea_exporter_interval: 10
+host_stork_agent_prometheus_bind9_exporter_address: localhost
+host_stork_agent_prometheus_bind9_exporter_port: 6765
+host_stork_agent_prometheus_bind9_exporter_interval: 30
+## stork_agent ##
