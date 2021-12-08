@@ -161,6 +161,7 @@ host_podman_grafana_dashboards_path:
   - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/coredns.json"
   - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/shp.json"
   - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/tmp117.json"
+  - "{{ host_podman_grafana_volumes_path }}/grafana/dashboards/kea-dhcp4.json"
 host_podman_grafana_url: "http://127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}"
 host_podman_grafana_admin_password: "{{ host_vault_grafana_admin_password }}"
 ## podman_grafana ##
