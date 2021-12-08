@@ -21,13 +21,12 @@
     state: present
   notify: ["Enable kea-dhcp4 service", "Start kea-dhcp4 service"]
 
-  # TODO: Use the template module to add pools, ip reservations etc...
-- name: Configure isc-Kea-dhcp4-server
-  ansible.builtin.copy:
-    src: kea-dhcp4.conf.json
+- name: Template kea-dhcp4 server configuration
+  ansible.builtin.template:
+    src: r_kea-dhcp4.conf.j2
     dest: /etc/kea/kea-dhcp4.conf
-    owner: _kea
-    group: _kea
+    owner:  _kea
+    group:  _kea
     mode: u=rw,g=,o=
     validate: /usr/sbin/kea-dhcp4 -t %s
   notify: Reload kea-dhcp4 service

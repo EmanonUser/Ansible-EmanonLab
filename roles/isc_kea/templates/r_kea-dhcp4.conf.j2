@@ -1,0 +1,99 @@
+{
+  "Dhcp4": {
+    "interfaces-config": {
+      "dhcp-socket-type": "udp",
+      "interfaces": [
+        "bond0"
+      ]
+    },
+    "multi-threading": {
+      "enable-multi-threading": true,
+      "thread-pool-size": 4,
+      "packet-queue-size": 16
+    },
+    "control-socket": {
+      "socket-type": "unix",
+      "socket-name": "/tmp/kea-dhcp4-ctrl.sock"
+    },
+    "lease-database": {
+      "type": "memfile",
+      "persist": true,
+      "name": "/var/lib/kea/dhcp4.leases",
+      "lfc-interval": 3600
+    },
+    "loggers": [
+      {
+        "name": "kea-dhcp4",
+        "output_options": [
+          {
+            "output": "/var/log/kea/kea-dhcp4.log",
+            "pattern": {% raw %}"%D{%Y-%m-%d %H:%M:%S.%q} %-5p [%c/%i] %m\n",{% endraw %}
+            "flush": false,
+            "maxsize": 1048576,
+            "maxver": 8
+          }
+        ],
+        "severity": "INFO",
+        "debuglevel": 0
+      }
+    ],
+    "valid-lifetime": 4000,
+    "renew-timer": 1000,
+    "rebind-timer": 2000,
+    "option-data": [
+      {
+        "name": "domain-name-servers",
+        "data": "{{ isc_kea_dns_server }}"
+      },
+      {
+        "name": "domain-search",
+        "data": "{{ isc_kea_domain_search }}"
+      },
+      {
+        "name": "ntp-servers",
+        "data": "{{ isc_kea_ntp_server }}"
+      }
+    ],
+    "host-reservation-identifiers": [
+      "hw-address"
+    ],
+    "option-def": [
+      {
+        "name": "PXE",
+        "code": 1,
+        "space": "vendor-encapsulated-options-space",
+        "type": "string",
+        "encapsulate": ""
+      }
+    ],
+    "subnet4": [{% for subnet in isc_kea_dhcp4 %}
+    
+    {
+        "subnet": "{{ subnet.subnet }}",
+        "pools" : [{% for pool in subnet.pools %}  
+          {
+            "pool": "{{ pool.start }}-{{ pool.end }}"
+          }{% if not loop.last %},{% endif %}{% endfor %}
+      
+        ],
+
+        "option-data": [
+          {
+            "name": "routers",
+            "data": "{{ subnet.routers }}"
+          }
+        ],
+        "reservations": [{% for reservation in subnet.reservations %}
+          
+        {
+            "hw-address": "{{ reservation.hw_addr }}",
+            "ip-address": "{{ reservation.ipv4_addr }}",
+            "hostname": "{{ reservation.hostname }}"
+        }{%if not loop.last %},{% endif %}{% endfor %}
+
+        ]
+      }{% if not loop.last %},{% endif %}{% endfor %}
+
+    ]
+  }
+}
