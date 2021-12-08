@@ -17,7 +17,6 @@ table ip routing {
 	chain postrouting {
 		type nat hook postrouting priority srcnat; policy accept
 		oifname $WAN masquerade # WAN NAT
-		iifname $WG ip saddr {{ wireguard_subnet }}.0/24 oifname $LAN masquerade # Wireguard NAT
 		# NAT hairpinning ip saddr 192.168.70.0/24 ip daddr {{ router_static_ip }} tcp dport 1234 masquerade
 	}
 }
