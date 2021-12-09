@@ -33,7 +33,7 @@
     dest: /etc/kea/kea-dhcp4.conf
     owner:  _kea
     group:  _kea
-    mode: u=rw,g=,o=
+    mode: u=rw,g=r,o=r
     validate: /usr/sbin/kea-dhcp4 -t %s
   notify: Reload kea-dhcp4 service
 
@@ -43,6 +43,6 @@
     dest: /etc/kea/kea-ctrl-agent.conf
     owner:  _kea
     group:  _kea
-    mode: u=rw,g=,o=
+    mode: u=rw,g=r,o=r
     validate: /usr/sbin/kea-ctrl-agent -t %s
   notify: Reload kea-ctrl-agent service
