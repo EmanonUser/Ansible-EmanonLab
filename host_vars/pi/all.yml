@@ -209,7 +209,7 @@ host_podman_syncthing_volumes:
 ## podman_flame ##
 host_podman_flame_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_flame_image: docker.io/pawelmalak/flame
-host_podman_flame_image_version: "multiarch2.0.1" # https://hub.docker.com/r/pawelmalak/flame/tags
+host_podman_flame_image_version: "multiarch2.1.1" # https://hub.docker.com/r/pawelmalak/flame/tags
 host_podman_flame_ports:
   - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
   - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}[::1]:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
