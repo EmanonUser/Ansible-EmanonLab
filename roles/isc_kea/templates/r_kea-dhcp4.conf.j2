@@ -80,7 +80,7 @@
         "option-data": [
           {
             "name": "routers",
-            "data": "{{ subnet.routers }}"
+            "data": "{% for router in subnet.routers %}{{ router }}{% if not loop.last %}, {% endif %}{% endfor %}"
           }
         ],
         "reservations": [{% for reservation in subnet.reservations %}

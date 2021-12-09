@@ -177,7 +177,8 @@ host_isc_kea_ctrl_agent_port: 8000
 
 host_isc_kea_dhcp4:
   - subnet: 192.168.10.0/24
-    routers: 192.168.10.1
+    routers: 
+      - 192.168.10.1
     pools:
       - start: 192.168.10.100
         end: 192.168.10.200
@@ -196,7 +197,8 @@ host_isc_kea_dhcp4:
         hostname: "{{ grp_device.aclite.hostname }}"
 
   - subnet: 192.168.20.0/24
-    routers: 192.168.20.1
+    routers: 
+      - 192.168.20.1
     pools:
       - start: 192.168.20.100
         end: 192.168.20.200
@@ -206,7 +208,8 @@ host_isc_kea_dhcp4:
         hostname: "{{ grp_device.arch.hostname }}"
   
   - subnet: 192.168.50.0/24
-    routers: 192.168.50.1
+    routers: 
+      - 192.168.50.1
     pools:
       - start: 192.168.50.100
         end: 192.168.50.200
@@ -234,7 +237,8 @@ host_isc_kea_dhcp4:
         hostname: "{{ grp_device.tmp117.hostname }}"
   
   - subnet: 192.168.70.0/24
-    routers: 192.168.70.1
+    routers: 
+      - 192.168.70.1
     pools:
       - start: 192.168.70.100
         end: 192.168.70.200
@@ -244,7 +248,8 @@ host_isc_kea_dhcp4:
         hostname: "{{ grp_device.printer.hostname }}"
 
   - subnet: 192.168.100.0/24
-    routers: 192.168.100.1
+    routers: 
+      - 192.168.100.1
     pools:
       - start: 192.168.100.100
         end: 192.168.100.200
