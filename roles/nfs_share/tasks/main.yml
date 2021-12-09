@@ -12,7 +12,7 @@
     group: root
     mode: u=rw,g=r,o=r
   notify:
-    - Daemon-reload systemd
+    - Daemon-reload nfs_share systemd
     - Enable mnt-vault.mount service
     - Start mnt-vault.mount service
     - Restart mnt-vault.mount service

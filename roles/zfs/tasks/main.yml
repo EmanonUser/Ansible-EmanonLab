@@ -41,7 +41,7 @@
     mode: u=rw,g=,o=
   loop: [zpool-scrub@.service, zpool-scrub@.timer]
   notify:
-    - Daemon-reload systemd
+    - Daemon-reload zfs systemd
     - Enable zpool(s)-scrub timer(s)
     - Start zpool(s)-scrub timer(s)
     - Restart zpool(s)-scrub timer(s)

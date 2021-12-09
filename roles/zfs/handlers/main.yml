@@ -1,5 +1,5 @@
 ---
-- name: Daemon-reload systemd
+- name: Daemon-reload zfs systemd
   ansible.builtin.systemd:
     daemon_reload: yes
 

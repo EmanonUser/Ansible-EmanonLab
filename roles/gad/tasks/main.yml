@@ -46,7 +46,7 @@
     - gad4.service
     - gad4.timer
   notify:
-    - Daemon-reload systemd
+    - Daemon-reload gad systemd
     - Enable gad4 timer
     - Start gad4 timer
     - Restart gad4 timer
@@ -65,7 +65,7 @@
     - gad6.timer
   when: gad_use_ipv6
   notify:
-    - Daemon-reload systemd
+    - Daemon-reload gad systemd
     - Enable gad6 timer
     - Start gad6 timer
     - Restart gad6 timer
