@@ -19,4 +19,4 @@
     - podman_syncthing
     - podman_flame
     - podman_smokeping
-    - nginx_reverse
+    - haproxy
