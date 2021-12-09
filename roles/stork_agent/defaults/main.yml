@@ -1,5 +1,5 @@
 stork_agent_cloudsmith_gpg_key: "{{ host_stork_agent_cloudsmith_gpg_key }}"
-stork_agent_address: "{{ host_stork_agent_address }}"
+stork_agent_host: "{{ host_stork_agent_host }}"
 stork_agent_port: "{{ host_stork_agent_port }}"
 stork_agent_listen_stork_only: "{{ host_stork_agent_listen_stork_only }}"
 stork_agent_listen_prometheus_only: "{{ host_stork_agent_listen_prometheus_only }}"

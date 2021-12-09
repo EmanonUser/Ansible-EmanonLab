@@ -253,7 +253,7 @@ host_isc_kea_dhcp4:
 
 ## stork_agent ##
 host_stork_agent_cloudsmith_gpg_key: gpg.77F64EC28053D1FB.key
-host_stork_agent_address: "{{ grp_device.router.ipv4_addr }}"
+host_stork_agent_host: "{{ grp_device.router.ipv4_addr }}"
 host_stork_agent_port: 6763
 host_stork_agent_listen_stork_only: false
 host_stork_agent_listen_prometheus_only: true
