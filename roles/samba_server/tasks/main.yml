@@ -44,4 +44,4 @@
     immediate: yes
     state: enabled
   loop: "{{ samba_server_firewalld_rich_rules }}"
-  when: ansible_host == 'lain.emanon.moe'
+  when: inventory_hostname == 'laptop'

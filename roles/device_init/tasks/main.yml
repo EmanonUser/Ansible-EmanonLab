@@ -133,5 +133,5 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-  when: ansible_host == 'lain.emanon.moe'
+  when: inventory_hostname == 'laptop'
   notify: Restart systemd-logind service

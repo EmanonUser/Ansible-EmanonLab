@@ -64,4 +64,4 @@
     permanent: yes
     state: enabled
     immediate: yes
-  when: ansible_host == 'pi.local.emanon'
+  when: inventory_hostname == 'pi'

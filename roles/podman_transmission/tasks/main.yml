@@ -42,7 +42,7 @@
   when:
     - podman_networking.transmission.lan_access is defined
     - podman_networking.transmission.lan_access
-    - ansible_host == 'pi.local.emanon'
+    - inventory_hostname == 'pi'
 
 - name: Close transmission firewalld ports
   ansible.posix.firewalld:
@@ -54,7 +54,7 @@
   when:
     - podman_networking.transmission.lan_access is defined
     - not podman_networking.transmission.lan_access
-    - ansible_host == 'pi.local.emanon'
+    - inventory_hostname == 'pi'
 
 - name: Open transmission firewalld ports to admin devices
   ansible.posix.firewalld:
@@ -67,7 +67,7 @@
   when:
     - podman_networking.transmission.lan_access is defined
     - podman_networking.transmission.lan_access
-    - ansible_host == 'lain.emanon.moe'
+    - inventory_hostname == 'laptop'
 
 - name: Close transmission firewalld ports to admin devices
   ansible.posix.firewalld:
@@ -80,4 +80,4 @@
   when:
     - podman_networking.transmission.lan_access is defined
     - not podman_networking.transmission.lan_access
-    - ansible_host == 'lain.emanon.moe'
+    - inventory_hostname == 'laptop'
