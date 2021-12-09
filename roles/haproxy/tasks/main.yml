@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     name: haproxy
     state: present
-  notify: Enable haproxy service
+  notify: ["Enable haproxy service", "Start haproxy service"]
 
 - name: Create HAproxy ssl dir
   ansible.builtin.file:
