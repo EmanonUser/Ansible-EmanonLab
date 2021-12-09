@@ -1,6 +1,6 @@
 ---
-primary_user_username: "{{ host_prometheus_node_exporter_roleless_primary_user_username }}"
-download_url: "{{ host_prometheus_node_exporter_download_url }}"
-node_exporter_version: "{{ host_prometheus_node_exporter_version }}"
-cpu_architecture: "{{ host_prometheus_node_exporter_roleless_cpu_architecture }}"
-firewalld_zone: "{{ host_firewalld_zone }}"
+prometheus_node_exporter_version: "{{ host_prometheus_node_exporter_version }}"
+prometheus_node_exporter_cpu_architecture: "{{ host_prometheus_node_exporter_roleless_cpu_architecture }}"
+prometheus_node_exporter_firewalld_zone: "{{ host_firewalld_zone }}"
+prometheus_node_exporter_interface_address: "{{ host_prometheus_node_exporter_interface_address }}"
+prometheus_node_exporter_port: "{{ host_prometheus_node_exporter_port }}"

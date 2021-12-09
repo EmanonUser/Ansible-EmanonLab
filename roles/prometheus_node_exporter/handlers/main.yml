@@ -1,5 +1,5 @@
 ---
-- name: Daemon-reload systemd
+- name: Daemon-reload node-exporter systemd
   ansible.builtin.systemd:
     daemon_reload: yes
 

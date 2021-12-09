@@ -1,38 +1,46 @@
 ---
-- name: Create folder
+- name: Create CoreDNS user
+  ansible.builtin.user:
+    name: node_exporter
+    create_home: no
+    shell: /usr/bin/bash
+    comment: Node_exporter user created by Ansible
+    state: present
+
+- name: Create node_exporter folder
   ansible.builtin.file:
     path: /opt/prometheus
-    owner: "{{ primary_user_username }}"
-    group: "{{ primary_user_username }}"
+    owner: node_exporter
+    group: node_exporter
     mode: u=rwx,g=,o=
     state: directory
 
 - name: Check if node_exporter Binary already exist
   ansible.builtin.stat:
-    path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}/node_exporter
+    path: /opt/prometheus/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}/node_exporter
   register: stat_value
 
 - name: Download node_exporter binary
   ansible.builtin.get_url:
-    url: "{{ download_url }}v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz"
-    dest: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
-    checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/sha256sums.txt"
-    owner: "{{ primary_user_username }}"
-    group: "{{ primary_user_username }}"
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}.tar.gz" # noqa 204
+    dest: /opt/prometheus/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}.tar.gz
+    checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/sha256sums.txt"
+    owner: node_exporter
+    group: node_exporter
     mode: u=rx,g=,o=
     timeout: 30
   when: not stat_value.stat.exists
 
 - name: Extract node_exporter archive
   ansible.builtin.unarchive:
-    src: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
+    src: /opt/prometheus/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}.tar.gz
     dest: /opt/prometheus/
     remote_src: yes
   when: not stat_value.stat.exists
 
 - name: Delete archive
   ansible.builtin.file:
-    path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
+    path: /opt/prometheus/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}.tar.gz
     state: absent
   when: not stat_value.stat.exists
 
@@ -44,14 +52,14 @@
     group: root
     mode: u=rw,g=,o=
   notify:
-    - Daemon-reload systemd
+    - Daemon-reload node-exporter systemd
     - Enable node-exporter service
     - Start node-exporter service
     - Restart node-exporter service
 
 - name: Open firewalld port
   ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
+    zone: "{{ prometheus_node_exporter_firewalld_zone }}"
     port: 9100/tcp
     permanent: yes
     state: enabled
