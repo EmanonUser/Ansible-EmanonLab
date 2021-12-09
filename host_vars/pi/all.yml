@@ -239,3 +239,9 @@ host_podman_smokeping_volumes:
   - "{{ host_podman_smokeping_volumes_path }}/smokeping/config:/config"
   - "{{ host_podman_smokeping_volumes_path }}/smokeping/data:/data"
 ## podman_smokeping ##
+
+## haproxy ##
+host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
+host_haproxy_firewalld_services: ["http", "https"]
+host_haproxy_stats: no
+## haproxy ##
