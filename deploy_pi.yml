@@ -18,5 +18,4 @@
     - podman_homeassistant
     - podman_syncthing
     - podman_flame
-    - podman_smokeping
     - haproxy
