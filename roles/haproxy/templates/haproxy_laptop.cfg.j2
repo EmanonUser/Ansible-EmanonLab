@@ -49,9 +49,6 @@ use_backend {{ service }}-backend if { hdr(host) -i {{ value.fulldomain }} }
 {% endif %}
 {% endfor %}
 
-acl letsencrypt-acl path_beg /.well-known/acme-challenge/
-use_backend letsencrypt-backend if letsencrypt-acl
-
 {% for service, value in podman_networking.items() %}
 {% if value.public %}
 backend {{ service }}-backend
