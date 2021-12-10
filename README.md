@@ -3,13 +3,11 @@
 
 TODO:
  
-    - Use template for kea
     - full check
     - Update zrepl
     - Rework nftables
     - smartd role
     - pi hosts var, centralise zfs data paths
-    - fix/complete nginx_reverse
     - verify if grp_ is overused in host_, instead of defaults/main.yml
-    - bind node-exporter
-    - replace nginx-reverse for pi
+    - Add basic auth to prometheus TSDB
+    - Template for filebrowser instead of a static file
