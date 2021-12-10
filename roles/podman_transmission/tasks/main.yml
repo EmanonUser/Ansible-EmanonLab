@@ -20,16 +20,19 @@
     state: started
     privileged: yes
     env:
-      OPENVPN_PROVIDER: "{{ podman_transmission_openvpn_provider }}"
-      OPENVPN_CONFIG: "{{ podman_transmission_openvpn_config }}"
-      OPENVPN_USERNAME: "{{ podman_transmission_openvpn_username }}"
-      OPENVPN_PASSWORD: "{{ podman_transmission_openvpn_password }}"
-      LOCAL_NETWORK: "192.168.0.0/16"
-      TRANSMISSION_HOME: "/transmission/home"
-      TRANSMISSION_DOWNLOAD_DIR: "/media"
-      #TRANSMISSION_INCOMPLETE_DIR: "/transmission/incompleted"
-      TRANSMISSION_WATCH_DIR: "/transmission/watch"
-      TRANSMISSION_WEB_UI: "flood-for-transmission"
+      TRANSMISSION_RPC_USERNAME: "{{ podman_transmission_env_rpc_username }}"
+      TRANSMISSION_RPC_PASSWORD: "{{ podman_transmission_env_rpc_password }}"
+      TRANSMISSION_RPC_AUTHENTICATION_REQUIRED: "{{ podman_transmission_env_rpc_auth_required }}"
+      OPENVPN_PROVIDER: "{{ podman_transmission_env_openvpn_provider }}"
+      OPENVPN_CONFIG: "{{ podman_transmission_env_openvpn_config }}"
+      OPENVPN_USERNAME: "{{ podman_transmission_env_openvpn_username }}"
+      OPENVPN_PASSWORD: "{{ podman_transmission_env_openvpn_password }}"
+      TRANSMISSION_HOME: "{{ podman_transmission_env_home_path }}"
+      TRANSMISSION_DOWNLOAD_DIR: "{{ podman_transmission_env_download_path }}"
+      #TRANSMISSION_INCOMPLETE_DIR: "{{ podman_transmission_env_incomplete_path }}"
+      TRANSMISSION_WATCH_DIR: "{{ podman_transmission_env_watch_path }}"
+      TRANSMISSION_WEB_UI: "{{ podman_transmission_env_web_ui }}"
+      LOCAL_NETWORK: "{{ podman_transmission_env_local_network }}"
   become_user: "{{ primary_user_username }}"
 
 - name: Open transmission firewalld ports
