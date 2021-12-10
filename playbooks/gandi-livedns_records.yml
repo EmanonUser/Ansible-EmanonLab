@@ -11,10 +11,10 @@
     - name: Call Gandi LiveDNS API to register the record
       community.general.gandi_livedns:
         domain: "{{ domain_name }}"
-        record: he
+        record: kuma 
         type: CNAME
         values:
           - lain.emanon.moe
-        ttl: 300
+        ttl: 1800
         api_key: "{{ v_gandi_api_key }}"
         state: present
