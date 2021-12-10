@@ -44,21 +44,20 @@ table inet firewall {
 	}
 
 	chain input_filter {
-	    ct state invalid counter drop
-	    iifname { "lo" } ip saddr != 127.0.0.0/8 counter drop
+		ct state invalid counter drop
+		iifname { "lo" } ip saddr != 127.0.0.0/8 counter drop
 	}
 
 	chain forward_filter {
-	    ct state invalid counter drop
-	    iifname $LAN oifname $WAN ip daddr @IANA_BOGON_IPV4 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv4 addresses to WAN
-        iifname $LAN oifname $WAN ip daddr @IANA_BOGON_IPV6 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv6 addresses to WAN
+		ct state invalid counter drop
+		iifname $LAN oifname $WAN ip daddr @IANA_BOGON_IPV4 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv4 addresses to WAN
+		iifname $LAN oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv6 addresses to WAN
 	}
 
 	chain output_filter {
-	    ct state invalid counter drop
-	    oifname $WAN ip daddr @IANA_BOGON_IPV4 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv4 addresses to WAN
-        oifname $WAN ip daddr @IANA_BOGON_IPV6 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv6 addresses to WAN
-	
+		ct state invalid counter drop
+		oifname $WAN ip daddr @IANA_BOGON_IPV4 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv4 addresses to WAN
+		oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv6 addresses to WAN
 	}
 
 	chain input {
