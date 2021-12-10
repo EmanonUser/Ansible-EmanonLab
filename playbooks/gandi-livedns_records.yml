@@ -14,7 +14,7 @@
         record: kuma 
         type: CNAME
         values:
-          - lain.emanon.moe
+          - lain
         ttl: 1800
         api_key: "{{ v_gandi_api_key }}"
         state: present
