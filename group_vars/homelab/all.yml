@@ -104,7 +104,7 @@ grp_podman_networking:
   transmission:
     fulldomain: "transmission.{{ grp_local_domain }}"
     webui_port: 4002
-    lan_access: yes
+    lan_access: no
   prometheus:
     fulldomain: "prometheus.{{ grp_local_domain }}"
     webui_port: 4003
@@ -116,7 +116,7 @@ grp_podman_networking:
   homeassistant:
     fulldomain: "hass.{{ grp_local_domain }}"
     webui_port: 4005
-    lan_access: yes
+    lan_access: no
   syncthing:
     fulldomain: "syncthing.{{ grp_local_domain }}"
     webui_port: 4006
