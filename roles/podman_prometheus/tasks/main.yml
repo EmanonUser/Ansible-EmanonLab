@@ -2,8 +2,8 @@
 - name: Create prometheus volume directory
   ansible.builtin.file:
     path: "{{ item }}"
-    owner: emanon
-    group: emanon
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
     state: directory
   loop: "{{ podman_prometheus_directories }}"
@@ -12,6 +12,9 @@
   ansible.builtin.template:
     src: prometheus.yml.j2
     dest: "{{ podman_prometheus_config_path }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=,o=
   register: conf_change
 
 - name: Run prometheus podman container
