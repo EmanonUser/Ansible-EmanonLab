@@ -1,0 +1,11 @@
+---
+primary_user_username: "{{ host_podman_loki_roleless_primary_user_username }}"
+podman_loki_image: "{{ host_podman_loki_image }}"
+podman_loki_image_version: "{{ host_podman_loki_image_version }}"
+podman_loki_ports: "{{ host_podman_loki_ports }}"
+podman_loki_firewalld_ports: "{{ host_podman_loki_firewalld_ports }}"
+podman_loki_directories: "{{ host_podman_loki_directories }}"
+podman_loki_volumes: "{{ host_podman_loki_volumes }}"
+podman_loki_config_path: "{{ host_podman_loki_config_path }}"
+podman_loki_firewalld_zone: "{{ host_podman_loki_firewalld_zone }}"
+podman_networking: "{{ grp_podman_networking }}"

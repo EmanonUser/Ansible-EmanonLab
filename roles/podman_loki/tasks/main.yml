@@ -1,0 +1,39 @@
+---
+- name: Create loki volume directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ podman_loki_directories }}"
+
+- name: Run loki podman container
+  containers.podman.podman_container:
+    name: loki_ansible
+    image: "{{ podman_loki_image }}:{{ podman_loki_image_version }}"
+    publish: "{{ podman_loki_ports }}"
+    volume: "{{ podman_loki_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+    command:
+      - "-config.file=/mnt/config/loki-config.yaml"
+  become_user: "{{ primary_user_username }}"
+
+- name: Open loki firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_loki_firewalld_zone }}"
+    port: "{{ podman_loki_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: podman_networking.loki.lan_access
+
+- name: Close loki firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_loki_firewalld_zone }}"
+    port: "{{ podman_loki_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when: not podman_networking.loki.lan_access
