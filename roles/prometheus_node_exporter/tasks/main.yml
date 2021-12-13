@@ -1,5 +1,5 @@
 ---
-- name: Create CoreDNS user
+- name: Create node_exporter user
   ansible.builtin.user:
     name: node_exporter
     create_home: no
