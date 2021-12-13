@@ -9,5 +9,4 @@ TODO:
     - smartd role
     - pi hosts var, centralise zfs data paths
     - verify if grp_ is overused in host_, instead of defaults/main.yml
-    - Add basic auth to prometheus TSDB
-    - Template for filebrowser instead of a static file
+    - Add basic auth to prometheus TSDB, Loki, Promtail
