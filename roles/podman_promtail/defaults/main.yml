@@ -1,0 +1,9 @@
+---
+primary_user_username: "{{ host_podman_promtail_roleless_primary_user_username }}"
+podman_promtail_image: "{{ host_podman_promtail_image }}"
+podman_promtail_image_version: "{{ host_podman_promtail_image_version }}"
+promtail_loki_url: "{{ host_promtail_loki_url }}"
+podman_promtail_volumes_path: "{{ host_podman_promtail_volumes_path }}"
+podman_promtail_directories: "{{ host_podman_promtail_directories }}"
+podman_promtail_volumes: "{{ host_podman_promtail_volumes }}"
+podman_promtail_config_path: "{{ host_podman_promtail_config_path }}"
