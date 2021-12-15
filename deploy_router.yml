@@ -12,6 +12,7 @@
     - frr
     - isc_kea
     - stork_agent
+    - promtail
     - wireguard
     - coredns
     - gad

@@ -125,10 +125,10 @@ grp_podman_networking:
     fulldomain: "flame.{{ grp_local_domain }}"
     webui_port: 4007
     lan_access: no
-  smokeping:
-    fulldomain: "smoke.{{ grp_local_domain }}"
+  loki:
+    fulldomain: "loki.{{ grp_local_domain }}"
     webui_port: 4008
-    lan_access: no
+    lan_access: yes
 
 grp_local_domain: local.emanon
 grp_domain_name: emanon.moe

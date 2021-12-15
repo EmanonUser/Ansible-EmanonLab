@@ -48,6 +48,7 @@ host_device_init_debian_stable_packages:
   - mtr-tiny
   - acl
   - neovim
+  - unzip
 ## device_init ##
 
 ## starship ##
@@ -269,3 +270,10 @@ host_stork_agent_prometheus_bind9_exporter_address: localhost
 host_stork_agent_prometheus_bind9_exporter_port: 6765
 host_stork_agent_prometheus_bind9_exporter_interval: 30
 ## stork_agent ##
+
+## promtail ##
+host_promtail_cpu_architecture: "amd64"
+host_promtail_version: "2.4.1"
+host_promtail_path: "/opt/promtail"
+host_promtail_loki_url: http://loki.local.emanon
+## promtail ##

@@ -240,24 +240,41 @@ host_podman_flame_volumes: "{{ host_podman_flame_volumes_path }}/flame:/app/data
 host_podman_flame_password: "{{ host_vault_podman_flame_password }}"
 ## podman_flame ##
 
-## podman_smokeping ##
-host_podman_smokeping_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_smokeping_image: quay.io/linuxserver.io/smokeping
-host_podman_smokeping_image_version: "2.7.3" # https://quay.io/repository/linuxserver.io/smokeping?tag=latest&tab=tags
-host_podman_smokeping_ports:
-  - "{% if grp_podman_networking.smokeping.lan_access %}[::]:{{ grp_podman_networking.smokeping.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.smokeping.webui_port }}{% endif %}:80/tcp"
-  - "{% if grp_podman_networking.smokeping.lan_access %}[::]:{{ grp_podman_networking.smokeping.webui_port }}{% else %}[::1]:{{ grp_podman_networking.smokeping.webui_port }}{% endif %}:80/tcp"
-host_podman_smokeping_firewalld_zone: "{{ host_firewalld_zone }}"
-host_podman_smokeping_firewalld_ports: "{{ grp_podman_networking.smokeping.webui_port }}/tcp"
-host_podman_smokeping_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_smokeping_directories: 
-  - "{{ host_podman_smokeping_volumes_path }}/smokeping"
-  - "{{ host_podman_smokeping_volumes_path }}/smokeping/config"
-  - "{{ host_podman_smokeping_volumes_path }}/smokeping/data"
-host_podman_smokeping_volumes: 
-  - "{{ host_podman_smokeping_volumes_path }}/smokeping/config:/config"
-  - "{{ host_podman_smokeping_volumes_path }}/smokeping/data:/data"
-## podman_smokeping ##
+## podman_loki ##
+host_podman_loki_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_podman_loki_image: docker.io/grafana/loki
+host_podman_loki_image_version: "2.4.1" # https://hub.docker.com/r/grafana/loki/tags
+host_podman_loki_ports:
+  - "{% if grp_podman_networking.loki.lan_access %}[::]:{{ grp_podman_networking.loki.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.loki.webui_port }}{% endif %}:3100/tcp"
+  - "{% if grp_podman_networking.loki.lan_access %}[::]:{{ grp_podman_networking.loki.webui_port }}{% else %}[::1]:{{ grp_podman_networking.loki.webui_port }}{% endif %}:3100/tcp"
+host_podman_loki_firewalld_zone: "{{ host_firewalld_zone }}"
+host_podman_loki_firewalld_ports: "{{ grp_podman_networking.loki.webui_port }}/tcp"
+host_podman_loki_volumes_path: "{{ host_podman_volumes_path }}"
+host_podman_loki_directories: 
+  - "{{ host_podman_loki_volumes_path }}/loki"
+  - "{{ host_podman_loki_volumes_path }}/loki/config"
+  - "{{ host_podman_loki_volumes_path }}/loki/storage"
+  - "{{ host_podman_loki_volumes_path }}/loki/rules"
+host_podman_loki_volumes: 
+  - "{{ host_podman_loki_volumes_path }}/loki/config:/mnt/config"
+  - "{{ host_podman_loki_volumes_path }}/loki/storage:/mnt/storage"
+  - "{{ host_podman_loki_volumes_path }}/loki/rules:/mnt/rules"
+## podman_loki ##
+
+## podman_promtail ##
+host_podman_promtail_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_podman_promtail_image: docker.io/grafana/promtail
+host_podman_promtail_image_version: "2.4.1" # https://hub.docker.com/r/grafana/promtail/tags
+host_promtail_loki_url: http://pi.local.emanon:4008
+host_podman_promtail_volumes_path: "{{ host_podman_volumes_path }}"
+host_podman_promtail_config_path: "{{ host_podman_promtail_volumes_path }}/promtail/config/promtail-config.yml"
+host_podman_promtail_directories: 
+  - "{{ host_podman_promtail_volumes_path }}/promtail"
+  - "{{ host_podman_promtail_volumes_path }}/promtail/config"
+host_podman_promtail_volumes: 
+  - "{{ host_podman_promtail_volumes_path }}/promtail/config:/mnt/config"
+  - /var/log:/var/log"
+## podman_loki ##
 
 ## haproxy ##
 host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
