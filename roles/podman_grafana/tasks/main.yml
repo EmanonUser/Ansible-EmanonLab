@@ -1,8 +1,18 @@
 ---
+- name: Place grafana dashboards
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ podman_grafana_volumes_path }}/grafana/dashboards"
+    owner: emanon
+    group: emanon
+    mode: u=rw,g=,o=
+  loop: "{{ podman_grafana_dashboards }}"
+
 - name: Run grafana podman container
   containers.podman.podman_container:
     name: grafana_ansible
     image: "{{ podman_grafana_image }}:{{ podman_grafana_image_version }}"
+    volumes: "{{ podman_grafana_volumes }}"
     publish: "{{ podman_grafana_ports }}"
     restart_policy: unless-stopped
     state: started
@@ -32,7 +42,7 @@
 - name: Pause, waiting for grafana # noqa 503
   ansible.builtin.pause:
     prompt: Pause the playbook, waiting for grafana to be fully up
-    seconds: 15
+    seconds: 20
   when: podman_grafana_res.changed
 
 - name: Create prometheus datasource
@@ -43,12 +53,58 @@
     url_password: "{{ podman_grafana_admin_password }}"
     ds_type: prometheus
     ds_url: "http://{{ podman_networking.prometheus.fulldomain }}"
+    is_default: yes
 
-- name: Import grafana base dashboards
+- name: Create grafana network folder
+  community.grafana.grafana_folder:
+    grafana_url: "{{ podman_grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ podman_grafana_admin_password }}"
+    title: Network
+    state: present
+
+- name: Create grafana devices folder
+  community.grafana.grafana_folder:
+    grafana_url: "{{ podman_grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ podman_grafana_admin_password }}"
+    title: Devices
+    state: present
+
+- name: Create grafana env folder
+  community.grafana.grafana_folder:
+    grafana_url: "{{ podman_grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ podman_grafana_admin_password }}"
+    title: Env
+    state: present
+
+- name: Import grafana network dashboards
   community.grafana.grafana_dashboard:
     grafana_url: "{{ podman_grafana_url }}"
     url_username: "admin"
     url_password: "{{ podman_grafana_admin_password }}"
     path: "{{ item }}"
+    folder: Network
     overwrite: yes
-  loop: "{{ podman_grafana_dashboards_path }}"
+  loop: "{{ podman_grafana_dashboards_path.network }}"
+
+- name: Import grafana env dashboards
+  community.grafana.grafana_dashboard:
+    grafana_url: "{{ podman_grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ podman_grafana_admin_password }}"
+    path: "{{ item }}"
+    folder: Env
+    overwrite: yes
+  loop: "{{ podman_grafana_dashboards_path.env }}"
+
+- name: Import grafana general dashboards
+  community.grafana.grafana_dashboard:
+    grafana_url: "{{ podman_grafana_url }}"
+    url_username: "admin"
+    url_password: "{{ podman_grafana_admin_password }}"
+    path: "{{ item }}"
+    folder: General
+    overwrite: yes
+  loop: "{{ podman_grafana_dashboards_path.general }}"
