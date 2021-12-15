@@ -19,4 +19,5 @@
     - podman_syncthing
     - podman_flame
     - podman_loki
+    - podman_promtail
     - haproxy
