@@ -63,14 +63,6 @@
     title: Network
     state: present
 
-- name: Create grafana devices folder
-  community.grafana.grafana_folder:
-    grafana_url: "{{ podman_grafana_url }}"
-    url_username: "admin"
-    url_password: "{{ podman_grafana_admin_password }}"
-    title: Devices
-    state: present
-
 - name: Create grafana env folder
   community.grafana.grafana_folder:
     grafana_url: "{{ podman_grafana_url }}"
