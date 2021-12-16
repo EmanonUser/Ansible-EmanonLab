@@ -70,7 +70,7 @@
 
 - name: Configure promtail config file
   ansible.builtin.template:
-    src: promtail.yml.j2
+    src: promtail_{{ inventory_hostname }}.yml.j2
     dest: "{{ promtail_path }}/promtail.yml"
     owner: promtail
     group: promtail
