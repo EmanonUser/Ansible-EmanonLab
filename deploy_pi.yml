@@ -10,6 +10,7 @@
     - firewalld
     - podman
     - prometheus_node_exporter
+    - promtail
     - nfs_share
     - podman_adguard
     - podman_transmission
@@ -19,5 +20,4 @@
     - podman_syncthing
     - podman_flame
     - podman_loki
-    - podman_promtail
     - haproxy

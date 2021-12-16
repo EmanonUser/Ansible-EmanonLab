@@ -71,6 +71,13 @@ host_prometheus_node_exporter_interface_address: "{{ grp_device.pi.ipv4_addr }}"
 host_prometheus_node_exporter_port: 9100
 ## prometheus_node_exporter ##
 
+## promtail ##
+host_promtail_cpu_architecture: "arm64"
+host_promtail_version: "2.4.1"
+host_promtail_path: "/opt/promtail"
+host_promtail_loki_url: http://loki.local.emanon
+## promtail ##
+
 ## nfs_share ##
 host_nfs_server_target: "192.168.10.25"
 host_nfs_remote_share: /mnt/vault/emanon
@@ -259,21 +266,6 @@ host_podman_loki_volumes:
   - "{{ host_podman_loki_volumes_path }}/loki/config:/mnt/config"
   - "{{ host_podman_loki_volumes_path }}/loki/storage:/mnt/storage"
   - "{{ host_podman_loki_volumes_path }}/loki/rules:/mnt/rules"
-## podman_loki ##
-
-## podman_promtail ##
-host_podman_promtail_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_promtail_image: docker.io/grafana/promtail
-host_podman_promtail_image_version: "2.4.1" # https://hub.docker.com/r/grafana/promtail/tags
-host_promtail_loki_url: http://pi.local.emanon:4008
-host_podman_promtail_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_promtail_config_path: "{{ host_podman_promtail_volumes_path }}/promtail/config/promtail-config.yml"
-host_podman_promtail_directories: 
-  - "{{ host_podman_promtail_volumes_path }}/promtail"
-  - "{{ host_podman_promtail_volumes_path }}/promtail/config"
-host_podman_promtail_volumes: 
-  - "{{ host_podman_promtail_volumes_path }}/promtail/config:/mnt/config"
-  - /var/log:/var/log"
 ## podman_loki ##
 
 ## haproxy ##
