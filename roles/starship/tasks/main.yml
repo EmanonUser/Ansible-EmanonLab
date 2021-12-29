@@ -16,10 +16,12 @@
 
 - name: Delete old starship archive(s)
   ansible.builtin.file:
-    file: "{{ item }}"
+    path: "{{ item }}"
     state: absent
   loop: "{{ files_to_delete.files }}"
-  when: not stat_result.stat.exists
+  when: 
+    - not stat_result.stat.exists
+    - files_to_delete.matched > 0
 
 - name: Get starship.rs archives
   ansible.builtin.get_url:
