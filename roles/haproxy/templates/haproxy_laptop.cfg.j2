@@ -42,6 +42,7 @@ frontend main-frontend
 	http-response set-header Referrer-Policy "no-referrer,same-origin,strict-origin,strict-origin-when-cross-origin"
 	http-response set-header X-Content-Type-Options nosniff
 	http-response set-header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;"
+	http-request deny if HTTP_1.0
 
 {% for service, value in podman_networking.items() %}
 {% if value.public %}
