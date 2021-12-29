@@ -64,9 +64,9 @@ backend emanon-backend
 	server srv localhost:9999 check
 {% if haproxy_stats %}
 frontend stats
-	bind :::8404 interface {{ ansible_default_ipv4.interface }}
+	bind :::8404 interface {{ ansible_lo.device }}
 	stats enable
 	stats uri /
 	stats refresh 10s
-	stats admin if TRUE
+	stats admin if LOCALHOST
 {% endif %}
