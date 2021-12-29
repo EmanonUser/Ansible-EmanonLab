@@ -49,19 +49,19 @@ frontend main-frontend
 use_backend {{ service }}-backend if { hdr(host) -i {{ value.fulldomain }} }
 {% endif %}
 {% endfor %}
-
 use_backend emanon-backend if { hdr(host) -i emanon.moe }
 
 {% for service, value in podman_networking.items() %}
 {% if value.public %}
 backend {{ service }}-backend
-	server srv localhost:{{ value.webui_port }} check
+	server srv localhost:{{ value.webui_port }} check maxconn 30
 
 {% endif %}
 {% endfor %}
 
 backend emanon-backend
-	server srv localhost:9999 check
+	server srv localhost:9999 check maxconn 30
+
 {% if haproxy_stats %}
 frontend stats
 	bind :::8404 interface {{ ansible_lo.device }}
