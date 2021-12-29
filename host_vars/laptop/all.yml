@@ -214,7 +214,7 @@ host_acme_dns_letsencrypt_dirs:
 host_acme_dns_domain: emanon.moe
 host_acme_dns_domain_name:
   - { fqdn: "*.{{ host_acme_dns_domain }}", index: 0, domain: ".{{ host_acme_dns_domain }}" }
-  # - { fqdn: "file.{{ host_acme_dns_domain }}", index: 0, domain: ".{{ host_acme_dns_domain }}" }
+  - { fqdn: "{{ host_acme_dns_domain }}", index: 1, domain: ".{{ host_acme_dns_domain }}" }
   # - { fqdn: "jellyfin.{{ host_acme_dns_domain }}", index: 1, domain: ".{{ host_acme_dns_domain }}" }
   # - { fqdn: "kuma.{{ host_acme_dns_domain }}", index: 2, domain: ".{{ host_acme_dns_domain }}" }
 ## acme_dns ##
