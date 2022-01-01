@@ -4,20 +4,56 @@
   become: yes
   gather_facts: yes
   roles:
-    - device_init
-    - fstrim
-    - starship
-    - firewalld
-    - podman
-    - systemd_timesyncd
-    - is_alive
-    - gad
-    - zfs
-    - zrepl
-    - podman_jellyfin
-    - podman_transmission
-    - podman_filebrowser
-    - podman_kuma
-    - haproxy
-    - acme_dns
-    - samba_server
+    - role: device_init
+      tags: [ device_init, init ]
+
+    - role: fstrim
+      tags: [ fstrim, init ]
+
+    - role: starship
+      tags: [ starship, init ]
+
+    - role: firewalld
+      tags: [ firewalld, init ]
+
+    - role: systemd_timesyncd
+      tags: [ systemd_timesyncd, init ]
+
+    - role: podman/podman
+      tags: [ podman_all ]
+
+    - role: is_alive
+      tags: [ is_alive, services ]
+
+    - role: gad
+      tags: [ gad, services ]
+
+    - role: zfs
+      tags: [ zfs, init ]
+
+    - role: zrepl
+      tags: [ zrepl, services ]
+    
+    - role: podman/podman
+      tags: [ podman/podman, podman_all ]
+
+    - role: podman/podman_jellyfin
+      tags: [ podman/podman_jellyfin, podman_all ]
+
+    - role: podman/podman_transmission
+      tags: [ podman/podman_transmission, podman_all ]
+
+    - role: podman/podman_filebrowser
+      tags: [ podman/podman_filebrowser, podman_all ]
+
+    - role: podman/podman_kuma
+      tags: [ podman/podman_kuma, podman_all ]
+
+    - role: haproxy
+      tags: [ haproxy, podman_all ]
+
+    - role: acme_dns
+      tags: [ acme_dns, podman_all ]
+
+    - role: samba_server
+      tags: [ samba_server, service ]

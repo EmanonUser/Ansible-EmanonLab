@@ -4,21 +4,56 @@
   become: yes
   gather_facts: yes
   roles:
-    - device_init
-    - fstrim
-    - starship
-    - sysctl
-    - interfaces
-    - frr
-    - isc_kea
-    - stork_agent
-    - promtail
-    - wireguard
-    - coredns
-    - gad
-    - is_alive
-    - msmtp
-    - ntpd
-    - sshguard
-    - prometheus_node_exporter
-    - nftables
+    - role: device_init
+      tags: [ device_init, init ]
+
+    - role: fstrim
+      tags: [ fstrim, init ]
+
+    - role: interfaces
+      tags: [ interfaces, init ]
+
+    - role: sysctl
+      tags: [ sysctl, init ]
+
+    - role: starship
+      tags: [ starship, init ]
+    
+    - role: frr
+      tags: [ frr, services ]
+
+    - role: isc_kea
+      tags: [ isc_kea, services ]
+
+    - role: coredns
+      tags: [ coredns, services ]
+
+    - role: wireguard
+      tags: [ wireguard, services ]
+
+    - role: ntpd
+      tags: [ ntpd, services ]
+
+    - role: stork_agent
+      tags: [ stork_agent, monitoring ]
+
+    - role: prometheus_node_exporter
+      tags: [ prometheus_node_exporter, monitoring ]
+
+    - role: promtail
+      tags: [ promtail, monitoring ]
+
+    - role: msmtp
+      tags: [ msmtp, monitoring ]
+
+    - role: gad
+      tags: [ gad, services ]
+
+    - role: is_alive
+      tags: [ is_alive, services ]
+
+    - role: sshguard
+      tags: [ sshguard, services ]
+
+    - role: nftables
+      tags: [ nftables, services ]

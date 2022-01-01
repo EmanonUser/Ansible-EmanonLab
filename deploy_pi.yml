@@ -4,20 +4,53 @@
   become: yes
   gather_facts: yes
   roles:
-    - device_init
-    - starship
-    - systemd_timesyncd
-    - firewalld
-    - podman
-    - prometheus_node_exporter
-    - promtail
-    - nfs_share
-    - podman_adguard
-    - podman_transmission
-    - podman_prometheus
-    - podman_grafana
-    - podman_homeassistant
-    - podman_syncthing
-    - podman_flame
-    - podman_loki
-    - haproxy
+    - role: device_init
+      tags: [ device_init, init ] 
+
+    - role: starship
+      tags: [ starship, init ]
+
+    - role: systemd_timesyncd
+      tags: [ systemd_timesyncd, init ]
+
+    - role: firewalld
+      tags: [ firewalld, init ]
+
+    - role: prometheus_node_exporter
+      tags: [ prometheus_node_exporter, monitoring ]
+
+    - role: promtail
+      tags: [ promtail, monitoring ]
+
+    - role: nfs_share
+      tags: [ nfs_share, podman_all ]
+
+    - role: podman/podman
+      tags: [ podman/podman, podman_all ]
+
+    - role: podman/podman_adguard
+      tags: [ podman/podman_adguard, podman_all ]
+
+    - role: podman/podman_transmission
+      tags: [ podman/podman_transmission, podman_all ]
+
+    - role: podman/podman_prometheus
+      tags: [ podman/podman_prometheus, podman_all ]
+
+    - role: podman/podman_grafana
+      tags: [ podman/podman_grafana, podman_all ]
+
+    - role: podman/podman_homeassistant
+      tags: [ podman/podman_homeassistant, podman_all ]
+
+    - role: podman/podman_syncthing
+      tags: [ podman/podman_syncthing, podman_all ]
+
+    - role: podman/podman_flame
+      tags: [ podman/podman_flame, podman_all ]
+
+    - role: podman/podman_loki
+      tags: [ podman/podman_loki, podman_all ]
+
+    - role: haproxy
+      tags: [ haproxy, podman_all ]
