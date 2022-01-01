@@ -7,12 +7,12 @@
 - name: Configure nfs share
   ansible.builtin.template:
     src: mnt-vault.mount.j2
-    dest: /etc/systemd/system/mnt-vault.mount
+    dest: /etc/systemd/system/nfs-share.mount
     owner: root
     group: root
     mode: u=rw,g=r,o=r
   notify:
     - Daemon-reload nfs_share systemd
-    - Enable mnt-vault.mount service
-    - Start mnt-vault.mount service
-    - Restart mnt-vault.mount service
+    - Enable nfs-share.mount service
+    - Start nfs-share.mount service
+    - Restart nfs-share.mount service
