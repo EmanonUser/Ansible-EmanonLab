@@ -54,7 +54,7 @@
     type: TXT
     values:
     - "{{ acme_dns_challenge_result.results[item.index]['challenge_data'][item.fqdn]['dns-01'].resource_value }}"
-    ttl: 10800
+    ttl: 300
     api_key: "{{ acme_dns_gandi_api_key }}"
     state: present
   loop: "{{ acme_dns_domain_name }}"
