@@ -3,17 +3,17 @@
   ansible.builtin.systemd:
     daemon_reload: yes
 
-- name: Enable mnt-vault.mount service
+- name: Enable {{ nfs_unit_name }}.mount service
   ansible.builtin.systemd:
-    name: mnt-vault.mount
+    name: "{{ nfs_unit_name }}.mount"
     enabled: yes
 
-- name: Start mnt-vault.mount service
+- name: Start {{ nfs_unit_name }}.mount service
   ansible.builtin.systemd:
-    name: mnt-vault.mount
+    name: "{{ nfs_unit_name }}.mount"
     state: started
 
-- name: Restart mnt-vault.mount service
+- name: Restart {{ nfs_unit_name }}.mount service
   ansible.builtin.systemd:
-    name: mnt-vault.mount
+    name: "{{ nfs_unit_name }}.mount"
     state: restarted

@@ -1,4 +1,6 @@
 ---
+nfs_username: "{{ host_roleless_nfs_username }}"
 nfs_server_target: "{{ host_nfs_server_target }}"
 nfs_remote_share: "{{ host_nfs_remote_share }}"
 nfs_mount_dir: "{{ host_nfs_mount_dir }}"
+nfs_unit_name: "{{ host_nfs_unit_name }}"
