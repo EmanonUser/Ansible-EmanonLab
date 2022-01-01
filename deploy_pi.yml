@@ -5,7 +5,7 @@
   gather_facts: yes
   roles:
     - role: device_init
-      tags: [ device_init, init ] 
+      tags: [ device_init, init ]
 
     - role: starship
       tags: [ starship, init ]

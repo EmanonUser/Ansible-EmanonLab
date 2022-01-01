@@ -18,7 +18,7 @@
 
     - role: starship
       tags: [ starship, init ]
-    
+
     - role: frr
       tags: [ frr, services ]
 

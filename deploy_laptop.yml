@@ -33,7 +33,7 @@
 
     - role: zrepl
       tags: [ zrepl, services ]
-    
+
     - role: podman/podman
       tags: [ podman/podman, podman_all ]
 
