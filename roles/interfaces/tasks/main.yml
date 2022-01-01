@@ -17,5 +17,4 @@
     group: root
     mode: u=rw,g=,o=
     force: yes
-  register: interfaces_config_result
   notify: Restart networking service
