@@ -4,6 +4,14 @@
     name: nfs-common
     state: present
 
+- name: Create nfs mount point
+  ansible.builtin.file:
+    path: "{{ nfs_mount_dir }}"
+    owner: "{{ nfs_username }}"
+    group: "{{ nfs_username }}"
+    mode: u=rwx,g=,o=
+    state: directory
+
 - name: Check if service already exist
   ansible.builtin.stat:
     path: /etc/systemd/system/nfs-share.mount
