@@ -4,6 +4,17 @@
     name: nfs-common
     state: present
 
+- name: Check if service already exist
+  ansible.builtin.stat:
+    path: /etc/systemd/system/nfs-share.mount
+  register: res
+
+- name: Mount the share
+  ansible.builtin.systemd:
+    name: nfs-share.mount
+    state: started
+  when: res.stat.exists
+
 - name: Configure nfs share
   ansible.builtin.template:
     src: mnt-vault.mount.j2
