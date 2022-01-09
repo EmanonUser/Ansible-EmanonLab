@@ -270,6 +270,24 @@ host_podman_loki_volumes:
   - "{{ host_podman_loki_volumes_path }}/loki/rules:/mnt/rules"
 ## podman_loki ##
 
+## podman_pyload ##
+host_podman_pyload_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_podman_pyload_image: docker.io/linuxserver/pyload
+host_podman_pyload_image_version: version-36437bcc
+host_podman_pyload_ports:
+  - "{% if grp_podman_networking.pyload.lan_access %}[::]:{{ grp_podman_networking.pyload.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.pyload.webui_port }}{% endif %}:8000/tcp"
+  - "{% if grp_podman_networking.pyload.lan_access %}[::]:{{ grp_podman_networking.pyload.webui_port }}{% else %}[::1]:{{ grp_podman_networking.pyload.webui_port }}{% endif %}:8000/tcp"
+host_podman_pyload_firewalld_zone: "{{ host_firewalld_zone }}"
+host_podman_pyload_firewalld_ports: "{{ grp_podman_networking.pyload.webui_port }}/tcp"
+host_podman_pyload_directories:
+  - "{{ host_podman_volumes_path }}/pyload"
+  - "{{ host_podman_volumes_path }}/pyload/config"
+  - "{{ host_podman_volumes_path }}/pyload/downloads"
+host_podman_pyload_volumes:
+  - "{{ host_podman_volumes_path }}/pyload/config:/config"
+  - "{{ host_podman_volumes_path }}/pyload/downloads:/downloads"
+## podman_pyload ##
+
 ## haproxy ##
 host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
 host_haproxy_firewalld_services: ["http", "https"]

@@ -129,6 +129,10 @@ grp_podman_networking:
     fulldomain: "loki.{{ grp_local_domain }}"
     webui_port: 4008
     lan_access: yes
+  pyload:
+    fulldomain: "pyload.{{ grp_local_domain }}"
+    webui_port: 4009
+    lan_access: yes
 
 grp_local_domain: local.emanon
 grp_domain_name: emanon.moe
