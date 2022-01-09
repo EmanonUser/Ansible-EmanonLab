@@ -1,0 +1,11 @@
+---
+primary_user_username: "{{ host_podman_pyload_roleless_primary_user_username }}"
+podman_pyload_image: "{{ host_podman_pyload_image }}"
+podman_pyload_image_version: "{{ host_podman_pyload_image_version }}"
+podman_pyload_ports: "{{ host_podman_pyload_ports }}"
+podman_pyload_firewalld_zone: "{{ host_podman_pyload_firewalld_zone }}"
+podman_pyload_firewalld_ports: "{{ host_podman_pyload_firewalld_ports }}"
+podman_pyload_directories: "{{ host_podman_pyload_directories }}"
+podman_pyload_files: "{{ host_podman_pyload_files }}"
+podman_pyload_volumes: "{{ host_podman_pyload_volumes }}"
+podman_networking: "{{ grp_podman_networking }}"

@@ -1,0 +1,37 @@
+---
+- name: Create pyload dir(s)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+  loop: "{{ podman_pyload_directories }}"
+
+- name: Run pyload podman container
+  containers.podman.podman_container:
+    name: pyload_ansible
+    image: "{{ podman_pyload_image }}:{{ podman_pyload_image_version }}"
+    publish: "{{ podman_pyload_ports }}"
+    volumes: "{{ podman_pyload_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+  become_user: "{{ primary_user_username }}"
+
+- name: Open pyload firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_pyload_firewalld_zone }}"
+    port: "{{ podman_pyload_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: podman_networking.pyload.lan_access
+
+- name: Close pyload firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ podman_pyload_firewalld_zone }}"
+    port: "{{ podman_pyload_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when: not podman_networking.pyload.lan_access
