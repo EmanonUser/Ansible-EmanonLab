@@ -35,19 +35,19 @@
       tags: [ zrepl, services ]
 
     - role: podman/podman
-      tags: [ podman/podman, podman_all ]
+      tags: [ podman, podman_all ]
 
     - role: podman/podman_jellyfin
-      tags: [ podman/podman_jellyfin, podman_all ]
+      tags: [ podman_jellyfin, podman_all ]
 
     - role: podman/podman_transmission
-      tags: [ podman/podman_transmission, podman_all ]
+      tags: [ podman_transmission, podman_all ]
 
     - role: podman/podman_filebrowser
-      tags: [ podman/podman_filebrowser, podman_all ]
+      tags: [ podman_filebrowser, podman_all ]
 
     - role: podman/podman_kuma
-      tags: [ podman/podman_kuma, podman_all ]
+      tags: [ podman_kuma, podman_all ]
 
     - role: haproxy
       tags: [ haproxy, podman_all ]
