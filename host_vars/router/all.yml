@@ -148,7 +148,7 @@ host_coredns_forwardto: "{{ grp_device.pi.ipv4_addr }}"
 ## gad ##
 host_gad_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_gad_path: /opt
-host_gad_version: "1.4.2" # https://github.com/brianreumere/gandi-automatic-dns/releases
+host_gad_version: "1.4.3" # https://github.com/brianreumere/gandi-automatic-dns/releases
 host_gad_use_ipv6: no
 ## gad ##
 
