@@ -103,6 +103,15 @@
     - "/home/{{ primary_user_username }}/.zsh/zsh-autosuggestions"
     - "/root/.zsh/zsh-autosuggestions"
 
+- name: Fetch zsh history-search-multi-word plugin from github
+  ansible.builtin.git:
+    repo: "https://github.com/z-shell/history-search-multi-word"
+    dest: "{{ item }}"
+    umask: "022"
+  loop:
+    - "/home/{{ primary_user_username }}/.zsh/history-search-multi-word"
+    - "/root/.zsh/history-search-multi-word"
+
 - name: Create .config/nvim dir(s) for primary user and root
   ansible.builtin.file:
     path: "{{ item.path }}"
