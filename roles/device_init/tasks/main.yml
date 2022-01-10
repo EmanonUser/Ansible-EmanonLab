@@ -112,6 +112,15 @@
     - "/home/{{ primary_user_username }}/.zsh/history-search-multi-word"
     - "/root/.zsh/history-search-multi-word"
 
+- name: Fetch zsh-completions plugin from github
+  ansible.builtin.git:
+    repo: "git://github.com/zsh-users/zsh-completions.git"
+    dest: "{{ item }}"
+    umask: "022"
+  loop:
+    - "/home/{{ primary_user_username }}/.zsh/zsh-completions"
+    - "/root/.zsh/zsh-completions"
+
 - name: Create .config/nvim dir(s) for primary user and root
   ansible.builtin.file:
     path: "{{ item.path }}"
