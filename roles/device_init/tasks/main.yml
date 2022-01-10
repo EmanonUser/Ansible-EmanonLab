@@ -94,7 +94,7 @@
     - { path: "/root/.zshrc", user: "root" }
   when: use_starship
 
-- name: Fetch zsh-completions plugin from github
+- name: Fetch zsh-autosuggestions plugin from github
   ansible.builtin.git:
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
     dest: "{{ item }}"
