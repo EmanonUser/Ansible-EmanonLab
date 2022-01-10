@@ -16,7 +16,7 @@
     mode: u=rwx,g=,o=
     timeout: 30
 
-- name: Unarchive CoreDNS binary
+- name: Unarchive Gad binary
   ansible.builtin.unarchive:
     src: "{{ gad_path }}/gad_{{ gad_version }}.tar.gz"
     dest: "{{ gad_path }}"
