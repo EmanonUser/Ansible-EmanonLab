@@ -154,7 +154,7 @@ host_gad_use_ipv6: no
 
 ## is_alive ##
 host_is_alive_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_is_alive_echo_request_target: lain.emanon.moe
+host_is_alive_echo_request_target: emanon.moe
 host_is_alive_echo_request_interval: 3m
 host_is_alive_echo_request_count: "21" 
 ## is_alive ##
