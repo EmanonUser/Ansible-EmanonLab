@@ -1,0 +1,95 @@
+---
+# Ansible-Emanonlab, variables conventions
+# snake_case
+# prefix define origin
+  # host_
+  # grp_
+  # host_vault_
+  # grp_vault_
+
+# All variables must follow those path: 
+##  host_vars/*/vault.yml --> host_vars/*/all.yml --> roles/*/default/main.yml  ##          Secret host variables
+##  group_vars/*/vault.yml --> group_vars/*/all.yml --> roles/*/default/main.yml  ##        Secret group variables
+##  host_vars/*/all.yml --> roles/*/default/main.yml  ##                                    Standards host variables
+##  group_vars/*/all.yml --> roles/*/default/main.yml  ##                                   Standards group variables
+
+# If a variables is used in multiples roles at the same time the prefix will be host_Origin-role_role_ and will be defined only on the origin role
+# Variables that do not belong to a role will be placed in the Roleless section
+# Add comment to external variables, variables that depend a third party apt gpg key etc
+# Verbose is cool, use verbose names even when it become extra long
+
+## Roleless ##
+host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
+host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
+host_roleless_primary_user_password_salt: "{{ host_vault_roleless_primary_user_password_salt }}"
+host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
+## Roleless ##
+
+## device_init ##
+host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
+host_device_init_roleless_primary_user_password_salt: "{{ host_roleless_primary_user_password_salt }}"
+host_device_init_root_user_password: "{{ host_vault_device_init_root_user_password }}"
+host_device_init_root_user_password_salt: "{{ host_vault_device_init_root_user_password_salt }}"
+host_device_init_use_starship: yes
+host_device_init_debian_stable_packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - curl
+  - gnupg2
+  - lsb-release
+  - dnsutils
+  - ldnsutils
+  - git
+  - tmux
+  - tcpdump
+  - mtr-tiny
+  - ldnsutils
+  - neofetch
+  - neovim
+  - zsh
+  - unzip
+  - htop
+  - vnstat
+  - acl
+  - rsync
+  - aria2
+## device_init ##
+
+## starship ##
+host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
+host_starship_version: "1.1.1" # https://github.com/starship/starship/releases
+## starship ##
+
+## firewalld ##
+host_firewalld_primary_interface: enp3s0
+host_firewalld_zone: dmz
+## firewalld ##
+
+## zfs ##
+host_zfs_primary_pools:
+  tank:
+    path: "/tank"
+host_zfs_zpool_names: "{% for pool, value in host_zfs_primary_pools %}{{ pool }}{% endif %}"
+host_zfs_systemd_on_calendar_scrubing_timer: Thu 00:00:00 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
+host_zfs_arc_max: 3006477000  # Bytes
+## zfs ##
+
+## zrepl ##
+host_zrepl_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
+## zrepl ##
+
+## samba_server ##
+host_samba_server_users:
+  - { username: emanon_samba, password: "{{ host_vault_emanon_samba_password }}" }
+  - { username: maeyo, password: "{{ host_vault_maeyo_password }}" }
+host_samba_server_network: { ipv4: "192.168.1.0/24", ipv6: "2a01:cb10:1cf:9c00::/64" }
+host_samba_server_firewalld_zone: "{{ host_firewalld_zone }}"
+host_samba_server_firewalld_rich_rules:
+  - { family: ipv4, source: "{{ host_samba_server_network.ipv4 }}", port: "445", proto: tcp }
+  - { family: ipv6, source: "{{ host_samba_server_network.ipv6 }}", port: "445", proto: tcp }
+  - { family: ipv4, source: "{{ host_samba_server_network.ipv4 }}", port: "139", proto: tcp }
+  - { family: ipv6, source: "{{ host_samba_server_network.ipv6 }}", port: "139", proto: tcp }
+## samba_server ##
