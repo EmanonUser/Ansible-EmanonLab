@@ -114,7 +114,7 @@
 
 - name: Fetch zsh-completions plugin from github
   ansible.builtin.git:
-    repo: "git://github.com/zsh-users/zsh-completions.git"
+    repo: "https://github.com/zsh-users/zsh-completions"
     dest: "{{ item }}"
     umask: "022"
   loop:
