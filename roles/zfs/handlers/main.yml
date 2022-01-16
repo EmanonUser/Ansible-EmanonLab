@@ -5,18 +5,18 @@
 
 - name: Enable zpool(s)-scrub timer(s)
   ansible.builtin.systemd:
-    name: "zpool-scrub@{{ item }}.timer"
+    name: "zpool-scrub@{{ item.pool }}.timer"
     enabled: yes
-  loop: "{{ zfs_zpool_names }}"
+  loop: "{{ zfs_primary_pools }}"
 
 - name: Start zpool(s)-scrub timer(s)
   ansible.builtin.systemd:
-    name: "zpool-scrub@{{ item }}.timer"
+    name: "zpool-scrub@{{ item.pool }}.timer"
     state: started
-  loop: "{{ zfs_zpool_names }}"
+  loop: "{{ zfs_primary_pools }}"
 
 - name: Restart zpool(s)-scrub timer(s)
   ansible.builtin.systemd:
-    name: "zpool-scrub@{{ item }}.timer"
+    name: "zpool-scrub@{{ item.pool }}.timer"
     state: restarted
-  loop: "{{ zfs_zpool_names }}"
+  loop: "{{ zfs_primary_pools }}"
