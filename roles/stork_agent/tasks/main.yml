@@ -1,11 +1,15 @@
 - name: Add Cloudsmith Stork GPG Key
-  ansible.builtin.apt_key:
+  ansible.builtin.get_url:
     url: https://dl.cloudsmith.io/public/isc/stork/{{ stork_agent_cloudsmith_gpg_key }}
-    state: present
+    dest: /usr/share/keyrings/isc_stork-archive-keyring.key
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    timeout: 30
 
 - name: Add Cloudsmith Stork Debian Repository
   ansible.builtin.apt_repository:
-    repo: deb https://dl.cloudsmith.io/public/isc/stork/deb/debian {{ ansible_distribution_release }}  main
+    repo: deb [signed-by=/usr/share/keyrings/isc_stork-archive-keyring.key] https://dl.cloudsmith.io/public/isc/stork/deb/debian {{ ansible_distribution_release }}  main
     filename: stork
     state: present
   notify: ["Apt update", "Apt upgrade"]

@@ -1,12 +1,16 @@
 ---
 - name: Add FRRouting GPG key
-  ansible.builtin.apt_key:
+  ansible.builtin.get_url:
     url: https://deb.frrouting.org/frr/keys.asc
-    state: present
+    dest: /usr/share/keyrings/frr-archive-keyring.asc
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    timeout: 30
 
 - name: Add FRRouting Debian Repository
   ansible.builtin.apt_repository:
-    repo: deb https://deb.frrouting.org/frr {{ ansible_distribution_release }} {{ frr_version }}
+    repo: deb [signed-by=/usr/share/keyrings/frr-archive-keyring.asc] https://deb.frrouting.org/frr {{ ansible_distribution_release }} {{ frr_version }}
     filename: frr
     state: present
   notify: ["Apt update","Apt upgrade"]
