@@ -51,7 +51,7 @@
 
     - role: podman/podman_loki
       tags: [ podman_loki, podman_all ]
-    
+
     - role: podman/podman_pyload
       tags: [ podman_pyload, podman_all ]
 

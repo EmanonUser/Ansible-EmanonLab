@@ -10,7 +10,7 @@
 
 - name: Add Cloudsmith isc-Kea Debian Repository
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/isc_kea-archive-keyring.key] https://dl.cloudsmith.io/public/isc/{{ kea_version }}/deb/debian {{ ansible_distribution_release }}  main
+    repo: deb [signed-by=/usr/share/keyrings/isc_kea-archive-keyring.key] https://dl.cloudsmith.io/public/isc/{{ kea_version }}/deb/debian {{ ansible_distribution_release }}  main # noqa 204
     filename: isc-{{ kea_version }}
     state: present
   notify: ["Apt update", "Apt upgrade"]

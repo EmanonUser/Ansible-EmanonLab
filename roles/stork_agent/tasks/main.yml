@@ -9,7 +9,7 @@
 
 - name: Add Cloudsmith Stork Debian Repository
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/isc_stork-archive-keyring.key] https://dl.cloudsmith.io/public/isc/stork/deb/debian {{ ansible_distribution_release }}  main
+    repo: deb [signed-by=/usr/share/keyrings/isc_stork-archive-keyring.key] https://dl.cloudsmith.io/public/isc/stork/deb/debian {{ ansible_distribution_release }}  main # noqa 204
     filename: stork
     state: present
   notify: ["Apt update", "Apt upgrade"]
