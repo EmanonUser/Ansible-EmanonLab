@@ -46,6 +46,22 @@
     - Start zpool(s)-scrub timer(s)
     - Restart zpool(s)-scrub timer(s)
 
+- name: truncate
+  ansible.builtin.command:
+    cmd: truncate -s 1G /home/emanon/1.zfs
+
+- name: zpool
+  ansible.builtin.command:
+    cmd: zpool create tank /home/emanon/1.zfs
+
+- name: Create dataset 1
+  ansible.builtin.command:
+    cmd: zfs create tank/files
+
+- name: Create dataset 2
+  ansible.builtin.command:
+    cmd: zfs create tank/media
+
 # - name: Create ZFS dataset encryption key(s)
 #   ansible.builtin.shell:
 #     chdir: /root

@@ -1,0 +1,63 @@
+---
+- name: Install nfsd server
+  ansible.builtin.apt:
+    name: ["nfs-kernel-server", "nfs4-acl-tools"]
+    state: present
+
+- name: Create export dir(s)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=rx,o=rx
+    state: directory
+  loop:
+    - /srv/nfs4/files
+    - /srv/nfs4/media
+
+- name: Create bind mount to zfs dataset(s)
+  ansible.posix.mount:
+    path: "{{ item.dest }}"
+    src: "{{ item.src }}"
+    opts: bind
+    state: mounted
+    fstype: zfs
+  loop:
+    - { dest: /srv/nfs4/files, src: /tank/files }
+    - { dest: /srv/nfs4/media, src: /tank/media }
+
+- name: Configure NFSv4 server
+  ansible.builtin.template:
+    src: "{{ item.name }}"
+    dest: "{{ item.path }}"
+  loop:
+    - { name: "nfs-common_{{ inventory_hostname }}.j2", path: /etc/default/nfs-common }
+    - { name: "nfs-kernel-server_{{ inventory_hostname }}.j2", path: /etc/default/nfs-kernel-server }
+  notify:
+    - Enable nfs-server service
+    - Start nfs-server service
+  
+- name: Disable rpcbind, we are using nfsv4 only
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    masked: yes
+    state: stopped
+  loop: ["rpcbind.service", "rpcbind.socket"]
+
+- name: Configure NFSv4 exports
+  ansible.builtin.template:
+    src: exports_{{ inventory_hostname }}.j2
+    dest: /etc/exports
+  notify: Reload nfs-server service
+
+- name: Open NFSv4 firewalld service
+  ansible.posix.firewalld:
+    zone: "{{ host_firewalld_zone }}"
+    service: nfs
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+# zpool shares will be bind mounted ie:
+#  mount --bind /tank/data/homelab /srv/nfs4/homelab
+# nfs will share /srv/nfs4/homelab, using basic id mapping (id = 1000, sec=sys) and IP restrictions
