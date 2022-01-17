@@ -64,8 +64,8 @@ host_starship_version: "1.1.1" # https://github.com/starship/starship/releases
 ## starship ##
 
 ## firewalld ##
-host_firewalld_primary_interface: enp3s0
-host_firewalld_zone: dmz
+host_firewalld_primary_interface: enp1s0
+host_firewalld_zone: home
 ## firewalld ##
 
 ## zfs ##
