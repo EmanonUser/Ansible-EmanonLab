@@ -55,7 +55,7 @@ host_device_init_debian_stable_packages:
 
 ## starship ##
 host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_starship_version: "1.1.1" # https://github.com/starship/starship/releases
+host_starship_version: "1.2.1" # https://github.com/starship/starship/releases
 ## starship ##
 
 ## firewalld ##
@@ -94,7 +94,7 @@ host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
 ## podman_adguard ##
 host_podman_adguard_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_adguard_image: docker.io/adguard/adguardhome
-host_podman_adguard_image_version: "v0.107.0" # https://hub.docker.com/r/adguard/adguardhome/tags
+host_podman_adguard_image_version: "v0.107.2" # https://hub.docker.com/r/adguard/adguardhome/tags
 host_podman_adguard_ports:
   - "{% if grp_podman_networking.adguard.lan_access %}[::]:{{ grp_podman_networking.adguard.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.adguard.webui_port }}{% endif %}:3000/tcp"
   - "{% if grp_podman_networking.adguard.lan_access %}[::]:{{ grp_podman_networking.adguard.webui_port }}{% else %}[::1]:{{ grp_podman_networking.adguard.webui_port }}{% endif %}:3000/tcp"
@@ -167,7 +167,7 @@ host_podman_prometheus_config_path: "{{ host_podman_prometheus_volumes_path }}/p
 ## podman_grafana ##
 host_podman_grafana_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_grafana_image: docker.io/grafana/grafana
-host_podman_grafana_image_version: "8.3.3-ubuntu" # https://hub.docker.com/r/grafana/grafana/tags
+host_podman_grafana_image_version: "8.3.4" # https://hub.docker.com/r/grafana/grafana/tags
 host_podman_grafana_ports: 
   - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
   - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}[::1]:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
@@ -197,7 +197,7 @@ host_podman_grafana_admin_password: "{{ host_vault_grafana_admin_password }}"
 ## podman_homeassistant ##
 host_podman_homeassistant_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_homeassistant_image: ghcr.io/home-assistant/home-assistant
-host_podman_homeassistant_image_version: "2021.12.0" # https://github.com/home-assistant/core/pkgs/container/home-assistant/versions
+host_podman_homeassistant_image_version: "2021.12.10" # https://github.com/home-assistant/core/pkgs/container/home-assistant/versions
 host_podman_homeassistant_ports: 
   - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
   - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}[::1]:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
@@ -212,7 +212,7 @@ host_podman_homeassistant_config_path: "{{ host_podman_homeassistant_volumes_pat
 ## podman_syncthing ##
 host_podman_syncthing_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_syncthing_image: quay.io/linuxserver.io/syncthing
-host_podman_syncthing_image_version: "1.18.5" # https://quay.io/repository/linuxserver.io/syncthing?tag=latest&tab=tags
+host_podman_syncthing_image_version: "1.18.6" # https://quay.io/repository/linuxserver.io/syncthing?tag=latest&tab=tags
 host_podman_syncthing_ports: 
   - "{% if grp_podman_networking.syncthing.lan_access %}[::]:{{ grp_podman_networking.syncthing.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.syncthing.webui_port }}{% endif %}:8384/tcp"
   - "{% if grp_podman_networking.syncthing.lan_access %}[::]:{{ grp_podman_networking.syncthing.webui_port }}{% else %}[::1]:{{ grp_podman_networking.syncthing.webui_port }}{% endif %}:8384/tcp"
@@ -237,7 +237,7 @@ host_podman_syncthing_volumes:
 ## podman_flame ##
 host_podman_flame_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_flame_image: docker.io/pawelmalak/flame
-host_podman_flame_image_version: "multiarch2.2.0" # https://hub.docker.com/r/pawelmalak/flame/tags
+host_podman_flame_image_version: "multiarch2.2.1" # https://hub.docker.com/r/pawelmalak/flame/tags
 host_podman_flame_ports:
   - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
   - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}[::1]:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
@@ -252,7 +252,7 @@ host_podman_flame_password: "{{ host_vault_podman_flame_password }}"
 ## podman_loki ##
 host_podman_loki_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_loki_image: docker.io/grafana/loki
-host_podman_loki_image_version: "2.4.1" # https://hub.docker.com/r/grafana/loki/tags
+host_podman_loki_image_version: "2.4.2" # https://hub.docker.com/r/grafana/loki/tags
 host_podman_loki_ports:
   - "{% if grp_podman_networking.loki.lan_access %}[::]:{{ grp_podman_networking.loki.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.loki.webui_port }}{% endif %}:3100/tcp"
   - "{% if grp_podman_networking.loki.lan_access %}[::]:{{ grp_podman_networking.loki.webui_port }}{% else %}[::1]:{{ grp_podman_networking.loki.webui_port }}{% endif %}:3100/tcp"
@@ -272,8 +272,8 @@ host_podman_loki_volumes:
 
 ## podman_pyload ##
 host_podman_pyload_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_pyload_image: docker.io/linuxserver/pyload
-host_podman_pyload_image_version: version-36437bcc
+host_podman_pyload_image: ghcr.io/linuxserver/pyload
+host_podman_pyload_image_version: version-f4f8bbaf # https://github.com/linuxserver/docker-pyload/pkgs/container/pyload
 host_podman_pyload_ports:
   - "{% if grp_podman_networking.pyload.lan_access %}[::]:{{ grp_podman_networking.pyload.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.pyload.webui_port }}{% endif %}:8000/tcp"
   - "{% if grp_podman_networking.pyload.lan_access %}[::]:{{ grp_podman_networking.pyload.webui_port }}{% else %}[::1]:{{ grp_podman_networking.pyload.webui_port }}{% endif %}:8000/tcp"
