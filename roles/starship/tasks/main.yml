@@ -19,9 +19,9 @@
     path: "{{ item.path }}"
     state: absent
   loop: "{{ files_to_delete.files }}"
-  when:
-    - not stat_result.stat.exists
-    - files_to_delete.matched > 0
+  loop_control:
+    label: "{{ item.path }}"
+  when: [ not stat_result.stat.exists, files_to_delete.matched > 0 ]
 
 - name: Get starship.rs archives
   ansible.builtin.get_url:
