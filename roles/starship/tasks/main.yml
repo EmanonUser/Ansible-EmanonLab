@@ -16,7 +16,7 @@
 
 - name: Delete old starship archive(s)
   ansible.builtin.file:
-    path: "{{ item }}"
+    path: "{{ item.path }}"
     state: absent
   loop: "{{ files_to_delete.files }}"
   when:
