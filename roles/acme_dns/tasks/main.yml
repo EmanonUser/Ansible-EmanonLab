@@ -50,15 +50,17 @@
 - name: Call Gandi LiveDNS API to register the TXT record
   community.general.gandi_livedns:
     domain: "{{ acme_dns_domain }}"
-    record: "{{ acme_dns_challenge_result.results[item.index]['challenge_data'][item.fqdn]['dns-01'].record | regex_replace(item.domain, '') }}"
+    record: "{{ acme_dns_challenge_result.results[item_index]['challenge_data'][item.fqdn]['dns-01'].record | regex_replace(item.domain, '') }}"
     type: TXT
     values:
-    - "{{ acme_dns_challenge_result.results[item.index]['challenge_data'][item.fqdn]['dns-01'].resource_value }}"
+    - "{{ acme_dns_challenge_result.results[item_index]['challenge_data'][item.fqdn]['dns-01'].resource_value }}"
     ttl: 300
     api_key: "{{ acme_dns_gandi_api_key }}"
     state: present
   loop: "{{ acme_dns_domain_name }}"
-  when: acme_dns_challenge_result['results'][item.index]['challenge_data'] is defined
+  loop_control:
+    index_var: item_index
+  when: acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
 
 - name: "Complete Let's Encrypt dns-01 challenge(s)"
   community.crypto.acme_certificate:
@@ -70,21 +72,25 @@
     csr: "{{ acme_dns_letsencrypt_dirs.csrs }}/{{ item.fqdn }}.csr"
     dest: "{{ acme_dns_letsencrypt_dirs.certs }}/{{ item.fqdn }}.crt"
     fullchain_dest: "{{ acme_dns_letsencrypt_dirs.certs }}/fullchain.{{ item.fqdn }}.crt"
-    data: "{{ acme_dns_challenge_result['results'][item.index] }}"
+    data: "{{ acme_dns_challenge_result['results'][item_index] }}"
     force: yes # Does not always renew, it will be forced when let's encrypt cert_days < remaining_days then will write the new certificates
   loop: "{{ acme_dns_domain_name }}"
-  when: acme_dns_challenge_result['results'][item.index]['challenge_data'] is defined
+  loop_control:
+    index_var: item_index
+  when: acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
   notify: Reload haproxy service
 
 - name: Call Gandi LiveDNS API to delete the TXT record
   community.general.gandi_livedns:
     domain: "{{ acme_dns_domain }}"
-    record: "{{ acme_dns_challenge_result.results[item.index]['challenge_data'][item.fqdn]['dns-01'].record | regex_replace(item.domain, '') }}"
+    record: "{{ acme_dns_challenge_result.results[item_index]['challenge_data'][item.fqdn]['dns-01'].record | regex_replace(item.domain, '') }}"
     type: TXT
     api_key: "{{ acme_dns_gandi_api_key }}"
     state: absent
   loop: "{{ acme_dns_domain_name }}"
-  when: acme_dns_challenge_result['results'][item.index]['challenge_data'] is defined
+  loop_control:
+    index_var: item_index
+  when: acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
 
 - name: Create symlink for haproxy's fullchain certs
   ansible.builtin.file:
