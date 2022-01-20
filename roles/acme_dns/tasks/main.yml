@@ -60,7 +60,9 @@
   loop: "{{ acme_dns_domain_name }}"
   loop_control:
     index_var: item_index
-  when: acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
+  when: 
+    - acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
+    - acme_dns_challenge_result['results'][item_index]['challenge_data']
 
 - name: "Complete Let's Encrypt dns-01 challenge(s)"
   community.crypto.acme_certificate:
@@ -77,7 +79,9 @@
   loop: "{{ acme_dns_domain_name }}"
   loop_control:
     index_var: item_index
-  when: acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
+  when: 
+    - acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
+    - acme_dns_challenge_result['results'][item_index]['challenge_data']
   notify: Reload haproxy service
 
 - name: Call Gandi LiveDNS API to delete the TXT record
@@ -90,7 +94,9 @@
   loop: "{{ acme_dns_domain_name }}"
   loop_control:
     index_var: item_index
-  when: acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
+  when: 
+    - acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
+    - acme_dns_challenge_result['results'][item_index]['challenge_data']
 
 - name: Create symlink for haproxy's fullchain certs
   ansible.builtin.file:
