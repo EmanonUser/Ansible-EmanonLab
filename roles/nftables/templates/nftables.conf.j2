@@ -9,7 +9,6 @@ define WG = {{ wireguard_interface_name }}
 table ip routing {
 	chain prerouting {
 		type nat hook prerouting priority dstnat; policy accept
-		iifname $WAN udp dport 2000 redirect to :{{ wireguard_server_port }} # Wiregard server DNAT
 		iifname $WAN tcp dport 22000 dnat to {{ pi_ipv4_addr }}:22000 # Syncthing DNAT
 		iifname $WAN tcp dport 8000 dnat to {{ arch_ipv4_addr }}:8000 # Temporary web server DNAT
 		# NAT hairpinning iifname $LAN ip daddr {{ subdomain_name }}.{{ domain_name }} tcp dport 1234 dnat to {{ router_static_ip }}:7999
