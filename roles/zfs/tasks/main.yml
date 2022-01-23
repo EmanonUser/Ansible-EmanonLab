@@ -51,6 +51,15 @@
     - Start zpool(s)-scrub timer(s)
     - Restart zpool(s)-scrub timer(s)
 
+- name: Configure automatic mount of encrypted datasets
+  ansible.builtin.template:
+    src: "zfs-mount-encrypted.service.j2"
+    dest: /etc/systemd/system/zfs-mount-encrypted.service
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  notify: Enable zfs-mount-encrypted service
+
 - name: Create dir for ZFS dataset encryption key(s)
   ansible.builtin.file:
     path: "{{ zfs_datasets_keylocation }}"
