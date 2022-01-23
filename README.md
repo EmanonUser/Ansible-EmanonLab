@@ -11,3 +11,4 @@ TODO:
     - verify if grp_ is overused in host_, instead of defaults/main.yml
     - Add basic auth to prometheus TSDB, Loki, Promtail
     - Reduce zsh prompt loading time, maybe zinit?
+    - ZFS add autoload key, and auto mount at boot see arch wiki
