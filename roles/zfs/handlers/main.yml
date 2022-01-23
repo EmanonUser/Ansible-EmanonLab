@@ -20,3 +20,8 @@
     name: "zpool-scrub@{{ item.pool }}.timer"
     state: restarted
   loop: "{{ zfs_primary_pools }}"
+
+- name: Enable zfs-mount-encrypted service
+  ansible.builtin.systemd:
+    name: "zfs-mount-encrypted.service"
+    enabled: yes
