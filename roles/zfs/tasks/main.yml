@@ -46,50 +46,48 @@
     - Start zpool(s)-scrub timer(s)
     - Restart zpool(s)-scrub timer(s)
 
-- name: truncate
-  ansible.builtin.command:
-    cmd: truncate -s 1G /home/emanon/1.zfs
+- name: Create dir for ZFS dataset encryption key(s)
+  ansible.builtin.file:
+    path: "{{ zfs_datasets_keylocation }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=,o=  
 
-- name: zpool
-  ansible.builtin.command:
-    cmd: zpool create tank /home/emanon/1.zfs
+- name: Create ZFS dataset encryption key(s)
+  ansible.builtin.shell:
+    creates: "{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key"
+    cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key
+  loop: "{{ zfs_pools | subelements('datasets') }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset }}"
 
-- name: Create dataset 1
-  ansible.builtin.command:
-    cmd: zfs create tank/files
+- name: Set permissions for dataset encryption key(s)
+  ansible.builtin.file:
+    path: "{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key"
+    owner: root
+    group: root
+    mode: u=r,g=,o=
+    state: file
+  loop: "{{ zfs_pools | subelements('datasets') }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset }}"
 
-- name: Create dataset 2
-  ansible.builtin.command:
-    cmd: zfs create tank/media
-
-# - name: Create ZFS dataset encryption key(s)
-#   ansible.builtin.shell:
-#     chdir: /root
-#     executable: /bin/bash
-#     creates: "{{ item }}.key"
-#     cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ item }}.key 
-#   loop: [one, two]
-
-# - name: Set permissions for dataset encryption key(s)
-#   ansible.builtin.file:
-#     path: /root/{{ item }}.key
-#     owner: root
-#     group: root
-#     mode: u=r,g=,o=
-#     state: file
-#   loop: [one, two]
-
-# - name: Create ZFS dataset(s)
-#   community.general.zfs:
-#     name: tank/{{ item }}
-#     state: present
-#     extra_zfs_properties:
-#       compression: lz4
-#       encryption: aes-256-gcm
-#       keyformat: hex
-#       keylocation: file:///root/{{ item }}.key
-#       atime: off
-#       aclmode: passthrough
-#       acltype: posix
-#       dnodesize: auto
-#   loop: [one, two]
+- name: Create ZFS dataset(s)
+  community.general.zfs:
+    name: "{{ item.0.pool }}/{{ item.1.dataset }}"
+    state: present
+    extra_zfs_properties:
+      compression: "{{ item.1.compression }}"
+      encryption: aes-256-gcm
+      keyformat: hex
+      keylocation: file://{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key
+      atime: off
+      relatime: off
+      aclmode: passthrough
+      acltype: posix
+      dnodesize: auto
+      xattr: sa
+  loop: "{{ zfs_pools | subelements('datasets') }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset }}"

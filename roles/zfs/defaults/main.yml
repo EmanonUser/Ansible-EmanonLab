@@ -1,4 +1,5 @@
 ---
-zfs_primary_pools: "{{ host_zfs_primary_pools }}"
+zfs_pools: "{{ host_zfs_pools }}"
+zfs_datasets_keylocation: "{{ host_zfs_datasets_keylocation }}"
 systemd_on_calendar_scrubing_timer: "{{ host_zfs_systemd_on_calendar_scrubing_timer }}"
 zfs_arc_max: "{{ host_zfs_arc_max }}"
