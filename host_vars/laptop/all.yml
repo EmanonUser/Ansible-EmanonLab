@@ -161,7 +161,7 @@ host_podman_transmission_env_local_network: "192.168.1.0/24"
 ## podman_filebrowser ##
 host_podman_filebrowser_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_filebrowser_image: docker.io/filebrowser/filebrowser
-host_podman_filebrowser_image_version: "v2-s6" # https://hub.docker.com/r/filebrowser/filebrowser/tags
+host_podman_filebrowser_image_version: "v2.19.0" # https://hub.docker.com/r/filebrowser/filebrowser/tags
 host_podman_filebrowser_ports: 
   - "{% if grp_podman_networking.filebrowser.lan_access %}[::]{{ grp_podman_networking.filebrowser.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
   - "{% if grp_podman_networking.filebrowser.lan_access %}[::]:{{ grp_podman_networking.filebrowser.webui_port }}{% else %}[::1]:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
