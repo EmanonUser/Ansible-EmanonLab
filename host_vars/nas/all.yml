@@ -70,7 +70,8 @@ host_firewalld_zone: home
 
 ## zfs ##
 host_zfs_manual_zpools_creation: no
-host_zfs_datasets_keylocation: /root/zfs_keys
+host_zfs_datasets_keylocation: /root/zfs_datasets_keys
+host_zfs_volumes_keylocation: /root/zfs_volumes_keys
 host_zfs_pools:
   - pool: tank
     path: "/tank"
@@ -104,6 +105,7 @@ host_zfs_pools:
 
     volumes:
       - volume: block 
+        volsize: 10M
 
 
 host_zfs_systemd_on_calendar_scrubing_timer: Thu 00:00:00 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
