@@ -80,7 +80,7 @@
 
 - name: Create ZFS dataset(s)
   community.general.zfs:
-    name: "{{ item.0.pool }}/{{ item.1.dataset }}"
+    name: "{{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
     state: present
     extra_zfs_properties:
       compression: "{{ item.1.compression }}"

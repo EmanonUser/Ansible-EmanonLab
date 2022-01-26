@@ -84,6 +84,12 @@ host_zfs_pools:
       - dataset: misc
         path: "/tank/misc"
         compression: zstd
+      - dataset: media-animu
+        path: "/tank/media/animu"
+        compression: zstd
+      - dataset: media-animu-kimetsu
+        path: "/tank/media/animu"
+        compression: zstd
 
 
 host_zfs_systemd_on_calendar_scrubing_timer: Thu 00:00:00 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
