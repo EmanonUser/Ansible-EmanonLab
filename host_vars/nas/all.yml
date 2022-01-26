@@ -69,7 +69,7 @@ host_firewalld_zone: home
 ## firewalld ##
 
 ## zfs ##
-host_zfs_datasets_keylocation: /root/xqc
+host_zfs_manual_zpools_creation: no
 host_zfs_pools:
   - pool: tank
     path: "/tank"

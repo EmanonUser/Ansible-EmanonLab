@@ -32,6 +32,11 @@
     name: zfs
     state: present
 
+- name: Pause create zpool(s) manually, too sensitive to automate it without a proper module
+  ansible.builtin.pause:
+    prompt: zpool create ZPOOL_NAME mirror/raidz/raidz1 -o ashift=12
+  when: zfs_manual_zpools_creation
+
 - name: Configure automatic zpool scrubing
   ansible.builtin.template:
     src: "{{ item }}.j2"
