@@ -76,20 +76,34 @@ host_zfs_pools:
     path: "/tank"
     datasets:
       - dataset: media
-        path: "/tank/media"
         compression: zstd
+
       - dataset: files
-        path: "/tank/files"
-        compression: zstd
+        compression: lz4
+        keylocation: file:///root/files.key
+
       - dataset: misc
-        path: "/tank/misc"
-        compression: zstd
+
+      - dataset: nex
+        encryption: aes-192-ccm
+
       - dataset: media-animu
-        path: "/tank/media/animu"
         compression: zstd
+
       - dataset: media-animu-kimetsu
-        path: "/tank/media/animu"
-        compression: zstd
+        compression: gzip
+        keyformat: hex
+        atime: on
+        relatime: on
+        aclmode: passthrough
+        acltype: posix
+        dnodesize: auto
+        recordsize: 256k
+        snapdev: visible
+        xattr: sa
+
+    volumes:
+      - volume: block 
 
 
 host_zfs_systemd_on_calendar_scrubing_timer: Thu 00:00:00 # https://www.freedesktop.org/software/systemd/man/systemd.time.html

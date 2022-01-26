@@ -65,7 +65,7 @@
     cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key
   loop: "{{ zfs_pools | subelements('datasets') }}"
   loop_control:
-    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset }}"
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
 
 - name: Set permissions for dataset encryption key(s)
   ansible.builtin.file:
@@ -76,23 +76,34 @@
     state: file
   loop: "{{ zfs_pools | subelements('datasets') }}"
   loop_control:
-    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset }}"
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+
+- name: debug
+  debug:
+    msg: "{{ item.1.keylocation | default('file://' + zfs_datasets_keylocation + '/' + item.1.dataset + '.key' ) }}"
+  loop: "{{ zfs_pools | subelements('datasets') }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
 
 - name: Create ZFS dataset(s)
   community.general.zfs:
     name: "{{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
     state: present
     extra_zfs_properties:
-      compression: "{{ item.1.compression }}"
-      encryption: aes-256-gcm
-      keyformat: hex
-      keylocation: file://{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key
-      atime: off
-      relatime: off
-      aclmode: passthrough
-      acltype: posix
-      dnodesize: auto
-      xattr: sa
+      compression: "{{ item.1.compression | default('lz4') }}"
+      encryption: "{{ item.1.encryption | default('aes-256-gcm') }}"
+      keyformat: "{{ item.1.keyformat | default('hex') }}"
+      keylocation: "{{ item.1.keylocation | default('file://' + zfs_datasets_keylocation + '/' + item.1.dataset + '.key' ) }}"
+      snapdev: "{{ item.1.snapdev | default('hidden') }}"
+      atime: "{{ item.1.atime | default('off') }}"
+      relatime: "{{ item.1.relatime | default('off') }}"
+      aclmode: "{{ item.1.aclmode | default('passthrough') }}"
+      acltype: "{{ item.1.acltype | default('posix') }}"
+      xattr: "{{ item.1.xattr | default('sa') }}"
+      recordsize: "{{ item.1.recordsize | default('128k') }}"
+      dnodesize: "{{ item.1.dnodesize | default('auto') }}"
   loop: "{{ zfs_pools | subelements('datasets') }}"
   loop_control:
-    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset }}"
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+
+## add Volumes creation
