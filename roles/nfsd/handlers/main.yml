@@ -9,7 +9,7 @@
     name: nfs-server.service
     state: started
 
-- name: Reload nfs-server service
+- name: Restart nfs-server service
   ansible.builtin.systemd:
     name: nfs-server.service
-    state: reloaded
+    state: restarted

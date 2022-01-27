@@ -48,7 +48,7 @@
   ansible.builtin.template:
     src: exports_{{ inventory_hostname }}.j2
     dest: /etc/exports
-  notify: Reload nfs-server service
+  notify: Restart nfs-server service
 
 - name: Open NFSv4 firewalld service
   ansible.posix.firewalld:
