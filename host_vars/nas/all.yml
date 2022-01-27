@@ -81,7 +81,6 @@ host_zfs_pools:
 
       - dataset: files
         compression: lz4
-        keylocation: file:///root/files.key
 
       - dataset: misc
 
