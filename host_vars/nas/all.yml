@@ -100,12 +100,13 @@ host_zfs_pools:
         acltype: posix
         dnodesize: auto
         recordsize: 256k
-        snapdev: visible
+        snapdir: visible
         xattr: sa
 
     volumes:
       - volume: block 
         volsize: 10M
+        snapdev: visible
 
 
 host_zfs_systemd_on_calendar_scrubing_timer: Thu 00:00:00 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
