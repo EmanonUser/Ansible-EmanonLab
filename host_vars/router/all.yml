@@ -1,23 +1,4 @@
 ---
-# Ansible-Emanonlab, variables conventions
-# snake_case
-# prefix define origin
-  # host_
-  # grp_
-  # host_vault_
-  # grp_vault_
-
-# All variables must follow those path: 
-##  host_vars/*/vault.yml --> host_vars/*/all.yml --> roles/*/default/main.yml  ##          Secret host variables
-##  group_vars/*/vault.yml --> group_vars/*/all.yml --> roles/*/default/main.yml  ##        Secret group variables
-##  host_vars/*/all.yml --> roles/*/default/main.yml  ##                                    Standards host variables
-##  group_vars/*/all.yml --> roles/*/default/main.yml  ##                                   Standards group variables
-
-# If a variables is used in multiples roles at the same time the prefix will be host_Origin-role_role_ and will be defined only on the origin role
-# Variables that do not belong to a role will be placed in the Roleless section
-# Add comment to external variables, variables that depend a third party apt gpg key etc
-# Verbose is cool, use verbose names even when it become extra long
-
 ## Roleless ##
 host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
 host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
@@ -45,32 +26,6 @@ host_debian_stable_packages:
   - mtr-tiny
 ## device_init ##
 
-## wireguard ##
-host_wireguard_interface_name: wg0
-host_wireguard_subnet: "172.16.0"
-host_wireguard_server_port: 51820
-host_wireguard_server_address: "{{ host_wireguard_subnet }}.1/24"
-host_wireguard_server_private_key: "{{ host_vault_wireguard_server_private_key }}"
-host_wireguard_server_public_key: "{{ host_vault_wireguard_server_public_key }}"
-host_wireguard_peers:
-  Arch:
-    private_key: "{{ host_vault_peer1_private_key }}"
-    public_key: "{{ host_vault_peer1_public_key }}"
-    preshared_key: "{{ host_vault_peer1_preshared_key }}"
-    ip_address: "{{ host_wireguard_subnet }}.2/32"
-
-  One:
-    private_key: "{{ host_vault_peer2_private_key }}"
-    public_key: "{{ host_vault_peer2_public_key }}"
-    preshared_key: "{{ host_vault_peer2_preshared_key }}"
-    ip_address: "{{ host_wireguard_subnet }}.3/32"
-  
-  W10:
-    private_key: "{{ host_vault_peer3_private_key }}"
-    public_key: "{{ host_vault_peer3_public_key }}"
-    preshared_key: "{{ host_vault_peer3_preshared_key }}"
-    ip_address: "{{ host_wireguard_subnet }}.4/32"
-## wireguard ##
 
 ## prometheus_node_exporter ##
 host_prometheus_node_exporter_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
