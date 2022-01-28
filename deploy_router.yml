@@ -34,8 +34,8 @@
     - role: ntpd
       tags: [ ntpd, services ]
 
-    - role: stork_agent
-      tags: [ stork_agent, monitoring ]
+    # - role: stork_agent
+    #   tags: [ stork_agent, monitoring ]
 
     - role: prometheus_node_exporter
       tags: [ prometheus_node_exporter, monitoring ]
