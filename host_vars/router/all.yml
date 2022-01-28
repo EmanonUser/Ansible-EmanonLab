@@ -35,11 +35,7 @@ host_prometheus_node_exporter_port: 9100
 ## prometheus_node_exporter ##
 
 ## ntpd ##
-host_ntpd_interfaces_ip: ["127.0.0.1", "{{ grp_device.router.ipv4_addr }}"]
-host_ntpd_upstream_server: 
-  - 0.debian.pool.ntp.org
-  - pool.ntp.org
-  - ntp.midway.ovh
+host_ntpd_interface_ipv4: "{{ grp_device.router.ipv4_addr }}"
 ## ntpd ##
 
 ## coredns ##
