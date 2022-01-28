@@ -1,9 +1,14 @@
 ---
-kea_version: "{{ host_isc_kea_version }}"
-cloudsmith_gpg_key: "{{ host_isc_kea_cloudsmith_gpg_key }}"
-isc_kea_dhcp4: "{{ host_isc_kea_dhcp4 }}"
-isc_kea_dns_servers: "{{ host_isc_kea_dns_servers }}"
-isc_kea_ntp_servers: "{{ host_isc_kea_ntp_servers }}"
-isc_kea_domains_search: "{{ host_isc_kea_domains_search }}"
-isc_kea_ctrl_agent_address: "{{ host_isc_kea_ctrl_agent_address }}"
-isc_kea_ctrl_agent_port: "{{ host_isc_kea_ctrl_agent_port }}"
+kea_version: "{{ host_isc_kea_version | default('kea-2-1') }}"                                        ## https://cloudsmith.io/~isc/repos/
+cloudsmith_gpg_key: "{{ host_isc_kea_cloudsmith_gpg_key | default('gpg.32D53EC4807EC10E.key') }}"     ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-2-1/signing/
+
+isc_kea_dns_servers: 
+  - "{{ grp_dns_server }}"
+isc_kea_ntp_servers: 
+  - "{{ grp_ntp_server }}"
+isc_kea_domains_search: 
+  - "{{ grp_local_domain }}"
+
+
+isc_kea_ctrl_agent_address: "{{ host_isc_kea_ctrl_agent_address | default('127.0.0.1') }}"
+isc_kea_ctrl_agent_port: "{{ host_isc_kea_ctrl_agent_port | default('8000') }}"

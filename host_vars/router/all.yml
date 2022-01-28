@@ -46,11 +46,6 @@ host_debian_stable_packages:
   - mtr-tiny
 ## device_init ##
 
-## isc_kea ##
-host_isc_kea_version: kea-2-1  ## https://cloudsmith.io/~isc/repos/
-host_isc_kea_cloudsmith_gpg_key: gpg.32D53EC4807EC10E.key ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-1-9/signing/
-## isc_kea ##
-
 ## wireguard ##
 host_wireguard_interface_name: wg0
 host_wireguard_subnet: "172.16.0"
@@ -122,97 +117,6 @@ host_nftables_wireguard_subnet: "{{ host_wireguard_subnet }}"
 host_nftables_wireguard_server_port: "{{ host_wireguard_server_port }}"
 host_nftables_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count }}"
 ## nftables ##
-
-## isc_kea ##
-host_isc_kea_dns_servers: 
-  - "{{ grp_dns_server }}"
-host_isc_kea_ntp_servers: 
-  - "{{ grp_ntp_server }}"
-host_isc_kea_domains_search: 
-  - "{{ grp_local_domain }}"
-host_isc_kea_ctrl_agent_address: 127.0.0.1
-host_isc_kea_ctrl_agent_port: 8000
-
-host_isc_kea_dhcp4:
-  - subnet: 192.168.10.0/24
-    routers: 
-      - 192.168.10.1
-    pools:
-      - start: 192.168.10.100
-        end: 192.168.10.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.truenas.ipv4_addr }}"
-        hw_addr: "{{ grp_device.truenas.hw_addr }}" 
-        hostname: "{{ grp_device.truenas.hostname }}"
-      - ipv4_addr: "{{ grp_device.ipmi.ipv4_addr }}"
-        hw_addr: "{{ grp_device.ipmi.hw_addr }}" 
-        hostname: "{{ grp_device.ipmi.hostname }}"
-      - ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
-        hw_addr: "{{ grp_device.pi.hw_addr }}"
-        hostname: "{{ grp_device.pi.hostname }}"
-      - ipv4_addr: "{{ grp_device.aclite.ipv4_addr }}"
-        hw_addr: "{{ grp_device.aclite.hw_addr }}"
-        hostname: "{{ grp_device.aclite.hostname }}"
-
-  - subnet: 192.168.20.0/24
-    routers: 
-      - 192.168.20.1
-    pools:
-      - start: 192.168.20.100
-        end: 192.168.20.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.arch.ipv4_addr }}"
-        hw_addr: "{{ grp_device.arch.hw_addr }}"
-        hostname: "{{ grp_device.arch.hostname }}"
-  
-  - subnet: 192.168.50.0/24
-    routers: 
-      - 192.168.50.1
-    pools:
-      - start: 192.168.50.100
-        end: 192.168.50.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.shp1.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp1.hw_addr }}"
-        hostname: "{{ grp_device.shp1.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp2.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp2.hw_addr }}"
-        hostname: "{{ grp_device.shp2.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp3.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp3.hw_addr }}"
-        hostname: "{{ grp_device.shp3.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp4.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp4.hw_addr }}"
-        hostname: "{{ grp_device.shp4.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp5.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp5.hw_addr }}"
-        hostname: "{{ grp_device.shp5.hostname }}"
-      - ipv4_addr: "{{ grp_device.hs110.ipv4_addr }}"
-        hw_addr: "{{ grp_device.hs110.hw_addr }}"
-        hostname: "{{ grp_device.hs110.hostname }}"
-      - ipv4_addr: "{{ grp_device.tmp117.ipv4_addr }}"
-        hw_addr: "{{ grp_device.tmp117.hw_addr }}"
-        hostname: "{{ grp_device.tmp117.hostname }}"
-  
-  - subnet: 192.168.70.0/24
-    routers: 
-      - 192.168.70.1
-    pools:
-      - start: 192.168.70.100
-        end: 192.168.70.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.printer.ipv4_addr }}"
-        hw_addr: "{{ grp_device.printer.hw_addr }}"
-        hostname: "{{ grp_device.printer.hostname }}"
-
-  - subnet: 192.168.100.0/24
-    routers: 
-      - 192.168.100.1
-    pools:
-      - start: 192.168.100.100
-        end: 192.168.100.200
-    reservations: []
-## isc_kea ##
 
 ## stork_agent ##
 host_stork_agent_cloudsmith_gpg_key: gpg.77F64EC28053D1FB.key
