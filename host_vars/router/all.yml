@@ -58,11 +58,6 @@ host_sysctl_entries:
   - { name: "net.ipv6.conf.all.forwarding", value: "1" }
 ## sysctl ##
 
-## interfaces ##
-host_interfaces_lacp_interface: bond0
-host_interfaces_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count }}"
-## interfaces ##
-
 ## isc_kea ##
 host_isc_kea_version: kea-2-1  ## https://cloudsmith.io/~isc/repos/
 host_isc_kea_cloudsmith_gpg_key: gpg.32D53EC4807EC10E.key ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-1-9/signing/

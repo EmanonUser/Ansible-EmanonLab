@@ -1,7 +1,2 @@
 ---
-WAN_interface_name: "{{ grp_device.router.wan_interface }}"
-LAN_interface_1_name: "{{ grp_device.router.lan_interface[0] }}"
-LAN_interface_2_name: "{{ grp_device.router.lan_interface[1] }}"
-LAN_static_ip: "{{ grp_device.router.ipv4_addr }}"
-LAN_static_ip_cidr: "{{ grp_device.router.ipv4_addr_cidr }}"
-LACP_interface_name: "{{ host_interfaces_lacp_interface }}"
+lacp_interface_name: "{{ host_lacp_interface_name | default('bond0') }}"

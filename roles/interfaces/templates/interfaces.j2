@@ -8,13 +8,13 @@ auto lo
 iface lo inet loopback
 
 # The primary network interface
-auto {{ WAN_interface_name }}
-iface {{ WAN_interface_name }} inet dhcp
+auto {{ grp_device.router.wan_interface }}
+iface {{ grp_device.router.wan_interface }} inet dhcp
 	dns-nameservers 127.0.0.1
 
-auto {{ LACP_interface_name }}
-iface {{ LACP_interface_name }} inet static
-	address {{ LAN_static_ip_cidr }}
-	bond-slaves {{ LAN_interface_1_name }} {{ LAN_interface_2_name }}
+auto {{ lacp_interface_name }}
+iface {{ lacp_interface_name }} inet static
+	address {{ grp_device.router.ipv4_addr_cidr }}
+	bond-slaves {{ grp_device.router.lan_interfaces[0] }} {{ grp_device.router.lan_interfaces[1] }}
 	bond_mode 4
 	bond_miimon 100
