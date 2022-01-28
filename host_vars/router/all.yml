@@ -51,13 +51,6 @@ host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_use
 host_starship_version: "1.2.1" # https://github.com/starship/starship/releases
 ## starship ##
 
-## sysctl ##
-host_sysctl_entries:
-  - { name: "net.ipv4.ip_forward", value: "1" }
-  - { name: "net.ipv6.conf.default.forwarding", value: "1" }
-  - { name: "net.ipv6.conf.all.forwarding", value: "1" }
-## sysctl ##
-
 ## isc_kea ##
 host_isc_kea_version: kea-2-1  ## https://cloudsmith.io/~isc/repos/
 host_isc_kea_cloudsmith_gpg_key: gpg.32D53EC4807EC10E.key ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-1-9/signing/
