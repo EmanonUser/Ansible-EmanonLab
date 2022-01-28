@@ -26,29 +26,24 @@ host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
 ## Roleless ##
 
 ## device_init ##
-host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
-host_device_init_roleless_primary_user_password_salt: "{{ host_roleless_primary_user_password_salt }}"
-host_device_init_root_user_password: "{{ host_vault_device_init_root_user_password }}"
-host_device_init_root_user_password_salt: "{{ host_vault_device_init_root_user_password_salt }}"
-host_device_init_use_starship: yes
-host_device_init_debian_stable_packages:
+host_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
   - ca-certificates
   - apt-transport-https
+  - acl
+  - gnupg2
+  - curl
+  - git
+  - zsh
+  - neovim
+  - unzip
   - dnsutils
   - ldnsutils
   - conntrack
-  - git
-  - msmtp
   - tcpdump
-  - zsh
   - socat
   - mtr-tiny
-  - acl
-  - neovim
-  - unzip
 ## device_init ##
 
 ## starship ##
@@ -69,7 +64,7 @@ host_interfaces_is_alive_echo_request_count: "{{ host_is_alive_echo_request_coun
 ## interfaces ##
 
 ## frr ##
-host_frr_version: frr-8  ## https://deb.frrouting.org/
+host_frr_version: frr-8 
 host_frr_daemons:
   - bgpd=no
   - ospfd=yes

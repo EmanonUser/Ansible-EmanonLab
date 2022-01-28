@@ -26,31 +26,25 @@ host_roleless_cpu_architecture: arm64 # amd64, arm64 etc ...
 ## Roleless ##
 
 ## device_init ##
-host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
-host_device_init_roleless_primary_user_password_salt: "{{ host_roleless_primary_user_password_salt }}"
-host_device_init_root_user_password: "{{ host_vault_device_init_root_user_password }}"
-host_device_init_root_user_password_salt: "{{ host_vault_device_init_root_user_password_salt }}"
-host_device_init_use_starship: yes
-host_device_init_debian_stable_packages:
+host_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
   - ca-certificates
   - apt-transport-https
-  - curl
+  - acl
   - gnupg2
+  - curl
+  - git
+  - zsh
+  - neovim
+  - unzip
   - lsb-release
   - dnsutils
   - ldnsutils
-  - git
   - tmux
   - htop
   - tcpdump
   - mtr-tiny
-  - zsh
-  - unzip
-  - neovim
-  - acl
 ## device_init ##
 
 ## starship ##

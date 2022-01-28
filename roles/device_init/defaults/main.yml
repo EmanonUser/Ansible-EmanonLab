@@ -1,9 +1,15 @@
 ---
-primary_user_ssh_pubkey: "{{ grp_primary_user_ssh_pubkey }}"
-primary_user_username: "{{ host_device_init_roleless_primary_user_username }}"
-primary_user_password: "{{ host_device_init_roleless_primary_user_password }}"
-primary_user_password_salt: "{{ host_device_init_roleless_primary_user_password_salt }}"
-root_user_password: "{{ host_device_init_root_user_password }}"
-root_user_password_salt: "{{ host_device_init_root_user_password_salt }}"
-debian_stable_packages: "{{ host_device_init_debian_stable_packages }}"
-use_starship: "{{ host_device_init_use_starship }}"
+use_starship: "{{ host_use_starship | default(true) }}"
+debian_stable_packages: "{{ host_debian_stable_packages | default(debian_stable_packages_defaults) }}"
+debian_stable_packages_defaults:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - acl
+  - gnupg2
+  - curl
+  - git
+  - zsh
+  - neovim
+  - unzip

@@ -36,7 +36,7 @@
 - name: Add SSH key to primary user
   ansible.posix.authorized_key:
     user: "{{ primary_user_username }}"
-    key: "{{ primary_user_ssh_pubkey }}"
+    key: "{{ grp_primary_user_ssh_pubkey }}"
     state: present
 
 - name: Enable SSH PubkeyAuthentication
