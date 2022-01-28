@@ -1,9 +1,7 @@
 ---
-cpu_architecture: "{{ host_coredns_roleless_cpu_architecture }}"
-coredns_path: "{{ host_coredns_path }}"
-coredns_version: "{{ host_coredns_version }}"
-coredns_ip: "{{ grp_device.router.ipv4_addr }}"
-coredns_port: "{{ host_coredns_port }}"
-coredns_prometheus_port: "{{ host_coredns_prometheus_port }}"
-coredns_forwardto: "{{ host_coredns_forwardto }}"
-podman_networking: "{{ grp_podman_networking }}"
+cpu_architecture: "{{ host_cpu_architecture | default('amd64') }}"
+coredns_version: "{{ host_coredns_version | default('1.8.6') }}"      # https://github.com/coredns/coredns/releases
+coredns_path: "{{ host_coredns_path | default('/opt/coredns') }}"
+coredns_port: "{{ host_coredns_port | default('53') }}"
+coredns_prometheus_port: "{{ host_coredns_prometheus_port | default('9353') }}"
+coredns_use_backup_config: "{{ host_coredns_use_backup_config | default(false) }}"

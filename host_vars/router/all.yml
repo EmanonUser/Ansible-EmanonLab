@@ -22,7 +22,6 @@
 host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
 host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
 host_roleless_primary_user_password_salt: "{{ host_vault_roleless_primary_user_password_salt }}"
-host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
 ## Roleless ##
 
 ## device_init ##
@@ -89,12 +88,10 @@ host_ntpd_upstream_server:
 ## ntpd ##
 
 ## coredns ##
-host_coredns_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
-host_coredns_path: /opt/coredns
-host_coredns_version: "1.8.6" # https://github.com/coredns/coredns/releases
-host_coredns_port: "53"
-host_coredns_prometheus_port: "9353"
-host_coredns_forwardto: "{{ grp_device.pi.ipv4_addr }}"
+host_coredns_use_backup_config: true
+host_coredns_upstream_dns_server: 
+  ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
+  port: "10053"
 ## coredns ##
 
 ## gad ##
