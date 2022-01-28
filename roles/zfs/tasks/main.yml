@@ -67,6 +67,7 @@
     owner: root
     group: root
     mode: u=rwx,g=,o=
+  when: host_zfs_datasets_keylocation is defined
 
 - name: Create dir for ZFS volumes encryption key(s)
   ansible.builtin.file:
@@ -75,12 +76,13 @@
     owner: root
     group: root
     mode: u=rwx,g=,o=
+  when: host_zfs_volumes_keylocation is defined
 
 - name: Create ZFS dataset encryption key(s)
   ansible.builtin.shell:
     creates: "{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key"
     cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key
-  loop: "{{ zfs_pools | subelements('datasets') }}"
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
 
@@ -88,7 +90,7 @@
   ansible.builtin.shell:
     creates: "{{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key"
     cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key
-  loop: "{{ zfs_pools | subelements('volumes') }}"
+  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
 
@@ -99,7 +101,7 @@
     group: root
     mode: u=r,g=,o=
     state: file
-  loop: "{{ zfs_pools | subelements('datasets') }}"
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
 
@@ -110,7 +112,7 @@
     group: root
     mode: u=r,g=,o=
     state: file
-  loop: "{{ zfs_pools | subelements('volumes') }}"
+  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
 
@@ -131,7 +133,7 @@
       xattr: "{{ item.1.xattr | default('sa') }}"
       recordsize: "{{ item.1.recordsize | default('128k') }}"
       dnodesize: "{{ item.1.dnodesize | default('auto') }}"
-  loop: "{{ zfs_pools | subelements('datasets') }}"
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
 
@@ -146,6 +148,6 @@
       keylocation: "{{ item.1.keylocation | default('file://' + zfs_volumes_keylocation + '/' + item.1.volume + '.key' ) }}"
       volsize: "{{ item.1.volsize }}"
       snapdev: "{{ item.1.snapdev | default('hidden') }}"
-  loop: "{{ zfs_pools | subelements('volumes') }}"
+  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
