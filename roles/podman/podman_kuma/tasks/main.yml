@@ -1,7 +1,7 @@
 ---
 - name: Create kuma data volume dir
   ansible.builtin.file:
-    path: "{{ podman_kuma_directory }}"
+    path: "{{ podman_kuma_directories }}"
     state: directory
     owner: emanon
     group: emanon
@@ -19,20 +19,20 @@
 
 - name: Open kuma firewalld ports to admin devices
   ansible.posix.firewalld:
-    zone: "{{ podman_kuma_firewalld_zone }}"
+    zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: enabled
   loop: "{{ podman_kuma_firewalld_rich_rules }}"
-  when: podman_networking.kuma.lan_access
+  when: grp_podman_networking.kuma.lan_access
 
 - name: Close kuma firewalld ports to admin devices
   ansible.posix.firewalld:
-    zone: "{{ podman_kuma_firewalld_zone }}"
+    zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: disabled
   loop: "{{ podman_kuma_firewalld_rich_rules }}"
-  when: not podman_networking.kuma.lan_access
+  when: not grp_podman_networking.kuma.lan_access

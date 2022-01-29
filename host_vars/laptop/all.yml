@@ -1,30 +1,4 @@
 ---
-# Ansible-Emanonlab, variables conventions
-# snake_case
-# prefix define origin
-  # host_
-  # grp_
-  # host_vault_
-  # grp_vault_
-
-# All variables must follow those path: 
-##  host_vars/*/vault.yml --> host_vars/*/all.yml --> roles/*/default/main.yml  ##          Secret host variables
-##  group_vars/*/vault.yml --> group_vars/*/all.yml --> roles/*/default/main.yml  ##        Secret group variables
-##  host_vars/*/all.yml --> roles/*/default/main.yml  ##                                    Standards host variables
-##  group_vars/*/all.yml --> roles/*/default/main.yml  ##                                   Standards group variables
-
-# If a variables is used in multiples roles at the same time the prefix will be host_Origin-role_role_ and will be defined only on the origin role
-# Variables that do not belong to a role will be placed in the Roleless section
-# Add comment to external variables, variables that depend a third party apt gpg key etc
-# Verbose is cool, use verbose names even when it become extra long
-
-## Roleless ##
-host_roleless_primary_user_username: "{{ primary_user_username }}"
-host_roleless_primary_user_password: "{{ primary_user_password }}"
-host_roleless_primary_user_password_salt: "{{ primary_user_password_salt }}"
-host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
-## Roleless ##
-
 ## device_init ##
 host_debian_stable_packages:
   - debian-keyring
@@ -52,14 +26,9 @@ host_debian_stable_packages:
   - aria2
 ## device_init ##
 
-## starship ##
-host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_starship_version: "1.2.1" # https://github.com/starship/starship/releases
-## starship ##
 
 ## firewalld ##
 host_firewalld_zone: dmz
-## firewalld ##
 
 ## is_alive ##
 host_is_alive_echo_request_target: iwakura.emanon.moe
@@ -85,6 +54,7 @@ host_podman_files_path: "{{ host_zfs_primary_pools[0].path }}/files"
 host_podman_misc_path: "{{ host_zfs_primary_pools[0].path }}/misc"
 ########## Podman ##########
 
+
 ## podman_transmission ##
 host_podman_transmission_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.transmission.webui_port }}", proto: tcp }
@@ -97,6 +67,7 @@ host_podman_transmission_volumes:
   - "{{ host_podman_misc_path }}:/misc"
   - "{{ host_podman_files_path }}:/files"
 host_podman_transmission_env_download_path: "/misc"
+
 
 ## podman_jellyfin ##
 host_podman_jellyfin_firewalld_rich_rules:
@@ -111,6 +82,7 @@ host_podman_jellyfin_volumes:
   - "{{ host_podman_media_2_path }}:/media_2"
   - "{{ host_podman_misc_path }}:/misc"
 
+
 ## podman_filebrowser ##
 host_podman_filebrowser_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.filebrowser.webui_port }}", proto: tcp }
@@ -122,22 +94,13 @@ host_podman_filebrowser_volumes:
   - "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json:/.filebrowser.json"
   - "{{ host_podman_files_path }}:/srv"
 
+
 ## podman_kuma ##
-host_podman_kuma_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_kuma_image: docker.io/louislam/uptime-kuma
-host_podman_kuma_image_version: "1.11.3-alpine" # https://hub.docker.com/r/louislam/uptime-kuma/tags
-host_podman_kuma_ports: 
-  - "{% if grp_podman_networking.kuma.lan_access %}[::]{{ grp_podman_networking.kuma.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
-  - "{% if grp_podman_networking.kuma.lan_access %}[::]:{{ grp_podman_networking.kuma.webui_port }}{% else %}[::1]:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
-host_podman_kuma_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_kuma_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
-host_podman_kuma_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_kuma_directory: "{{ host_podman_kuma_volumes_path }}/kuma"
-host_podman_kuma_volumes: "{{ host_podman_kuma_volumes_path }}/kuma:/app/data"
-## podman_kuma ##
+
 
 ## acme_dns ##
 host_acme_dns_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
