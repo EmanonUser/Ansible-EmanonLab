@@ -1,10 +1,18 @@
 ---
-primary_user_username: "{{ host_podman_jellyfin_roleless_primary_user_username }}"
-podman_jellyfin_image: "{{ host_podman_jellyfin_image }}"
-podman_jellyfin_image_version: "{{ host_podman_jellyfin_image_version }}"
-podman_jellyfin_ports: "{{ host_podman_jellyfin_ports }}"
-podman_jellyfin_volumes: "{{ host_podman_jellyfin_volumes }}"
-podman_jellyfin_directories: "{{ host_podman_jellyfin_directories }}"
-podman_jellyfin_firewalld_zone: "{{ host_podman_jellyfin_firewalld_zone }}"
+podman_jellyfin_image: "{{ host_podman_jellyfin_image | default('docker.io/jellyfin/jellyfin') }}"
+podman_jellyfin_image_version: "{{ host_podman_jellyfin_image_version | default('10.7.7') }}"
+# https://hub.docker.com/r/jellyfin/jellyfin/tags
+
+podman_jellyfin_ports: 
+  - "{% if grp_podman_networking.jellyfin.lan_access %}[::]{{ grp_podman_networking.jellyfin.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
+  - "{% if grp_podman_networking.jellyfin.lan_access %}[::]:{{ grp_podman_networking.jellyfin.webui_port }}{% else %}[::1]:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
+
+podman_jellyfin_firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 podman_jellyfin_firewalld_rich_rules: "{{ host_podman_jellyfin_firewalld_rich_rules }}"
-podman_networking: "{{ grp_podman_networking }}"
+
+podman_jellyfin_directories:
+ - "{{ host_podman_volumes_path }}/jellyfin/cache"
+ - "{{ host_podman_volumes_path }}/jellyfin/config"
+ - "{{ host_podman_volumes_path }}/jellyfin/media"
+
+podman_jellyfin_volumes: "{{ host_podman_jellyfin_volumes | default(host_podman_volumes_path + '/jellyfin/media:/media') }}"

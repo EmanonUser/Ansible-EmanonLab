@@ -27,7 +27,7 @@
     immediate: yes
     state: enabled
   loop: "{{ podman_jellyfin_firewalld_rich_rules }}"
-  when: podman_networking.jellyfin.lan_access
+  when: grp_podman_networking.jellyfin.lan_access
 
 - name: Close jellyfin firewalld ports to admin devices
   ansible.posix.firewalld:
@@ -37,4 +37,4 @@
     immediate: yes
     state: disabled
   loop: "{{ podman_jellyfin_firewalld_rich_rules }}"
-  when: not podman_networking.jellyfin.lan_access
+  when: not grp_podman_networking.jellyfin.lan_access
