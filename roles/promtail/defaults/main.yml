@@ -1,5 +1,5 @@
 ---
-promtail_cpu_architecture: "{{ host_promtail_cpu_architecture }}"
-promtail_version: "{{ host_promtail_version }}"
-promtail_path: "{{ host_promtail_path }}"
-promtail_loki_url: "{{ host_promtail_loki_url }}"
+cpu_architecture: "{{ host_cpu_architecture | default('amd64') }}"
+promtail_version: "{{ host_promtail_version | default('2.4.1') }}"                  # https://github.com/grafana/loki/releases
+promtail_path: "{{ host_promtail_path | default('/opt/promtail') }}"
+promtail_loki_url: "{{ host_promtail_loki_url | default('http://localhost') }}"

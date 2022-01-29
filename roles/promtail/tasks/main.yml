@@ -18,7 +18,7 @@
 
 - name: Create promtail versions folder
   ansible.builtin.file:
-    path: "{{ promtail_path }}/promtail-linux-{{ promtail_cpu_architecture }}-{{ promtail_version }}"
+    path: "{{ promtail_path }}/promtail-linux-{{ cpu_architecture }}-{{ promtail_version }}"
     owner: promtail
     group: promtail
     mode: u=rwx,g=,o=
@@ -26,13 +26,13 @@
 
 - name: Check if promtail Binary already exist
   ansible.builtin.stat:
-    path: "{{ promtail_path }}/promtail-linux-{{ promtail_cpu_architecture }}-{{ promtail_version }}/promtail-linux-{{ promtail_cpu_architecture }}"
+    path: "{{ promtail_path }}/promtail-linux-{{ cpu_architecture }}-{{ promtail_version }}/promtail-linux-{{ cpu_architecture }}"
   register: stat_value
 
 - name: Download promtail zip archive
   ansible.builtin.get_url:
-    url: "https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-{{ promtail_cpu_architecture }}.zip" # noqa 204
-    dest: "{{ promtail_path }}/promtail-linux-{{ promtail_cpu_architecture }}-{{ promtail_version }}.zip"
+    url: "https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-{{ cpu_architecture }}.zip" # noqa 204
+    dest: "{{ promtail_path }}/promtail-linux-{{ cpu_architecture }}-{{ promtail_version }}.zip"
     checksum: "sha256:https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/SHA256SUMS"
     owner: promtail
     group: promtail
@@ -42,8 +42,8 @@
 
 - name: Extract promtail archive
   ansible.builtin.unarchive:
-    src: "{{ promtail_path }}/promtail-linux-{{ promtail_cpu_architecture }}-{{ promtail_version }}.zip"
-    dest: "{{ promtail_path }}/promtail-linux-{{ promtail_cpu_architecture }}-{{ promtail_version }}"
+    src: "{{ promtail_path }}/promtail-linux-{{ cpu_architecture }}-{{ promtail_version }}.zip"
+    dest: "{{ promtail_path }}/promtail-linux-{{ cpu_architecture }}-{{ promtail_version }}"
     owner: promtail
     group: promtail
     remote_src: yes
@@ -51,7 +51,7 @@
 
 - name: Delete promtail zip archive
   ansible.builtin.file:
-    path: "{{ promtail_path }}/promtail-linux-{{ promtail_cpu_architecture }}-{{ promtail_version }}.zip"
+    path: "{{ promtail_path }}/promtail-linux-{{ cpu_architecture }}-{{ promtail_version }}.zip"
     state: absent
   when: not stat_value.stat.exists
 

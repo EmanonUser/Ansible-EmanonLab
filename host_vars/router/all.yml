@@ -64,8 +64,5 @@ host_nftables_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count 
 ## nftables ##
 
 ## promtail ##
-host_promtail_cpu_architecture: "amd64"
-host_promtail_version: "2.4.1"
-host_promtail_path: "/opt/promtail"
 host_promtail_loki_url: http://loki.local.emanon
 ## promtail ##

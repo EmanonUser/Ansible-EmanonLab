@@ -63,9 +63,6 @@ host_prometheus_node_exporter_interface_addr: "{{ grp_device.pi.ipv4_addr }}"
 
 
 ## promtail ##
-host_promtail_cpu_architecture: "arm64"
-host_promtail_version: "2.4.1" # https://github.com/grafana/loki/releases
-host_promtail_path: "/opt/promtail"
 host_promtail_loki_url: http://pi.local.emanon:4008
 ## promtail ##
 
