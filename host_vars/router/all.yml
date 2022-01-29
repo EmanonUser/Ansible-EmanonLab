@@ -1,10 +1,4 @@
 ---
-## Roleless ##
-host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
-host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
-host_roleless_primary_user_password_salt: "{{ host_vault_roleless_primary_user_password_salt }}"
-## Roleless ##
-
 ## device_init ##
 host_debian_stable_packages:
   - debian-keyring
@@ -26,31 +20,23 @@ host_debian_stable_packages:
   - mtr-tiny
 ## device_init ##
 
-
 ## prometheus_node_exporter ##
 host_prometheus_node_exporter_interface_addr: "{{ grp_device.router.ipv4_addr }}"
-## prometheus_node_exporter ##
 
 ## ntpd ##
 host_ntpd_interface_ipv4: "{{ grp_device.router.ipv4_addr }}"
-## ntpd ##
 
 ## coredns ##
 host_coredns_use_backup_config: true
 host_coredns_upstream_dns_server: 
   ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
   port: "10053"
-## coredns ##
 
 ## gad ##
 host_gad_use_ipv6: false
-## gad ##
 
 ## is_alive ##
 host_is_alive_echo_request_target: emanon.moe
-## is_alive ##
-
 
 ## promtail ##
 host_promtail_loki_url: http://loki.local.emanon
-## promtail ##

@@ -2,7 +2,7 @@
 host_wireguard_subnet: "172.16.0"
 host_wireguard_server_address: "{{ host_wireguard_subnet }}.1/24"
 host_wireguard_server_private_key: "{{ host_vault_wireguard_server_private_key }}"
-# host_wireguard_server_public_key: "{{ host_vault_wireguard_server_public_key }}" Unused for now maybe for client conf gen
+# host_wireguard_server_public_key: "{{ host_vault_wireguard_server_public_key }}"                Unused for now maybe for client conf generation
 host_wireguard_peers:
   Arch:
     private_key: "{{ host_vault_peer1_private_key }}"
