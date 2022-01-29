@@ -1,11 +1,25 @@
 ---
-primary_user_username: "{{ host_podman_filebrowser_roleless_primary_user_username }}"
-podman_filebrowser_image: "{{ host_podman_filebrowser_image }}"
-podman_filebrowser_image_version: "{{ host_podman_filebrowser_image_version }}"
-podman_filebrowser_ports: "{{ host_podman_filebrowser_ports }}"
-podman_filebrowser_firewalld_zone: "{{ host_podman_filebrowser_firewalld_zone }}"
+podman_filebrowser_image: "{{ host_podman_filebrowser_image | default('docker.io/filebrowser/filebrowser') }}"
+podman_filebrowser_image_version: "{{ host_podman_filebrowser_image_version | default('v2.19.0') }}"
+# https://hub.docker.com/r/filebrowser/filebrowser/tags
+
+podman_filebrowser_ports: 
+  - "{% if grp_podman_networking.filebrowser.lan_access %}[::]{{ grp_podman_networking.filebrowser.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
+  - "{% if grp_podman_networking.filebrowser.lan_access %}[::]:{{ grp_podman_networking.filebrowser.webui_port }}{% else %}[::1]:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
+
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 podman_filebrowser_firewalld_rich_rules: "{{ host_podman_filebrowser_firewalld_rich_rules }}"
-podman_filebrowser_directories: "{{ host_podman_filebrowser_directories }}"
-podman_filebrowser_files: "{{ host_podman_filebrowser_files }}"
-podman_filebrowser_volumes: "{{ host_podman_filebrowser_volumes }}"
-podman_networking: "{{ grp_podman_networking }}"
+
+podman_filebrowser_directories: 
+  - "{{ host_podman_volumes_path }}/filebrowser"
+  - "{{ host_podman_volumes_path }}/filebrowser/data"
+
+podman_filebrowser_files:
+  config: "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json"
+  database: "{{ host_podman_volumes_path }}/filebrowser/database.db"
+
+podman_filebrowser_volumes: "{{ host_podman_filebrowser_volumes | default(podman_filebrowser_volumes_default) }}"
+podman_filebrowser_volumes_default:
+  - "{{ host_podman_volumes_path }}/filebrowser/database.db:/database.db"
+  - "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json:/.filebrowser.json"
+  - "{{ host_podman_volumes_path }}/filebrowser/data:/srv"
