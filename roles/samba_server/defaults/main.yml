@@ -1,5 +1,10 @@
 ---
-samba_server_users: "{{ host_samba_server_users }}"
-samba_server_network: "{{ host_samba_server_network }}"
-samba_server_firewalld_zone: "{{ host_samba_server_firewalld_zone }}"
-samba_server_firewalld_rich_rules: "{{ host_samba_server_firewalld_rich_rules }}"
+samba_server_users:
+  - { username: emanon_samba, password: "{{ emanon_samba_password }}" }
+  - { username: maeyo, password: "{{ maeyo_samba_password }}" }
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+samba_server_firewalld_rich_rules:
+  - { family: ipv4, source: "{{ grp_local_subnet.ipv4_cidr }}", port: "445", proto: tcp }
+  - { family: ipv6, source: "{{ grp_local_subnet.ipv6_cidr }}", port: "445", proto: tcp }
+  - { family: ipv4, source: "{{ grp_local_subnet.ipv4_cidr }}", port: "139", proto: tcp }
+  - { family: ipv6, source: "{{ grp_local_subnet.ipv6_cidr }}", port: "139", proto: tcp }

@@ -15,6 +15,7 @@ jobs:
       # replace "master" with any valid ref
       uses: ansible/ansible-lint-action@master
       with:
+        override-deps: rich>=9.5.1,<11.0.0
         args: "--exclude playbooks/vars/vault.yml"
         targets: |
           group_vars/

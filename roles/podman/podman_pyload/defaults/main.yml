@@ -1,11 +1,19 @@
 ---
-primary_user_username: "{{ host_podman_pyload_roleless_primary_user_username }}"
-podman_pyload_image: "{{ host_podman_pyload_image }}"
-podman_pyload_image_version: "{{ host_podman_pyload_image_version }}"
-podman_pyload_ports: "{{ host_podman_pyload_ports }}"
-podman_pyload_firewalld_zone: "{{ host_podman_pyload_firewalld_zone }}"
-podman_pyload_firewalld_ports: "{{ host_podman_pyload_firewalld_ports }}"
-podman_pyload_directories: "{{ host_podman_pyload_directories }}"
-podman_pyload_files: "{{ host_podman_pyload_files }}"
-podman_pyload_volumes: "{{ host_podman_pyload_volumes }}"
-podman_networking: "{{ grp_podman_networking }}"
+podman_pyload_image: "{{ host_podman_pyload_image | default('ghcr.io/linuxserver/pyload') }}"
+podman_pyload_image_version: "{{ host_podman_pyload_image | default('version-f4f8bbaf') }}"
+# https://github.com/linuxserver/docker-pyload/pkgs/container/pyload
+
+podman_pyload_ports:
+  - "{% if grp_podman_networking.pyload.lan_access %}[::]:{{ grp_podman_networking.pyload.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.pyload.webui_port }}{% endif %}:8000/tcp"
+  - "{% if grp_podman_networking.pyload.lan_access %}[::]:{{ grp_podman_networking.pyload.webui_port }}{% else %}[::1]:{{ grp_podman_networking.pyload.webui_port }}{% endif %}:8000/tcp"
+
+podman_pyload_firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+podman_pyload_firewalld_ports: "{{ grp_podman_networking.pyload.webui_port }}/tcp"
+
+podman_pyload_directories:
+  - "{{ host_podman_volumes_path }}/pyload"
+  - "{{ host_podman_volumes_path }}/pyload/config"
+  - "{{ host_podman_volumes_path }}/pyload/downloads"
+podman_pyload_volumes:
+  - "{{ host_podman_volumes_path }}/pyload/config:/config"
+  - "{{ host_podman_volumes_path }}/pyload/downloads:/downloads"

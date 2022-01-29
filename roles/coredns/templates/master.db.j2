@@ -3,6 +3,6 @@ local.emanon.        IN  SOA r.local.emanon. moemanon.pm.me. 12 7200 3600 120960
 {{ device.hostname }}.{{ grp_local_domain }}.        IN A {{ device.ipv4_addr }}
 {% endfor %}
 
-{% for _, container in podman_networking.items() %}
+{% for _, container in grp_podman_networking.items() %}
 {{ container.fulldomain }}.        IN CNAME   {{ grp_device.pi.hostname }}.{{ grp_local_domain }}.
 {% endfor %}

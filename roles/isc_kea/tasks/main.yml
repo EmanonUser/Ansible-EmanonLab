@@ -1,12 +1,16 @@
 ---
 - name: Add Cloudsmith Kea GPG Key
-  ansible.builtin.apt_key:
+  ansible.builtin.get_url:
     url: https://dl.cloudsmith.io/public/isc/{{ kea_version }}/{{ cloudsmith_gpg_key }}
-    state: present
+    dest: /usr/share/keyrings/isc_kea-archive-keyring.key
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    timeout: 30
 
 - name: Add Cloudsmith isc-Kea Debian Repository
   ansible.builtin.apt_repository:
-    repo: deb https://dl.cloudsmith.io/public/isc/{{ kea_version }}/deb/debian {{ ansible_distribution_release }}  main
+    repo: deb [signed-by=/usr/share/keyrings/isc_kea-archive-keyring.key] https://dl.cloudsmith.io/public/isc/{{ kea_version }}/deb/debian {{ ansible_distribution_release }}  main # noqa 204
     filename: isc-{{ kea_version }}
     state: present
   notify: ["Apt update", "Apt upgrade"]

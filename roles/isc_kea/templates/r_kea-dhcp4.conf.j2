@@ -66,7 +66,7 @@
     "host-reservation-identifiers": [
       "hw-address"
     ],
-    "subnet4": [{% for subnet in isc_kea_dhcp4 %}
+    "subnet4": [{% for subnet in host_isc_kea_dhcp4 %}
     
     {
         "subnet": "{{ subnet.subnet }}",

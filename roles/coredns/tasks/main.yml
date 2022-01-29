@@ -44,6 +44,17 @@
     group: coredns
     mode: u=rwx,g=,o=
   notify: Restart coredns service
+  when: not coredns_use_backup_config
+
+- name: Configure CoreDNS backup config
+  ansible.builtin.template:
+    src: Corefile_backup.j2
+    dest: "{{ coredns_path }}/Corefile"
+    owner: coredns
+    group: coredns
+    mode: u=rwx,g=,o=
+  notify: Restart coredns service
+  when: coredns_use_backup_config
 
 - name: Configure CoreDNS local-zone file
   ansible.builtin.template:

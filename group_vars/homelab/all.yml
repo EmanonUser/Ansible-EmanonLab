@@ -1,23 +1,4 @@
 ---
-# Ansible-Emanonlab, variables conventions
-# snake_case
-# prefix define origin
-  # host_
-  # grp_
-  # host_vault_
-  # grp_vault_
-
-# All variables must follow those path: 
-##  host_vars/*/vault.yml --> host_vars/*/all.yml --> roles/*/default/main.yml  ##          Secret host variables
-##  group_vars/*/vault.yml --> group_vars/*/all.yml --> roles/*/default/main.yml  ##        Secret group variables
-##  host_vars/*/all.yml --> roles/*/default/main.yml  ##                                    Standards host variables
-##  group_vars/*/all.yml --> roles/*/default/main.yml  ##                                   Standards group variables
-
-# If a variables is used in multiples roles at the same time the prefix will be host_Origin-role_role_ and will be defined only on the origin role
-# Variables that do not belong to a role will be placed in the Roleless section
-# Add comment to external variables, variables that depend a third party apt gpg key etc
-# Verbose is cool, use verbose names even when it become extra long
-
 grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch 
 grp_device:
     router:
@@ -25,7 +6,7 @@ grp_device:
       ipv4_addr_cidr:  192.168.5.1/24
       hostname: r
       wan_interface: enp1s0
-      lan_interface: [enp2s0, enp3s0]
+      lan_interfaces: [enp2s0, enp3s0]
     brocade:
       ipv4_addr:  192.168.5.2
       ipv4_addr_cidr: 192.168.5.2/24
@@ -137,8 +118,17 @@ grp_podman_networking:
 grp_local_domain: local.emanon
 grp_domain_name: emanon.moe
 grp_subdomain: iwakura
+
 grp_dns_server: "{{ grp_device.router.ipv4_addr }}"
 grp_ntp_server: "{{ grp_device.router.ipv4_addr }}"
 grp_gandi_api_key: "{{ grp_vault_gandi_api_key }}"
+
 grp_gandi_email: "{{ grp_vault_gandi_email }}"
 grp_gandi_email_password: "{{ grp_vault_gandi_email_password }}"
+
+grp_nfs_server_target: "{{ grp_device.truenas.hostname }}.{{ grp_local_domain }}"
+grp_nfs_remote_share: /mnt/vault/emanon
+grp_nfs_mount_dir: /mnt/vault
+
+grp_dns_server_upstream_ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
+grp_dns_server_upstream_port: "10053"

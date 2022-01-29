@@ -42,11 +42,11 @@ frontend main-frontend
 	http-response set-header X-Content-Type-Options nosniff
 	http-response set-header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;"
 
-{% for service, value in podman_networking.items() %}
+{% for service, value in grp_podman_networking.items() %}
 use_backend {{ service }}-backend if { hdr(host) -i {{ value.fulldomain }} }
 {% endfor %}
 
-{% for service, value in podman_networking.items() %}
+{% for service, value in grp_podman_networking.items() %}
 backend {{ service }}-backend
 	server srv localhost:{{ value.webui_port }} check
 

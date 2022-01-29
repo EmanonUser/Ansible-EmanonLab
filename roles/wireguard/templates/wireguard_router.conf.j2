@@ -1,9 +1,9 @@
 [Interface]
-Address = {{ wireguard_server_address }}
+Address = {{ host_wireguard_server_address }}
 ListenPort = {{ wireguard_server_port }}
-PrivateKey = {{ wireguard_server_private_key }}
+PrivateKey = {{ host_wireguard_server_private_key }}
 
-{% for peer_name, peer_value in wireguard_peers.items() %}
+{% for peer_name, peer_value in host_wireguard_peers.items() %}
 [Peer]
 # {{ peer_name }}
 PublicKey =  {{ peer_value.public_key }}

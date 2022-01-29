@@ -1,279 +1,42 @@
 ---
-# Ansible-Emanonlab, variables conventions
-# snake_case
-# prefix define origin
-  # host_
-  # grp_
-  # host_vault_
-  # grp_vault_
-
-# All variables must follow those path: 
-##  host_vars/*/vault.yml --> host_vars/*/all.yml --> roles/*/default/main.yml  ##          Secret host variables
-##  group_vars/*/vault.yml --> group_vars/*/all.yml --> roles/*/default/main.yml  ##        Secret group variables
-##  host_vars/*/all.yml --> roles/*/default/main.yml  ##                                    Standards host variables
-##  group_vars/*/all.yml --> roles/*/default/main.yml  ##                                   Standards group variables
-
-# If a variables is used in multiples roles at the same time the prefix will be host_Origin-role_role_ and will be defined only on the origin role
-# Variables that do not belong to a role will be placed in the Roleless section
-# Add comment to external variables, variables that depend a third party apt gpg key etc
-# Verbose is cool, use verbose names even when it become extra long
-
-## Roleless ##
-host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
-host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
-host_roleless_primary_user_password_salt: "{{ host_vault_roleless_primary_user_password_salt }}"
-host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
-## Roleless ##
-
 ## device_init ##
-host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
-host_device_init_roleless_primary_user_password_salt: "{{ host_roleless_primary_user_password_salt }}"
-host_device_init_root_user_password: "{{ host_vault_device_init_root_user_password }}"
-host_device_init_root_user_password_salt: "{{ host_vault_device_init_root_user_password_salt }}"
-host_device_init_use_starship: yes
-host_device_init_debian_stable_packages:
+host_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
   - ca-certificates
   - apt-transport-https
+  - acl
+  - gnupg2
+  - curl
+  - git
+  - zsh
+  - neovim
+  - unzip
   - dnsutils
   - ldnsutils
   - conntrack
-  - git
-  - msmtp
   - tcpdump
-  - zsh
   - socat
   - mtr-tiny
-  - acl
-  - neovim
-  - unzip
 ## device_init ##
 
-## starship ##
-host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_starship_version: "1.0.0" # https://github.com/starship/starship/releases
-## starship ##
-
-## sysctl ##
-host_sysctl_entries:
-  - { name: "net.ipv4.ip_forward", value: "1" }
-  - { name: "net.ipv6.conf.default.forwarding", value: "1" }
-  - { name: "net.ipv6.conf.all.forwarding", value: "1" }
-## sysctl ##
-
-## interfaces ##
-host_interfaces_lacp_interface: bond0
-host_interfaces_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count }}"
-## interfaces ##
-
-## frr ##
-host_frr_version: frr-8  ## https://deb.frrouting.org/
-host_frr_daemons:
-  - bgpd=no
-  - ospfd=yes
-  - ospf6d=no
-  - ripd=no
-  - ripngd=no
-  - isisd=no
-  - pimd=no
-  - ldpd=no
-  - nhrpd=no
-  - eigrpd=no
-  - babeld=no
-  - sharpd=no
-  - pbrd=no
-  - bfdd=no
-  - fabricd=no
-  - vrrpd=no
-## frr ##
-
-## isc_kea ##
-host_isc_kea_version: kea-2-1  ## https://cloudsmith.io/~isc/repos/
-host_isc_kea_cloudsmith_gpg_key: gpg.32D53EC4807EC10E.key ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-1-9/signing/
-## isc_kea ##
-
-## wireguard ##
-host_wireguard_interface_name: wg0
-host_wireguard_subnet: "172.16.0"
-host_wireguard_server_port: 51820
-host_wireguard_server_address: "{{ host_wireguard_subnet }}.1/24"
-host_wireguard_server_private_key: "{{ host_vault_wireguard_server_private_key }}"
-host_wireguard_server_public_key: "{{ host_vault_wireguard_server_public_key }}"
-host_wireguard_peers:
-  Arch:
-    private_key: "{{ host_vault_peer1_private_key }}"
-    public_key: "{{ host_vault_peer1_public_key }}"
-    preshared_key: "{{ host_vault_peer1_preshared_key }}"
-    ip_address: "{{ host_wireguard_subnet }}.2/32"
-
-  One:
-    private_key: "{{ host_vault_peer2_private_key }}"
-    public_key: "{{ host_vault_peer2_public_key }}"
-    preshared_key: "{{ host_vault_peer2_preshared_key }}"
-    ip_address: "{{ host_wireguard_subnet }}.3/32"
-  
-  W10:
-    private_key: "{{ host_vault_peer3_private_key }}"
-    public_key: "{{ host_vault_peer3_public_key }}"
-    preshared_key: "{{ host_vault_peer3_preshared_key }}"
-    ip_address: "{{ host_wireguard_subnet }}.4/32"
-## wireguard ##
-
 ## prometheus_node_exporter ##
-host_prometheus_node_exporter_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
-host_prometheus_node_exporter_version: 1.3.1 # https://github.com/prometheus/node_exporter/releases/
-host_prometheus_node_exporter_interface_address: "{{ grp_device.router.ipv4_addr }}"
-host_prometheus_node_exporter_port: 9100
-## prometheus_node_exporter ##
+host_prometheus_node_exporter_interface_addr: "{{ grp_device.router.ipv4_addr }}"
 
 ## ntpd ##
-host_ntpd_interfaces_ip: ["127.0.0.1", "{{ grp_device.router.ipv4_addr }}"]
-host_ntpd_upstream_server: 
-  - 0.debian.pool.ntp.org
-  - pool.ntp.org
-  - ntp.midway.ovh
-## ntpd ##
+host_ntpd_interface_ipv4: "{{ grp_device.router.ipv4_addr }}"
 
 ## coredns ##
-host_coredns_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
-host_coredns_path: /opt/coredns
-host_coredns_version: "1.8.6" # https://github.com/coredns/coredns/releases
-host_coredns_port: "53"
-host_coredns_prometheus_port: "9353"
-host_coredns_forwardto: "{{ grp_device.pi.ipv4_addr }}"
-## coredns ##
+host_coredns_use_backup_config: true
+host_coredns_upstream_dns_server: 
+  ipv4_addr: "{{ grp_dns_server_upstream_ipv4_addr }}"
+  port: "{{ grp_dns_server_upstream_port }}"
 
 ## gad ##
-host_gad_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_gad_path: /opt
-host_gad_version: "1.4.3" # https://github.com/brianreumere/gandi-automatic-dns/releases
-host_gad_use_ipv6: no
-## gad ##
+host_gad_use_ipv6: false
 
 ## is_alive ##
-host_is_alive_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_is_alive_echo_request_target: emanon.moe
-host_is_alive_echo_request_interval: 3m
-host_is_alive_echo_request_count: "21" 
-## is_alive ##
-
-## nftables ##
-host_nftables_wireguard_interface_name: "{{ host_wireguard_interface_name }}"
-host_nftables_wireguard_subnet: "{{ host_wireguard_subnet }}"
-host_nftables_wireguard_server_port: "{{ host_wireguard_server_port }}"
-host_nftables_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count }}"
-## nftables ##
-
-## isc_kea ##
-host_isc_kea_dns_servers: 
-  - "{{ grp_dns_server }}"
-host_isc_kea_ntp_servers: 
-  - "{{ grp_ntp_server }}"
-host_isc_kea_domains_search: 
-  - "{{ grp_local_domain }}"
-host_isc_kea_ctrl_agent_address: 127.0.0.1
-host_isc_kea_ctrl_agent_port: 8000
-
-host_isc_kea_dhcp4:
-  - subnet: 192.168.10.0/24
-    routers: 
-      - 192.168.10.1
-    pools:
-      - start: 192.168.10.100
-        end: 192.168.10.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.truenas.ipv4_addr }}"
-        hw_addr: "{{ grp_device.truenas.hw_addr }}" 
-        hostname: "{{ grp_device.truenas.hostname }}"
-      - ipv4_addr: "{{ grp_device.ipmi.ipv4_addr }}"
-        hw_addr: "{{ grp_device.ipmi.hw_addr }}" 
-        hostname: "{{ grp_device.ipmi.hostname }}"
-      - ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
-        hw_addr: "{{ grp_device.pi.hw_addr }}"
-        hostname: "{{ grp_device.pi.hostname }}"
-      - ipv4_addr: "{{ grp_device.aclite.ipv4_addr }}"
-        hw_addr: "{{ grp_device.aclite.hw_addr }}"
-        hostname: "{{ grp_device.aclite.hostname }}"
-
-  - subnet: 192.168.20.0/24
-    routers: 
-      - 192.168.20.1
-    pools:
-      - start: 192.168.20.100
-        end: 192.168.20.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.arch.ipv4_addr }}"
-        hw_addr: "{{ grp_device.arch.hw_addr }}"
-        hostname: "{{ grp_device.arch.hostname }}"
-  
-  - subnet: 192.168.50.0/24
-    routers: 
-      - 192.168.50.1
-    pools:
-      - start: 192.168.50.100
-        end: 192.168.50.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.shp1.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp1.hw_addr }}"
-        hostname: "{{ grp_device.shp1.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp2.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp2.hw_addr }}"
-        hostname: "{{ grp_device.shp2.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp3.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp3.hw_addr }}"
-        hostname: "{{ grp_device.shp3.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp4.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp4.hw_addr }}"
-        hostname: "{{ grp_device.shp4.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp5.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp5.hw_addr }}"
-        hostname: "{{ grp_device.shp5.hostname }}"
-      - ipv4_addr: "{{ grp_device.hs110.ipv4_addr }}"
-        hw_addr: "{{ grp_device.hs110.hw_addr }}"
-        hostname: "{{ grp_device.hs110.hostname }}"
-      - ipv4_addr: "{{ grp_device.tmp117.ipv4_addr }}"
-        hw_addr: "{{ grp_device.tmp117.hw_addr }}"
-        hostname: "{{ grp_device.tmp117.hostname }}"
-  
-  - subnet: 192.168.70.0/24
-    routers: 
-      - 192.168.70.1
-    pools:
-      - start: 192.168.70.100
-        end: 192.168.70.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.printer.ipv4_addr }}"
-        hw_addr: "{{ grp_device.printer.hw_addr }}"
-        hostname: "{{ grp_device.printer.hostname }}"
-
-  - subnet: 192.168.100.0/24
-    routers: 
-      - 192.168.100.1
-    pools:
-      - start: 192.168.100.100
-        end: 192.168.100.200
-    reservations: []
-## isc_kea ##
-
-## stork_agent ##
-host_stork_agent_cloudsmith_gpg_key: gpg.77F64EC28053D1FB.key
-host_stork_agent_host: "{{ grp_device.router.ipv4_addr }}"
-host_stork_agent_port: 6763
-host_stork_agent_listen_stork_only: "false"
-host_stork_agent_listen_prometheus_only: "false"
-host_stork_agent_prometheus_kea_exporter_address: "{{ grp_device.router.ipv4_addr }}"
-host_stork_agent_prometheus_kea_exporter_port: 6764
-host_stork_agent_prometheus_kea_exporter_interval: 10
-host_stork_agent_prometheus_bind9_exporter_address: localhost
-host_stork_agent_prometheus_bind9_exporter_port: 6765
-host_stork_agent_prometheus_bind9_exporter_interval: 30
-## stork_agent ##
 
 ## promtail ##
-host_promtail_cpu_architecture: "amd64"
-host_promtail_version: "2.4.1"
-host_promtail_path: "/opt/promtail"
 host_promtail_loki_url: http://loki.local.emanon
-## promtail ##

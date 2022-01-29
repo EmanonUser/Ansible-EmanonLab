@@ -1,6 +1,6 @@
 (snip) {
     bind 127.0.0.1
-    bind {{ coredns_ip }}
+    bind {{ grp_device.router.ipv4_addr }}
     any
     minimal
     log
@@ -13,7 +13,7 @@
 
 local.emanon:{{ coredns_port }} {
     import snip
-    prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
+    prometheus {{ grp_device.router.ipv4_addr }}:{{ coredns_prometheus_port }}
     file /opt/coredns/master.db
 }
 
@@ -30,7 +30,7 @@ local.emanon:{{ coredns_port }} {
 }
 
 .:5301 {
-    prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
+    prometheus {{ grp_device.router.ipv4_addr }}:{{ coredns_prometheus_port }}
     bind 127.0.0.1 ::1
     forward . tls://9.9.9.9 {
         tls_servername dns.quad9.net
@@ -40,7 +40,7 @@ local.emanon:{{ coredns_port }} {
 }
 
 .:5302 {
-    prometheus {{ coredns_ip }}:{{ coredns_prometheus_port }}
+    prometheus {{ grp_device.router.ipv4_addr }}:{{ coredns_prometheus_port }}
     bind 127.0.0.1 ::1
     forward . tls://1.1.1.1 tls://1.0.0.1 {
         tls_servername cloudflare-dns.com

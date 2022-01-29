@@ -1,12 +1,14 @@
 ---
-primary_user_username: "{{ host_podman_flame_roleless_primary_user_username }}"
-podman_flame_image: "{{ host_podman_flame_image }}"
-podman_flame_image_version: "{{ host_podman_flame_image_version }}"
-podman_flame_ports: "{{ host_podman_flame_ports }}"
-podman_flame_firewalld_ports: "{{ host_podman_flame_firewalld_ports }}"
-podman_flame_directories: "{{ host_podman_flame_directories }}"
-podman_flame_volumes: "{{ host_podman_flame_volumes }}"
-podman_flame_config_path: "{{ host_podman_flame_config_path }}"
-podman_flame_password: "{{ host_podman_flame_password }}"
-podman_flame_firewalld_zone: "{{ host_podman_flame_firewalld_zone }}"
-podman_networking: "{{ grp_podman_networking }}"
+podman_flame_image: "{{ host_podman_flame_image | default('docker.io/pawelmalak/flame') }}"
+podman_flame_image_version: "{{ host_podman_flame_image_version | default('multiarch2.2.1') }}"
+# https://hub.docker.com/r/pawelmalak/flame/tags
+
+podman_flame_ports:
+  - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
+  - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}[::1]:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
+
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+podman_flame_firewalld_ports: "{{ grp_podman_networking.flame.webui_port }}/tcp"
+
+podman_flame_directories: "{{ host_podman_volumes_path }}/flame"
+podman_flame_volumes: "{{ host_podman_volumes_path }}/flame:/app/data"

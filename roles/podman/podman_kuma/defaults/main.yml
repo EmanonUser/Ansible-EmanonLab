@@ -1,10 +1,14 @@
 ---
-primary_user_username: "{{ host_podman_kuma_roleless_primary_user_username }}"
-podman_kuma_image: "{{ host_podman_kuma_image }}"
-podman_kuma_image_version: "{{ host_podman_kuma_image_version }}"
-podman_kuma_ports: "{{ host_podman_kuma_ports }}"
-podman_kuma_firewalld_zone: "{{ host_podman_kuma_firewalld_zone }}"
+podman_kuma_image: "{{ host_podman_kuma_image | default('docker.io/louislam/uptime-kuma') }}"
+podman_kuma_image_version: "{{ host_podman_kuma_image_version | default('1.11.3-alpine') }}"
+# https://hub.docker.com/r/louislam/uptime-kuma/tags
+
+podman_kuma_ports: 
+  - "{% if grp_podman_networking.kuma.lan_access %}[::]{{ grp_podman_networking.kuma.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
+  - "{% if grp_podman_networking.kuma.lan_access %}[::]:{{ grp_podman_networking.kuma.webui_port }}{% else %}[::1]:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
+
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 podman_kuma_firewalld_rich_rules: "{{ host_podman_kuma_firewalld_rich_rules }}"
-podman_kuma_directory: "{{ host_podman_kuma_directory }}"
-podman_kuma_volumes: "{{ host_podman_kuma_volumes }}"
-podman_networking: "{{ grp_podman_networking }}"
+
+podman_kuma_directories: "{{ host_podman_volumes_path }}/kuma"
+podman_kuma_volumes: "{{ host_podman_volumes_path }}/kuma:/app/data"

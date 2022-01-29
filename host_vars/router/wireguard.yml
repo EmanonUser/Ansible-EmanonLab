@@ -1,0 +1,23 @@
+---
+host_wireguard_subnet: "172.16.0"
+host_wireguard_server_address: "{{ host_wireguard_subnet }}.1/24"
+host_wireguard_server_private_key: "{{ host_vault_wireguard_server_private_key }}"
+# host_wireguard_server_public_key: "{{ host_vault_wireguard_server_public_key }}"                Unused for now maybe for client conf generation
+host_wireguard_peers:
+  Arch:
+    private_key: "{{ host_vault_peer1_private_key }}"
+    public_key: "{{ host_vault_peer1_public_key }}"
+    preshared_key: "{{ host_vault_peer1_preshared_key }}"
+    ip_address: "{{ host_wireguard_subnet }}.2/32"
+
+  One:
+    private_key: "{{ host_vault_peer2_private_key }}"
+    public_key: "{{ host_vault_peer2_public_key }}"
+    preshared_key: "{{ host_vault_peer2_preshared_key }}"
+    ip_address: "{{ host_wireguard_subnet }}.3/32"
+  
+  W10:
+    private_key: "{{ host_vault_peer3_private_key }}"
+    public_key: "{{ host_vault_peer3_public_key }}"
+    preshared_key: "{{ host_vault_peer3_preshared_key }}"
+    ip_address: "{{ host_wireguard_subnet }}.4/32"

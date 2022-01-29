@@ -1,85 +1,43 @@
 ---
-# Ansible-Emanonlab, variables conventions
-# snake_case
-# prefix define origin
-  # host_
-  # grp_
-  # host_vault_
-  # grp_vault_
-
-# All variables must follow those path: 
-##  host_vars/*/vault.yml --> host_vars/*/all.yml --> roles/*/default/main.yml  ##          Secret host variables
-##  group_vars/*/vault.yml --> group_vars/*/all.yml --> roles/*/default/main.yml  ##        Secret group variables
-##  host_vars/*/all.yml --> roles/*/default/main.yml  ##                                    Standards host variables
-##  group_vars/*/all.yml --> roles/*/default/main.yml  ##                                   Standards group variables
-
-# If a variables is used in multiples roles at the same time the prefix will be host_Origin-role_role_ and will be defined only on the origin role
-# Variables that do not belong to a role will be placed in the Roleless section
-# Add comment to external variables, variables that depend a third party apt gpg key etc
-# Verbose is cool, use verbose names even when it become extra long
-
-## Roleless ##
-host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
-host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
-host_roleless_primary_user_password_salt: "{{ host_vault_roleless_primary_user_password_salt }}"
-host_roleless_cpu_architecture: amd64 # amd64, arm64 etc ...
-## Roleless ##
-
 ## device_init ##
-host_device_init_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_device_init_roleless_primary_user_password: "{{ host_roleless_primary_user_password }}"
-host_device_init_roleless_primary_user_password_salt: "{{ host_roleless_primary_user_password_salt }}"
-host_device_init_root_user_password: "{{ host_vault_device_init_root_user_password }}"
-host_device_init_root_user_password_salt: "{{ host_vault_device_init_root_user_password_salt }}"
-host_device_init_use_starship: yes
-host_device_init_debian_stable_packages:
+host_debian_stable_packages:
   - debian-keyring
   - debian-archive-keyring
   - ca-certificates
   - apt-transport-https
-  - curl
+  - acl
   - gnupg2
+  - curl
+  - git
+  - zsh
+  - neovim
+  - unzip
   - lsb-release
   - dnsutils
   - ldnsutils
-  - git
   - tmux
   - tcpdump
   - mtr-tiny
   - ldnsutils
   - neofetch
-  - neovim
-  - zsh
-  - unzip
   - htop
   - vnstat
-  - acl
   - rsync
   - aria2
 ## device_init ##
 
-## starship ##
-host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_starship_version: "1.1.1" # https://github.com/starship/starship/releases
-## starship ##
 
 ## firewalld ##
-host_firewalld_primary_interface: enp3s0
 host_firewalld_zone: dmz
-## firewalld ##
 
 ## is_alive ##
-host_is_alive_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_is_alive_echo_request_target: iwakura.emanon.moe
-host_is_alive_echo_request_interval: 3m
-host_is_alive_echo_request_count: "21" 
 ## is_alive ##
 
 ## zfs ##
 host_zfs_primary_pools:
-  tank:
+  - pool: tank
     path: "/tank"
-host_zfs_zpool_names: "{% for pool, value in host_zfs_primary_pools %}{{ pool }}{% endif %}"
 host_zfs_systemd_on_calendar_scrubing_timer: Thu 00:00:00 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
 host_zfs_arc_max: 3006477000  # Bytes
 ## zfs ##
@@ -89,162 +47,56 @@ host_zrepl_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
 ## zrepl ##
 
 ########## Podman ##########
-host_podman_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_volumes_path: "{{ host_zfs_primary_pools.tank.path }}/data/podman"
-host_podman_media_path: "{{ host_zfs_primary_pools.tank.path }}/media"
-host_podman_files_path: "{{ host_zfs_primary_pools.tank.path }}/files"
+host_podman_volumes_path: "{{ host_zfs_primary_pools[0].path }}/data/podman"
+host_podman_media_path: "{{ host_zfs_primary_pools[0].path }}/media"
+host_podman_media_2_path: "{{ host_zfs_primary_pools[0].path }}/media_2"
+host_podman_files_path: "{{ host_zfs_primary_pools[0].path }}/files"
+host_podman_misc_path: "{{ host_zfs_primary_pools[0].path }}/misc"
 ########## Podman ##########
 
-## podman_jellyfin ##
-host_podman_jellyfin_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_jellyfin_image: docker.io/jellyfin/jellyfin
-host_podman_jellyfin_image_version: "10.7.7" # https://hub.docker.com/r/jellyfin/jellyfin/tags
-host_podman_jellyfin_ports: 
-  - "{% if grp_podman_networking.jellyfin.lan_access %}[::]{{ grp_podman_networking.jellyfin.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
-  - "{% if grp_podman_networking.jellyfin.lan_access %}[::]:{{ grp_podman_networking.jellyfin.webui_port }}{% else %}[::1]:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
-host_podman_jellyfin_firewalld_zone: "{{ host_firewalld_zone }}"
-host_podman_jellyfin_firewalld_rich_rules:
-  - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.jellyfin.webui_port }}", proto: tcp }
-  - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.jellyfin.webui_port }}", proto: tcp }
-  - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.jellyfin.webui_port }}", proto: tcp }
-host_podman_jellyfin_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_jellyfin_directories:
- - "{{ host_podman_jellyfin_volumes_path }}/jellyfin/cache"
- - "{{ host_podman_jellyfin_volumes_path }}/jellyfin/config"
-host_podman_jellyfin_volumes:
-  - "{{ host_podman_jellyfin_volumes_path }}/jellyfin/cache:/cache"
-  - "{{ host_podman_jellyfin_volumes_path }}/jellyfin/config:/config"
-  - "{{ host_podman_media_path }}:/media"
-  - "{{ host_podman_media_path }}_2:/media_2"
-  - "{{ host_zfs_primary_pools.tank.path }}/misc:/misc"
-## podman_jellyfin ##
 
 ## podman_transmission ##
-host_podman_transmission_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_transmission_image: docker.io/haugene/transmission-openvpn
-host_podman_transmission_image_version: "4.0"  # https://hub.docker.com/r/haugene/transmission-openvpn/tags
-host_podman_transmission_ports: 
-  - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
-  - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
-host_podman_transmission_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_transmission_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.transmission.webui_port }}", proto: tcp }
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.transmission.webui_port }}", proto: tcp }
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.transmission.webui_port }}", proto: tcp }
-host_podman_transmission_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_transmission_directories:
-  - "{{ host_podman_transmission_volumes_path }}/transmission/home"
-  - "{{ host_podman_transmission_volumes_path }}/transmission/completed"
-  - "{{ host_podman_transmission_volumes_path }}/transmission/incompleted"
-  - "{{ host_podman_transmission_volumes_path }}/transmission/watch"
+
 host_podman_transmission_volumes:
-  - "{{ host_podman_transmission_volumes_path }}/transmission/:/transmission"
+  - "{{ host_podman_volumes_path }}/transmission/:/transmission"
   - "{{ host_podman_media_path }}:/media"
-  - "{{ host_zfs_primary_pools.tank.path }}/misc:/misc"
-  - "{{ host_zfs_primary_pools.tank.path }}/files:/files"
-host_podman_transmission_env_rpc_username: "{{ host_vault_podman_transmission_env_rpc_username }}"
-host_podman_transmission_env_rpc_password: "{{ host_vault_podman_transmission_env_rpc_password }}"
-host_podman_transmission_env_rpc_auth_required: true
-host_podman_transmission_env_openvpn_provider: "{{ host_vault_podman_transmission_openvpn_provider }}"
-host_podman_transmission_env_openvpn_config: "{{ host_vault_podman_transmission_openvpn_config }}"
-host_podman_transmission_env_openvpn_username: "{{ host_vault_podman_transmission_openvpn_username }}"
-host_podman_transmission_env_openvpn_password: "{{ host_vault_podman_transmission_openvpn_password }}"
-host_podman_transmission_env_home_path: "/transmission/home"
+  - "{{ host_podman_misc_path }}:/misc"
+  - "{{ host_podman_files_path }}:/files"
 host_podman_transmission_env_download_path: "/misc"
-host_podman_transmission_env_incomplete_path: "/transmission/incompleted"
-host_podman_transmission_env_watch_path: "/transmission/watch"
-host_podman_transmission_env_web_ui: "flood-for-transmission"
-host_podman_transmission_env_local_network: "192.168.1.0/24"
-## podman_transmission ##
+
+
+## podman_jellyfin ##
+host_podman_jellyfin_firewalld_rich_rules:
+  - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.jellyfin.webui_port }}", proto: tcp }
+  - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.jellyfin.webui_port }}", proto: tcp }
+  - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.jellyfin.webui_port }}", proto: tcp }
+
+host_podman_jellyfin_volumes:
+  - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache"
+  - "{{ host_podman_volumes_path }}/jellyfin/config:/config"
+  - "{{ host_podman_media_path }}:/media"
+  - "{{ host_podman_media_2_path }}:/media_2"
+  - "{{ host_podman_misc_path }}:/misc"
+
 
 ## podman_filebrowser ##
-host_podman_filebrowser_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_filebrowser_image: docker.io/filebrowser/filebrowser
-host_podman_filebrowser_image_version: "v2.19.0" # https://hub.docker.com/r/filebrowser/filebrowser/tags
-host_podman_filebrowser_ports: 
-  - "{% if grp_podman_networking.filebrowser.lan_access %}[::]{{ grp_podman_networking.filebrowser.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
-  - "{% if grp_podman_networking.filebrowser.lan_access %}[::]:{{ grp_podman_networking.filebrowser.webui_port }}{% else %}[::1]:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
-host_podman_filebrowser_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_filebrowser_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.filebrowser.webui_port }}", proto: tcp }
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.filebrowser.webui_port }}", proto: tcp }
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.filebrowser.webui_port }}", proto: tcp }
-host_podman_filebrower_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_filebrowser_directories: 
-  - "{{ host_podman_filebrower_volumes_path }}/filebrowser"
-  - "{{ host_podman_files_path }}"
-host_podman_filebrowser_files:
-  config: "{{ host_podman_filebrower_volumes_path }}/filebrowser/.filebrowser.json"
-  database: "{{ host_podman_filebrower_volumes_path }}/filebrowser/database.db"
+
 host_podman_filebrowser_volumes:
-  - "{{ host_podman_filebrower_volumes_path }}/filebrowser/database.db:/database.db"
-  - "{{ host_podman_filebrower_volumes_path }}/filebrowser/.filebrowser.json:/.filebrowser.json"
+  - "{{ host_podman_volumes_path }}/filebrowser/database.db:/database.db"
+  - "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json:/.filebrowser.json"
   - "{{ host_podman_files_path }}:/srv"
-## podman_filebrowser ##
+
 
 ## podman_kuma ##
-host_podman_kuma_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_kuma_image: docker.io/louislam/uptime-kuma
-host_podman_kuma_image_version: 1.11.1-alpine # https://hub.docker.com/r/louislam/uptime-kuma/tags
-host_podman_kuma_ports: 
-  - "{% if grp_podman_networking.kuma.lan_access %}[::]{{ grp_podman_networking.kuma.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
-  - "{% if grp_podman_networking.kuma.lan_access %}[::]:{{ grp_podman_networking.kuma.webui_port }}{% else %}[::1]:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
-host_podman_kuma_firewalld_zone: "{{ host_firewalld_zone }}"
 host_podman_kuma_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
-host_podman_kuma_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_kuma_directory: "{{ host_podman_kuma_volumes_path }}/kuma"
-host_podman_kuma_volumes: "{{ host_podman_kuma_volumes_path }}/kuma:/app/data"
-## podman_kuma ##
-
-## acme_dns ##
-host_acme_dns_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_acme_dns_directory: https://acme-v02.api.letsencrypt.org/directory
-host_acme_dns_version: 2
-host_acme_dns_challenge_type: dns-01
-host_acme_dns_email: moemanon@pm.me
-host_acme_dns_letsencrypt_base_path: /etc/letsencrypt
-host_acme_dns_letsencrypt_dirs:
-  account: "{{ host_acme_dns_letsencrypt_base_path }}/account"
-  mykeys: "{{ host_acme_dns_letsencrypt_base_path }}/keys"
-  csrs: "{{ host_acme_dns_letsencrypt_base_path }}/csrs"
-  certs: "{{ host_acme_dns_letsencrypt_base_path }}/certs"
-host_acme_dns_domain: emanon.moe
-host_acme_dns_domain_name:
-  - { fqdn: "{{ host_acme_dns_domain }}", index: 0, domain: ".{{ host_acme_dns_domain }}" } # Domain itself
-  - { fqdn: "*.{{ host_acme_dns_domain }}", index: 1, domain: ".{{ host_acme_dns_domain }}" }  # Wilcard for all subdomains
-  # - { fqdn: "jellyfin.{{ host_acme_dns_domain }}", index: 1, domain: ".{{ host_acme_dns_domain }}" }
-  # - { fqdn: "kuma.{{ host_acme_dns_domain }}", index: 2, domain: ".{{ host_acme_dns_domain }}" }
-## acme_dns ##
-
-## haproxy ##
-host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
-host_haproxy_firewalld_services: ["http", "https"]
-host_haproxy_stats: yes
-host_haproxy_firewalld_rich_rules:
-  - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "8404", proto: tcp }
-  - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "8404", proto: tcp }
-  - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "8404", proto: tcp }
-## haproxy ##
-
-## gad ##
-host_gad_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_gad_path: /opt
-host_gad_version: "1.4.3" # https://github.com/brianreumere/gandi-automatic-dns/releases
-host_gad_use_ipv6: yes
-## gad ##
-
-## samba_server ##
-host_samba_server_users:
-  - { username: emanon_samba, password: "{{ host_vault_emanon_samba_password }}" }
-  - { username: maeyo, password: "{{ host_vault_maeyo_password }}" }
-host_samba_server_network: { ipv4: "192.168.1.0/24", ipv6: "2a01:cb10:1cf:9c00::/64" }
-host_samba_server_firewalld_zone: "{{ host_firewalld_zone }}"
-host_samba_server_firewalld_rich_rules:
-  - { family: ipv4, source: "{{ host_samba_server_network.ipv4 }}", port: "445", proto: tcp }
-  - { family: ipv6, source: "{{ host_samba_server_network.ipv6 }}", port: "445", proto: tcp }
-  - { family: ipv4, source: "{{ host_samba_server_network.ipv4 }}", port: "139", proto: tcp }
-  - { family: ipv6, source: "{{ host_samba_server_network.ipv6 }}", port: "139", proto: tcp }
-## samba_server ##

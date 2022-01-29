@@ -1,25 +1,29 @@
 ---
-primary_user_username: "{{ host_podman_transmission_roleless_primary_user_username }}"
-podman_transmission_image: "{{ host_podman_transmission_image }}"
-podman_transmission_image_version: "{{ host_podman_transmission_image_version }}"
-podman_transmission_ports: "{{ host_podman_transmission_ports }}"
-podman_transmission_firewalld_zone: "{{ host_podman_transmission_firewalld_zone }}"
-podman_transmission_firewalld_ports: "{{ host_podman_transmission_firewalld_ports }}"
+podman_transmission_image: "{{ host_podman_transmission_image | default('docker.io/haugene/transmission-openvpn') }}"
+podman_transmission_image_version: "{{ host_podman_transmission_image_version | default('4.0') }}" 
+# https://hub.docker.com/r/haugene/transmission-openvpn/tags
+
+podman_transmission_ports: 
+  - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
+  - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
+
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+podman_transmission_firewalld_ports: "{{ grp_podman_networking.transmission.webui_port }}/tcp"
 podman_transmission_firewalld_rich_rules: "{{ host_podman_transmission_firewalld_rich_rules }}"
-podman_media_path: "{{ host_podman_media_path }}"
-podman_transmission_directories: "{{ host_podman_transmission_directories }}"
-podman_transmission_volumes: "{{ host_podman_transmission_volumes }}"
-podman_transmission_env_rpc_username: "{{ host_podman_transmission_env_rpc_username }}"
-podman_transmission_env_rpc_password: "{{ host_podman_transmission_env_rpc_password }}"
-podman_transmission_env_rpc_auth_required: "{{ host_podman_transmission_env_rpc_auth_required }}"
-podman_transmission_env_openvpn_provider: "{{ host_podman_transmission_env_openvpn_provider }}"
-podman_transmission_env_openvpn_config: "{{ host_podman_transmission_env_openvpn_config }}"
-podman_transmission_env_openvpn_username: "{{ host_podman_transmission_env_openvpn_username }}"
-podman_transmission_env_openvpn_password: "{{ host_podman_transmission_env_openvpn_password }}"
-podman_transmission_env_home_path: "{{ host_podman_transmission_env_home_path }}"
-podman_transmission_env_download_path: "{{ host_podman_transmission_env_download_path }}"
-podman_transmission_env_incomplete_path: "{{ host_podman_transmission_env_incomplete_path }}"
-podman_transmission_env_watch_path: "{{ host_podman_transmission_env_watch_path }}"
-podman_transmission_env_web_ui: "{{ host_podman_transmission_env_web_ui }}"
-podman_transmission_env_local_network: "{{ host_podman_transmission_env_local_network }}"
-podman_networking: "{{ grp_podman_networking }}"
+
+podman_transmission_directories:
+  - "{{ host_podman_volumes_path }}/transmission/home"
+  - "{{ host_podman_volumes_path }}/transmission/completed"
+  - "{{ host_podman_volumes_path }}/transmission/incompleted"
+  - "{{ host_podman_volumes_path }}/transmission/watch"
+
+podman_transmission_volumes: "{{ host_podman_transmission_volumes | default(host_podman_volumes_path + '/transmission:/transmission') }}"
+
+
+podman_transmission_env_home_path: "{{ host_podman_transmission_env_home_path | default('/transmission/home') }}"
+podman_transmission_env_download_path: "{{ host_podman_transmission_env_download_path | default('/transmission/completed')}}"
+podman_transmission_env_incomplete_path: "{{ host_podman_transmission_env_incomplete_path | default('/transmission/incompleted') }}"
+podman_transmission_env_watch_path: "{{ host_podman_transmission_env_watch_path | default('/transmission/watch') }}"
+
+podman_transmission_env_web_ui: "{{ host_podman_transmission_env_web_ui | default('flood-for-transmission') }}"
+podman_transmission_env_local_network: "{{ host_podman_transmission_env_local_network | default('192.168.0.0/16') }}"

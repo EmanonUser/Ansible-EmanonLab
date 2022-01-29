@@ -1,10 +1,25 @@
 ---
-primary_user_username: "{{ host_podman_adguard_roleless_primary_user_username }}"
-podman_adguard_image: "{{ host_podman_adguard_image }}"
-podman_adguard_image_version: "{{ host_podman_adguard_image_version }}"
-podman_adguard_ports: "{{ host_podman_adguard_ports }}"
-podman_adguard_firewalld_ports: "{{ host_podman_adguard_firewalld_ports }}"
-podman_adguard_directories: "{{ host_podman_adguard_directories }}"
-podman_adguard_volumes: "{{ host_podman_adguard_volumes }}"
-podman_adguard_firewalld_zone: "{{ host_podman_adguard_firewalld_zone }}"
-podman_networking: "{{ grp_podman_networking }}"
+podman_adguard_image: "{{ host_podman_adguard_image | default('docker.io/adguard/adguardhome') }}"
+podman_adguard_image_version: "{{ host_podman_adguard_image_version | default('v0.107.2') }}"           
+# https://hub.docker.com/r/adguard/adguardhome/tags
+
+podman_adguard_ports:
+  - "{% if grp_podman_networking.adguard.lan_access %}[::]:{{ grp_podman_networking.adguard.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.adguard.webui_port }}{% endif %}:3000/tcp"
+  - "{% if grp_podman_networking.adguard.lan_access %}[::]:{{ grp_podman_networking.adguard.webui_port }}{% else %}[::1]:{{ grp_podman_networking.adguard.webui_port }}{% endif %}:3000/tcp"
+  - "{{ grp_dns_server_upstream_port }}:53/udp"
+  - "{{ grp_dns_server_upstream_port }}:53/tcp"
+
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+podman_adguard_firewalld_ports:
+  webui: "{{ grp_podman_networking.adguard.webui_port }}/tcp"
+  dns_udp: "{{ grp_dns_server_upstream_port }}/udp"
+  dns_tcp: "{{ grp_dns_server_upstream_port }}/tcp"
+
+podman_adguard_directories:
+  - "{{ host_podman_volumes_path }}/adguard/work"
+  - "{{ host_podman_volumes_path }}/adguard/conf"
+
+podman_adguard_volumes:
+  - "{{ podman_adguard_directories[0] }}:/opt/adguardhome/work"
+  - "{{ podman_adguard_directories[1] }}:/opt/adguardhome/conf"
+

@@ -20,12 +20,18 @@
 
 grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch
 grp_local_domain: .home
+grp_local_subnet: 
+  ipv4_cidr: 192.168.1.0/24
+  ipv6_cidr: "2a01:cb10:1cf:9c00::/64"
 grp_domain_name: emanon.moe
 grp_subdomain: "@"
+grp_acme_dns_domain_name:
+  - { fqdn: "{{ grp_domain_name }}", domain: ".{{ grp_domain_name }}" }             # Domain itself
+  - { fqdn: "*.{{ grp_domain_name }}", domain: ".{{ grp_domain_name }}" }           # Wilcard for all subdomains
+  #- { fqdn: "kuma.{{ host_acme_dns_domain }}", domain: ".{{ host_acme_dns_domain }}" } # Simple example for subdomain
+
 grp_ntp_server: pool.ntp.org
-grp_gandi_api_key: "{{ grp_vault_gandi_api_key }}"
-grp_gandi_email: "{{ grp_vault_gandi_email }}"
-grp_gandi_email_password: "{{ grp_vault_gandi_email_password }}"
+
 grp_device:
     srv:
       ipv4_addr:  192.168.1.50
@@ -50,20 +56,16 @@ grp_podman_networking:
   jellyfin:
     fulldomain: jellyfin.emanon.moe
     webui_port: 25101
-    public: yes
-    lan_access: no
+    lan_access: false
   filebrowser:
     fulldomain: file.emanon.moe
     webui_port: 25102
-    public: yes
-    lan_access: no
+    lan_access: false
   transmission:
     fulldomain: transmission.emanon.moe
     webui_port: 25103
-    public: no
-    lan_access: yes
+    lan_access: true
   kuma:
     fulldomain: kuma.emanon.moe
     webui_port: 25104
-    public: yes
-    lan_access: no
+    lan_access: false

@@ -1,6 +1,22 @@
 ---
-frr_version: "{{ host_frr_version }}"
-frr_daemons: "{{ host_frr_daemons }}"
+frr_version: "{{ host_frr_version | default('frr-8') }}"
+frr_daemons:
+  - bgpd=no
+  - ospfd=yes
+  - ospf6d=no
+  - ripd=no
+  - ripngd=no
+  - isisd=no
+  - pimd=no
+  - ldpd=no
+  - nhrpd=no
+  - eigrpd=no
+  - babeld=no
+  - sharpd=no
+  - pbrd=no
+  - bfdd=no
+  - fabricd=no
+  - vrrpd=no
 frr_services_port: |
   zebrasrv      	2600/tcp                 # zebra service
   zebra         	2601/tcp                 # zebra vty

@@ -14,7 +14,7 @@ filegen peerstats file peerstats type day enable
 filegen clockstats file clockstats type day enable
 
 interface ignore wildcard
-{% for interface in ntp_interfaces_ip %}
+{% for interface in ntp_interfaces_ipv4 %}
 interface listen {{ interface }}
 {% endfor %}
 # You do need to talk to an NTP server or two (or three).

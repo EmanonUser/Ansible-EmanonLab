@@ -1,3 +1,7 @@
 ---
-ntp_interfaces_ip: "{{ host_ntpd_interfaces_ip }}"
-ntp_pool_server: "{{ host_ntpd_upstream_server }}"
+ntp_interfaces_ipv4: ["127.0.0.1", "{{ host_ntpd_interface_ipv4 | default(ansible_default_ipv4.address) }}"]
+ntp_pool_server: "{{ host_ntpd_upstream_servers | default(ntp_pool_server_defaults) }}"
+ntp_pool_server_defaults:
+  - 0.debian.pool.ntp.org
+  - pool.ntp.org
+  - ntp.midway.ovh
