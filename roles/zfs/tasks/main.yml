@@ -32,6 +32,11 @@
     name: zfs
     state: present
 
+- name: Pause create zpool(s) manually, too sensitive to automate it without a proper module
+  ansible.builtin.pause:
+    prompt: zpool create ZPOOL_NAME mirror/raidz/raidz1 -o ashift=12
+  when: zfs_manual_zpools_creation
+
 - name: Configure automatic zpool scrubing
   ansible.builtin.template:
     src: "{{ item }}.j2"
@@ -55,34 +60,94 @@
     mode: u=rw,g=,o=
   notify: Enable zfs-mount-encrypted service
 
-# - name: Create ZFS dataset encryption key(s)
-#   ansible.builtin.shell:
-#     chdir: /root
-#     executable: /bin/bash
-#     creates: "{{ item }}.key"
-#     cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ item }}.key 
-#   loop: [one, two]
+- name: Create dir for ZFS dataset encryption key(s)
+  ansible.builtin.file:
+    path: "{{ zfs_datasets_keylocation }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=,o=
+  when: host_zfs_datasets_keylocation is defined
 
-# - name: Set permissions for dataset encryption key(s)
-#   ansible.builtin.file:
-#     path: /root/{{ item }}.key
-#     owner: root
-#     group: root
-#     mode: u=r,g=,o=
-#     state: file
-#   loop: [one, two]
+- name: Create dir for ZFS volumes encryption key(s)
+  ansible.builtin.file:
+    path: "{{ zfs_volumes_keylocation }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=,o=
+  when: host_zfs_volumes_keylocation is defined
 
-# - name: Create ZFS dataset(s)
-#   community.general.zfs:
-#     name: tank/{{ item }}
-#     state: present
-#     extra_zfs_properties:
-#       compression: lz4
-#       encryption: aes-256-gcm
-#       keyformat: hex
-#       keylocation: file:///root/{{ item }}.key
-#       atime: off
-#       aclmode: passthrough
-#       acltype: posix
-#       dnodesize: auto
-#   loop: [one, two]
+- name: Create ZFS dataset encryption key(s)
+  ansible.builtin.shell:
+    creates: "{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key"
+    cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+
+- name: Create ZFS volume encryption key(s)
+  ansible.builtin.shell:
+    creates: "{{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key"
+    cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key
+  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
+
+- name: Set permissions for dataset encryption key(s)
+  ansible.builtin.file:
+    path: "{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key"
+    owner: root
+    group: root
+    mode: u=r,g=,o=
+    state: file
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+
+- name: Set permissions for volume encryption key(s)
+  ansible.builtin.file:
+    path: "{{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key"
+    owner: root
+    group: root
+    mode: u=r,g=,o=
+    state: file
+  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
+
+- name: Create ZFS dataset(s)
+  community.general.zfs:
+    name: "{{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+    state: present
+    extra_zfs_properties:
+      compression: "{{ item.1.compression | default('lz4') }}"
+      encryption: "{{ item.1.encryption | default('aes-256-gcm') }}"
+      keyformat: "{{ item.1.keyformat | default('hex') }}"
+      keylocation: "{{ item.1.keylocation | default('file://' + zfs_datasets_keylocation + '/' + item.1.dataset + '.key' ) }}"
+      snapdir: "{{ item.1.snapdir | default('hidden') }}"
+      atime: "{{ item.1.atime | default('off') }}"
+      relatime: "{{ item.1.relatime | default('off') }}"
+      aclmode: "{{ item.1.aclmode | default('passthrough') }}"
+      acltype: "{{ item.1.acltype | default('posix') }}"
+      xattr: "{{ item.1.xattr | default('sa') }}"
+      recordsize: "{{ item.1.recordsize | default('128k') }}"
+      dnodesize: "{{ item.1.dnodesize | default('auto') }}"
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+
+- name: Create ZFS volume(s)
+  community.general.zfs:
+    name: "{{ item.0.pool }}/{{ item.1.volume }}"
+    state: present
+    extra_zfs_properties:
+      compression: "{{ item.1.compression | default('lz4') }}"
+      encryption: "{{ item.1.encryption | default('aes-256-gcm') }}"
+      keyformat: "{{ item.1.keyformat | default('hex') }}"
+      keylocation: "{{ item.1.keylocation | default('file://' + zfs_volumes_keylocation + '/' + item.1.volume + '.key' ) }}"
+      volsize: "{{ item.1.volsize }}"
+      snapdev: "{{ item.1.snapdev | default('hidden') }}"
+  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"

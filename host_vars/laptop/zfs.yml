@@ -1,0 +1,12 @@
+---
+host_zfs_datasets_keylocation: /root
+host_zfs_pools:
+  - pool: tank
+    datasets:
+      - dataset: media
+      - dataset: media_2
+      - dataset: data
+      - dataset: files
+      - dataset: misc
+# https://www.freedesktop.org/software/systemd/man/systemd.time.html
+host_zfs_arc_max: 3006477000  # Bytes
