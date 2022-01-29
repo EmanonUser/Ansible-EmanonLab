@@ -9,6 +9,7 @@ podman_adguard_ports:
   - "{{ grp_dns_server_upstream_port }}:53/udp"
   - "{{ grp_dns_server_upstream_port }}:53/tcp"
 
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 podman_adguard_firewalld_ports:
   webui: "{{ grp_podman_networking.adguard.webui_port }}/tcp"
   dns_udp: "{{ grp_dns_server_upstream_port }}/udp"
@@ -22,4 +23,3 @@ podman_adguard_volumes:
   - "{{ podman_adguard_directories[0] }}:/opt/adguardhome/work"
   - "{{ podman_adguard_directories[1] }}:/opt/adguardhome/conf"
 
-firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
