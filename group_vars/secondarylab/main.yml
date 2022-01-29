@@ -20,6 +20,9 @@
 
 grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch
 grp_local_domain: .home
+grp_local_subnet: 
+  ipv4_cidr: 192.168.1.0/24
+  ipv6_cidr: "2a01:cb10:1cf:9c00::/64"
 grp_domain_name: emanon.moe
 grp_subdomain: "@"
 grp_acme_dns_domain_name:

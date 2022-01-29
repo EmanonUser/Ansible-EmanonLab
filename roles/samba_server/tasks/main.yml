@@ -38,7 +38,7 @@
 
 - name: Open samba firewalld ports to internal network
   ansible.posix.firewalld:
-    zone: "{{ samba_server_firewalld_zone }}"
+    zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
