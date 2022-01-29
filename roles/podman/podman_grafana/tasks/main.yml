@@ -1,8 +1,17 @@
 ---
+- name: Create grafana volume directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ podman_grafana_directories }}"
+
 - name: Place grafana dashboards
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "{{ podman_grafana_volumes_path }}/grafana/dashboards"
+    dest: "{{ host_podman_volumes_path }}/grafana/dashboards"
     owner: emanon
     group: emanon
     mode: u=rw,g=,o=

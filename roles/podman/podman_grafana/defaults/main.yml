@@ -1,14 +1,30 @@
 ---
-primary_user_username: "{{ host_podman_grafana_roleless_primary_user_username }}"
-podman_grafana_image: "{{ host_podman_grafana_image }}"
-podman_grafana_image_version: "{{ host_podman_grafana_image_version }}"
-podman_grafana_volumes_path: "{{ host_podman_grafana_volumes_path }}"
-podman_grafana_volumes: "{{ host_podman_grafana_volumes }}"
-podman_grafana_ports: "{{ host_podman_grafana_ports }}"
-podman_grafana_firewalld_ports: "{{ host_podman_grafana_firewalld_ports }}"
-podman_grafana_url: "{{ host_podman_grafana_url }}"
-podman_grafana_admin_password: "{{ host_podman_grafana_admin_password }}"
-podman_grafana_dashboards: "{{ host_podman_grafana_dashboards }}"
-podman_grafana_dashboards_path: "{{ host_podman_grafana_dashboards_path }}"
-podman_grafana_firewalld_zone: "{{ host_podman_flame_firewalld_zone }}"
-podman_networking: "{{ grp_podman_networking }}"
+podman_grafana_image: "{{ host_podman_grafana_image | default('docker.io/grafana/grafana') }}"
+podman_grafana_image_version: "{{ host_podman_grafana_image_version | default('8.3.4') }}"
+# https://hub.docker.com/r/grafana/grafana/tags
+
+podman_grafana_ports: 
+  - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
+  - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}[::1]:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
+
+podman_grafana_firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+podman_grafana_firewalld_ports: "{{ grp_podman_networking.grafana.webui_port }}/tcp"
+
+podman_grafana_directories:
+  - "{{ host_podman_volumes_path }}/grafana/storage"
+  - "{{ host_podman_volumes_path }}/grafana/dashboards"
+
+podman_grafana_volumes: "{{ host_podman_volumes_path }}/grafana/storage:/var/lib/grafana"
+
+podman_grafana_dashboards: ["home.json", "kea_dhcp4.json", "coredns.json", "shp.json", "tmp117.json"]
+podman_grafana_dashboards_path:
+  general:
+    - "{{ host_podman_volumes_path }}/grafana/dashboards/home.json"
+  network:
+    - "{{ host_podman_volumes_path }}/grafana/dashboards/kea_dhcp4.json"
+    - "{{ host_podman_volumes_path }}/grafana/dashboards/coredns.json"
+  env:
+    - "{{ host_podman_volumes_path }}/grafana/dashboards/shp.json"
+    - "{{ host_podman_volumes_path }}/grafana/dashboards/tmp117.json"
+
+podman_grafana_url: "http://127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}"
