@@ -23,3 +23,5 @@ TODO:
     - convert wireguard datatype ? full hashes to list of hashes
     - is wireguard-dkms still used since it's now living in the kernel ? ( no )
     - rework ntpd.conf
+    - promtail_loki_url doesn't include a tcp port variable
+    - nfs_share, add vers=4.1 (.2) for incomming nas, maybe rename the role accordingly

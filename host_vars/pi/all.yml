@@ -1,29 +1,4 @@
 ---
-# Ansible-Emanonlab, variables conventions
-# snake_case
-# prefix define origin
-  # host_
-  # grp_
-  # host_vault_
-  # grp_vault_
-
-# All variables must follow those path: 
-##  host_vars/*/vault.yml --> host_vars/*/all.yml --> roles/*/default/main.yml  ##          Secret host variables
-##  group_vars/*/vault.yml --> group_vars/*/all.yml --> roles/*/default/main.yml  ##        Secret group variables
-##  host_vars/*/all.yml --> roles/*/default/main.yml  ##                                    Standards host variables
-##  group_vars/*/all.yml --> roles/*/default/main.yml  ##                                   Standards group variables
-
-# If a variables is used in multiples roles at the same time the prefix will be host_Origin-role_role_ and will be defined only on the origin role
-# Variables that do not belong to a role will be placed in the Roleless section
-# Add comment to external variables, variables that depend a third party apt gpg key etc
-# Verbose is cool, use verbose names even when it become extra long
-
-## Roleless ##
-host_roleless_primary_user_username: "{{ host_vault_roleless_primary_user_username }}"
-host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_password }}"
-host_roleless_primary_user_password_salt: "{{ host_vault_roleless_primary_user_password_salt }}"
-host_roleless_cpu_architecture: arm64 # amd64, arm64 etc ...
-## Roleless ##
 host_cpu_architecture: arm64
 
 ## device_init ##
@@ -46,12 +21,7 @@ host_debian_stable_packages:
   - htop
   - tcpdump
   - mtr-tiny
-## device_init ##
 
-## starship ##
-host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_starship_version: "1.2.1" # https://github.com/starship/starship/releases
-## starship ##
 
 host_prometheus_node_exporter_interface_addr: "{{ grp_device.pi.ipv4_addr }}"
 
@@ -64,28 +34,6 @@ host_promtail_loki_url: http://pi.local.emanon:4008
 host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
 ########## Podman ##########
 
-## podman_adguard ##
-host_podman_adguard_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_adguard_image: docker.io/adguard/adguardhome
-host_podman_adguard_image_version: "v0.107.2" # https://hub.docker.com/r/adguard/adguardhome/tags
-host_podman_adguard_ports:
-  - "{% if grp_podman_networking.adguard.lan_access %}[::]:{{ grp_podman_networking.adguard.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.adguard.webui_port }}{% endif %}:3000/tcp"
-  - "{% if grp_podman_networking.adguard.lan_access %}[::]:{{ grp_podman_networking.adguard.webui_port }}{% else %}[::1]:{{ grp_podman_networking.adguard.webui_port }}{% endif %}:3000/tcp"
-  - "10053:53/udp"
-  - "10053:53/tcp"
-host_podman_adguard_firewalld_zone: "{{ host_firewalld_zone }}"
-host_podman_adguard_firewalld_ports:
-  webui: "{{ grp_podman_networking.adguard.webui_port }}/tcp"
-  dns_udp: "10053/udp"
-  dns_tcp: "10053/tcp"
-host_podman_adguard_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_adguard_directories:
-  - "{{ host_podman_adguard_volumes_path }}/adguard/work"
-  - "{{ host_podman_adguard_volumes_path }}/adguard/conf"
-host_podman_adguard_volumes:
-  - "{{ host_podman_adguard_directories[0] }}:/opt/adguardhome/work"
-  - "{{ host_podman_adguard_directories[1] }}:/opt/adguardhome/conf"
-## podman_adguard ##
 
 ## podman_transmission ##
 host_podman_transmission_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
