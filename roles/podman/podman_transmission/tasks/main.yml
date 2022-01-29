@@ -45,7 +45,6 @@
   when:
     - inventory_hostname == 'pi'
     - grp_podman_networking.transmission.lan_access
-    
 
 - name: Close transmission firewalld ports
   ansible.posix.firewalld:
@@ -57,10 +56,6 @@
   when:
     - inventory_hostname == 'pi'
     - not grp_podman_networking.transmission.lan_access
-
-- name: debug
-  debug:
-    msg: "{{ inventory_hostname }}"
 
 - name: Open transmission firewalld ports to admin devices
   ansible.posix.firewalld:
