@@ -56,16 +56,16 @@ grp_podman_networking:
   jellyfin:
     fulldomain: jellyfin.emanon.moe
     webui_port: 25101
-    lan_access: no
+    lan_access: false
   filebrowser:
     fulldomain: file.emanon.moe
     webui_port: 25102
-    lan_access: no
+    lan_access: false
   transmission:
     fulldomain: transmission.emanon.moe
     webui_port: 25103
-    lan_access: yes
+    lan_access: true
   kuma:
     fulldomain: kuma.emanon.moe
     webui_port: 25104
-    lan_access: no
+    lan_access: false
