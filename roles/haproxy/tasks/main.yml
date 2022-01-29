@@ -24,33 +24,9 @@
 
 - name: Open firewalld service(s)
   ansible.posix.firewalld:
-    zone: "{{ haproxy_firewalld_zone }}"
+    zone: "{{ firewalld_zone }}"
     service: "{{ item }}"
     state: enabled
     permanent: yes
     immediate: yes
   loop: "{{ haproxy_firewalld_services }}"
-
-- name: Open HAproxy stats firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ haproxy_firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  loop: "{{ haproxy_firewalld_rich_rules }}"
-  when:
-    - haproxy_stats
-    - inventory_hostname == "laptop"
-
-- name: Close HAproxy stats firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ haproxy_firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  loop: "{{ haproxy_firewalld_rich_rules }}"
-  when:
-    - not haproxy_stats
-    - inventory_hostname == "laptop"

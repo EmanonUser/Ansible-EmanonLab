@@ -44,14 +44,14 @@ frontend main-frontend
 	http-response set-header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;"
 	http-request deny if HTTP_1.0
 
-{% for service, value in podman_networking.items() %}
+{% for service, value in grp_podman_networking.items() %}
 {% if value.public %}
 use_backend {{ service }}-backend if { hdr(host) -i {{ value.fulldomain }} }
 {% endif %}
 {% endfor %}
 use_backend emanon-backend if { hdr(host) -i emanon.moe }
 
-{% for service, value in podman_networking.items() %}
+{% for service, value in grp_podman_networking.items() %}
 {% if value.public %}
 backend {{ service }}-backend
 	server srv localhost:{{ value.webui_port }} check maxconn 30

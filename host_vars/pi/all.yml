@@ -22,13 +22,11 @@ host_debian_stable_packages:
   - tcpdump
   - mtr-tiny
 
-
+## prometheus_node_exporter ##
 host_prometheus_node_exporter_interface_addr: "{{ grp_device.pi.ipv4_addr }}"
-
 
 ## promtail ##
 host_promtail_loki_url: http://pi.local.emanon:4008
-## promtail ##
 
 ########## Podman ##########
 host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
@@ -41,18 +39,8 @@ host_podman_transmission_volumes:
   - "{{ host_podman_volumes_path }}/transmission:/transmission"
   - "{{ host_podman_media_path }}:/media"
 host_podman_transmission_env_download_path: "/media"
- 
+
+## podman_syncthing ##
 host_podman_syncthing_volumes:
   - "{{ host_podman_volumes_path }}/syncthing/config:/config"
   - "{{ host_podman_keepassxc_path }}:/data"
-
-
-
-
-
-
-## haproxy ##
-host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
-host_haproxy_firewalld_services: ["http", "https"]
-host_haproxy_stats: no
-## haproxy ##

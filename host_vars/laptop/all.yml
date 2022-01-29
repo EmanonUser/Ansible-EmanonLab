@@ -183,16 +183,6 @@ host_acme_dns_domain_name:
   #- { fqdn: "kuma.{{ host_acme_dns_domain }}", domain: ".{{ host_acme_dns_domain }}" } # Simple example for subdomain
 ## acme_dns ##
 
-## haproxy ##
-host_haproxy_firewalld_zone: "{{ host_firewalld_zone }}"
-host_haproxy_firewalld_services: ["http", "https"]
-host_haproxy_stats: yes
-host_haproxy_firewalld_rich_rules:
-  - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "8404", proto: tcp }
-  - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "8404", proto: tcp }
-  - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "8404", proto: tcp }
-## haproxy ##
-
 ## samba_server ##
 host_samba_server_users:
   - { username: emanon_samba, password: "{{ host_vault_emanon_samba_password }}" }

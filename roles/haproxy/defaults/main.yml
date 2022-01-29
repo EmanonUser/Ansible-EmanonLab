@@ -1,6 +1,4 @@
 ---
-haproxy_firewalld_zone: "{{ host_haproxy_firewalld_zone }}"
-haproxy_firewalld_services: "{{ host_haproxy_firewalld_services }}"
-podman_networking: "{{ grp_podman_networking }}"
-haproxy_stats: "{{ host_haproxy_stats }}"
-haproxy_firewalld_rich_rules: "{{ host_haproxy_firewalld_rich_rules }}"
+haproxy_firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+haproxy_firewalld_services: ["http", "https"]
+haproxy_stats: "{{ host_haproxy_stats | default(true) }}"
