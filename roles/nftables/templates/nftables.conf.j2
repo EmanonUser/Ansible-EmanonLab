@@ -2,21 +2,19 @@
 
 flush ruleset
 
-define WAN = {{ WAN_interface_name }}
+define WAN = {{ grp_device.router.wan_interface }}
 define LAN = {{ lacp_interface_name }}
 define WG = {{ wireguard_interface_name }}
 
 table ip routing {
 	chain prerouting {
 		type nat hook prerouting priority dstnat; policy accept
-		iifname $WAN tcp dport 22000 dnat to {{ pi_ipv4_addr }}:22000 # Syncthing DNAT
-		iifname $WAN tcp dport 8000 dnat to {{ arch_ipv4_addr }}:8000 # Temporary web server DNAT
-		# NAT hairpinning iifname $LAN ip daddr {{ subdomain_name }}.{{ domain_name }} tcp dport 1234 dnat to {{ router_static_ip }}:7999
+		iifname $WAN tcp dport 22000 dnat to {{ grp_device.pi.ipv4_addr }}:22000 # Syncthing DNAT
+		iifname $WAN tcp dport 8000 dnat to {{ grp_device.arch.ipv4_addr }}:8000 # Temporary web server DNAT
 	}
 	chain postrouting {
 		type nat hook postrouting priority srcnat; policy accept
 		oifname $WAN masquerade # WAN NAT
-		# NAT hairpinning ip saddr 192.168.70.0/24 ip daddr {{ router_static_ip }} tcp dport 1234 masquerade
 	}
 }
 
@@ -56,14 +54,14 @@ table inet firewall {
 	chain input {
 		type filter hook input priority filter; policy drop;
 		jump input_filter
-		icmp type echo-request icmp sequence {{ echo_request_count }} log level notice prefix "laptop Server isAlive Ping: " counter accept # isAlive echo-request from emanon.moe
+		icmp type echo-request icmp sequence {{ is_alive_echo_request_count }} log level notice prefix "laptop Server isAlive Ping: " counter accept # isAlive echo-request from emanon.moe
 		ct state { established, related } counter accept
 		iifname { "lo" } accept
 		ip protocol icmp counter accept
 		ip6 nexthdr icmpv6 counter accept
 		iifname $LAN icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } accept
 		iifname $LAN icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } accept
-		iifname $LAN ip saddr {{ brocade_ipv4_addr }} ip protocol ospf counter accept # Accept OSPFv2 from brocade
+		iifname $LAN ip saddr {{ grp_device.brocade.ipv4_addr }} ip protocol ospf counter accept # Accept OSPFv2 from brocade
 		iifname $LAN udp dport { 53, 67, 123 } counter accept # DNS server & DHCP server & NTP server for LAN
 		iifname $LAN tcp dport { 9100, 9353, 6763, 6764 } counter accept # Prometheus Node exporter for LAN
 		iifname $WG udp dport 53 counter accept # Accept DNS query from wireguard devices
@@ -73,13 +71,13 @@ table inet firewall {
 	}
 	chain forward {
 		type filter hook forward priority filter; policy drop;
-		ip saddr {{ arch_ipv4_addr }} ip daddr 192.168.1.1 counter accept # Accept from admin to FAI modem
+		ip saddr {{ grp_device.arch.ipv4_addr }} ip daddr 192.168.1.1 counter accept # Accept from admin to FAI modem
 		jump forward_filter
 		ct state { established, related } counter accept
 		iifname $WG counter accept # Wireguard Admin VPN to any
 		iifname $LAN oifname $WAN counter accept # WAN traffic forwading
-		iifname $WAN oifname $LAN ip daddr {{ pi_ipv4_addr }} tcp dport 22000 counter accept # Syncthing Port Forwarding
-		iifname $WAN oifname $LAN ip daddr {{ arch_ipv4_addr }} tcp dport 8000 counter accept # Temporary web server Port Forwading
+		iifname $WAN oifname $LAN ip daddr {{ grp_device.pi.ipv4_addr }} tcp dport 22000 counter accept # Syncthing Port Forwarding
+		iifname $WAN oifname $LAN ip daddr {{ grp_device.arch.ipv4_addr }} tcp dport 8000 counter accept # Temporary web server Port Forwading
 		
 	}
 	chain output {

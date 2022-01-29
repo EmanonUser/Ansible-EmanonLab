@@ -50,12 +50,6 @@ host_gad_use_ipv6: false
 host_is_alive_echo_request_target: emanon.moe
 ## is_alive ##
 
-## nftables ##
-host_nftables_wireguard_interface_name: "{{ host_wireguard_interface_name }}"
-host_nftables_wireguard_subnet: "{{ host_wireguard_subnet }}"
-host_nftables_wireguard_server_port: "{{ host_wireguard_server_port }}"
-host_nftables_is_alive_echo_request_count: "{{ host_is_alive_echo_request_count }}"
-## nftables ##
 
 ## promtail ##
 host_promtail_loki_url: http://loki.local.emanon
