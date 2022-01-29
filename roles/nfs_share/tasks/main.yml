@@ -6,9 +6,9 @@
 
 - name: Create nfs mount point
   ansible.builtin.file:
-    path: "{{ nfs_mount_dir }}"
-    owner: "{{ nfs_username }}"
-    group: "{{ nfs_username }}"
+    path: "{{ grp_nfs_mount_dir }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
     state: directory
 

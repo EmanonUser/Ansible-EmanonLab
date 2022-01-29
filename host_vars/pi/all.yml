@@ -60,14 +60,6 @@ host_prometheus_node_exporter_interface_addr: "{{ grp_device.pi.ipv4_addr }}"
 host_promtail_loki_url: http://pi.local.emanon:4008
 ## promtail ##
 
-## nfs_share ##
-host_nfs_server_target: "192.168.10.25"
-host_roleless_nfs_username: "{{ host_roleless_primary_user_username }}"
-host_nfs_remote_share: /mnt/vault/emanon
-host_nfs_mount_dir: /mnt/vault
-host_nfs_unit_name: mnt-vault # Must match the mounted path ie: /mnt/vault == mnt-vault
-## nfs_share ##
-
 ########## Podman ##########
 host_podman_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
