@@ -1,7 +1,7 @@
 ---
 - name: Install firewalld
   ansible.builtin.apt:
-    name: [ 'firewalld', 'python3-firewall' ]
+    name: ['firewalld', 'python3-firewall']
     state: present
   notify: ["Enable firewalld service","Start firewalld service"]
 

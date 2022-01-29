@@ -53,12 +53,6 @@ host_starship_roleless_primary_user_username: "{{ host_roleless_primary_user_use
 host_starship_version: "1.2.1" # https://github.com/starship/starship/releases
 ## starship ##
 
-## firewalld ##
-host_firewalld_primary_interface: eth0
-host_firewalld_zone: home
-## firewalld ##
-
-
 host_prometheus_node_exporter_interface_addr: "{{ grp_device.pi.ipv4_addr }}"
 
 
