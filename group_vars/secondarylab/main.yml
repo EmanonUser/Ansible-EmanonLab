@@ -22,10 +22,13 @@ grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf
 grp_local_domain: .home
 grp_domain_name: emanon.moe
 grp_subdomain: "@"
+grp_acme_dns_domain_name:
+  - { fqdn: "{{ grp_domain_name }}", domain: ".{{ grp_domain_name }}" }             # Domain itself
+  - { fqdn: "*.{{ grp_domain_name }}", domain: ".{{ grp_domain_name }}" }           # Wilcard for all subdomains
+  #- { fqdn: "kuma.{{ host_acme_dns_domain }}", domain: ".{{ host_acme_dns_domain }}" } # Simple example for subdomain
+
 grp_ntp_server: pool.ntp.org
-grp_gandi_api_key: "{{ grp_vault_gandi_api_key }}"
-grp_gandi_email: "{{ grp_vault_gandi_email }}"
-grp_gandi_email_password: "{{ grp_vault_gandi_email_password }}"
+
 grp_device:
     srv:
       ipv4_addr:  192.168.1.50

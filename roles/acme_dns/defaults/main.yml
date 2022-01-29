@@ -1,11 +1,11 @@
 ---
-primary_user_username: "{{ host_acme_dns_roleless_primary_user_username }}"
-acme_dns_directory: "{{ host_acme_dns_directory }}"
-acme_dns_version: "{{ host_acme_dns_version }}"
-acme_dns_challenge_type: "{{ host_acme_dns_challenge_type }}"
-acme_dns_email: "{{ host_acme_dns_email }}"
-acme_dns_letsencrypt_base_path: "{{ host_acme_dns_letsencrypt_base_path }}"
-acme_dns_letsencrypt_dirs: "{{ host_acme_dns_letsencrypt_dirs }}"
-acme_dns_domain: "{{ grp_domain_name }}"
-acme_dns_domain_name: "{{ host_acme_dns_domain_name }}"
-acme_dns_gandi_api_key: "{{ grp_gandi_api_key }}"
+acme_dns_directory: https://acme-v02.api.letsencrypt.org/directory
+acme_dns_version: 2
+acme_dns_challenge_type: dns-01
+acme_dns_email: moemanon@pm.me
+acme_dns_letsencrypt_base_path: /etc/letsencrypt
+acme_dns_letsencrypt_dirs:
+  account: "{{ acme_dns_letsencrypt_base_path }}/account"
+  mykeys: "{{ acme_dns_letsencrypt_base_path }}/keys"
+  csrs: "{{ acme_dns_letsencrypt_base_path }}/csrs"
+  certs: "{{ acme_dns_letsencrypt_base_path }}/certs"

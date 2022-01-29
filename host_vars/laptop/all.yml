@@ -101,26 +101,6 @@ host_podman_kuma_firewalld_rich_rules:
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
 
-
-## acme_dns ##
-host_acme_dns_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_acme_dns_directory: https://acme-v02.api.letsencrypt.org/directory
-host_acme_dns_version: 2
-host_acme_dns_challenge_type: dns-01
-host_acme_dns_email: moemanon@pm.me
-host_acme_dns_letsencrypt_base_path: /etc/letsencrypt
-host_acme_dns_letsencrypt_dirs:
-  account: "{{ host_acme_dns_letsencrypt_base_path }}/account"
-  mykeys: "{{ host_acme_dns_letsencrypt_base_path }}/keys"
-  csrs: "{{ host_acme_dns_letsencrypt_base_path }}/csrs"
-  certs: "{{ host_acme_dns_letsencrypt_base_path }}/certs"
-host_acme_dns_domain: emanon.moe
-host_acme_dns_domain_name:
-  - { fqdn: "{{ host_acme_dns_domain }}", domain: ".{{ host_acme_dns_domain }}" } # Domain itself
-  - { fqdn: "*.{{ host_acme_dns_domain }}", domain: ".{{ host_acme_dns_domain }}" }  # Wilcard for all subdomains
-  #- { fqdn: "kuma.{{ host_acme_dns_domain }}", domain: ".{{ host_acme_dns_domain }}" } # Simple example for subdomain
-## acme_dns ##
-
 ## samba_server ##
 host_samba_server_users:
   - { username: emanon_samba, password: "{{ host_vault_emanon_samba_password }}" }
