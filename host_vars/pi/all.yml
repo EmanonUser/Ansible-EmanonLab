@@ -33,6 +33,7 @@ host_promtail_loki_url: http://pi.local.emanon:4008
 ########## Podman ##########
 host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
 host_podman_media_path: "/mnt/vault/media"
+host_podman_keepassxc_path: "/mnt/vault/data/homelab/keepassxc"
 ########## Podman ##########
 
 ## podman_transmission ##
@@ -41,31 +42,9 @@ host_podman_transmission_volumes:
   - "{{ host_podman_media_path }}:/media"
 host_podman_transmission_env_download_path: "/media"
  
-
-## podman_syncthing ##
-host_podman_syncthing_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_syncthing_image: quay.io/linuxserver.io/syncthing
-host_podman_syncthing_image_version: "1.18.6" # https://quay.io/repository/linuxserver.io/syncthing?tag=latest&tab=tags
-host_podman_syncthing_ports: 
-  - "{% if grp_podman_networking.syncthing.lan_access %}[::]:{{ grp_podman_networking.syncthing.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.syncthing.webui_port }}{% endif %}:8384/tcp"
-  - "{% if grp_podman_networking.syncthing.lan_access %}[::]:{{ grp_podman_networking.syncthing.webui_port }}{% else %}[::1]:{{ grp_podman_networking.syncthing.webui_port }}{% endif %}:8384/tcp"
-  - "22000:22000/tcp"
-  - "22000:22000/udp"
-  - "21027:21027/udp"
-host_podman_syncthing_firewalld_zone: "{{ host_firewalld_zone }}"
-host_podman_syncthing_firewalld_ports:
-  webui: "{{ grp_podman_networking.syncthing.webui_port }}/tcp"
-  p2p_tcp: "22000/tcp"
-  p2p_udp: "22000/udp"
-  discovery: "21027/udp"
-host_podman_syncthing_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_syncthing_directories: 
-  - "{{ host_podman_syncthing_volumes_path }}/syncthing"
-  - "{{ host_podman_syncthing_volumes_path }}/syncthing/config"
 host_podman_syncthing_volumes:
-  - "{{ host_podman_syncthing_volumes_path }}/syncthing/config:/config"
-  - "/mnt/vault/data/homelab/keepassxc:/data"
-## podman_syncthing ##
+  - "{{ host_podman_volumes_path }}/syncthing/config:/config"
+  - "{{ host_podman_keepassxc_path }}:/data"
 
 ## podman_flame ##
 host_podman_flame_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
