@@ -32,42 +32,15 @@ host_promtail_loki_url: http://pi.local.emanon:4008
 
 ########## Podman ##########
 host_podman_volumes_path: "/mnt/vault/data/homelab/podman"
+host_podman_media_path: "/mnt/vault/media"
 ########## Podman ##########
 
-
 ## podman_transmission ##
-host_podman_transmission_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_transmission_image: docker.io/haugene/transmission-openvpn
-host_podman_transmission_image_version: "4.0" # https://hub.docker.com/r/haugene/transmission-openvpn/tags
-host_podman_transmission_ports: 
-  - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
-  - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
-host_podman_transmission_firewalld_zone: "{{ host_firewalld_zone }}"
-host_podman_transmission_firewalld_ports: "{{ grp_podman_networking.transmission.webui_port }}/tcp"
-host_podman_transmission_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_transmission_directories:
-  - "{{ host_podman_transmission_volumes_path }}/transmission/home"
-  - "{{ host_podman_transmission_volumes_path }}/transmission/completed"
-  - "{{ host_podman_transmission_volumes_path }}/transmission/incompleted"
-  - "{{ host_podman_transmission_volumes_path }}/transmission/watch"
 host_podman_transmission_volumes:
-   - "{{ host_podman_transmission_volumes_path }}/transmission:/transmission"
-   - "/mnt/vault/media:/media"
-host_podman_transmission_env_rpc_username: "{{ host_vault_podman_transmission_env_rpc_username }}"
-host_podman_transmission_env_rpc_password: "{{ host_vault_podman_transmission_env_rpc_password }}"
-host_podman_transmission_env_rpc_auth_required: true
-host_podman_transmission_env_openvpn_provider: "{{ host_vault_podman_transmission_openvpn_provider }}"
-host_podman_transmission_env_openvpn_config: "{{ host_vault_podman_transmission_openvpn_config }}"
-host_podman_transmission_env_openvpn_username: "{{ host_vault_podman_transmission_openvpn_username }}"
-host_podman_transmission_env_openvpn_password: "{{ host_vault_podman_transmission_openvpn_password }}"
-host_podman_transmission_env_home_path: "/transmission/home"
+  - "{{ host_podman_volumes_path }}/transmission:/transmission"
+  - "{{ host_podman_media_path }}:/media"
 host_podman_transmission_env_download_path: "/media"
-host_podman_transmission_env_incomplete_path: "/transmission/incompleted"
-host_podman_transmission_env_watch_path: "/transmission/watch"
-host_podman_transmission_env_web_ui: "flood-for-transmission"
-host_podman_transmission_env_local_network: "192.168.0.0/16"
-## podman_transmission ##
-
+ 
 ## podman_prometheus ##
 host_podman_prometheus_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_prometheus_image: docker.io/prom/prometheus
