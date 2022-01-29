@@ -5,10 +5,10 @@
     state: present
   notify: ["Enable podman service", "Start podman service"]
 
-- name: Add docker.io to podman register
+- name: Add podman registers
   ansible.builtin.lineinfile:
     path: /etc/containers/registries.conf.d/docker.io.conf
-    line: unqualified-search-registries = ["docker.io", "quay.io"]
+    line: "{{ podman_unqualified_registries }}"
     owner: root
     group: root
     mode: u=rw,g=r,o=r

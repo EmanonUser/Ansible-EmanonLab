@@ -26,7 +26,7 @@
       tags: [ nfs_share, podman_all ]
 
     - role: podman/podman
-      tags: [ podman/podman, podman_all ]
+      tags: [ podman, podman_all ]
 
     - role: podman/podman_adguard
       tags: [ podman_adguard, podman_all ]

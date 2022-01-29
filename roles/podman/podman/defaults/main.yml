@@ -1,1 +1,2 @@
-primary_user_username: "{{ host_podman_roleless_primary_user_username }}"
+---
+podman_unqualified_registries:  'unqualified-search-registries = ["docker.io", "quay.io"]'

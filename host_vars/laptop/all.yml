@@ -78,7 +78,6 @@ host_zrepl_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
 ## zrepl ##
 
 ########## Podman ##########
-host_podman_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
 host_podman_volumes_path: "{{ host_zfs_primary_pools[0].path }}/data/podman"
 host_podman_media_path: "{{ host_zfs_primary_pools[0].path }}/media"
 host_podman_media_2_path: "{{ host_zfs_primary_pools[0].path }}/media_2"
