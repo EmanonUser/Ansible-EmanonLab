@@ -29,8 +29,8 @@ host_ntpd_interface_ipv4: "{{ grp_device.router.ipv4_addr }}"
 ## coredns ##
 host_coredns_use_backup_config: true
 host_coredns_upstream_dns_server: 
-  ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
-  port: "10053"
+  ipv4_addr: "{{ grp_dns_server_upstream_ipv4_addr }}"
+  port: "{{ grp_dns_server_upstream_port }}"
 
 ## gad ##
 host_gad_use_ipv6: false
