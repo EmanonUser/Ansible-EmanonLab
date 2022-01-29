@@ -1,11 +1,14 @@
 ---
-primary_user_username: "{{ host_podman_homeassistant_roleless_primary_user_username }}"
-podman_homeassistant_image: "{{ host_podman_homeassistant_image }}"
-podman_homeassistant_image_version: "{{ host_podman_homeassistant_image_version }}"
-podman_homeassistant_ports: "{{ host_podman_homeassistant_ports }}"
-podman_homeassistant_firewalld_ports: "{{ host_podman_homeassistant_firewalld_ports }}"
-podman_homeassistant_directories: "{{ host_podman_homeassistant_directories }}"
-podman_homeassistant_volumes: "{{ host_podman_homeassistant_volumes }}"
-podman_homeassistant_config_path: "{{ host_podman_homeassistant_config_path }}"
-podman_homeassistant_firewalld_zone: "{{ host_podman_homeassistant_firewalld_zone }}"
-podman_networking: "{{ grp_podman_networking }}"
+podman_homeassistant_image: "{{ host_podman_homeassistant_image | default('ghcr.io/home-assistant/home-assistant') }}"
+podman_homeassistant_image_version: "{{ host_podman_homeassistant_image_version | default('2021.12.10') }}"
+# https://github.com/home-assistant/core/pkgs/container/home-assistant/versions
+
+podman_homeassistant_ports: 
+  - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
+  - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}[::1]:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
+
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+podman_homeassistant_firewalld_ports: "{{ grp_podman_networking.homeassistant.webui_port }}/tcp"
+
+podman_homeassistant_directories: "{{ host_podman_volumes_path }}/home_assistant"
+podman_homeassistant_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"

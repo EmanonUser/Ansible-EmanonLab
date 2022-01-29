@@ -41,20 +41,6 @@ host_podman_transmission_volumes:
   - "{{ host_podman_media_path }}:/media"
 host_podman_transmission_env_download_path: "/media"
  
-## podman_homeassistant ##
-host_podman_homeassistant_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_homeassistant_image: ghcr.io/home-assistant/home-assistant
-host_podman_homeassistant_image_version: "2021.12.10" # https://github.com/home-assistant/core/pkgs/container/home-assistant/versions
-host_podman_homeassistant_ports: 
-  - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
-  - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}[::1]:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
-host_podman_homeassistant_firewalld_zone: "{{ host_firewalld_zone }}"
-host_podman_homeassistant_firewalld_ports: "{{ grp_podman_networking.homeassistant.webui_port }}/tcp"
-host_podman_homeassistant_volumes_path: "{{ host_podman_volumes_path }}"
-host_podman_homeassistant_directories: "{{ host_podman_homeassistant_volumes_path }}/home_assistant"
-host_podman_homeassistant_volumes: "{{ host_podman_homeassistant_volumes_path }}/home_assistant:/config"
-host_podman_homeassistant_config_path: "{{ host_podman_homeassistant_volumes_path }}/home_assistant/configuration.yaml"
-## podman_homeassistant ##
 
 ## podman_syncthing ##
 host_podman_syncthing_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
