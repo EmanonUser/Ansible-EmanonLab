@@ -1,32 +1,4 @@
 ---
-## device_init ##
-host_debian_stable_packages:
-  - debian-keyring
-  - debian-archive-keyring
-  - ca-certificates
-  - apt-transport-https
-  - acl
-  - gnupg2
-  - curl
-  - git
-  - zsh
-  - neovim
-  - unzip
-  - lsb-release
-  - dnsutils
-  - ldnsutils
-  - tmux
-  - tcpdump
-  - mtr-tiny
-  - ldnsutils
-  - neofetch
-  - htop
-  - vnstat
-  - rsync
-  - aria2
-## device_init ##
-
-
 ## firewalld ##
 host_firewalld_zone: dmz
 

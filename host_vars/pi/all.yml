@@ -1,26 +1,6 @@
 ---
 host_cpu_architecture: arm64
 
-## device_init ##
-host_debian_stable_packages:
-  - debian-keyring
-  - debian-archive-keyring
-  - ca-certificates
-  - apt-transport-https
-  - acl
-  - gnupg2
-  - curl
-  - git
-  - zsh
-  - neovim
-  - unzip
-  - lsb-release
-  - dnsutils
-  - ldnsutils
-  - tmux
-  - htop
-  - tcpdump
-  - mtr-tiny
 
 ## prometheus_node_exporter ##
 host_prometheus_node_exporter_interface_addr: "{{ grp_device.pi.ipv4_addr }}"
