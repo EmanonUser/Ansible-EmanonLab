@@ -24,6 +24,7 @@ host_roleless_primary_user_password: "{{ host_vault_roleless_primary_user_passwo
 host_roleless_primary_user_password_salt: "{{ host_vault_roleless_primary_user_password_salt }}"
 host_roleless_cpu_architecture: arm64 # amd64, arm64 etc ...
 ## Roleless ##
+host_cpu_architecture: arm64
 
 ## device_init ##
 host_debian_stable_packages:
@@ -57,13 +58,9 @@ host_firewalld_primary_interface: eth0
 host_firewalld_zone: home
 ## firewalld ##
 
-## prometheus_node_exporter ##
-host_prometheus_node_exporter_roleless_cpu_architecture: "{{ host_roleless_cpu_architecture }}"
-host_prometheus_node_exporter_version: "1.3.1" # https://github.com/prometheus/node_exporter/releases/
-host_prometheus_node_exporter_firewalld_zone: "{{ host_firewalld_zone }}"
-host_prometheus_node_exporter_interface_address: "{{ grp_device.pi.ipv4_addr }}"
-host_prometheus_node_exporter_port: 9100
-## prometheus_node_exporter ##
+
+host_prometheus_node_exporter_interface_addr: "{{ grp_device.pi.ipv4_addr }}"
+
 
 ## promtail ##
 host_promtail_cpu_architecture: "arm64"

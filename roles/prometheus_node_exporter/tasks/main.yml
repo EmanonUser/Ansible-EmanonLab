@@ -17,14 +17,14 @@
 
 - name: Check if node_exporter Binary already exist
   ansible.builtin.stat:
-    path: /opt/prometheus/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}/node_exporter
+    path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}/node_exporter
   register: stat_value
 
 - name: Download node_exporter binary
   ansible.builtin.get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}.tar.gz" # noqa 204
-    dest: /opt/prometheus/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}.tar.gz
-    checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/sha256sums.txt"
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz" # noqa 204
+    dest: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
+    checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/sha256sums.txt"
     owner: node_exporter
     group: node_exporter
     mode: u=rx,g=,o=
@@ -33,14 +33,14 @@
 
 - name: Extract node_exporter archive
   ansible.builtin.unarchive:
-    src: /opt/prometheus/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}.tar.gz
+    src: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
     dest: /opt/prometheus/
     remote_src: yes
   when: not stat_value.stat.exists
 
 - name: Delete archive
   ansible.builtin.file:
-    path: /opt/prometheus/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_cpu_architecture }}.tar.gz
+    path: /opt/prometheus/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_architecture }}.tar.gz
     state: absent
   when: not stat_value.stat.exists
 
@@ -59,9 +59,9 @@
 
 - name: Open firewalld port
   ansible.posix.firewalld:
-    zone: "{{ prometheus_node_exporter_firewalld_zone }}"
+    zone: "{{ firewalld_zone }}"
     port: 9100/tcp
     permanent: yes
     state: enabled
     immediate: yes
-  when: inventory_hostname == 'pi'
+  when: host_firewalld_zone is defined
