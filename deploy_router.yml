@@ -43,9 +43,6 @@
     - role: promtail
       tags: [ promtail, monitoring ]
 
-    - role: msmtp
-      tags: [ msmtp, monitoring ]
-
     - role: gad
       tags: [ gad, services ]
 
