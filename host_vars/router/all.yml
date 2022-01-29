@@ -43,10 +43,7 @@ host_coredns_upstream_dns_server:
 ## coredns ##
 
 ## gad ##
-host_gad_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_gad_path: /opt
-host_gad_version: "1.4.3" # https://github.com/brianreumere/gandi-automatic-dns/releases
-host_gad_use_ipv6: no
+host_gad_use_ipv6: false
 ## gad ##
 
 ## is_alive ##

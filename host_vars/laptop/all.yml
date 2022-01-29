@@ -222,13 +222,6 @@ host_haproxy_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "8404", proto: tcp }
 ## haproxy ##
 
-## gad ##
-host_gad_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_gad_path: /opt
-host_gad_version: "1.4.3" # https://github.com/brianreumere/gandi-automatic-dns/releases
-host_gad_use_ipv6: yes
-## gad ##
-
 ## samba_server ##
 host_samba_server_users:
   - { username: emanon_samba, password: "{{ host_vault_emanon_samba_password }}" }

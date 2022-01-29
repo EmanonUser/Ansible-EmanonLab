@@ -4,7 +4,7 @@
     name: gandi
     create_home: no
     shell: /usr/bin/bash
-    comment: Gad user created by Ansible
+    comment: Gandi user created by Ansible
     state: present
 
 - name: Download Gandi Automatic DNS archive
