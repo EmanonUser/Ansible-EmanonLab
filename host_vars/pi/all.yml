@@ -42,21 +42,16 @@ host_podman_transmission_volumes:
 host_podman_transmission_env_download_path: "/media"
  
 ## podman_prometheus ##
-host_podman_prometheus_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
-host_podman_prometheus_image: docker.io/prom/prometheus
-host_podman_prometheus_image_version: v2.32.1 # https://hub.docker.com/r/prom/prometheus/tags
-host_podman_prometheus_ports: 
-  - "{% if grp_podman_networking.prometheus.lan_access %}[::]:{{ grp_podman_networking.prometheus.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.prometheus.webui_port }}{% endif %}:9090/tcp"
-  - "{% if grp_podman_networking.prometheus.lan_access %}[::]:{{ grp_podman_networking.prometheus.webui_port }}{% else %}[::1]:{{ grp_podman_networking.prometheus.webui_port }}{% endif %}:9090/tcp"
-host_podman_prometheus_firewalld_zone: "{{ host_firewalld_zone }}"
-host_podman_prometheus_firewalld_ports: "{{ grp_podman_networking.prometheus.webui_port }}/tcp"
+
+
+
 host_podman_prometheus_volumes_path: "{{ host_podman_volumes_path }}"
 host_podman_prometheus_directories:
  - "{{ host_podman_prometheus_volumes_path }}/prometheus"
  - "{{ host_podman_prometheus_volumes_path }}/prometheus/data"
 host_podman_prometheus_volumes: "{{ host_podman_prometheus_volumes_path }}/prometheus:/etc/prometheus"
 host_podman_prometheus_config_path: "{{ host_podman_prometheus_volumes_path }}/prometheus/prometheus.yml"
-## podman_prometheus ##
+
 
 ## podman_grafana ##
 host_podman_grafana_roleless_primary_user_username: "{{ host_roleless_primary_user_username }}"
