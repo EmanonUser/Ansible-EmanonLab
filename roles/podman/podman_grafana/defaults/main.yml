@@ -7,7 +7,7 @@ podman_grafana_ports:
   - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
   - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}[::1]:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
 
-podman_grafana_firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 podman_grafana_firewalld_ports: "{{ grp_podman_networking.grafana.webui_port }}/tcp"
 
 podman_grafana_directories:
