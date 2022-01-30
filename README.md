@@ -12,7 +12,6 @@ TODO:
     - Reduce zsh prompt loading time, maybe zinit?
     - ## Here start refactoring of all variables, this associate issues found ##
     - Add clear conventions
-    - msmtp is broken
     - systemd-logind role ? effectly disable the laptop lied
     - add ipv6 support to interfaces role
     - maybe handler for interfaces ( networking.service ) will be under_used tho
