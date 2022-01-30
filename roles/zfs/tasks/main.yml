@@ -133,6 +133,7 @@
       xattr: "{{ item.1.xattr | default('sa') }}"
       recordsize: "{{ item.1.recordsize | default('128k') }}"
       dnodesize: "{{ item.1.dnodesize | default('auto') }}"
+      mountpoint: "{{ item.1.mountpoint | default(omit) }}"
   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
