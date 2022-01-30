@@ -1,0 +1,10 @@
+---
+- name: Enable vnstat service
+  ansible.builtin.systemd:
+    name: vnstat.service
+    enabled: yes
+
+- name: Start vnstat service
+  ansible.builtin.systemd:
+    name: vnstat.service
+    state: started

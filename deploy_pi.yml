@@ -13,6 +13,9 @@
     - role: systemd_timesyncd
       tags: [ systemd_timesyncd, init ]
 
+    - role: vnstat
+      tags: [ vnstat, init, monitoring ]
+
     - role: firewalld
       tags: [ firewalld, init ]
 

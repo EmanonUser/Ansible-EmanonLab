@@ -20,6 +20,5 @@ host_debian_stable_packages:
   - ldnsutils
   - neofetch
   - htop
-  - vnstat
   - rsync
   - aria2
