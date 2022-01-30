@@ -1,2 +1,3 @@
 ---
-cpu_architecture: "{{ host_zrepl_roleless_cpu_architecture }}"
+cpu_architecture: "{{ host_cpu_architecture | default('amd64') }}"
+zrepl_gpg_key: https://zrepl.cschwarz.com/apt/apt-key.asc

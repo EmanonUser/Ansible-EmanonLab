@@ -1,7 +1,7 @@
 ---
 - name: Add zrepl repo key
   ansible.builtin.get_url:
-    url: https://zrepl.cschwarz.com/apt/apt-key.asc
+    url: "{{ zrepl_gpg_key }}"
     dest: /usr/share/keyrings/zrepl-archive-keyring.asc
     owner: root
     group: root
