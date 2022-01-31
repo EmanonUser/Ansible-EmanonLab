@@ -40,7 +40,7 @@ table inet firewall {
 		tcp dport ssh ct state new limit rate 5/second log level notice prefix "New SSH connexion from WAN: " counter accept
 		udp dport {{ wireguard_server_port }} ct state new limit rate 5/second log level notice prefix "New Wireguard connexion from WAN: " counter accept
 		icmp type echo-request icmp sequence {{ is_alive_echo_request_count }} log level notice prefix "isAlive Ping: " counter accept
-		icmp type echo-request ct state new limit rate 5/second counter accept
+		icmp type echo-request ct state new counter accept
 		icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } ct state new limit rate 5/second counter accept
 		icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } ct state new limit rate 5/second counter accept
 	}
@@ -54,6 +54,14 @@ table inet firewall {
 	}
 	chain input_filter {   
 		ct state invalid counter drop
+		icmp type echo-request limit rate over 3/second counter drop
+		icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } ct state new limit rate 3/second counter drop
+		icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } ct state new limit rate 3/second counter drop
+		tcp flags ne syn ct state new log level notice prefix "TCP flags not a SYN " counter drop
+		tcp flags & (syn|fin) eq (syn|fin) log level notice prefix "TCP flags SYN + FIN " counter drop
+		tcp flags & (syn|rst) eq (syn|rst) log level notice prefix "TCP flags SYN + RST " counter drop
+		tcp flags & (fin|syn|rst|psh|ack|urg) lt (fin) log level notice prefix "NO TCP flags NULL " counter drop
+		tcp flags & (fin|syn|rst|psh|ack|urg) eq (fin|psh|urg) log prefix "TCP flags FIN + PSH + URG " counter drop
 		ip saddr 192.168.1.1 udp dport 51820 counter accept # Wireguard from WiFi, this is the result of double nat
 		ip saddr @IANA_BOGON_IPV4 counter drop  # Reject special-purpose ipv4 addresses
 		ip6 saddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv4 addresses
