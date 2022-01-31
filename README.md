@@ -13,7 +13,6 @@ TODO:
     - ## Here start refactoring of all variables, this associate issues found ##
     - Add clear conventions
     - systemd-logind role ? effectly disable the laptop lied
-    - add ipv6 support to interfaces role
     - maybe handler for interfaces ( networking.service ) will be under_used tho
     - delete starship archive directly after decompression
     - coredns path use /opt/coredns --> should use /opt
