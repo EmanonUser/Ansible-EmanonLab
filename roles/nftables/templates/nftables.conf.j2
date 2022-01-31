@@ -12,6 +12,7 @@ table ip routing {
 		iifname $WAN tcp dport 22000 dnat to {{ grp_device.pi.ipv4_addr }}:22000 # Syncthing DNAT
 		iifname $WAN tcp dport 8000 dnat to {{ grp_device.arch.ipv4_addr }}:8000 # Temporary web server DNAT
 	}
+
 	chain postrouting {
 		type nat hook postrouting priority srcnat; policy accept
 		oifname $WAN masquerade # WAN NAT
@@ -19,7 +20,6 @@ table ip routing {
 }
 
 table inet firewall {
-	
 	set IANA_BOGON_IPV4 {
 		type ipv4_addr
 		counter
@@ -34,59 +34,77 @@ table inet firewall {
 		elements = { ::/128, ::1/128, ::ffff:0:0/96, 64:ff9b:1::/48, 100::/64, 2001::/23, 2001:db8::/32, fc00::/7, fe80::/10 }
 	}
 
-	chain input_filter {
+
+	chain wan_input {
+		jump input_filter
+		tcp dport ssh ct state new limit rate 5/second log level notice prefix "New SSH connexion from WAN: " counter accept
+		udp dport {{ wireguard_server_port }} ct state new limit rate 5/second log level notice prefix "New Wireguard connexion from WAN: " counter accept
+		icmp type echo-request icmp sequence {{ is_alive_echo_request_count }} log level notice prefix "isAlive Ping: " counter accept
+		icmp type echo-request ct state new limit rate 5/second counter accept
+		icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } ct state new limit rate 5/second counter accept
+		icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } ct state new limit rate 5/second counter accept
+	}
+	chain lan_input {
+		udp dport { 53, 67, 123 } ct state new counter accept
+		tcp dport { 22, 53, 9100 } ct state new counter accept
+		ip protocol ospf counter ct state new counter accept
+		icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } ct state new counter accept
+		icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } ct state new counter accept
 		ct state invalid counter drop
-		iifname { "lo" } ip saddr != 127.0.0.0/8 counter drop
+	}
+	chain input_filter {   
+		ct state invalid counter drop
+		ip saddr 192.168.1.1 udp dport 51820 counter accept # Wireguard from WiFi, this is the result of double nat
+		ip saddr @IANA_BOGON_IPV4 counter drop  # Reject special-purpose ipv4 addresses
+		ip6 saddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv4 addresses
 	}
 
+
+	chain wan_forward {
+		oifname $LAN ip daddr {{ grp_device.pi.ipv4_addr }} tcp dport 22000 counter accept # Syncthing Port Forwarding
+		oifname $LAN ip daddr {{ grp_device.arch.ipv4_addr }} tcp dport 8000 counter accept # Temporary web server Port Forwading
+		jump forward_filter
+	}
+	chain lan_forward {
+		ip saddr {{ grp_device.arch.ipv4_addr }} ip daddr 192.168.1.1 counter accept # Accept from admin to FAI modem
+		oifname $WAN ct state new counter accept # WAN traffic forwading
+		jump forward_filter
+	}
 	chain forward_filter {
 		ct state invalid counter drop
-		iifname $LAN oifname $WAN ip daddr @IANA_BOGON_IPV4 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv4 addresses to WAN
-		iifname $LAN oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv6 addresses to WAN
+		oifname $WAN ip daddr @IANA_BOGON_IPV4 counter drop # Reject special-purpose ipv4 addresses to WAN from LAN
+		oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv4 addresses to WAN from LAN
 	}
+
 
 	chain output_filter {
 		ct state invalid counter drop
-		oifname $WAN ip daddr @IANA_BOGON_IPV4 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv4 addresses to WAN
-		oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv6 addresses to WAN
+		oifname $WAN ip daddr @IANA_BOGON_IPV4 counter reject with icmpx type admin-prohibited  # Reject special-purpose ipv4 addresses to WAN from local
+		oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv6 addresses to WAN from local
 	}
+
 
 	chain input {
 		type filter hook input priority filter; policy drop;
-		jump input_filter
-		icmp type echo-request icmp sequence {{ is_alive_echo_request_count }} log level notice prefix "laptop Server isAlive Ping: " counter accept # isAlive echo-request from emanon.moe
+		iifname "lo" ip saddr 127.0.0.0/8 counter accept
+		iifname "lo" ip6 saddr ::1 counter accept
+		iifname vmap { $WAN : jump wan_input, $LAN : jump lan_input, $WG : accept }
 		ct state { established, related } counter accept
-		iifname { "lo" } accept
-		ip protocol icmp counter accept
-		ip6 nexthdr icmpv6 counter accept
-		iifname $LAN icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } accept
-		iifname $LAN icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } accept
-		iifname $LAN ip saddr {{ grp_device.brocade.ipv4_addr }} ip protocol ospf counter accept # Accept OSPFv2 from brocade
-		iifname $LAN udp dport { 53, 67, 123 } counter accept # DNS server & DHCP server & NTP server for LAN
-		iifname $LAN tcp dport { 9100, 9353, 6763, 6764 } counter accept # Prometheus Node exporter for LAN
-		iifname $WG udp dport 53 counter accept # Accept DNS query from wireguard devices
-		udp dport {{ wireguard_server_port }} ct state new log level notice prefix "New Wireguard connexion: " counter accept
-		tcp dport ssh ct state new log level notice prefix "New SSH connexion: " counter accept
-		# NAT Hairpinning tcp dport 7999 counter accept
 	}
 	chain forward {
 		type filter hook forward priority filter; policy drop;
-		ip saddr {{ grp_device.arch.ipv4_addr }} ip daddr 192.168.1.1 counter accept # Accept from admin to FAI modem
-		jump forward_filter
+		iifname vmap { $WAN : jump wan_forward, $LAN : jump lan_forward, $WG : accept }
 		ct state { established, related } counter accept
-		iifname $WG counter accept # Wireguard Admin VPN to any
-		iifname $LAN oifname $WAN counter accept # WAN traffic forwading
-		iifname $WAN oifname $LAN ip daddr {{ grp_device.pi.ipv4_addr }} tcp dport 22000 counter accept # Syncthing Port Forwarding
-		iifname $WAN oifname $LAN ip daddr {{ grp_device.arch.ipv4_addr }} tcp dport 8000 counter accept # Temporary web server Port Forwading
-		
 	}
 	chain output {
 		type filter hook output priority filter; policy drop;
-		oifname $WAN ip daddr 192.168.1.1 counter accept # Don't Block SSH for ndd
+		icmpv6 type { 1-4, 128-136 } counter accept         # Accept icmpv6 before ct state invalid, multicast is tagged as invalid
+		oifname $WAN ip daddr 192.168.1.1 counter accept    # Don't Block SSH from ndd
 		jump output_filter
 		ct state { established, related, new } counter accept
 	}
 }
+
 table ip sshguard {
 	set attackers {
 		type ipv4_addr
@@ -98,7 +116,6 @@ table ip sshguard {
 		ip saddr @attackers drop
 	}
 }
-
 table ip6 sshguard {
 	set attackers {
 		type ipv6_addr
