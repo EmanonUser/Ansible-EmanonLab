@@ -1,0 +1,6 @@
+---
+- name: Install vnstat
+  ansible.builtin.apt:
+    name: vnstat
+    state: present
+  notify: ["Enable vnstat service", "Start vnstat service"]
