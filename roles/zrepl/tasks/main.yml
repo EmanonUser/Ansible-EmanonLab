@@ -29,9 +29,10 @@
 
 - name: Configure zrepl
   ansible.builtin.template:
-    src: zrepl.yml.j2
+    src: zrepl_{{ inventory_hostname }}.yml.j2
     dest: /etc/zrepl/zrepl.yml
     owner: root
     group: root
     mode: u=rw,g=r,o=r
+    validate: /usr/bin/zrepl configcheck --config %s
   notify: Restart zrepl service

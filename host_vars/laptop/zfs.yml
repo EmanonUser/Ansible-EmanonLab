@@ -6,6 +6,7 @@ host_zfs_pools:
       - dataset: media
       - dataset: media_2
       - dataset: data
+        zrepl_snapshot_policy: zrepl_P3
       - dataset: files
       - dataset: misc
 

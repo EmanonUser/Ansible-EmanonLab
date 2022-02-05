@@ -67,7 +67,6 @@
     owner: root
     group: root
     mode: u=rwx,g=,o=
-  when: host_zfs_datasets_keylocation is defined
 
 - name: Create dir for ZFS volumes encryption key(s)
   ansible.builtin.file:
@@ -76,7 +75,6 @@
     owner: root
     group: root
     mode: u=rwx,g=,o=
-  when: host_zfs_volumes_keylocation is defined
 
 - name: Create ZFS dataset encryption key(s)
   ansible.builtin.shell:
@@ -140,7 +138,7 @@
 
 - name: Create ZFS volume(s)
   community.general.zfs:
-    name: "{{ item.0.pool }}/{{ item.1.volume }}"
+    name: "{{ item.0.pool }}/{{ item.1.volume | regex_replace('-', '/') }}"
     state: present
     extra_zfs_properties:
       compression: "{{ item.1.compression | default('lz4') }}"
@@ -151,4 +149,4 @@
       snapdev: "{{ item.1.snapdev | default('hidden') }}"
   loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
   loop_control:
-    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
+    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume | regex_replace('-', '/') }}"
