@@ -8,18 +8,24 @@
     name: "zpool-scrub@{{ item.pool }}.timer"
     enabled: yes
   loop: "{{ zfs_pools }}"
+  loop_control:
+    label: "Zpool Name: {{ item.pool }}"
 
 - name: Start zpool(s)-scrub timer(s)
   ansible.builtin.systemd:
     name: "zpool-scrub@{{ item.pool }}.timer"
     state: started
   loop: "{{ zfs_pools }}"
+  loop_control:
+    label: "Zpool Name: {{ item.pool }}"
 
 - name: Restart zpool(s)-scrub timer(s)
   ansible.builtin.systemd:
     name: "zpool-scrub@{{ item.pool }}.timer"
     state: restarted
   loop: "{{ zfs_pools }}"
+  loop_control:
+    label: "Zpool Name: {{ item.pool }}"
 
 - name: Enable zfs-mount-encrypted service
   ansible.builtin.systemd:
