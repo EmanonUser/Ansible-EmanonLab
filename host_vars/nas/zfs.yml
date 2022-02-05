@@ -54,3 +54,16 @@ host_zfs_pools:
       - volume: emanonlab-pi
         zrepl_snapshot_policy: zrepl_P3
         volsize: 512M
+
+  - pool: vault
+    datasets:
+      ## media datasets ##
+      - dataset: a
+        zrepl_snapshot_policy: "no"
+      - dataset: a-b
+      ## Media dataset ##
+    volumes:
+      - volume: a-vol
+        volsize: 10M
+      - volume: myvol
+        volsize: 12M
