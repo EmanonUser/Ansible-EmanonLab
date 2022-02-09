@@ -74,6 +74,11 @@
     mode: u=rw,g=,o=
   notify: Enable zfs-mount-encrypted service
 
+- name: Delete default cron scrub timer
+  ansible.builtin.file:
+    path: /etc/cron.d/zfsutils-linux
+    state: absent
+
 - name: Create dir for ZFS dataset encryption key(s)
   ansible.builtin.file:
     path: "{{ zfs_datasets_keylocation }}"
