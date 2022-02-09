@@ -11,7 +11,6 @@ TODO:
     - systemd-logind role ? effectly disable the laptop lied
     - delete starship archive directly after decompression
     - coredns path use /opt/coredns --> should use /opt
-    - convert wireguard datatype ? full hashes to list of hashes
     - rework ntpd.conf
     - promtail_loki_url doesn't include a tcp port variable
     - nfs_share, add vers=4.1 (.2) for incomming nas, maybe rename the role accordingly
