@@ -43,13 +43,27 @@
     dest: /etc/systemd/system/{{ item }}
     owner: root
     group: root
-    mode: u=rw,g=,o=
+    mode: u=rw,g=r,o=r
   loop: [zpool-scrub@.service, zpool-scrub@.timer]
   notify:
     - Daemon-reload zfs systemd
     - Enable zpool(s)-scrub timer(s)
     - Start zpool(s)-scrub timer(s)
     - Restart zpool(s)-scrub timer(s)
+  
+- name: Configure automatic zpool triming
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: /etc/systemd/system/{{ item }}
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  loop: [zpool-trim@.service, zpool-trim@.timer] 
+  notify:
+    - Daemon-reload zfs systemd
+    - Enable zpool(s)-trim timer(s)
+    - Start zpool(s)-trim timer(s)
+    - Restart zpool(s)-trim timer(s)
 
 - name: Configure automatic mount of encrypted datasets
   ansible.builtin.template:

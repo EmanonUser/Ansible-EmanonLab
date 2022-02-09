@@ -1,0 +1,15 @@
+[Unit]
+Description=ZFS zpool %I trim service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/zpool trim %i
+KillSignal=SIGINT
+ProtectHome=read-only
+ProtectSystem=full
+ProtectControlGroups=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -27,6 +27,33 @@
   loop_control:
     label: "Zpool Name: {{ item.pool }}"
 
+- name: Enable zpool(s)-trim timer(s)
+  ansible.builtin.systemd:
+    name: "zpool-trim@{{ item.pool }}.timer"
+    enabled: yes
+  when: item.enable_trim
+  loop: "{{ zfs_pools }}"
+  loop_control:
+    label: "Zpool Name: {{ item.pool }}"
+
+- name: Start zpool(s)-trim timer(s)
+  ansible.builtin.systemd:
+    name: "zpool-trim@{{ item.pool }}.timer"
+    state: started
+  when: item.enable_trim
+  loop: "{{ zfs_pools }}"
+  loop_control:
+    label: "Zpool Name: {{ item.pool }}"
+
+- name: Restart zpool(s)-trim timer(s)
+  ansible.builtin.systemd:
+    name: "zpool-trim@{{ item.pool }}.timer"
+    state: restarted
+  when: item.enable_trim
+  loop: "{{ zfs_pools }}"
+  loop_control:
+    label: "Zpool Name: {{ item.pool }}"
+
 - name: Enable zfs-mount-encrypted service
   ansible.builtin.systemd:
     name: "zfs-mount-encrypted.service"
