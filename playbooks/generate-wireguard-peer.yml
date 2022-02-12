@@ -1,0 +1,27 @@
+- name: Generate peer for wireguard
+  hosts: localhost
+  tasks:
+    - name: Generate peer private key
+      ansible.builtin.command:
+        cmd: wg genkey
+      register: privkey
+    
+    - name: Generate peer public key
+      ansible.builtin.shell:
+        cmd: echo {{ privkey.stdout }} | wg pubkey
+      register: pubkey
+    
+    - name: Generate peer preshared key
+      ansible.builtin.command:
+        cmd: wg genpsk
+      register: presharedkey
+    
+    - name: Generate peer file
+      ansible.builtin.lineinfile:
+        path: ./peer.txt
+        line: "{{ item }}"
+        create: yes
+      loop:
+        - "privkey: {{ privkey.stdout }}"
+        - "pubkey: {{ pubkey.stdout }}"
+        - "presharedkey: {{ presharedkey.stdout }}"

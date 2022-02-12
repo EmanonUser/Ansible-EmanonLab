@@ -123,9 +123,6 @@ grp_dns_server: "{{ grp_device.router.ipv4_addr }}"
 grp_ntp_server: "{{ grp_device.router.ipv4_addr }}"
 grp_gandi_api_key: "{{ grp_vault_gandi_api_key }}"
 
-grp_gandi_email: "{{ grp_vault_gandi_email }}"
-grp_gandi_email_password: "{{ grp_vault_gandi_email_password }}"
-
 grp_nfs_server_target: "{{ grp_device.truenas.hostname }}.{{ grp_local_domain }}"
 grp_nfs_remote_share: /mnt/vault/emanon
 grp_nfs_mount_dir: /mnt/vault

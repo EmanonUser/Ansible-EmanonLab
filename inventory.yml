@@ -9,8 +9,7 @@ homelab:
     pi:
       ansible_host: pi.local.emanon
     nas:
-      ansible_host: 192.168.22.211
-
+      ansible_host: 192.168.22.210
 secondarylab:
   vars:
     ansible_user: ansible

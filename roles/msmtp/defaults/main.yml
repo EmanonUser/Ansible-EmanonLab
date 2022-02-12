@@ -1,3 +1,0 @@
----
-gandi_email: "{{ grp_gandi_email }}"
-gandi_mail_password: "{{ grp_gandi_email_password }}"

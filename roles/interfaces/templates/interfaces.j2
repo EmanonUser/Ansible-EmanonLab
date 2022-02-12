@@ -8,10 +8,14 @@ auto lo
 iface lo inet loopback
 
 # The primary network interface
+allow-hotplug {{ grp_device.router.wan_interface }}
 auto {{ grp_device.router.wan_interface }}
 iface {{ grp_device.router.wan_interface }} inet dhcp
 	dns-nameservers 127.0.0.1
 
+iface {{ grp_device.router.wan_interface }} inet6 auto
+
+allow-hotplug {{ lacp_interface_name }}
 auto {{ lacp_interface_name }}
 iface {{ lacp_interface_name }} inet static
 	address {{ grp_device.router.ipv4_addr_cidr }}

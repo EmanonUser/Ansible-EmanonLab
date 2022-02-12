@@ -16,6 +16,9 @@
     - role: sysctl
       tags: [ sysctl, init ]
 
+    - role: vnstat
+      tags: [ vnstat, init, monitoring ]
+
     - role: starship
       tags: [ starship, init ]
 

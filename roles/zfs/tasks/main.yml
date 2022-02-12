@@ -43,13 +43,27 @@
     dest: /etc/systemd/system/{{ item }}
     owner: root
     group: root
-    mode: u=rw,g=,o=
+    mode: u=rw,g=r,o=r
   loop: [zpool-scrub@.service, zpool-scrub@.timer]
   notify:
     - Daemon-reload zfs systemd
     - Enable zpool(s)-scrub timer(s)
     - Start zpool(s)-scrub timer(s)
     - Restart zpool(s)-scrub timer(s)
+  
+- name: Configure automatic zpool triming
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: /etc/systemd/system/{{ item }}
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  loop: [zpool-trim@.service, zpool-trim@.timer] 
+  notify:
+    - Daemon-reload zfs systemd
+    - Enable zpool(s)-trim timer(s)
+    - Start zpool(s)-trim timer(s)
+    - Restart zpool(s)-trim timer(s)
 
 - name: Configure automatic mount of encrypted datasets
   ansible.builtin.template:
@@ -59,6 +73,11 @@
     group: root
     mode: u=rw,g=,o=
   notify: Enable zfs-mount-encrypted service
+
+- name: Delete default cron scrub timer
+  ansible.builtin.file:
+    path: /etc/cron.d/zfsutils-linux
+    state: absent
 
 - name: Create dir for ZFS dataset encryption key(s)
   ansible.builtin.file:
@@ -131,6 +150,7 @@
       xattr: "{{ item.1.xattr | default('sa') }}"
       recordsize: "{{ item.1.recordsize | default('128k') }}"
       dnodesize: "{{ item.1.dnodesize | default('auto') }}"
+      mountpoint: "{{ item.1.mountpoint | default(omit) }}"
   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"

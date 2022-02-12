@@ -1,25 +1,4 @@
 ---
-## device_init ##
-host_debian_stable_packages:
-  - debian-keyring
-  - debian-archive-keyring
-  - ca-certificates
-  - apt-transport-https
-  - acl
-  - gnupg2
-  - curl
-  - git
-  - zsh
-  - neovim
-  - unzip
-  - dnsutils
-  - ldnsutils
-  - conntrack
-  - tcpdump
-  - socat
-  - mtr-tiny
-## device_init ##
-
 ## prometheus_node_exporter ##
 host_prometheus_node_exporter_interface_addr: "{{ grp_device.router.ipv4_addr }}"
 

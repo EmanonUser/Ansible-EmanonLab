@@ -1,13 +1,13 @@
 ---
 podman_grafana_image: "{{ host_podman_grafana_image | default('docker.io/grafana/grafana') }}"
-podman_grafana_image_version: "{{ host_podman_grafana_image_version | default('8.3.4') }}"
+podman_grafana_image_version: "{{ host_podman_grafana_image_version | default('8.3.5') }}"
 # https://hub.docker.com/r/grafana/grafana/tags
 
 podman_grafana_ports: 
   - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
   - "{% if grp_podman_networking.grafana.lan_access %}[::]:{{ grp_podman_networking.grafana.webui_port }}{% else %}[::1]:{{ grp_podman_networking.grafana.webui_port }}{% endif %}:3000/tcp"
 
-podman_grafana_firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 podman_grafana_firewalld_ports: "{{ grp_podman_networking.grafana.webui_port }}/tcp"
 
 podman_grafana_directories:
