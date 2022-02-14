@@ -2,6 +2,7 @@
 host_zfs_datasets_keylocation: /root
 host_zfs_pools:
   - pool: tank
+    base_path: /tank
     enable_trim: false
     datasets:
       - dataset: media
