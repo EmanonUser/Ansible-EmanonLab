@@ -65,14 +65,23 @@
     - Start zpool(s)-trim timer(s)
     - Restart zpool(s)-trim timer(s)
 
-- name: Configure automatic mount of encrypted datasets
+- name: Configure automatic loading of encryption keys
   ansible.builtin.template:
-    src: "zfs-mount-encrypted.service.j2"
-    dest: /etc/systemd/system/zfs-mount-encrypted.service
+    src: "zfs-load-keys.service.j2"
+    dest: /etc/systemd/system/zfs-load-keys.service
     owner: root
     group: root
     mode: u=rw,g=,o=
-  notify: Enable zfs-mount-encrypted service
+  notify: Enable zfs-load-keys service
+
+- name: Configure automatic mounting of encrypted datasets
+  ansible.builtin.template:
+    src: "zfs-mount-encrypted-datasets.service.j2"
+    dest: /etc/systemd/system/zfs-mount-encrypted-datasets.service
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  notify: Enable zfs-mount-encrypted-datasets service
 
 - name: Delete default cron scrub timer
   ansible.builtin.file:
@@ -165,7 +174,20 @@
       keyformat: "{{ item.1.keyformat | default('hex') }}"
       keylocation: "{{ item.1.keylocation | default('file://' + zfs_volumes_keylocation + '/' + item.1.volume + '.key' ) }}"
       volsize: "{{ item.1.volsize }}"
+      volmode: "{{ item.1.volmode | default('full')}}"
       snapdev: "{{ item.1.snapdev | default('hidden') }}"
   loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume | regex_replace('-', '/') }}"
+
+- name: Set ZFS datatsets base permissions for default mountpoints
+  ansible.builtin.file:
+    path: >-
+          {% if item.1.mountpoint is not defined %}{{ item.0.base_path }}/{{ item.1.dataset | regex_replace('-', '/') -}}
+          {% elif item.1.mountpoint is defined %}{{ item.1.mountpoint }}{% endif %}
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=,o=
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
