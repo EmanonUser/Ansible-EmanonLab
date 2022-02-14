@@ -1,0 +1,17 @@
+[Unit]
+Description=Load ZFS encryption keys
+Documentation=man:zfs(8)
+DefaultDependencies=no
+After=systemd-udev-settle.service
+After=zfs-import.target
+After=systemd-remount-fs.service
+Before=local-fs.target
+ConditionPathIsDirectory=/sys/module/zfs
+
+[Service]
+Type=oneshot
+RemainAfterExit=no
+ExecStart=/sbin/zfs load-key -a
+
+[Install]
+WantedBy=zfs.target

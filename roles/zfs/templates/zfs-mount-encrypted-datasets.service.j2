@@ -1,17 +1,18 @@
 [Unit]
-Description=Mount ZFS encrypted filesystems
+Description=Load ZFS encryption keys
 Documentation=man:zfs(8)
 DefaultDependencies=no
 After=systemd-udev-settle.service
 After=zfs-import.target
+After=zfs-load-keys.service
 After=systemd-remount-fs.service
 Before=local-fs.target
 ConditionPathIsDirectory=/sys/module/zfs
 
 [Service]
 Type=oneshot
-RemainAfterExit=yes
-ExecStart=/sbin/zfs mount -alv
+RemainAfterExit=no
+ExecStart=/sbin/zfs mount -a -v
 
 [Install]
 WantedBy=zfs.target
