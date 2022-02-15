@@ -174,7 +174,7 @@
       keyformat: "{{ item.1.keyformat | default('hex') }}"
       keylocation: "{{ item.1.keylocation | default('file://' + zfs_volumes_keylocation + '/' + item.1.volume + '.key' ) }}"
       volsize: "{{ item.1.volsize }}"
-      volmode: "{{ item.1.volmode | default('full')}}"
+      volmode: "{{ item.1.volmode | default('full') }}"
       snapdev: "{{ item.1.snapdev | default('hidden') }}"
   loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
   loop_control:
