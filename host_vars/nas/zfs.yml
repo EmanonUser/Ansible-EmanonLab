@@ -6,7 +6,7 @@ host_zfs_manual_zpools_creation: no
 host_zfs_pools:
   - pool: tank
     enable_trim: no
-    base_path: /opt/tank
+    base_path: /tank      # Carefull with the pool base mountpoint, must be changed too
     datasets:
       ## media datasets ##
       - dataset: media
