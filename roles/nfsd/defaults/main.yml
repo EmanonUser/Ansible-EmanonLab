@@ -1,1 +1,2 @@
 ---
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"

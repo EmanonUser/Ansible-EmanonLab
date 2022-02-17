@@ -25,8 +25,8 @@
     - role: zrepl
       tags: [ zrepl, services ]
 
-    # - role: nfsd
-    #   tags: [ nfsd, services ]
+    - role: nfsd
+      tags: [ nfsd, services ]
 
     # - role: samba_server
     #   tags: [ samba_server, service ]

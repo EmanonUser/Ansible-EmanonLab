@@ -1,1 +1,38 @@
 ---
+host_nfs_exports:
+  - export: /tank/media
+    path: /srv/nfs4/media
+    authorized_clients:
+      - "{{ grp_device.pi.ipv4_addr }}" 
+      - "{{ grp_device.arch.ipv4_addr }}"
+
+  - export: /tank/media/animes
+    path: /srv/nfs4/media/animes
+    authorized_clients:
+      - "{{ grp_device.pi.ipv4_addr }}" 
+      - "{{ grp_device.arch.ipv4_addr }}"
+      - "192.168.70.0/24"
+
+  - export: /tank/media/series
+    path: /srv/nfs4/media/series
+    authorized_clients:
+      - "{{ grp_device.pi.ipv4_addr }}" 
+      - "{{ grp_device.arch.ipv4_addr }}"
+
+  - export: /tank/media/movies
+    path: /srv/nfs4/media/movies
+    authorized_clients:
+      - "{{ grp_device.pi.ipv4_addr }}" 
+      - "{{ grp_device.arch.ipv4_addr }}"
+
+  - export: /tank/media/tmp
+    path: /srv/nfs4/media/tmp
+    authorized_clients:
+      - "{{ grp_device.pi.ipv4_addr }}" 
+      - "{{ grp_device.arch.ipv4_addr }}"
+  
+  - export: /tank/emanonlab/containers
+    path: /srv/nfs4/containers
+    authorized_clients:
+      - "{{ grp_device.pi.ipv4_addr }}" 
+      - "{{ grp_device.arch.ipv4_addr }}"
