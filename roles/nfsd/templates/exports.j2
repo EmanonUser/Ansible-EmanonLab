@@ -1,3 +1,4 @@
 {% for export in host_nfs_exports %}
-{{ export.path }} {% for client in export.authorized_clients %} {{ client }}{% endfor %}(rw,sync,no_subtree_check)
+{{ export.path }} {% for client in export.authorized_clients %} {{ client }}(rw,sync,no_subtree_check){% endfor %}
+
 {% endfor %}
