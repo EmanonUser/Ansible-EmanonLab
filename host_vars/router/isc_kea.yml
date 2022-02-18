@@ -5,9 +5,9 @@ host_isc_kea_dhcp4:
       - start: 192.168.10.100
         end: 192.168.10.200
     reservations:
-      - ipv4_addr: "{{ grp_device.truenas.ipv4_addr }}"
-        hw_addr: "{{ grp_device.truenas.hw_addr }}" 
-        hostname: "{{ grp_device.truenas.hostname }}"
+      - ipv4_addr: "{{ grp_device.nas.ipv4_addr }}"
+        hw_addr: "{{ grp_device.nas.hw_addr }}" 
+        hostname: "{{ grp_device.nas.hostname }}"
       - ipv4_addr: "{{ grp_device.ipmi.ipv4_addr }}"
         hw_addr: "{{ grp_device.ipmi.hw_addr }}" 
         hostname: "{{ grp_device.ipmi.hostname }}"

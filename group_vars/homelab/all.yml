@@ -16,11 +16,11 @@ grp_device:
       ipv4_addr_cidr: 192.168.20.20/24
       hw_addr: "00:d8:61:57:9c:fb"
       hostname: arch
-    truenas:
+    nas:
       ipv4_addr:  192.168.10.25
       ipv4_addr_cidr: 192.168.10.25/24
-      hw_addr: "ac:1f:6b:77:cf:b8"
-      hostname: truenas
+      hw_addr: "ac:1f:6b:77:cf:b8"           # May change after LACP
+      hostname: nas
     ipmi:
       ipv4_addr:  192.168.10.26
       ipv4_addr_cidr: 192.168.10.26/24
@@ -123,7 +123,7 @@ grp_dns_server: "{{ grp_device.router.ipv4_addr }}"
 grp_ntp_server: "{{ grp_device.router.ipv4_addr }}"
 grp_gandi_api_key: "{{ grp_vault_gandi_api_key }}"
 
-grp_nfs_server_target: "{{ grp_device.truenas.hostname }}.{{ grp_local_domain }}"
+grp_nfs_server_target: "{{ grp_device.nas.hostname }}.{{ grp_local_domain }}"
 grp_nfs_remote_share: /mnt/vault/emanon
 grp_nfs_mount_dir: /mnt/vault
 
