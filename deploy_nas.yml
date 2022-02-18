@@ -1,0 +1,32 @@
+---
+- name: Provisioning of the nas server
+  hosts: nas 
+  become: yes
+  gather_facts: yes
+  roles:
+    - role: device_init
+      tags: [ device_init, init ]
+
+    - role: fstrim
+      tags: [ fstrim, init ]
+
+    - role: starship
+      tags: [ starship, init ]
+
+    - role: firewalld
+      tags: [ firewalld, init ]
+
+    - role: systemd_timesyncd
+      tags: [ systemd_timesyncd, init ]
+
+    - role: zfs
+      tags: [ zfs, init ]
+
+    - role: zrepl
+      tags: [ zrepl, services ]
+
+    - role: nfsd
+      tags: [ nfsd, services ]
+
+    - role: samba_server
+      tags: [ samba_server, service ]

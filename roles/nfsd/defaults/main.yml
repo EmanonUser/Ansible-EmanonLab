@@ -1,0 +1,4 @@
+---
+nfsd_threads: 8
+nfsd_nice_priority: 0
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"

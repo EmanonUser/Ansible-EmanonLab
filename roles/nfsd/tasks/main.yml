@@ -1,0 +1,55 @@
+---
+- name: Install nfsd server
+  ansible.builtin.apt:
+    name: ["nfs-kernel-server", "nfs4-acl-tools"]
+    state: present
+
+- name: Create export dir(s)
+  ansible.builtin.file:
+    path: "{{ item.export }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ host_nfs_exports }}"
+
+- name: Create bind mount to zfs dataset(s)
+  ansible.posix.mount:
+    path: "{{ item.path }}"
+    src: "{{ item.export }}"
+    opts: bind
+    state: mounted
+    fstype: zfs
+  loop: "{{ host_nfs_exports }}"
+
+- name: Configure NFSv4 server
+  ansible.builtin.template:
+    src: "{{ item.name }}"
+    dest: "{{ item.path }}"
+  loop:
+    - { name: "nfs-common.j2", path: /etc/default/nfs-common }
+    - { name: "nfs-kernel-server.j2", path: /etc/default/nfs-kernel-server }
+  notify:
+    - Enable nfs-server service
+    - Start nfs-server service
+  
+- name: Disable rpcbind, we are using nfsv4 only
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    masked: yes
+    state: stopped
+  loop: ["rpcbind.service", "rpcbind.socket"]
+
+- name: Configure NFSv4 exports
+  ansible.builtin.template:
+    src: exports.j2
+    dest: /etc/exports
+  notify: Restart nfs-server service
+
+- name: Open NFSv4 firewalld service
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    service: nfs
+    permanent: yes
+    immediate: yes
+    state: enabled

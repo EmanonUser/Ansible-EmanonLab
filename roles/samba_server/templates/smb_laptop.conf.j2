@@ -3,7 +3,7 @@
     interfaces = {{ ansible_default_ipv4.interface }}
     server min protocol = SMB3
     server max protocol = SMB3
-    vfs objects = acl_xattr
+    vfs objects = acl_xattr shadow_copy2
 
 [main]
     path = /tank

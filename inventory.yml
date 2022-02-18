@@ -8,7 +8,8 @@ homelab:
       ansible_host: r.local.emanon
     pi:
       ansible_host: pi.local.emanon
-
+    nas:
+      ansible_host: nas.local.emanon
 secondarylab:
   vars:
     ansible_user: ansible
