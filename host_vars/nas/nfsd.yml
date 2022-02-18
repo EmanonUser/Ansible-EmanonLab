@@ -3,38 +3,32 @@ host_nfs_exports:
   - export: /tank/media
     path: /srv/nfs4/media
     authorized_clients:
-      - "{{ grp_device.pi.ipv4_addr }}"
-      - "{{ grp_device.arch.ipv4_addr }}"
+      - client: "192.168.0.0/16"
+        options: "(rw,sync,fsid=0,no_subtree_check,crossmnt)"
+      - client: "91.0.0.0"
 
   - export: /tank/media/animes
     path: /srv/nfs4/media/animes
     authorized_clients:
-      - "{{ grp_device.pi.ipv4_addr }}"
-      - "{{ grp_device.arch.ipv4_addr }}"
-
+      - client: "192.168.0.0/16"
 
   - export: /tank/media/series
     path: /srv/nfs4/media/series
     authorized_clients:
-      - "{{ grp_device.pi.ipv4_addr }}"
-      - "{{ grp_device.arch.ipv4_addr }}"
+      - client: "192.168.0.0/16"
 
 
   - export: /tank/media/movies
     path: /srv/nfs4/media/movies
     authorized_clients:
-      - "{{ grp_device.pi.ipv4_addr }}"
-      - "{{ grp_device.arch.ipv4_addr }}"
-
+      - client: "192.168.0.0/16"
 
   - export: /tank/media/tmp
     path: /srv/nfs4/media/tmp
     authorized_clients:
-      - "{{ grp_device.pi.ipv4_addr }}"
-      - "{{ grp_device.arch.ipv4_addr }}"
+      - client: "192.168.0.0/16"
 
-  
   - export: /tank/emanonlab/containers
     path: /srv/nfs4/containers
     authorized_clients:
-      - "{{ grp_device.pi.ipv4_addr }}"
+      - client: "192.168.0.0/16"
