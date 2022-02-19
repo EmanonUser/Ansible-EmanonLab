@@ -9,6 +9,9 @@
 
     - role: fstrim
       tags: [ fstrim, init ]
+    
+    - role: vnstat
+      tags: [ vnstat, init, monitoring ]
 
     - role: starship
       tags: [ starship, init ]
