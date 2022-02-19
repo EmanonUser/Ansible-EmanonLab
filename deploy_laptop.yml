@@ -60,3 +60,6 @@
 
     - role: samba_server
       tags: [ samba_server, service ]
+    
+    - role: tgtd
+      tags: [ tgtd, service ]

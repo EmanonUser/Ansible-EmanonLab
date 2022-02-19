@@ -1,0 +1,15 @@
+---
+- name: Install tgtd server
+  ansible.builtin.apt:
+    name: tgt
+    state: present
+  notify: ["Enable tgt service", "Start tgt service"]
+
+- name: Config iscsi targets
+  ansible.builtin.template:
+    src: tgt.conf.j2
+    dest: "/etc/tgt/conf.d/{{ item.iqn }}.conf"
+  loop: "{{ host_iscsi_targets }}"
+  loop_control:
+    label: "iSCSI Target: {{ item.iqn }}"
+  notify: Restart tgt service

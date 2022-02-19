@@ -1,0 +1,15 @@
+host_iscsi_targets:
+  - iqn: iqn.2022-02.local.srv:zvol
+    backing_stores: 
+      - backing_store: /dev/zvol/tank/zvol_01
+      - backing_store: /dev/zvol/tank/zvol_02
+    incoming_users:
+      - incominguser_username: emanonin
+        incominguser_password: 123456
+      - incominguser_username: emanon2
+        incominguser_password: 17422535
+    initiator_addresses:
+      - initiator_address: "192.168.22.1"
+      - initiator_address: "192.168.1.20"
+      - initiator_address: 2a01:cb10:1cf:9c00:65e0:760e:5b73:33e2
+      - initiator_address: 2a01:cb10:1cf:9c00:e3dc:448f:1c43:e5ed

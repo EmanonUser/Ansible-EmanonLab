@@ -1,0 +1,15 @@
+---
+- name: Enable tgt service
+  ansible.builtin.systemd:
+    name: tgt.service
+    enabled: yes
+
+- name: Start tgt service
+  ansible.builtin.systemd:
+    name: tgt.service
+    state: started
+
+- name: Restart tgt service
+  ansible.builtin.systemd:
+    name: tgt.service
+    state: restarted
