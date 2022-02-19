@@ -15,3 +15,5 @@ TODO:
     - promtail_loki_url doesn't include a tcp port variable
     - nfs_share, add vers=4.1 (.2) for incomming nas, maybe rename the role accordingly
     - configure zed ( zfs )
+    - rework samba_server, rename to smbd ?
+    - verify tgtd security
