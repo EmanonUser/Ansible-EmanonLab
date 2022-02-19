@@ -28,7 +28,7 @@ host_zfs_pools:
         compression: zstd
       - dataset: emanonlab-containers
         zrepl_snapshot_policy: zrepl_P2
-        compression: zstd
+        compression: zstd-6
       - dataset: emanonlab-secrets
         zrepl_snapshot_policy: zrepl_P2
         compression: zstd
