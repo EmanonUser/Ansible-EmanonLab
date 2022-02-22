@@ -16,9 +16,8 @@ host_debian_stable_packages:
   - ldnsutils
   - tmux
   - tcpdump
-  - mtr-tiny
   - ldnsutils
   - neofetch
   - htop
   - rsync
-  - aria2
+  - fio
