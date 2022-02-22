@@ -1,34 +1,49 @@
 ---
 host_nfs_exports:
-  - export: /tank/media
-    path: /srv/nfs4/media
+  - export: /vault
+    path: /srv/nfs4/vault
     authorized_clients:
-      - client: "192.168.0.0/16"
+      - client: "{{ grp_device.pi.ipv4_addr }}"
         options: "(rw,sync,fsid=0,no_subtree_check,crossmnt)"
-      - client: "91.0.0.0"
 
-  - export: /tank/media/animes
-    path: /srv/nfs4/media/animes
+  - export: /vault/media
+    path: /srv/nfs4/vault/media
     authorized_clients:
-      - client: "192.168.0.0/16"
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+        options: "(rw,sync,fsid=0,no_subtree_check,crossmnt)"
+      - client: "{{ grp_device.pi.ipv4_addr }}"
+        options: "(rw,sync,no_subtree_check,crossmnt)"
 
-  - export: /tank/media/series
-    path: /srv/nfs4/media/series
+  - export: /vault/media/animes
+    path: /srv/nfs4/vault/media/animes
     authorized_clients:
-      - client: "192.168.0.0/16"
+      - client: "{{ grp_device.arch.ipv4_addr }}"
 
-
-  - export: /tank/media/movies
-    path: /srv/nfs4/media/movies
+  - export: /vault/media/series
+    path: /srv/nfs4/vault/media/series
     authorized_clients:
-      - client: "192.168.0.0/16"
+      - client: "{{ grp_device.arch.ipv4_addr }}"
 
-  - export: /tank/media/tmp
-    path: /srv/nfs4/media/tmp
-    authorized_clients:
-      - client: "192.168.0.0/16"
 
-  - export: /tank/emanonlab/containers
-    path: /srv/nfs4/containers
+  - export: /vault/media/movies
+    path: /srv/nfs4/vault/media/movies
     authorized_clients:
-      - client: "192.168.0.0/16"
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+
+  - export: /vault/media/tmp
+    path: /srv/nfs4/vault/media/tmp
+    authorized_clients:
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+        options: "(rw,sync,no_subtree_check,crossmnt,pnfs)"
+
+  - export: /vault/emanonlab/containers
+    path: /srv/nfs4/vault/emanonlab/containers
+    authorized_clients:
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+      - client: "{{ grp_device.pi.ipv4_addr }}"
+        options: "(rw,sync,no_subtree_check,crossmnt)"
+  
+  - export: /vault/emanonlab/secrets/keepassxc
+    path: /srv/nfs4/vault/emanonlab/secrets/keepassxc
+    authorized_clients:
+      - client: "{{ grp_device.pi.ipv4_addr }}"
