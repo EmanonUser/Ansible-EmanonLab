@@ -12,6 +12,8 @@
     mode: u=rwx,g=,o=
     state: directory
   loop: "{{ host_nfs_exports }}"
+  loop_control:
+    label: "NFS Export: {{ item.export }}"
 
 - name: Create bind mount to zfs dataset(s)
   ansible.posix.mount:
@@ -21,6 +23,8 @@
     state: mounted
     fstype: zfs
   loop: "{{ host_nfs_exports }}"
+  loop_control:
+    label: "NFS Export: {{ item.export }}"
 
 - name: Configure NFSv4 server
   ansible.builtin.template:
