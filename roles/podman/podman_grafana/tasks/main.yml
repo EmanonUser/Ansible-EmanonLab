@@ -92,7 +92,7 @@
     folder: Network
     overwrite: yes
   loop: "{{ podman_grafana_dashboards_path.network }}"
-  become_user: "{{ primary_user_username }}" 
+  become_user: "{{ primary_user_username }}"
 
 - name: Import grafana env dashboards
   community.grafana.grafana_dashboard:
