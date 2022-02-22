@@ -180,7 +180,7 @@
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume | regex_replace('-', '/') }}"
 
-- name: Set ZFS datatsets base permissions for default mountpoints
+- name: Set ZFS datatsets base permissions
   ansible.builtin.file:
     path: >-
           {% if item.1.mountpoint is not defined %}{{ item.0.base_path }}/{{ item.1.dataset | regex_replace('-', '/') -}}
