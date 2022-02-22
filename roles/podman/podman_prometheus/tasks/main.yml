@@ -7,6 +7,7 @@
     mode: u=rwx,g=,o=
     state: directory
   loop: "{{ podman_prometheus_directories }}"
+  become_user: "{{ primary_user_username }}"
 
 - name: Configure prometheus TSDB
   ansible.builtin.template:
@@ -16,6 +17,7 @@
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
   register: conf_change
+  become_user: "{{ primary_user_username }}"
 
 - name: Run prometheus podman container
   containers.podman.podman_container:
@@ -27,6 +29,7 @@
     state: started
     recreate: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
     label: "io.containers.autoupdate=image"
+    user: "root" # Overwrite the nobody user in the Dockerfile
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/etc/prometheus/data"

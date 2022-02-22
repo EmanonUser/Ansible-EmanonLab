@@ -7,6 +7,7 @@
     mode: u=rwx,g=,o=
     state: directory
   loop: "{{ podman_grafana_directories }}"
+  become_user: "{{ primary_user_username }}"
 
 - name: Place grafana dashboards
   ansible.builtin.copy:
@@ -16,6 +17,7 @@
     group: emanon
     mode: u=rw,g=,o=
   loop: "{{ podman_grafana_dashboards }}"
+  become_user: "{{ primary_user_username }}"
 
 - name: Run grafana podman container
   containers.podman.podman_container:
@@ -25,6 +27,7 @@
     publish: "{{ podman_grafana_ports }}"
     restart_policy: unless-stopped
     state: started
+    user: "root"
     env:
       GF_SECURITY_ADMIN_PASSWORD: "{{ podman_grafana_admin_password }}"
   become_user: "{{ primary_user_username }}"
@@ -89,6 +92,7 @@
     folder: Network
     overwrite: yes
   loop: "{{ podman_grafana_dashboards_path.network }}"
+  become_user: "{{ primary_user_username }}" 
 
 - name: Import grafana env dashboards
   community.grafana.grafana_dashboard:
@@ -99,6 +103,7 @@
     folder: Env
     overwrite: yes
   loop: "{{ podman_grafana_dashboards_path.env }}"
+  become_user: "{{ primary_user_username }}"
 
 - name: Import grafana general dashboards
   community.grafana.grafana_dashboard:
@@ -109,3 +114,4 @@
     folder: General
     overwrite: yes
   loop: "{{ podman_grafana_dashboards_path.general }}"
+  become_user: "{{ primary_user_username }}"

@@ -6,6 +6,7 @@
     group: emanon
     mode: u=rwx,g=,o=
     state: directory
+  become_user: "{{ primary_user_username }}"
 
 - name: Run home assistant podman container
   containers.podman.podman_container:
