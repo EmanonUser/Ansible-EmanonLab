@@ -32,7 +32,7 @@ local.emanon:{{ coredns_port }} {
 .:5301 {
     prometheus {{ grp_device.router.ipv4_addr }}:{{ coredns_prometheus_port }}
     bind 127.0.0.1 ::1
-    forward . tls://9.9.9.9 {
+    forward . tls://9.9.9.9 tls://9.9.9.11 {
         tls_servername dns.quad9.net
         health_check 5s
     }
