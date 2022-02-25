@@ -13,3 +13,11 @@
   loop_control:
     label: "iSCSI Target: {{ item.iqn }}"
   notify: Restart tgt service
+
+- name: Open iscsi-target firewalld service
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    service: iscsi-target
+    permanent: yes
+    immediate: yes
+    state: enabled
