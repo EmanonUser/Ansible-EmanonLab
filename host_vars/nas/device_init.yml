@@ -21,3 +21,4 @@ host_debian_stable_packages:
   - htop
   - rsync
   - fio
+  - iotop
