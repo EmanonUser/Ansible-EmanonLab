@@ -25,8 +25,8 @@
     - role: promtail
       tags: [ promtail, monitoring ]
 
-    - role: nfs_share
-      tags: [ nfs_share, podman_all ]
+    # - role: nfs_share
+    #   tags: [ nfs_share, podman_all ]
 
     - role: podman/podman
       tags: [ podman, podman_all ]
@@ -46,17 +46,17 @@
     - role: podman/podman_homeassistant
       tags: [ podman_homeassistant, podman_all ]
 
-    - role: podman/podman_syncthing
-      tags: [ podman_syncthing, podman_all ]
+    # - role: podman/podman_syncthing
+    #   tags: [ podman_syncthing, podman_all ]
 
     - role: podman/podman_flame
       tags: [ podman_flame, podman_all ]
 
-    - role: podman/podman_loki
-      tags: [ podman_loki, podman_all ]
+    # - role: podman/podman_loki
+    #   tags: [ podman_loki, podman_all ]
 
-    - role: podman/podman_pyload
-      tags: [ podman_pyload, podman_all ]
+    # - role: podman/podman_pyload
+    #   tags: [ podman_pyload, podman_all ]
 
     - role: haproxy
       tags: [ haproxy, podman_all ]

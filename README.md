@@ -17,3 +17,5 @@ TODO:
     - configure zed ( zfs )
     - rework samba_server, rename to smbd ?
     - verify tgtd security
+    - fix automatic mount of encrypted datasets at boot
+    - conf journald

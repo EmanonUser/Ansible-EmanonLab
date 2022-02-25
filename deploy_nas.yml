@@ -31,5 +31,8 @@
     - role: nfsd
       tags: [ nfsd, services ]
 
-    - role: samba_server
-      tags: [ samba_server, service ]
+    - role: smbd
+      tags: [ smbd, service ]
+    
+    - role: tgtd
+      tags: [ tgtd, service ]
