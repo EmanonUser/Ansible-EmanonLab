@@ -1,0 +1,14 @@
+host_smb_shares:
+  - share: media
+    path: /vault/media
+    browseable: 'yes'
+    writeable: 'yes'
+    read_only: 'no'
+    authorized_users: ['test', 'emanon']
+  
+  - share: emanonlab
+    path: /vault/emanonlab
+    browseable: 'yes'
+    writeable: 'yes'
+    read_only: 'no'
+    authorized_users: ['emanon']

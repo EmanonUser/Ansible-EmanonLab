@@ -1,0 +1,30 @@
+[global]
+    workgroup = WORKGROUP
+    interfaces = {{ ansible_default_ipv4.interface }}
+    smb ports = 445
+    server services = +smb
+    server min protocol = SMB3
+    server max protocol = SMB3
+    smb encrypt = required
+    vfs objects = acl_xattr shadow_copy2
+    server multi channel support = yes
+
+{% for share in host_smb_shares %}
+[{{ share.share }}]
+    path = {{ share.path }}
+    browseable = {{ share.browseable }}
+    writeable = {{ share.writeable }}
+    read only = {{ share.read_only }}
+    guest ok = no
+    public = no
+    valid users = {% for user in share.authorized_users %}{{ user }} {% endfor +%}
+    force user = {{ primary_user_username }}
+    create mask = 0700
+    directory mask = 0700
+    shadow:sort = desc
+    shadow:format = zrepl_default_%Y%m%d_%H%M%S_000
+    shadow:snapdir = .zfs/snapshot
+    shadow:snapdirseverywhere = yes
+    shadow:crossmountpoints = yes
+
+{% endfor %}
