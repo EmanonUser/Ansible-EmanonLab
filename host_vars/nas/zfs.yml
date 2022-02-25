@@ -20,6 +20,8 @@ host_zfs_pools:
         recordsize: 1M
       - dataset: media-tmp
         recordsize: 1M
+      - dataset: media-games
+        recordsize: 1M
       ## Media dataset ##
 
       ## emanonlab datasets ##
