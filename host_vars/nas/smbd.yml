@@ -4,10 +4,17 @@ host_smb_shares:
     browseable: 'yes'
     writeable: 'yes'
     read_only: 'no'
-    authorized_users: ['test', 'emanon']
+    authorized_users: ['emanon']
   
   - share: emanonlab
     path: /vault/emanonlab
+    browseable: 'yes'
+    writeable: 'yes'
+    read_only: 'no'
+    authorized_users: ['emanon']
+  
+  - share: emanon
+    path: /vault/emanon
     browseable: 'yes'
     writeable: 'yes'
     read_only: 'no'

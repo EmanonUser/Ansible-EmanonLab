@@ -5,14 +5,44 @@ host_nfs_exports:
     authorized_clients:
       - client: "{{ grp_device.pi.ipv4_addr }}"
         options: "(rw,sync,fsid=0,no_subtree_check,crossmnt)"
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+        options: "(rw,sync,fsid=0,no_subtree_check,crossmnt)"
+
+  - export: /vault/emanonlab/tmp
+    path: /srv/nfs4/vault/emanonlab/tmp
+    authorized_clients:
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+  
+  - export: /vault/emanonlab/dev
+    path: /srv/nfs4/vault/emanonlab/dev
+    authorized_clients:
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+  
+  - export: /vault/emanonlab/misc
+    path: /srv/nfs4/vault/emanonlab/misc
+    authorized_clients:
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+  
+  - export: /vault/emanonlab/secrets/keepassxc
+    path: /srv/nfs4/vault/emanonlab/secrets/keepassxc
+    authorized_clients:
+      - client: "{{ grp_device.pi.ipv4_addr }}"
+
+  - export: /vault/emanon/documents
+    path: /srv/nfs4/vault/emanon/documents
+    authorized_clients:
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+  
+  - export: /vault/emanon/other_users
+    path: /srv/nfs4/vault/emanon/other_users
+    authorized_clients:
+      - client: "{{ grp_device.arch.ipv4_addr }}"
 
   - export: /vault/media
     path: /srv/nfs4/vault/media
     authorized_clients:
       - client: "{{ grp_device.arch.ipv4_addr }}"
-        options: "(rw,sync,fsid=0,no_subtree_check,crossmnt)"
       - client: "{{ grp_device.pi.ipv4_addr }}"
-        options: "(rw,sync,no_subtree_check,crossmnt)"
 
   - export: /vault/media/animes
     path: /srv/nfs4/vault/media/animes
@@ -23,7 +53,6 @@ host_nfs_exports:
     path: /srv/nfs4/vault/media/series
     authorized_clients:
       - client: "{{ grp_device.arch.ipv4_addr }}"
-
 
   - export: /vault/media/movies
     path: /srv/nfs4/vault/media/movies
@@ -38,12 +67,5 @@ host_nfs_exports:
 
   - export: /vault/emanonlab/containers
     path: /srv/nfs4/vault/emanonlab/containers
-    authorized_clients:
-      - client: "{{ grp_device.arch.ipv4_addr }}"
-      - client: "{{ grp_device.pi.ipv4_addr }}"
-        options: "(rw,sync,no_subtree_check,crossmnt)"
-  
-  - export: /vault/emanonlab/secrets/keepassxc
-    path: /srv/nfs4/vault/emanonlab/secrets/keepassxc
     authorized_clients:
       - client: "{{ grp_device.pi.ipv4_addr }}"
