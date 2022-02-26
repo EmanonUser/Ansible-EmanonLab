@@ -11,7 +11,7 @@
 
 - name: Configure Wireguard
   ansible.builtin.template:
-    src: wireguard_{{ inventory_hostname }}.conf.j2
+    src: wireguard.conf.j2
     dest: /etc/wireguard/{{ wireguard_interface_name }}.conf
     owner: root
     group: root

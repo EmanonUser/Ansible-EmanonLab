@@ -33,7 +33,7 @@
 
 - name: Template kea-dhcp4 server configuration
   ansible.builtin.template:
-    src: r_kea-dhcp4.conf.j2
+    src: kea-dhcp4.conf.j2
     dest: /etc/kea/kea-dhcp4.conf
     owner:  _kea
     group:  _kea
@@ -43,7 +43,7 @@
 
 - name: Template kea-ctrl-agent configuration
   ansible.builtin.template:
-    src: r_kea-ctrl-agent.conf.j2
+    src: kea-ctrl-agent.conf.j2
     dest: /etc/kea/kea-ctrl-agent.conf
     owner:  _kea
     group:  _kea

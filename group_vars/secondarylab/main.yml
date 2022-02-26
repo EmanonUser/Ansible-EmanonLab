@@ -69,3 +69,7 @@ grp_podman_networking:
     fulldomain: kuma.emanon.moe
     webui_port: 25104
     lan_access: false
+  emanon:
+    fulldomain: emanon.moe
+    webui_port: 9999
+    lan_access: false
