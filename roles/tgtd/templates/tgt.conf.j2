@@ -14,7 +14,7 @@
 
 
     {%- if item.incoming_users is defined +%}
-    {% for users in item.incoming_users %}incominguser {{ users.incominguser_username }} {{ users.incominguser_password }}
+    {% for users in item.incoming_users %}incominguser {{ users.username }} {{ users.password }}
     {% endfor %}{% endif +%}
 
     {%- if item.initiator_addresses is defined +%}
