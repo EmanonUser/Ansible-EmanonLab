@@ -22,6 +22,9 @@
     - role: systemd_timesyncd
       tags: [ systemd_timesyncd, init ]
 
+    - role: prometheus_node_exporter
+      tags: [ prometheus_node_exporter, monitoring ]
+
     - role: zfs
       tags: [ zfs, init ]
 

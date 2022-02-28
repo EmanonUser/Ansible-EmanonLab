@@ -27,48 +27,53 @@ scrape_configs:
   - job_name: 'frr'
     scrape_interval: 5s
     static_configs:
-    - targets: ['192.168.5.1:9100']
+    - targets: ['r.local.emanon:9100']
+
+  - job_name: 'nas'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['nas.local.emanon:9100']
 
   - job_name: 'arch'
     scrape_interval: 5s
     static_configs:
-    - targets: ['192.168.20.20:9100']
+    - targets: ['arch.local.emanon:9100']
 
   - job_name: 'pi'
     scrape_interval: 5s
     static_configs:
-    - targets: ['192.168.10.30:9100']
+    - targets: ['pi.local.emanon:9100']
 
   - job_name: 'tmp117'
     scrape_interval: 5s
     static_configs:
-    - targets: ['192.168.50.60:9100']
+    - targets: ['tmp117.local.emanon:9100']
   
   - job_name: 'coredns'
     scrape_interval: 5s
     static_configs:
-    - targets: ['192.168.5.1:9353']
+    - targets: ['r.local.emanon:9353']
 
   - job_name: 'SHP10'
     scrape_interval: 5s
     static_configs:
-    - targets: ['192.168.50.50:80']
+    - targets: ['homelabshp.local.emanon:80']
       labels:
         shp_device: 'Homelab'
-    - targets: ['192.168.50.51:80']
+    - targets: ['supermicroshp.local.emanon:80']
       labels:
         shp_device: 'Supermicro'
-    - targets: ['192.168.50.52:80']
+    - targets: ['brocadeshp.local.emanon:80']
       labels:
         shp_device: 'Brocade'
-    - targets: ['192.168.50.53:80']
+    - targets: ['qotomshp.local.emanon:80']
       labels:
         shp_device: 'Qotom'
-    - targets: ['192.168.50.54:80']
+    - targets: ['pishp.local.emanon:80']
       labels:
         shp_device: 'Raspberry'
     
   - job_name: 'kea'
     scrape_interval: 10s
     static_configs:
-    - targets: ['192.168.5.1:6764']
+    - targets: ['r.local.emanon:6764']

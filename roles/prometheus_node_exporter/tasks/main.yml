@@ -64,4 +64,4 @@
     permanent: yes
     state: enabled
     immediate: yes
-  when: host_firewalld_zone is defined
+  when: firewalld_zone is defined
