@@ -7,6 +7,7 @@
     group: emanon
     mode: u=rwx,g=,o=
   loop: "{{ podman_syncthing_directories }}"
+  become_user: "{{ primary_user_username }}"
 
 - name: Run syncthing podman container
   containers.podman.podman_container:
@@ -16,6 +17,11 @@
     volumes: "{{ podman_syncthing_volumes }}"
     restart_policy: unless-stopped
     state: started
+    user: 'root'
+    env:
+      PUID: "0"
+      PGID: "0"
+      TZ: Europe/London
   become_user: "{{ primary_user_username }}"
 
 - name: Open syncthing webui firewalld ports
