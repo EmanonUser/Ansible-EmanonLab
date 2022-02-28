@@ -1,6 +1,6 @@
 ---
 ## prometheus_node_exporter ##
-host_prometheus_node_exporter_interface_addr: "{{ grp_device.router.ipv4_addr }}"
+host_node_exporter_interface_addr: "{{ grp_device.router.ipv4_addr }}"
 
 ## ntpd ##
 host_ntpd_interface_ipv4: "{{ grp_device.router.ipv4_addr }}"

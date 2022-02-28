@@ -19,8 +19,8 @@
     - role: firewalld
       tags: [ firewalld, init ]
 
-    - role: prometheus_node_exporter
-      tags: [ prometheus_node_exporter, monitoring ]
+    - role: node_exporter
+      tags: [ node_exporter, monitoring ]
 
     - role: promtail
       tags: [ promtail, monitoring ]

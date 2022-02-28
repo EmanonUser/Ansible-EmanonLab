@@ -3,7 +3,7 @@ host_cpu_architecture: arm64
 
 
 ## prometheus_node_exporter ##
-host_prometheus_node_exporter_interface_addr: "{{ grp_device.pi.ipv4_addr }}"
+host_node_exporter_interface_addr: "{{ grp_device.pi.ipv4_addr }}"
 
 ## promtail ##
 host_promtail_loki_url: http://pi.local.emanon:4008
