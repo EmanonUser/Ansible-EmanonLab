@@ -10,6 +10,9 @@
     - role: fstrim
       tags: [ fstrim, init ]
     
+    - role: interfaces
+      tags: [ interfaces, init ]
+
     - role: vnstat
       tags: [ vnstat, init, monitoring ]
 

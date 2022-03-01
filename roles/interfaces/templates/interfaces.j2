@@ -1,24 +1,38 @@
-# This file describes the network interfaces available on your system
-# and how to activate them. For more information, see interfaces(5).
-
 source /etc/network/interfaces.d/*
 
-# The loopback network interface
 auto lo
 iface lo inet loopback
 
-# The primary network interface
-allow-hotplug {{ grp_device.router.wan_interface }}
-auto {{ grp_device.router.wan_interface }}
-iface {{ grp_device.router.wan_interface }} inet dhcp
-	dns-nameservers 127.0.0.1
+{% for interface in host_network_interfaces %}
+auto {{ interface.interface }}
+allow-hotplug {{ interface.interface }}
 
-iface {{ grp_device.router.wan_interface }} inet6 auto
+{% endfor %}
+{% for interface in host_network_interfaces %}{% if interface.ipv4 == True %}
+iface {{ interface.interface }} inet {{ interface.configuration.v4 }}
+	{% if interface.bonding.slaves is defined -%}
+	bond-slaves {% for slaves in interface.bonding.slaves %}{{ slaves }} {% endfor +%}
+	bond_mode {{ interface.bonding.mode }}
+	bond_miimon {{ interface.bonding.millim }}
+	{% endif -%}
+	{% if interface.configuration.v4 == 'static' -%}
+	{% for address in interface.addresses.v4 %}address {{ address }}
+	{% endfor -%}
+	{% if interface.gateway.v4 is defined %}gateway {{ interface.gateway.v4 }}
+	{% endif %}{% endif -%}
+	{% if interface.dns_servers.v4 is defined %}{% for dns_server in interface.dns_servers.v4 %}dns-nameservers {{ dns_server }}
+	{% endfor %}{% endif %}
 
-allow-hotplug {{ lacp_interface_name }}
-auto {{ lacp_interface_name }}
-iface {{ lacp_interface_name }} inet static
-	address {{ grp_device.router.ipv4_addr_cidr }}
-	bond-slaves {{ grp_device.router.lan_interfaces[0] }} {{ grp_device.router.lan_interfaces[1] }}
-	bond_mode 4
-	bond_miimon 100
+{% endif %}{% endfor %}
+
+{% for interface in host_network_interfaces %}{% if interface.ipv6 == True %}
+iface {{ interface.interface }} inet6 {{ interface.configuration.v6 }}
+	{% if interface.configuration.v6 == 'static' -%}
+	{% for address in interface.addresses.v6 %}address {{ address }}
+	{% endfor -%}
+	{% if interface.gateway.v6 is defined %}gateway {{ interface.gateway.v6 }}
+	{% endif %}{% endif -%}
+	{% if interface.dns_servers.v6 is defined %}{% for dns_server in interface.dns_servers.v6 %}dns-nameservers {{ dns_server }}
+	{% endfor %}{% endif %}
+
+{% endif %}{% endfor %}
