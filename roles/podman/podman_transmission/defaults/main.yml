@@ -8,6 +8,7 @@ podman_transmission_ports:
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
 
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+spe_firewalld_handling: "{{ host_spe_firewalld_handling | default(false) }}"
 podman_transmission_firewalld_ports: "{{ grp_podman_networking.transmission.webui_port }}/tcp"
 podman_transmission_firewalld_rich_rules: "{{ host_podman_transmission_firewalld_rich_rules }}"
 

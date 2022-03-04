@@ -43,9 +43,7 @@
     permanent: yes
     immediate: yes
     state: enabled
-  when:
-    - inventory_hostname == 'pi'
-    - grp_podman_networking.transmission.lan_access
+  when: [not spe_firewalld_handling, grp_podman_networking.syncthing.lan_access]
 
 - name: Close transmission firewalld ports
   ansible.posix.firewalld:
@@ -54,30 +52,8 @@
     permanent: yes
     immediate: yes
     state: disabled
-  when:
-    - inventory_hostname == 'pi'
-    - not grp_podman_networking.transmission.lan_access
+  when: [not spe_firewalld_handling, not grp_podman_networking.syncthing.lan_access]
 
-- name: Open transmission firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  loop: "{{ podman_transmission_firewalld_rich_rules }}"
-  when:
-    - inventory_hostname == 'laptop'
-    - grp_podman_networking.transmission.lan_access
-
-- name: Close transmission firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  loop: "{{ podman_transmission_firewalld_rich_rules }}"
-  when:
-    - inventory_hostname == 'laptop'
-    - not grp_podman_networking.transmission.lan_access
+- name: Import firewalld tasks rules handling
+  include_tasks: firewalld.yml
+  when: spe_firewalld_handling

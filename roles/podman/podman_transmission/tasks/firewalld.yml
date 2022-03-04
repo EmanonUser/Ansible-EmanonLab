@@ -1,0 +1,20 @@
+---
+- name: Open transmission firewalld ports to admin devices
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop: "{{ podman_transmission_firewalld_rich_rules }}"
+  when: grp_podman_networking.transmission.lan_access
+
+- name: Close transmission firewalld ports to admin devices
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  loop: "{{ podman_transmission_firewalld_rich_rules }}"
+  when: not grp_podman_networking.transmission.lan_access
