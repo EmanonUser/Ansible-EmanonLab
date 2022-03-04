@@ -19,7 +19,7 @@ grp_device:
     nas:
       ipv4_addr:  192.168.10.25
       ipv4_addr_cidr: 192.168.10.25/24
-      hw_addr: "e2:cc:32:4b:17:b0"
+      hw_addr: "ec:cc:32:4b:17:b0"
       hostname: nas
       lan_interfaces: [eno1, eno2]
     ipmi:
