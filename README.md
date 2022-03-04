@@ -15,7 +15,8 @@ TODO:
     - promtail_loki_url doesn't include a tcp port variable
     - nfs_share, add vers=4.1 (.2) for incomming nas, maybe rename the role accordingly
     - configure zed ( zfs )
-    - rework samba_server, rename to smbd ?
     - verify tgtd security
     - fix automatic mount of encrypted datasets at boot
     - conf journald
+    - unify haproxy/zrepl configs
+    - fix shadow copies, only work with zrepl_default_
