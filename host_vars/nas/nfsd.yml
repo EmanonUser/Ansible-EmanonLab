@@ -8,6 +8,11 @@ host_nfs_exports:
       - client: "{{ grp_device.arch.ipv4_addr }}"
         options: "(rw,sync,fsid=0,no_subtree_check,crossmnt)"
 
+  - export: /vault/emanonlab
+    path: /srv/nfs4/vault/emanonlab
+    authorized_clients:
+      - client: "{{ grp_device.arch.ipv4_addr }}"
+
   - export: /vault/emanonlab/tmp
     path: /srv/nfs4/vault/emanonlab/tmp
     authorized_clients:
