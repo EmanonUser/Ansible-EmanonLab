@@ -15,5 +15,6 @@ export SYSTEMD_EDITOR=/usr/bin/vim
 alias ls="ls --color"
 alias ll="ls --color --group-directories-first -lh"
 alias la="ls --color --group-directories-first -Alh --ignore='[^.]*'"
+alias ip="ip --color=auto"
 alias grep="grep --color"
 eval "$(starship init zsh)"
