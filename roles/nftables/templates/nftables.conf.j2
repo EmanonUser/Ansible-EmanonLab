@@ -5,6 +5,7 @@ flush ruleset
 define WAN = {{ grp_device.router.wan_interface }}
 define LAN = {{ lacp_interface_name }}
 define WG = {{ wireguard_interface_name }}
+define HE = he-ipv6
 
 table ip routing {
 	chain prerouting {
@@ -66,7 +67,7 @@ table inet firewall {
 		ip saddr 192.168.1.1 tcp dport 22 counter accept # Wireguard from WiFi, this is the result of double nat
 		ct state invalid counter drop
 		ip saddr @IANA_BOGON_IPV4 counter drop  # Reject special-purpose ipv4 addresses
-		ip6 saddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv4 addresses
+		ip6 saddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv6 addresses
 	}
 
 
@@ -83,7 +84,7 @@ table inet firewall {
 	chain forward_filter {
 		ct state invalid counter drop
 		oifname $WAN ip daddr @IANA_BOGON_IPV4 counter drop # Reject special-purpose ipv4 addresses to WAN from LAN
-		oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv4 addresses to WAN from LAN
+		oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv6 addresses to WAN from LAN
 	}
 
 
@@ -98,12 +99,12 @@ table inet firewall {
 		type filter hook input priority filter; policy drop;
 		iifname "lo" ip saddr 127.0.0.0/8 counter accept
 		iifname "lo" ip6 saddr ::1 counter accept
-		iifname vmap { $WAN : jump wan_input, $LAN : jump lan_input, $WG : accept }
+		iifname vmap { $WAN : jump wan_input, $HE : jump wan_input , $LAN : jump lan_input, $WG : accept }
 		ct state { established, related } counter accept
 	}
 	chain forward {
 		type filter hook forward priority filter; policy drop;
-		iifname vmap { $WAN : jump wan_forward, $LAN : jump lan_forward, $WG : accept }
+		iifname vmap { $WAN : jump wan_forward, $HE : jump wan_forward , $LAN : jump lan_forward, $WG : accept }
 		ct state { established, related } counter accept
 	}
 	chain output {
