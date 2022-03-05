@@ -43,7 +43,7 @@ table inet firewall {
 		icmp type echo-request ct state new counter accept
 	}
 	chain lan_input {
-		udp dport { 53, 67, 123 } ct state new counter accept
+		udp dport { 53, 67, 123, 547 } ct state new counter accept
 		tcp dport { 22, 53, 9100 } ct state new counter accept
 		ip protocol ospf ct state new counter accept
 		icmpv6 type { echo-request, echo-reply, nd-neighbor-solicit, nd-neighbor-advert } counter accept

@@ -15,10 +15,11 @@
     state: present
   notify: ["Apt update", "Apt upgrade"]
 
-- name: Install isc-kea dhcp server (IPv4 only (for now))
+- name: Install isc-kea dhcp servers IPv4 + IPv6
   ansible.builtin.apt:
     name:
       - isc-kea-dhcp4-server
+      - isc-kea-dhcp6-server
       - isc-kea-admin
       - isc-kea-ctrl-agent
       - isc-kea-doc
@@ -31,15 +32,25 @@
     state: present
   notify: ["Enable kea-ctrl-agent service", "Start kea-ctrl-agent service"]
 
-- name: Template kea-dhcp4 server configuration
+- name: Template kea-dhcp4 server configurations 
   ansible.builtin.template:
-    src: kea-dhcp4.conf.j2
+    src: "kea-dhcp4.conf.j2"
     dest: /etc/kea/kea-dhcp4.conf
     owner:  _kea
     group:  _kea
     mode: u=rw,g=r,o=r
     validate: /usr/sbin/kea-dhcp4 -t %s
   notify: Reload kea-dhcp4 service
+
+- name: Template kea-dhcp6 server configurations
+  ansible.builtin.template:
+    src: "kea-dhcp6.conf.j2"
+    dest: /etc/kea/kea-dhcp6.conf
+    owner:  _kea
+    group:  _kea
+    mode: u=rw,g=r,o=r
+    # validate: /usr/sbin/kea-dhcp6 -t %s
+  notify: Reload kea-dhcp6 service
 
 - name: Template kea-ctrl-agent configuration
   ansible.builtin.template:

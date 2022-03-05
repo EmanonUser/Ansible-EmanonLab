@@ -85,3 +85,52 @@ host_isc_kea_dhcp4:
     options_data:
       - option_data: "routers"
         data: ["192.168.100.1"]
+
+host_isc_kea_dhcp6:
+  - subnet: "{{ grp_ipv6_prefix }}:10::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:10::1000"
+        end: "{{ grp_ipv6_prefix }}:10::2000"
+    reservations:
+      - ipv6_addr: "{{ grp_device.nas.ipv6_addr }}"
+        hw_addr: "{{ grp_device.nas.hw_addr }}" 
+        hostname: "{{ grp_device.nas.hostname }}"
+      - ipv6_addr: "{{ grp_device.ipmi.ipv6_addr }}"
+        hw_addr: "{{ grp_device.ipmi.hw_addr }}" 
+        hostname: "{{ grp_device.ipmi.hostname }}"
+      - ipv6_addr: "{{ grp_device.pi.ipv6_addr }}"
+        hw_addr: "{{ grp_device.pi.hw_addr }}"
+        hostname: "{{ grp_device.pi.hostname }}"
+      - ipv6_addr: "{{ grp_device.aclite.ipv6_addr }}"
+        hw_addr: "{{ grp_device.aclite.hw_addr }}"
+        hostname: "{{ grp_device.aclite.hostname }}"
+
+  - subnet: "{{ grp_ipv6_prefix }}:20::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:20::1000"
+        end: "{{ grp_ipv6_prefix }}:20::2000"
+    reservations:
+      - ipv6_addr: "{{ grp_device.arch.ipv6_addr }}"
+        hw_addr: "{{ grp_device.arch.hw_addr }}"
+        hostname: "{{ grp_device.arch.hostname }}"
+  
+  - subnet: "{{ grp_ipv6_prefix }}:50::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:50::1000"
+        end: "{{ grp_ipv6_prefix }}:50::2000"
+    reservations: []
+  
+  - subnet: "{{ grp_ipv6_prefix }}:70::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:70::1000"
+        end: "{{ grp_ipv6_prefix }}:70::2000"
+    reservations:
+      - ipv6_addr: "{{ grp_device.printer.ipv6_addr }}"
+        hw_addr: "{{ grp_device.printer.hw_addr }}"
+        hostname: "{{ grp_device.printer.hostname }}"
+
+  - subnet: "{{ grp_ipv6_prefix }}:100::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:100::1000"
+        end: "{{ grp_ipv6_prefix }}:100::2000"
+    reservations: []
