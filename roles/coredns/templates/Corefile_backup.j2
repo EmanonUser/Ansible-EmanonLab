@@ -1,6 +1,6 @@
 (snip) {
     bind 127.0.0.1
-    bind {{ grp_device.router.ipv4_addr }}
+    bind {{ ansible_bond0.device }}
     any
     minimal
     log
