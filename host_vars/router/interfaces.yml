@@ -6,7 +6,7 @@ host_network_interfaces:
       configuration: 
         v4: dhcp
       dns_servers: 
-        v4: ["127.0.0.1"]
+        v4: ["127.0.0.1", "9.9.9.9", "1.1.1.1"]
 
     - interface: "bond0"
       ipv4: yes
