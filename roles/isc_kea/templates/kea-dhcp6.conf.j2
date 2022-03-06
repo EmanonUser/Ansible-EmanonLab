@@ -84,9 +84,9 @@
           
           {
             "hw-address": "{{ reservation.hw_addr }}",
-            "ip-addresses": ["{{ reservation.ipv6_addr }}"],
+            "ip-addresses": [{% for ipv6_addr in reservation.ipv6_addr %}"{{ ipv6_addr }}"{% if not loop.last %}, {% endif %}{% endfor %}],
             "hostname": "{{ reservation.hostname }}"
-          }{%if not loop.last %},{% endif %}{% endfor %}
+          }{% if not loop.last %},{% endif %}{% endfor %}
 
         ]
       }{% if not loop.last %},{% endif %}{% endfor %}
@@ -94,4 +94,3 @@
     ]
   }
 }
-
