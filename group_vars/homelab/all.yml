@@ -4,8 +4,8 @@ grp_device:
     router:
       ipv4_addr: 192.168.5.1
       ipv4_addr_cidr: 192.168.5.1/24
-      ipv6_addr: 2001:470:72a9:5::1
-      ipv6_addr_cidr: 2001:470:72a9:5::1/64
+      ipv6_addr: "{{ grp_ipv6_prefix }}:5::1"
+      ipv6_addr_cidr: "{{ grp_ipv6_prefix }}:5::1/64"
       hostname: r
       wan_interface: enp1s0
       lan_interfaces: [enp2s0, enp3s0]
@@ -69,7 +69,7 @@ grp_device:
       hostname: tmp117
     printer:
       ipv4_addr: 192.168.70.5
-      ipv6_addr: 2001:470:72a9:70::5
+      ipv6_addr: "{{ grp_ipv6_prefix }}:70::5"
       hw_addr: "00:21:5a:e5:51:f9"
       hostname: printer
 
@@ -128,4 +128,4 @@ grp_nfs_mount_dir: /mnt/vault
 grp_dns_server_upstream_ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
 grp_dns_server_upstream_port: "10053"
 
-grp_ipv6_prefix: 2001:470:72a9 # /48
+grp_ipv6_prefix: 2001:470:c887 # /48
