@@ -32,7 +32,7 @@
     state: present
   notify: ["Enable kea-ctrl-agent service", "Start kea-ctrl-agent service"]
 
-- name: Template kea-dhcp4 server configurations 
+- name: Template kea-dhcp4 server configurations
   ansible.builtin.template:
     src: "kea-dhcp4.conf.j2"
     dest: /etc/kea/kea-dhcp4.conf

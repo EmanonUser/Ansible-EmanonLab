@@ -2,20 +2,13 @@
 kea_version: "{{ host_isc_kea_version | default('kea-2-1') }}"                                        ## https://cloudsmith.io/~isc/repos/
 cloudsmith_gpg_key: "{{ host_isc_kea_cloudsmith_gpg_key | default('gpg.32D53EC4807EC10E.key') }}"     ## For kea-1-9 https://cloudsmith.io/~isc/repos/kea-2-1/signing/
 
-isc_kea_dns_ipv4_servers: 
-  - "{{ grp_dns_ipv4_server }}"
-isc_kea_ntp_ipv4_servers: 
-  - "{{ grp_ntp_ipv4_server }}"
-isc_kea_domains_search: 
-  - "{{ grp_local_domain }}"
+isc_kea_dns_ipv4_servers: ["{{ grp_dns_ipv4_server }}"]
+isc_kea_ntp_ipv4_servers: ["{{ grp_ntp_ipv4_server }}"]
 
-isc_kea_dns_ipv6_servers: 
-  - "{{ grp_dns_ipv6_server }}"
-isc_kea_ntp_ipv6_servers: 
-  - "{{ grp_ntp_ipv6_server }}"
-isc_kea_domains_search: 
-  - "{{ grp_local_domain }}"
+isc_kea_dns_ipv6_servers: ["{{ grp_dns_ipv6_server }}"]
+isc_kea_ntp_ipv6_servers: ["{{ grp_ntp_ipv6_server }}"]
 
+isc_kea_domains_search: ["{{ grp_local_domain }}"]
 
 isc_kea_ctrl_agent_address: "{{ host_isc_kea_ctrl_agent_address | default('::') }}" # Bind to all interfaces in IPv4 + IPv6, losing localhost bindind no solution
 isc_kea_ctrl_agent_port: "{{ host_isc_kea_ctrl_agent_port | default('8000') }}"
