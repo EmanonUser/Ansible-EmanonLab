@@ -39,6 +39,11 @@ grp_device:
       ipv6_addr: "{{ grp_ipv6_prefix }}:10::30"
       hw_addr: dc:a6:32:25:7f:cc
       hostname: pi
+    pi2:
+      ipv4_addr: 192.168.100.31
+      ipv6_addr: "{{ grp_ipv6_prefix }}:100::31"
+      hw_addr: 00:e0:4c:68:04:83
+      hostname: pi
     shp1:
       ipv4_addr: 192.168.50.50
       hw_addr: "a4:cf:12:d7:91:6d"
