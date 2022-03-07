@@ -20,6 +20,8 @@ iface {{ interface.interface }} inet {{ interface.configuration.v4 }}
 	{% endfor -%}
 	{% if interface.gateway.v4 is defined %}gateway {{ interface.gateway.v4 }}
 	{% endif %}{% endif -%}
+	{% if interface.hwaddress is defined %}hwaddress {{ interface.hwaddress }}
+	{% endif -%}
 	{% if interface.dns_servers.v4 is defined %}{% for dns_server in interface.dns_servers.v4 %}dns-nameservers {{ dns_server }}
 	{% endfor %}{% endif %}
 

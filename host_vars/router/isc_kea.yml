@@ -81,7 +81,67 @@ host_isc_kea_dhcp4:
     pools:
       - start: 192.168.100.100
         end: 192.168.100.200
-    reservations: []
+    reservations:
+      - ipv4_addr: "{{ grp_device.pi2.ipv4_addr }}"
+        hw_addr: "{{ grp_device.pi2.hw_addr }}"
+        hostname: "{{ grp_device.pi2.hostname }}"
     options_data:
       - option_data: "routers"
         data: ["192.168.100.1"]
+
+host_isc_kea_dhcp6:
+  - subnet: "{{ grp_ipv6_prefix }}:10::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:10::aaaa"
+        end: "{{ grp_ipv6_prefix }}:10::ffff"
+    options_data: []
+    reservations:
+      - ipv6_addr: ["{{ grp_device.nas.ipv6_addr }}"]
+        hw_addr: "{{ grp_device.nas.hw_addr }}" 
+        hostname: "{{ grp_device.nas.hostname }}"
+      - ipv6_addr: ["{{ grp_device.ipmi.ipv6_addr }}"]
+        hw_addr: "{{ grp_device.ipmi.hw_addr }}" 
+        hostname: "{{ grp_device.ipmi.hostname }}"
+      - ipv6_addr: ["{{ grp_device.pi.ipv6_addr }}"]
+        hw_addr: "{{ grp_device.pi.hw_addr }}"
+        hostname: "{{ grp_device.pi.hostname }}"
+      - ipv6_addr: ["{{ grp_device.aclite.ipv6_addr }}"]
+        hw_addr: "{{ grp_device.aclite.hw_addr }}"
+        hostname: "{{ grp_device.aclite.hostname }}"
+
+  - subnet: "{{ grp_ipv6_prefix }}:20::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:20::aaaa"
+        end: "{{ grp_ipv6_prefix }}:20::ffff"
+    options_data: []
+    reservations:
+      - ipv6_addr: ["{{ grp_device.arch.ipv6_addr }}", "{{ grp_ipv6_prefix }}:20::beef"]
+        duid: "{{ grp_device.arch.duid }}"
+        hostname: "{{ grp_device.arch.hostname }}"
+  
+  - subnet: "{{ grp_ipv6_prefix }}:50::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:50::aaaa"
+        end: "{{ grp_ipv6_prefix }}:50::ffff"
+    options_data: []
+    reservations: []
+  
+  - subnet: "{{ grp_ipv6_prefix }}:70::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:70::aaaa"
+        end: "{{ grp_ipv6_prefix }}:70::ffff"
+    options_data: []
+    reservations:
+      - ipv6_addr: ["{{ grp_device.printer.ipv6_addr }}"]
+        hw_addr: "{{ grp_device.printer.hw_addr }}"
+        hostname: "{{ grp_device.printer.hostname }}"
+
+  - subnet: "{{ grp_ipv6_prefix }}:100::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:100::aaaa"
+        end: "{{ grp_ipv6_prefix }}:100::ffff"
+    options_data: []
+    reservations:
+      - ipv6_addr: ["{{ grp_device.pi2.ipv6_addr }}"]
+        hw_addr: "{{ grp_device.pi2.hw_addr }}"
+        hostname: "{{ grp_device.pi2.hostname }}"

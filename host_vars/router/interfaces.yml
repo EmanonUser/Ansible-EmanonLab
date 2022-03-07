@@ -6,16 +6,18 @@ host_network_interfaces:
       configuration: 
         v4: dhcp
       dns_servers: 
-        v4: ["127.0.0.1"]
+        v4: ["127.0.0.1", "9.9.9.9", "1.1.1.1"]
 
     - interface: "bond0"
       ipv4: yes
-      ipv6: no
+      ipv6: yes
       configuration: 
         v4: static
+        v6: static
       bonding:
         slaves: "{{ grp_device.router.lan_interfaces }}"
         mode: 4
         millim: 100
       addresses:
-        v4: ["192.168.5.1/24"]
+        v4: ["{{ grp_device.router.ipv4_addr_cidr }}"]
+        v6: ["{{ grp_device.router.ipv6_addr_cidr }}"]

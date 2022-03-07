@@ -1,6 +1,6 @@
 (snip) {
     bind 127.0.0.1 ::1
-    bind {{ grp_device.router.ipv4_addr }}
+    bind {{ ansible_bond0.device }}
     any
     minimal
     log
@@ -13,13 +13,13 @@
 
 local.emanon:{{ coredns_port }} {
     import snip
-    prometheus {{ grp_device.router.ipv4_addr }}:{{ coredns_prometheus_port }}
+    prometheus [::]:{{ coredns_prometheus_port }}
     file /opt/coredns/master.db
 }
 
 .:{{ coredns_port }} {
     import snip
-    prometheus {{ grp_device.router.ipv4_addr }}:{{ coredns_prometheus_port }}
+    prometheus [::]:{{ coredns_prometheus_port }}
     forward . {{ host_coredns_upstream_dns_server.ipv4_addr }}:{{ host_coredns_upstream_dns_server.port }} {
         except example.org
         except local.emanon

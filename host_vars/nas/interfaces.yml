@@ -10,3 +10,4 @@ host_network_interfaces:
         slaves: "{{ grp_device.nas.lan_interfaces }}"
         mode: 4
         millim: 100
+      hwaddress: ec:cc:32:4b:17:b0

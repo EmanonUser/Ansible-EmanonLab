@@ -2,79 +2,80 @@
 grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch 
 grp_device:
     router:
-      ipv4_addr:  192.168.5.1
-      ipv4_addr_cidr:  192.168.5.1/24
+      ipv4_addr: 192.168.5.1
+      ipv4_addr_cidr: 192.168.5.1/24
+      ipv6_addr: "{{ grp_ipv6_prefix }}:5::1"
+      ipv6_addr_cidr: "{{ grp_ipv6_prefix }}:5::1/64"
       hostname: r
       wan_interface: enp1s0
       lan_interfaces: [enp2s0, enp3s0]
     brocade:
-      ipv4_addr:  192.168.5.2
-      ipv4_addr_cidr: 192.168.5.2/24
+      ipv4_addr: 192.168.5.2
+      ipv6_addr: "{{ grp_ipv6_prefix }}:5::2"
       hostname: sw
     arch:
-      ipv4_addr:  192.168.20.20
-      ipv4_addr_cidr: 192.168.20.20/24
+      ipv4_addr: 192.168.20.20
+      ipv6_addr: "{{ grp_ipv6_prefix }}:20::20"
       hw_addr: "00:d8:61:57:9c:fb"
+      duid: "00:04:70:26:38:68:14:d5:5f:5d:27:22:49:67:86:fa:23:40"
       hostname: arch
     nas:
-      ipv4_addr:  192.168.10.25
-      ipv4_addr_cidr: 192.168.10.25/24
+      ipv4_addr: 192.168.10.25
+      ipv6_addr: "{{ grp_ipv6_prefix }}:10::25"
       hw_addr: "ec:cc:32:4b:17:b0"
       hostname: nas
       lan_interfaces: [eno1, eno2]
     ipmi:
-      ipv4_addr:  192.168.10.26
-      ipv4_addr_cidr: 192.168.10.26/24
+      ipv4_addr: 192.168.10.26
+      ipv6_addr: "{{ grp_ipv6_prefix }}:10::26"
       hw_addr: "ac:1f:6b:77:c8:78"
       hostname: ipmi 
     aclite:
-      ipv4_addr:  192.168.10.40
-      ipv4_addr_cidr: 192.168.10.40/24
+      ipv4_addr: 192.168.10.40
+      ipv6_addr: "{{ grp_ipv6_prefix }}:10::40"
       hw_addr: "b4:fb:e4:90:49:50"
       hostname: ubnt
     pi:
-      ipv4_addr:  192.168.10.30
-      ipv4_addr_cidr: 192.168.10.30/24
+      ipv4_addr: 192.168.10.30
+      ipv6_addr: "{{ grp_ipv6_prefix }}:10::30"
       hw_addr: dc:a6:32:25:7f:cc
+      hostname: pi
+    pi2:
+      ipv4_addr: 192.168.100.31
+      ipv6_addr: "{{ grp_ipv6_prefix }}:100::31"
+      hw_addr: 00:e0:4c:68:04:83
       hostname: pi
     shp1:
       ipv4_addr: 192.168.50.50
-      ipv4_addr_cidr: 192.168.50.50/24
       hw_addr: "a4:cf:12:d7:91:6d"
       hostname: homelabshp
     shp2:
       ipv4_addr: 192.168.50.51
-      ipv4_addr_cidr: 192.168.50.51/24
       hw_addr: "a4:cf:12:d7:8f:48"
       hostname: brocadeshp
     shp3:
       ipv4_addr: 192.168.50.52
-      ipv4_addr_cidr: 192.168.50.52/24
       hw_addr: "e8:db:84:89:1b:35"
       hostname: supermicroshp
     shp4:
       ipv4_addr: 192.168.50.53
-      ipv4_addr_cidr: 192.168.50.53/24
       hw_addr: "e8:db:84:89:24:61"
       hostname: qotomshp
     shp5:
       ipv4_addr: 192.168.50.54
-      ipv4_addr_cidr: 192.168.50.54/24
       hw_addr: "e8:db:84:88:3a:fa"
       hostname: pishp
     hs110:
       ipv4_addr: 192.168.50.55
-      ipv4_addr_cidr: 192.168.50.55/24
       hw_addr: "50:c7:bf:0a:f3:44"
       hostname: hs110
     tmp117:
       ipv4_addr: 192.168.50.60
-      ipv4_addr_cidr: 192.168.50.60/24
       hw_addr: "c8:2b:96:09:17:b0"
       hostname: tmp117
     printer:
       ipv4_addr: 192.168.70.5
-      ipv4_addr_cidr: 192.168.70.5/24
+      ipv6_addr: "{{ grp_ipv6_prefix }}:70::5"
       hw_addr: "00:21:5a:e5:51:f9"
       hostname: printer
 
@@ -120,8 +121,10 @@ grp_local_domain: local.emanon
 grp_domain_name: emanon.moe
 grp_subdomain: iwakura
 
-grp_dns_server: "{{ grp_device.router.ipv4_addr }}"
-grp_ntp_server: "{{ grp_device.router.ipv4_addr }}"
+grp_dns_ipv4_server: "{{ grp_device.router.ipv4_addr }}"
+grp_ntp_ipv4_server: "{{ grp_device.router.ipv4_addr }}"
+grp_dns_ipv6_server: "{{ grp_device.router.ipv6_addr }}"
+grp_ntp_ipv6_server: "{{ grp_device.router.ipv6_addr }}"
 grp_gandi_api_key: "{{ grp_vault_gandi_api_key }}"
 
 grp_nfs_server_target: "{{ grp_device.nas.hostname }}.{{ grp_local_domain }}"
@@ -130,3 +133,5 @@ grp_nfs_mount_dir: /mnt/vault
 
 grp_dns_server_upstream_ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
 grp_dns_server_upstream_port: "10053"
+
+grp_ipv6_prefix: 2001:470:c86d # /48

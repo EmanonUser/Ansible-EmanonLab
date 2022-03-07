@@ -20,3 +20,4 @@ TODO:
     - conf journald
     - unify haproxy/zrepl configs
     - fix shadow copies, only work with zrepl_default_
+    - add upstream IPv6 servers to coredns when the tunnel will be stable ( or native IPv6 )

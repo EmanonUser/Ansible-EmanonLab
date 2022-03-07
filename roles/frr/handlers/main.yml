@@ -9,7 +9,7 @@
     name: frr.service
     state: started
 
-- name: Reload frrRouting service
+- name: Reload frrouting service
   ansible.builtin.systemd:
     name: frr.service
     state: reloaded

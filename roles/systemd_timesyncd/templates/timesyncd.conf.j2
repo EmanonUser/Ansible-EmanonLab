@@ -12,7 +12,7 @@
 # See timesyncd.conf(5) for details.
 
 [Time]
-NTP= {{ grp_ntp_server }}
+NTP= {{ grp_ntp_ipv4_server }} {{ grp_ntp_ipv6_server }} 
 FallbackNTP=0.debian.pool.ntp.org 1.debian.pool.ntp.org 2.debian.pool.ntp.org 3.debian.pool.ntp.org
 RootDistanceMaxSec=5
 PollIntervalMinSec=32
