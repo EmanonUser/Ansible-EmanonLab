@@ -7,11 +7,11 @@ define LAN = {{ lacp_interface_name }}
 define WG = {{ wireguard_interface_name }}
 define HE = he-ipv6
 
-table ip routing {
+table inet routing {
 	chain prerouting {
 		type nat hook prerouting priority dstnat; policy accept
-		iifname $WAN tcp dport 22000 dnat to {{ grp_device.pi.ipv4_addr }}:22000 # Syncthing DNAT
-		iifname $WAN tcp dport 8000 dnat to {{ grp_device.arch.ipv4_addr }}:8000 # Temporary web server DNAT
+		iifname $WAN tcp dport 22000 dnat ip to {{ grp_device.pi.ipv4_addr }}:22000 # Syncthing DNAT
+		iifname $WAN tcp dport 8000 dnat ip to {{ grp_device.arch.ipv4_addr }}:8000 # Temporary web server DNAT
 	}
 
 	chain postrouting {
@@ -35,65 +35,80 @@ table inet firewall {
 		elements = { ::/128, ::1/128, ::ffff:0:0/96, 64:ff9b:1::/48, 100::/64, 2001::/23, 2001:db8::/32, fc00::/7, fe80::/10 }
 	}
 
-
 	chain wan_input {
-		jump input_filter
+		jump wan_input_log
+		jump wan_input_filter
 		tcp dport ssh ct state new log level notice prefix "New SSH connexion from WAN: " counter accept
 		udp dport {{ wireguard_server_port }} ct state new log level notice prefix "New Wireguard connexion from WAN: " counter accept
+		ip protocol ipv6 ct state new counter accept
+	}
+
+	chain wan_input_log {
 		icmp type echo-request icmp sequence {{ is_alive_echo_request_count }} log level notice prefix "isAlive Ping: " counter accept
-		icmp type echo-request ct state new counter accept
+		icmpv6 type echo-request icmpv6 sequence {{ is_alive_echo_request_count }} log level notice prefix "isAlive Ping: " counter accept
 	}
-	chain lan_input {
-		udp dport { 53, 67, 123, 547 } ct state new counter accept
-		tcp dport { 22, 53, 9100 } ct state new counter accept
-		ip protocol ospf ct state new counter accept
-		icmpv6 type { echo-request, echo-reply, nd-neighbor-solicit, nd-neighbor-advert } counter accept
-		icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } counter accept
-		ct state invalid counter drop
-	}
-	chain input_filter {
+
+	chain wan_input_filter {
 		tcp dport ssh ct state new limit rate over 100/second counter drop
-		icmp type echo-request limit rate over 10/second counter drop
-		icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } limit rate over 10/second counter drop
-		icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } limit rate over 10/second counter drop
-		icmpv6 type { echo-request, nd-neighbor-solicit, nd-neighbor-advert } counter accept
-		icmpv6 type { nd-router-solicit, nd-router-advert, mld-listener-query } counter accept
+		icmp type { echo-request, timestamp-request, destination-unreachable } limit rate over 10/second counter drop
+		icmp type { echo-request, timestamp-request, destination-unreachable } counter accept
+		icmp type { time-exceeded, parameter-problem } limit rate over 10/second counter drop
+		icmp type { time-exceeded, parameter-problem } counter accept
+		icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } limit rate over 10/second counter drop
+		icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } counter accept
+		icmpv6 type { nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } limit rate over 10/second counter drop
+		icmpv6 type { nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } counter accept
+		icmpv6 type { mld-listener-query, mld-listener-report, mld-listener-reduction } limit rate over 10/second counter drop
+		icmpv6 type { mld-listener-query, mld-listener-report, mld-listener-reduction } counter accept
 		tcp flags ne syn ct state new log level notice prefix "TCP flags not a SYN " counter drop
 		tcp flags & (syn|fin) eq (syn|fin) log level notice prefix "TCP flags SYN + FIN " counter drop
 		tcp flags & (syn|rst) eq (syn|rst) log level notice prefix "TCP flags SYN + RST " counter drop
 		tcp flags & (fin|syn|rst|psh|ack|urg) lt (fin) log level notice prefix "NO TCP flags NULL " counter drop
 		tcp flags & (fin|syn|rst|psh|ack|urg) eq (fin|psh|urg) log prefix "TCP flags FIN + PSH + URG " counter drop
-		ip saddr 192.168.1.1 udp dport 51820 counter accept # Wireguard from WiFi, this is the result of double nat
-		ip saddr 192.168.1.1 tcp dport 22 counter accept # Wireguard from WiFi, this is the result of double nat
+		ip saddr 192.168.1.1 udp dport 51820 counter accept 				# Wireguard from LAN, this is the result of double nat
+		ip saddr 192.168.1.1 tcp dport 22 counter accept 					# SSH from LAN, this is the result of double nat
 		ct state invalid counter drop
 		ip saddr @IANA_BOGON_IPV4 counter drop  # Reject special-purpose ipv4 addresses
 		ip6 saddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv6 addresses
 	}
 
+	chain lan_input {
+		tcp dport { ssh, 9100 } ct state new counter accept
+		udp dport { domain, bootps, ntp, dhcpv6-server } ct state new counter accept
+		icmp type { echo-request, timestamp-request, destination-unreachable } ct state new counter accept
+		icmp type { time-exceeded, parameter-problem } counter accept
+		icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } ct state new counter accept
+		icmpv6 type { nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } ct state new counter accept
+		icmpv6 type { mld-listener-query, mld-listener-report, mld-listener-reduction } ct state new counter accept
+		ip protocol ospf ct state new counter accept
+		ct state invalid counter drop
+	}
 
 	chain wan_forward {
 		oifname $LAN ip daddr {{ grp_device.pi.ipv4_addr }} tcp dport 22000 counter accept # Syncthing Port Forwarding
 		oifname $LAN ip daddr {{ grp_device.arch.ipv4_addr }} tcp dport 8000 counter accept # Temporary web server Port Forwading
+		oifname $LAN ip6 daddr {{ grp_device.pi.ipv6_addr }} tcp dport 22000 counter accept # Syncthing Port Forwarding
+		oifname $LAN ip6 daddr {{ grp_device.arch.ipv6_addr }} tcp dport 8000 counter accept # Temporary web server Port Forwading
 		jump forward_filter
 	}
+
 	chain lan_forward {
 		ip saddr {{ grp_device.arch.ipv4_addr }} ip daddr 192.168.1.1 counter accept # Accept from admin to FAI modem
 		oifname $WAN ct state new counter accept # WAN traffic forwading
 		jump forward_filter
 	}
+
 	chain forward_filter {
 		ct state invalid counter drop
 		oifname $WAN ip daddr @IANA_BOGON_IPV4 counter drop # Reject special-purpose ipv4 addresses to WAN from LAN
 		oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv6 addresses to WAN from LAN
 	}
 
-
 	chain output_filter {
 		ct state invalid counter drop
 		oifname $WAN ip daddr @IANA_BOGON_IPV4 counter reject with icmpx type admin-prohibited  # Reject special-purpose ipv4 addresses to WAN from local
 		oifname $WAN ip6 daddr @IANA_BOGON_IPV6 counter reject with icmpx type admin-prohibited # Reject special-purpose ipv6 addresses to WAN from local
 	}
-
 
 	chain input {
 		type filter hook input priority filter; policy drop;
@@ -102,14 +117,17 @@ table inet firewall {
 		iifname vmap { $WAN : jump wan_input, $HE : jump wan_input , $LAN : jump lan_input, $WG : accept }
 		ct state { established, related } counter accept
 	}
+
 	chain forward {
 		type filter hook forward priority filter; policy drop;
 		iifname vmap { $WAN : jump wan_forward, $HE : jump wan_forward , $LAN : jump lan_forward, $WG : accept }
 		ct state { established, related } counter accept
 	}
+
 	chain output {
 		type filter hook output priority filter; policy drop;
-		icmpv6 type { 1-4, 128-136 } counter accept         # Accept icmpv6 before ct state invalid, multicast is tagged as invalid
+		icmpv6 type { 1-4, 128-136 } counter accept       # Accept icmpv6 before ct state invalid, multicast is tagged as invalid
+		ip protocol ipv6 ct state new counter accept
 		oifname $WAN ip daddr 192.168.1.1 counter accept    # Don't Block SSH from ndd
 		jump output_filter
 		ct state { established, related, new } counter accept
