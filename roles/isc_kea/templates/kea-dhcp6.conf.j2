@@ -26,7 +26,8 @@
       "type": "memfile",
       "persist": true,
       "name": "/var/lib/kea/dhcp6.leases",
-      "lfc-interval": 3600
+      "lfc-interval": 1800,
+      "max-row-errors": 100
     },
     "loggers": [
       {
@@ -45,9 +46,10 @@
         "debuglevel": 0
       }
     ],
-    "valid-lifetime": 4000,
+    "valid-lifetime": 6000,
     "renew-timer": 1000,
     "rebind-timer": 2000,
+    "preferred-lifetime": 3000,
     "option-data": [
       {
         "name": "unicast",
