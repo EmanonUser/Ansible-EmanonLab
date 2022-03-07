@@ -43,6 +43,7 @@ frontend main-frontend
 	http-response set-header X-Content-Type-Options nosniff
 	http-response set-header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;"
 	http-request deny if HTTP_1.0
+	http-request redirect scheme https unless { ssl_fc }
 
 {% for service, value in grp_podman_networking.items() %}
 {% if not value.lan_access %}
