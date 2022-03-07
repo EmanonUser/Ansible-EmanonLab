@@ -92,11 +92,11 @@ host_isc_kea_dhcp4:
 host_isc_kea_dhcp6:
   - subnet: "{{ grp_ipv6_prefix }}:10::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:10::1000"
-        end: "{{ grp_ipv6_prefix }}:10::2000"
+      - start: "{{ grp_ipv6_prefix }}:10::aaaa"
+        end: "{{ grp_ipv6_prefix }}:10::ffff"
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ grp_device.nas.ipv6_addr }}", "{{ grp_ipv6_prefix }}:10::256"]
+      - ipv6_addr: ["{{ grp_device.nas.ipv6_addr }}"]
         hw_addr: "{{ grp_device.nas.hw_addr }}" 
         hostname: "{{ grp_device.nas.hostname }}"
       - ipv6_addr: ["{{ grp_device.ipmi.ipv6_addr }}"]
@@ -111,25 +111,25 @@ host_isc_kea_dhcp6:
 
   - subnet: "{{ grp_ipv6_prefix }}:20::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:20::1000"
-        end: "{{ grp_ipv6_prefix }}:20::2000"
+      - start: "{{ grp_ipv6_prefix }}:20::aaaa"
+        end: "{{ grp_ipv6_prefix }}:20::ffff"
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ grp_device.arch.ipv6_addr }}"]
+      - ipv6_addr: ["{{ grp_device.arch.ipv6_addr }}", "{{ grp_ipv6_prefix }}:20::beef"]
         duid: "{{ grp_device.arch.duid }}"
         hostname: "{{ grp_device.arch.hostname }}"
   
   - subnet: "{{ grp_ipv6_prefix }}:50::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:50::1000"
-        end: "{{ grp_ipv6_prefix }}:50::2000"
+      - start: "{{ grp_ipv6_prefix }}:50::aaaa"
+        end: "{{ grp_ipv6_prefix }}:50::ffff"
     options_data: []
     reservations: []
   
   - subnet: "{{ grp_ipv6_prefix }}:70::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:70::1000"
-        end: "{{ grp_ipv6_prefix }}:70::2000"
+      - start: "{{ grp_ipv6_prefix }}:70::aaaa"
+        end: "{{ grp_ipv6_prefix }}:70::ffff"
     options_data: []
     reservations:
       - ipv6_addr: ["{{ grp_device.printer.ipv6_addr }}"]
@@ -138,8 +138,8 @@ host_isc_kea_dhcp6:
 
   - subnet: "{{ grp_ipv6_prefix }}:100::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:100::1000"
-        end: "{{ grp_ipv6_prefix }}:100::2000"
+      - start: "{{ grp_ipv6_prefix }}:100::aaaa"
+        end: "{{ grp_ipv6_prefix }}:100::ffff"
     options_data: []
     reservations:
       - ipv6_addr: ["{{ grp_device.pi2.ipv6_addr }}"]

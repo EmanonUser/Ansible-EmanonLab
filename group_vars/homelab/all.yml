@@ -134,4 +134,4 @@ grp_nfs_mount_dir: /mnt/vault
 grp_dns_server_upstream_ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
 grp_dns_server_upstream_port: "10053"
 
-grp_ipv6_prefix: 2001:470:c887 # /48
+grp_ipv6_prefix: 2001:470:c86d # /48
