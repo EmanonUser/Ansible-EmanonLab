@@ -17,6 +17,7 @@ grp_device:
       ipv4_addr: 192.168.20.20
       ipv6_addr: "{{ grp_ipv6_prefix }}:20::20"
       hw_addr: "00:d8:61:57:9c:fb"
+      duid: "00:04:70:26:38:68:14:d5:5f:5d:27:22:49:67:86:fa:23:40"
       hostname: arch
     nas:
       ipv4_addr: 192.168.10.25
