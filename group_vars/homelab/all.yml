@@ -52,11 +52,11 @@ grp_device:
     shp2:
       ipv4_addr: 192.168.50.51
       hw_addr: "a4:cf:12:d7:8f:48"
-      hostname: brocadeshp
+      hostname: supermicroshp
     shp3:
       ipv4_addr: 192.168.50.52
       hw_addr: "e8:db:84:89:1b:35"
-      hostname: supermicroshp
+      hostname: brocadeshp
     shp4:
       ipv4_addr: 192.168.50.53
       hw_addr: "e8:db:84:89:24:61"
