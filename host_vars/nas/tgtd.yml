@@ -5,4 +5,5 @@ host_iscsi_targets:
       - backing_store: /dev/zvol/vault/zvol_01
     incoming_users: "{{ v_tgtd_incoming_users.iqn_2022_02_local_srv_zvol }}"
     initiator_addresses:
+      - initiator_address: "{{ grp_device.arch.ipv6_addr }}"
       - initiator_address: "{{ grp_device.arch.ipv4_addr }}"

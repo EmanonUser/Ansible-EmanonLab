@@ -5,7 +5,6 @@ flush ruleset
 define WAN = {{ grp_device.router.wan_interface }}
 define LAN = {{ lacp_interface_name }}
 define WG = {{ wireguard_interface_name }}
-define HE = he-ipv6
 
 table inet routing {
 	chain prerouting {
@@ -40,7 +39,6 @@ table inet firewall {
 		jump wan_input_filter
 		tcp dport ssh ct state new log level notice prefix "New SSH connexion from WAN: " counter accept
 		udp dport {{ wireguard_server_port }} ct state new log level notice prefix "New Wireguard connexion from WAN: " counter accept
-		ip protocol ipv6 ct state new counter accept
 	}
 
 	chain wan_input_log {
@@ -65,8 +63,8 @@ table inet firewall {
 		tcp flags & (syn|rst) eq (syn|rst) log level notice prefix "TCP flags SYN + RST " counter drop
 		tcp flags & (fin|syn|rst|psh|ack|urg) lt (fin) log level notice prefix "NO TCP flags NULL " counter drop
 		tcp flags & (fin|syn|rst|psh|ack|urg) eq (fin|psh|urg) log prefix "TCP flags FIN + PSH + URG " counter drop
-		ip saddr 192.168.1.1 udp dport 51820 counter accept 				# Wireguard from LAN, this is the result of double nat
-		ip saddr 192.168.1.1 tcp dport 22 counter accept 					# SSH from LAN, this is the result of double nat
+		ip saddr 192.168.1.1 udp dport 51820 counter accept # Wireguard from LAN, this is the result of double nat
+		ip saddr 192.168.1.1 tcp dport 22 counter accept # SSH from LAN, this is the result of double nat
 		ct state invalid counter drop
 		ip saddr @IANA_BOGON_IPV4 counter drop  # Reject special-purpose ipv4 addresses
 		ip6 saddr @IANA_BOGON_IPV6 counter drop # Reject special-purpose ipv6 addresses
@@ -114,20 +112,19 @@ table inet firewall {
 		type filter hook input priority filter; policy drop;
 		iifname "lo" ip saddr 127.0.0.0/8 counter accept
 		iifname "lo" ip6 saddr ::1 counter accept
-		iifname vmap { $WAN : jump wan_input, $HE : jump wan_input , $LAN : jump lan_input, $WG : accept }
+		iifname vmap { $WAN : jump wan_input, $LAN : jump lan_input, $WG : accept }
 		ct state { established, related } counter accept
 	}
 
 	chain forward {
 		type filter hook forward priority filter; policy drop;
-		iifname vmap { $WAN : jump wan_forward, $HE : jump wan_forward , $LAN : jump lan_forward, $WG : accept }
+		iifname vmap { $WAN : jump wan_forward, $LAN : jump lan_forward, $WG : accept }
 		ct state { established, related } counter accept
 	}
 
 	chain output {
 		type filter hook output priority filter; policy drop;
 		icmpv6 type { 1-4, 128-136 } counter accept       # Accept icmpv6 before ct state invalid, multicast is tagged as invalid
-		ip protocol ipv6 ct state new counter accept
 		oifname $WAN ip daddr 192.168.1.1 counter accept    # Don't Block SSH from ndd
 		jump output_filter
 		ct state { established, related, new } counter accept
