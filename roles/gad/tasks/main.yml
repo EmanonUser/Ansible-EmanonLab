@@ -4,6 +4,7 @@
     name: gandi
     create_home: no
     shell: /usr/bin/bash
+    system: yes
     comment: Gandi user created by Ansible
     state: present
 

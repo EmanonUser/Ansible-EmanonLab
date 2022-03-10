@@ -4,6 +4,7 @@
     name: node_exporter
     create_home: no
     shell: /usr/bin/bash
+    system: yes
     comment: Node_exporter user created by Ansible
     state: present
 

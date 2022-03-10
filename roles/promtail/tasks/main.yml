@@ -5,6 +5,7 @@
     groups: ["systemd-journal", "adm"]
     create_home: no
     shell: /usr/bin/bash
+    system: yes
     comment: Promtail user created by Ansible
     state: present
 

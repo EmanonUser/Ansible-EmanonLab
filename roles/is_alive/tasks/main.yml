@@ -1,3 +1,13 @@
+---
+- name: Create is_alive user
+  ansible.builtin.user:
+    name: is_alive
+    create_home: no
+    shell: /usr/bin/bash
+    system: yes
+    comment: is_alive user created by Ansible
+    state: present
+
 - name: Configure periodic echo request
   ansible.builtin.template:
     src: "{{ item }}.j2"

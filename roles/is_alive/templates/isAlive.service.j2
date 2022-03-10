@@ -4,8 +4,8 @@ After=network-pre.target
 
 [Service]
 Type=simple
-User={{ primary_user_username }}
-Group={{ primary_user_username }}
+User=is_alive
+Group=is_alive
 ExecStart=/usr/bin/ping -c {{ is_alive_echo_request_count }} {{ host_is_alive_echo_request_target }}
 AmbientCapabilities=CAP_NET_RAW
 ProtectHome=read-only
