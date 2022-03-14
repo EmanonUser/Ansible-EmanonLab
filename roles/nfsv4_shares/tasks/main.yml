@@ -1,0 +1,43 @@
+---
+- name: Install nfs client
+  ansible.builtin.apt:
+    name: nfs-common
+    state: present
+
+- name: Create nfs mount point
+  ansible.builtin.file:
+    path: "{{ item.target_mountpoint }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=,o=
+    state: directory
+  become_user: "{{ primary_user_username }}"
+  loop: "{{ nfs4_mounts }}"
+  loop_control:
+    label: "NFSv4 Mountpoint: {{ item.target_mountpoint }}"
+
+- name: Configure NFSv4 environnement file(s)
+  ansible.builtin.template:
+    src: nfsv4.env.j2
+    dest: /etc/systemd/system/nfsv4_{{ item.mount }}.env
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=
+  loop: "{{ nfs4_mounts }}"
+  loop_control:
+    label: "NFSv4 Env file name: nfsv4_{{ item.mount }}.env"
+
+- name: Configure NFSv4 share(s)
+  ansible.builtin.template:
+    src: nfsv4_mount@.service.j2
+    dest: /etc/systemd/system/nfsv4_mount@.service
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  loop: "{{ nfs4_mounts }}"
+  loop_control:
+    label: "NFSv4 Mount name: {{ item.mount }}"
+  notify:
+    - Daemon-reload nfsv4_client systemd
+    - Enable nfsv4_mount service(s)
+    - Start nfsv4_mount service(s)

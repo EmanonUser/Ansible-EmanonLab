@@ -1,5 +1,0 @@
----
-nfs_unit_name: mnt-vault    # Must match the mounted path ie: /mnt/vault == mnt-vault
-
-# [WARNING]: Handler 'Enable {{ grp_nfs_unit_name }}.mount service' is unusable because it has no listen topics and the name could not be templated (host-specific variables are not
-# supported in handler names). The error: 'grp_nfs_unit_name' is undefined

@@ -25,8 +25,8 @@
     - role: promtail
       tags: [ promtail, monitoring ]
 
-    # - role: nfs_share
-    #   tags: [ nfs_share, podman_all ]
+    - role: nfs4_shares
+      tags: [ nfs4_shares, podman_all ]
 
     - role: podman/podman
       tags: [ podman, podman_all ]

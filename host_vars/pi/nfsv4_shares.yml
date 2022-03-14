@@ -1,0 +1,7 @@
+---
+host_nfs4_mounts: 
+  - mount: vault
+    target_addr: nas.local.emanon
+    target_path: /
+    target_mountpoint: /mnt
+    options: "vers=4.2,port=2049,proto=tcp"

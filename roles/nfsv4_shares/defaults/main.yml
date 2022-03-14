@@ -1,0 +1,2 @@
+---
+nfs4_mounts: "{{ host_nfs4_mounts }}"
