@@ -11,6 +11,16 @@
     }
 }
 
+in-addr.arpa.:{{ coredns_port }} {
+    import snip
+    file /opt/coredns/master.db
+}
+
+ip6.arpa.:{{ coredns_port }} {
+    import snip
+    file /opt/coredns/master.db
+}
+
 local.emanon:{{ coredns_port }} {
     import snip
     prometheus [::]:{{ coredns_prometheus_port }}
