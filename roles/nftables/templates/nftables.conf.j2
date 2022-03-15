@@ -75,9 +75,9 @@ table inet firewall {
 		udp dport { domain, bootps, ntp, dhcpv6-server } ct state new counter accept
 		icmp type { echo-request, timestamp-request, destination-unreachable } ct state new counter accept
 		icmp type { time-exceeded, parameter-problem } counter accept
-		icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } ct state new counter accept
-		icmpv6 type { nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } ct state new counter accept
-		icmpv6 type { mld-listener-query, mld-listener-report, mld-listener-reduction } ct state new counter accept
+		icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } counter accept
+		icmpv6 type { nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } counter accept
+		icmpv6 type { mld-listener-query, mld-listener-report, mld-listener-reduction } counter accept
 		ip protocol ospf ct state new counter accept
 		ct state invalid counter drop
 	}
