@@ -12,10 +12,10 @@ host_zfs_primary_pools:
     path: "/tank"
 
 ########## Podman ##########
-host_podman_volumes_path: "{{ host_zfs_primary_pools[0].path }}/data/podman"
+host_podman_volumes_path: "{{ host_zfs_primary_pools[0].path }}/containers"
 host_podman_media_path: "{{ host_zfs_primary_pools[0].path }}/media"
-host_podman_media_2_path: "{{ host_zfs_primary_pools[0].path }}/media_2"
-host_podman_files_path: "{{ host_zfs_primary_pools[0].path }}/files"
+host_podman_media_2_path: "{{ host_zfs_primary_pools[0].path }}/emanon/media"
+host_podman_files_path: "{{ host_zfs_primary_pools[0].path }}/emanon/files"
 host_podman_misc_path: "{{ host_zfs_primary_pools[0].path }}/misc"
 ########## Podman ##########
 
@@ -44,6 +44,7 @@ host_podman_jellyfin_volumes:
   - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache"
   - "{{ host_podman_volumes_path }}/jellyfin/config:/config"
   - "{{ host_podman_media_path }}:/media"
+  - "{{ host_podman_media_path }}:/emanon-media"
   - "{{ host_podman_media_2_path }}:/media_2"
   - "{{ host_podman_misc_path }}:/misc"
 
@@ -65,3 +66,9 @@ host_podman_kuma_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
+
+## podman_syncthing ##
+host_podman_syncthing_firewalld_rich_rules:
+  - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.syncthing.webui_port }}", proto: tcp }
+  - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.syncthing.webui_port }}", proto: tcp }
+  - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.syncthing.webui_port }}", proto: tcp }

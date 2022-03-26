@@ -70,6 +70,10 @@ grp_podman_networking:
     fulldomain: kuma.emanon.moe
     webui_port: 25104
     lan_access: false
+  syncthing:
+    fulldomain: syncthing.emanon.moe
+    webui_port: 25105
+    lan_access: true
   emanon:
     fulldomain: emanon.moe
     webui_port: 9999

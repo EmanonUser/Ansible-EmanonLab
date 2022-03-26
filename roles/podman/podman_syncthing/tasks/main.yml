@@ -31,7 +31,7 @@
     permanent: yes
     immediate: yes
     state: enabled
-  when: grp_podman_networking.syncthing.lan_access
+  when: [not spe_firewalld_handling, grp_podman_networking.syncthing.lan_access]
 
 - name: Open syncthing common firewalld ports
   ansible.posix.firewalld:
@@ -52,4 +52,8 @@
     permanent: yes
     immediate: yes
     state: disabled
-  when: not grp_podman_networking.syncthing.lan_access
+  when: [not spe_firewalld_handling, not grp_podman_networking.syncthing.lan_access]
+
+- name: Import firewalld tasks rules handling
+  include_tasks: firewalld.yml
+  when: spe_firewalld_handling

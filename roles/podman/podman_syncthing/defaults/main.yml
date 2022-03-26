@@ -17,6 +17,8 @@ podman_syncthing_firewalld_ports:
   p2p_udp: "22000/udp"
   discovery: "21027/udp"
 
+podman_syncthing_firewalld_rich_rules: "{{ host_podman_syncthing_firewalld_rich_rules }}"
+
 podman_syncthing_directories:
   - "{{ host_podman_volumes_path }}/syncthing"
   - "{{ host_podman_volumes_path }}/syncthing/config"
