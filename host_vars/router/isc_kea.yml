@@ -6,10 +6,10 @@ host_isc_kea_dhcp4:
         end: 192.168.10.200
     reservations:
       - ipv4_addr: "{{ grp_device.nas.ipv4_addr }}"
-        hw_addr: "{{ grp_device.nas.hw_addr }}" 
+        hw_addr: "{{ grp_device.nas.hw_addr }}"
         hostname: "{{ grp_device.nas.hostname }}"
       - ipv4_addr: "{{ grp_device.ipmi.ipv4_addr }}"
-        hw_addr: "{{ grp_device.ipmi.hw_addr }}" 
+        hw_addr: "{{ grp_device.ipmi.hw_addr }}"
         hostname: "{{ grp_device.ipmi.hostname }}"
       - ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
         hw_addr: "{{ grp_device.pi.hw_addr }}"
@@ -32,7 +32,7 @@ host_isc_kea_dhcp4:
     options_data:
       - option_data: "routers"
         data: ["192.168.20.1"]
-  
+
   - subnet: 192.168.50.0/24
     pools:
       - start: 192.168.50.100
@@ -62,7 +62,7 @@ host_isc_kea_dhcp4:
     options_data:
       - option_data: "routers"
         data: ["192.168.50.1"]
-  
+
   - subnet: 192.168.70.0/24
     pools:
       - start: 192.168.70.100
@@ -76,7 +76,7 @@ host_isc_kea_dhcp4:
         data: ["192.168.70.1"]
 
   - subnet: 192.168.100.0/24
-    routers: 
+    routers:
       - 192.168.100.1
     pools:
       - start: 192.168.100.100
@@ -97,10 +97,10 @@ host_isc_kea_dhcp6:
     options_data: []
     reservations:
       - ipv6_addr: ["{{ grp_device.nas.ipv6_addr }}"]
-        hw_addr: "{{ grp_device.nas.hw_addr }}" 
+        hw_addr: "{{ grp_device.nas.hw_addr }}"
         hostname: "{{ grp_device.nas.hostname }}"
       - ipv6_addr: ["{{ grp_device.ipmi.ipv6_addr }}"]
-        hw_addr: "{{ grp_device.ipmi.hw_addr }}" 
+        hw_addr: "{{ grp_device.ipmi.hw_addr }}"
         hostname: "{{ grp_device.ipmi.hostname }}"
       - ipv6_addr: ["{{ grp_device.pi.ipv6_addr }}"]
         hw_addr: "{{ grp_device.pi.hw_addr }}"
@@ -118,14 +118,14 @@ host_isc_kea_dhcp6:
       - ipv6_addr: ["{{ grp_device.arch.ipv6_addr }}", "{{ grp_ipv6_prefix }}:20::beef"]
         duid: "{{ grp_device.arch.duid }}"
         hostname: "{{ grp_device.arch.hostname }}"
-  
+
   - subnet: "{{ grp_ipv6_prefix }}:50::/64"
     pools:
       - start: "{{ grp_ipv6_prefix }}:50::aaaa"
         end: "{{ grp_ipv6_prefix }}:50::ffff"
     options_data: []
     reservations: []
-  
+
   - subnet: "{{ grp_ipv6_prefix }}:70::/64"
     pools:
       - start: "{{ grp_ipv6_prefix }}:70::aaaa"

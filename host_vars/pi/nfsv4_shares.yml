@@ -1,5 +1,5 @@
 ---
-host_nfs4_mounts: 
+host_nfs4_mounts:
   - mount: vault
     target_addr: nas.local.emanon
     target_path: /

@@ -11,7 +11,7 @@
     - name: Call Gandi LiveDNS API to register the record
       community.general.gandi_livedns:
         domain: "{{ domain_name }}"
-        record: kuma 
+        record: kuma
         type: CNAME
         values:
           - lain

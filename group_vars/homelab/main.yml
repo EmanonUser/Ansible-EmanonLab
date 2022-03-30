@@ -1,5 +1,5 @@
 ---
-grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch 
+grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch
 grp_device:
     router:
       ipv4_addr: 192.168.5.1
@@ -29,7 +29,7 @@ grp_device:
       ipv4_addr: 192.168.10.26
       ipv6_addr: "{{ grp_ipv6_prefix }}:10::26"
       hw_addr: "ac:1f:6b:77:c8:78"
-      hostname: ipmi 
+      hostname: ipmi
     aclite:
       ipv4_addr: 192.168.10.40
       ipv6_addr: "{{ grp_ipv6_prefix }}:10::40"

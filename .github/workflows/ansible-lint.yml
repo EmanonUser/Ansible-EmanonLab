@@ -1,29 +1,18 @@
-name: Ansible Lint  # feel free to pick your own name
+name: Ansible Lint # feel free to pick your own name
 
 on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    # Important: This sets up your GITHUB_WORKSPACE environment variable
-    - uses: actions/checkout@v2
+      # Important: This sets up your GITHUB_WORKSPACE environment variable
+      - uses: actions/checkout@v2
 
-    - name: Lint Ansible Playbook
-      # replace "main" with any valid ref
-      uses: ansible/ansible-lint-action@main
-      with:
-        override-deps: rich>=9.5.1,<11.0.0
-        args: "--exclude playbooks/vars/vault.yml"
-        targets: |
-          group_vars/
-          host_vars/
-          playbooks/
-          roles/
-          deploy_router.yml
-          deploy_pi.yml
-          deploy_laptop.yml
-          inventory.yml
-          requirements.yml
+      - name: Lint Ansible Playbook
+        # replace `main` with any valid ref, or tags like `v6`
+        uses: ansible-community/ansible-lint-action@main
+        # optional:
+        with:
+          args: "" # args to pass to ansible-lint command

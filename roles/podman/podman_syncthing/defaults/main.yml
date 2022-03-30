@@ -1,9 +1,9 @@
 ---
 podman_syncthing_image: "{{ host_podman_syncthing_image | default('quay.io/linuxserver.io/syncthing') }}"
-podman_syncthing_image_version: "{{ host_podman_syncthing_image_version | default('1.19.0') }}" 
+podman_syncthing_image_version: "{{ host_podman_syncthing_image_version | default('1.19.0') }}"
 # https://quay.io/repository/linuxserver.io/syncthing?tag=latest&tab=tags
 
-podman_syncthing_ports: 
+podman_syncthing_ports:
   - "{% if grp_podman_networking.syncthing.lan_access %}[::]:{{ grp_podman_networking.syncthing.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.syncthing.webui_port }}{% endif %}:8384/tcp"
   - "{% if grp_podman_networking.syncthing.lan_access %}[::]:{{ grp_podman_networking.syncthing.webui_port }}{% else %}[::1]:{{ grp_podman_networking.syncthing.webui_port }}{% endif %}:8384/tcp"
   - "22000:22000/tcp"

@@ -3,15 +3,15 @@ host_network_interfaces:
     - interface: "{{ grp_device.router.wan_interface }}"
       ipv4: yes
       ipv6: no
-      configuration: 
+      configuration:
         v4: dhcp
-      dns_servers: 
+      dns_servers:
         v4: ["127.0.0.1", "9.9.9.9", "1.1.1.1"]
 
     - interface: "bond0"
       ipv4: yes
       ipv6: yes
-      configuration: 
+      configuration:
         v4: static
         v6: static
       bonding:

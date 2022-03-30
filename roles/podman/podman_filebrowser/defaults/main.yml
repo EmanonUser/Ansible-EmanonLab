@@ -3,14 +3,14 @@ podman_filebrowser_image: "{{ host_podman_filebrowser_image | default('docker.io
 podman_filebrowser_image_version: "{{ host_podman_filebrowser_image_version | default('v2.19.0') }}"
 # https://hub.docker.com/r/filebrowser/filebrowser/tags
 
-podman_filebrowser_ports: 
+podman_filebrowser_ports:
   - "{% if grp_podman_networking.filebrowser.lan_access %}[::]{{ grp_podman_networking.filebrowser.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
   - "{% if grp_podman_networking.filebrowser.lan_access %}[::]:{{ grp_podman_networking.filebrowser.webui_port }}{% else %}[::1]:{{ grp_podman_networking.filebrowser.webui_port }}{% endif %}:2500/tcp"
 
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 podman_filebrowser_firewalld_rich_rules: "{{ host_podman_filebrowser_firewalld_rich_rules }}"
 
-podman_filebrowser_directories: 
+podman_filebrowser_directories:
   - "{{ host_podman_volumes_path }}/filebrowser"
   - "{{ host_podman_volumes_path }}/filebrowser/data"
 

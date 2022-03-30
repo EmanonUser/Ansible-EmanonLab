@@ -7,7 +7,7 @@ host_ntpd_interface_ipv4: "{{ grp_device.router.ipv4_addr }}"
 
 ## coredns ##
 host_coredns_use_backup_config: true
-host_coredns_upstream_dns_server: 
+host_coredns_upstream_dns_server:
   ipv4_addr: "{{ grp_dns_server_upstream_ipv4_addr }}"
   port: "{{ grp_dns_server_upstream_port }}"
 

@@ -3,7 +3,7 @@ host_network_interfaces:
     - interface: "bond0"
       ipv4: yes
       ipv6: yes
-      configuration: 
+      configuration:
         v4: dhcp
         v6: auto
       bonding:

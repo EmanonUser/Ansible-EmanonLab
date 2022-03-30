@@ -39,7 +39,7 @@
   notify:
     - Enable nfs-server service
     - Start nfs-server service
-  
+
 - name: Disable rpcbind, we are using nfsv4 only
   ansible.builtin.systemd:
     name: "{{ item }}"

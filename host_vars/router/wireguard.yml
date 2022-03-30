@@ -15,7 +15,7 @@ host_wireguard_peers:
     public_key: "{{ host_vault_peer2_public_key }}"
     preshared_key: "{{ host_vault_peer2_preshared_key }}"
     ip_address: "{{ host_wireguard_subnet }}.3/32"
-  
+
   - peer: w10
     private_key: "{{ host_vault_peer3_private_key }}"
     public_key: "{{ host_vault_peer3_public_key }}"

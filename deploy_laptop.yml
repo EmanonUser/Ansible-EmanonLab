@@ -51,7 +51,7 @@
 
     - role: podman/podman_kuma
       tags: [ podman_kuma, podman_all ]
-    
+
     - role: podman/podman_syncthing
       tags: [ podman_syncthing, podman_all ]
 

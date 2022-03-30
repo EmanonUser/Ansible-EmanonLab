@@ -1,9 +1,9 @@
 ---
 podman_transmission_image: "{{ host_podman_transmission_image | default('docker.io/haugene/transmission-openvpn') }}"
-podman_transmission_image_version: "{{ host_podman_transmission_image_version | default('4.0') }}" 
+podman_transmission_image_version: "{{ host_podman_transmission_image_version | default('4.0') }}"
 # https://hub.docker.com/r/haugene/transmission-openvpn/tags
 
-podman_transmission_ports: 
+podman_transmission_ports:
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
   - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
 

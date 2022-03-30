@@ -23,19 +23,19 @@ host_nfs_exports:
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
-  
+
   - export: /vault/emanonlab/dev
     path: /srv/nfs4/vault/emanonlab/dev
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
-  
+
   - export: /vault/emanonlab/misc
     path: /srv/nfs4/vault/emanonlab/misc
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
-  
+
   - export: /vault/emanonlab/secrets/keepassxc
     path: /srv/nfs4/vault/emanonlab/secrets/keepassxc
     authorized_clients:
@@ -47,7 +47,7 @@ host_nfs_exports:
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
-  
+
   - export: /vault/emanon/other_users
     path: /srv/nfs4/vault/emanon/other_users
     authorized_clients:

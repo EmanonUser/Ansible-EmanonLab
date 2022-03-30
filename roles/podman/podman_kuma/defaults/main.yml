@@ -3,7 +3,7 @@ podman_kuma_image: "{{ host_podman_kuma_image | default('docker.io/louislam/upti
 podman_kuma_image_version: "{{ host_podman_kuma_image_version | default('1.12.1-alpine') }}"
 # https://hub.docker.com/r/louislam/uptime-kuma/tags
 
-podman_kuma_ports: 
+podman_kuma_ports:
   - "{% if grp_podman_networking.kuma.lan_access %}[::]{{ grp_podman_networking.kuma.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
   - "{% if grp_podman_networking.kuma.lan_access %}[::]:{{ grp_podman_networking.kuma.webui_port }}{% else %}[::1]:{{ grp_podman_networking.kuma.webui_port }}{% endif %}:3001/tcp"
 

@@ -1,6 +1,6 @@
 ---
 - name: Provisioning of the nas server
-  hosts: nas 
+  hosts: nas
   become: yes
   gather_facts: yes
   roles:
@@ -9,7 +9,7 @@
 
     - role: fstrim
       tags: [ fstrim, init ]
-    
+
     - role: interfaces
       tags: [ interfaces, init ]
 
@@ -39,6 +39,6 @@
 
     - role: smbd
       tags: [ smbd, service ]
-    
+
     - role: tgtd
       tags: [ tgtd, service ]
