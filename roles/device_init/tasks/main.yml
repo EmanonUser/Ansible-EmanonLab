@@ -71,9 +71,10 @@
     validate: /usr/sbin/visudo -cf %s
 
 - name: Set system-wide umask
-  ansible.builtin.copy:
-    content: umask 0077
-    dest: /etc/zsh/zprofile
+  ansible.builtin.lineinfile:
+    line: umask 0077
+    path: /etc/zsh/zprofile
+    create: yes
     owner: root
     group: root
     mode: u=rw,g=r,o=r
