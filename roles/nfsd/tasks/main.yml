@@ -30,6 +30,9 @@
   ansible.builtin.template:
     src: "{{ item.name }}"
     dest: "{{ item.path }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   loop:
     - { name: "nfs-common.j2", path: /etc/default/nfs-common }
     - { name: "nfs-kernel-server.j2", path: /etc/default/nfs-kernel-server }
@@ -48,6 +51,9 @@
   ansible.builtin.template:
     src: exports.j2
     dest: /etc/exports
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   notify: Restart nfs-server service
 
 - name: Open NFSv4 firewalld service

@@ -9,6 +9,9 @@
   ansible.builtin.template:
     src: tgt.conf.j2
     dest: "/etc/tgt/conf.d/{{ item.iqn }}.conf"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   loop: "{{ host_iscsi_targets }}"
   loop_control:
     label: "iSCSI Target: {{ item.iqn }}"
