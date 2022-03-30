@@ -1,0 +1,7 @@
+---
+- name: Enable home_assistant_ansible podman service
+  ansible.builtin.systemd:
+    name: podman-home_assistant_ansible.service
+    enabled: yes
+    scope: user
+  become_user: "{{ primary_user_username }}"

@@ -23,9 +23,13 @@
     volume: "{{ podman_smokeping_volumes }}"
     restart_policy: unless-stopped
     state: started
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       TZ: "Europe/Paris"
   become_user: "{{ primary_user_username }}"
+  notify: Enable smokeping_ansible podman service
 
 - name: Open smokeping firewalld ports
   ansible.posix.firewalld:

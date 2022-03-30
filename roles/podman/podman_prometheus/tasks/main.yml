@@ -36,7 +36,11 @@
       - "--storage.tsdb.retention=1y"
       - "--web.console.libraries=/usr/share/prometheus/console_libraries"
       - "--web.console.templates=/usr/share/prometheus/consoles"
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
+  notify: Enable prometheus_ansible podman service
 
 - name: Open prometheus firewalld ports
   ansible.posix.firewalld:

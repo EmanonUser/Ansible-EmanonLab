@@ -16,9 +16,13 @@
     volume: "{{ podman_flame_volumes }}"
     restart_policy: unless-stopped
     state: started
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       PASSWORD: "{{ podman_flame_password }}"
   become_user: "{{ primary_user_username }}"
+  notify: Enable flame_ansible podman service
 
 - name: Open flame firewalld ports
   ansible.posix.firewalld:

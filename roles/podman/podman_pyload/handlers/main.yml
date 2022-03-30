@@ -1,0 +1,7 @@
+---
+- name: Enable pyload_ansible podman service
+  ansible.builtin.systemd:
+    name: podman-pyload_ansible.service
+    enabled: yes
+    scope: user
+  become_user: "{{ primary_user_username }}"

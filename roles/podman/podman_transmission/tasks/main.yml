@@ -20,6 +20,9 @@
     restart_policy: unless-stopped
     state: started
     privileged: yes
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       TRANSMISSION_RPC_USERNAME: "{{ podman_transmission_env_rpc_username }}"
       TRANSMISSION_RPC_PASSWORD: "{{ podman_transmission_env_rpc_password }}"
@@ -35,6 +38,7 @@
       TRANSMISSION_WEB_UI: "{{ podman_transmission_env_web_ui }}"
       LOCAL_NETWORK: "{{ podman_transmission_env_local_network }}"
   become_user: "{{ primary_user_username }}"
+  notify: Enable transmission_ansible podman service
 
 - name: Open transmission firewalld ports
   ansible.posix.firewalld:

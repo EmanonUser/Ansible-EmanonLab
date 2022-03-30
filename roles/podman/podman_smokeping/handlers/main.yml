@@ -1,0 +1,7 @@
+---
+- name: Enable smokeping_ansible podman service
+  ansible.builtin.systemd:
+    name: podman-smokeping_ansible.service
+    enabled: yes
+    scope: user
+  become_user: "{{ primary_user_username }}"

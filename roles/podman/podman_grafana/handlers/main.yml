@@ -1,0 +1,7 @@
+---
+- name: Enable grafana_ansible podman service
+  ansible.builtin.systemd:
+    name: podman-grafana_ansible.service
+    enabled: yes
+    scope: user
+  become_user: "{{ primary_user_username }}"

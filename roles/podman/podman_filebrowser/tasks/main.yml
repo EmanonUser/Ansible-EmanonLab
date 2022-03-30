@@ -34,7 +34,11 @@
     volumes: "{{ podman_filebrowser_volumes }}"
     restart_policy: unless-stopped
     state: started
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
+  notify: Enable filebrowser_ansible podman service
 
 - name: Open filebrowser firewalld ports to admin devices
   ansible.posix.firewalld:

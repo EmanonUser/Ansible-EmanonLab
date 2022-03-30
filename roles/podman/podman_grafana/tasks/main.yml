@@ -28,9 +28,13 @@
     restart_policy: unless-stopped
     state: started
     user: "root"
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       GF_SECURITY_ADMIN_PASSWORD: "{{ podman_grafana_admin_password }}"
   become_user: "{{ primary_user_username }}"
+  notify: Enable grafana_ansible podman service
   register: podman_grafana_res
 
 - name: Open grafana webui firewalld ports

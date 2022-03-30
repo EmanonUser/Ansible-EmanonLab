@@ -17,9 +17,13 @@
     restart_policy: unless-stopped
     state: started
     label: "io.containers.autoupdate=image"
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       DISABLE_JEMALLOC: yes
   become_user: "{{ primary_user_username }}"
+  notify: Enable home_assistant_ansible podman service
 
 - name: Open homeassistant webui firewalld ports
   ansible.posix.firewalld:

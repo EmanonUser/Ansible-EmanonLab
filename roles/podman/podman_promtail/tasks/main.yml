@@ -25,4 +25,8 @@
     state: started
     command:
       - "-config.file=/mnt/config/promtail-config.yml"
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
+  notify: Enable promtail_ansible podman service

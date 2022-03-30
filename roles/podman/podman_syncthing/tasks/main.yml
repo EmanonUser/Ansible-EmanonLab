@@ -18,11 +18,15 @@
     restart_policy: unless-stopped
     state: started
     user: 'root'
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       PUID: "0"
       PGID: "0"
       TZ: Europe/London
   become_user: "{{ primary_user_username }}"
+  notify: Enable syncthing_ansible podman service
 
 - name: Open syncthing webui firewalld ports
   ansible.posix.firewalld:

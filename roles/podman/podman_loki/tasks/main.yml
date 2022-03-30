@@ -18,7 +18,11 @@
     state: started
     command:
       - "-config.file=/mnt/config/loki-config.yaml"
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
+  notify: Enable loki_ansible podman service
 
 - name: Open loki firewalld ports
   ansible.posix.firewalld:

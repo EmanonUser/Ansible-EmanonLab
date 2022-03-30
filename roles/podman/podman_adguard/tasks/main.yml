@@ -18,7 +18,11 @@
     restart_policy: unless-stopped
     state: started
     label: "io.containers.autoupdate=image"
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
+  notify: Enable adguard_ansible podman service
 
 - name: Open adguard dns firewalld ports
   ansible.posix.firewalld:

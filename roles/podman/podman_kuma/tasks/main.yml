@@ -15,7 +15,11 @@
     volumes: "{{ podman_kuma_volumes }}"
     restart_policy: unless-stopped
     state: started
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
+  notify: Enable kuma_ansible podman service
 
 - name: Open kuma firewalld ports to admin devices
   ansible.posix.firewalld:
