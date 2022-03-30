@@ -12,8 +12,8 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Lint Ansible Playbook
-      # replace "master" with any valid ref
-      uses: ansible/ansible-lint-action@master
+      # replace "main" with any valid ref
+      uses: ansible/ansible-lint-action@main
       with:
         override-deps: rich>=9.5.1,<11.0.0
         args: "--exclude playbooks/vars/vault.yml"
