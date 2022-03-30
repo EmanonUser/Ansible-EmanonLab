@@ -44,7 +44,6 @@ host_podman_jellyfin_volumes:
   - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache"
   - "{{ host_podman_volumes_path }}/jellyfin/config:/config"
   - "{{ host_podman_media_path }}:/media"
-  - "{{ host_podman_media_path }}:/emanon-media"
   - "{{ host_podman_media_2_path }}:/media_2"
   - "{{ host_podman_misc_path }}:/misc"
 
