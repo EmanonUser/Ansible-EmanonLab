@@ -22,9 +22,6 @@
     - role: node_exporter
       tags: [ node_exporter, monitoring ]
 
-    - role: promtail
-      tags: [ promtail, monitoring ]
-
     - role: nfsv4_shares
       tags: [ nfsv4_shares, podman_all ]
 
@@ -51,12 +48,6 @@
 
     - role: podman/podman_flame
       tags: [ podman_flame, podman_all ]
-
-    # - role: podman/podman_loki
-    #   tags: [ podman_loki, podman_all ]
-
-    # - role: podman/podman_pyload
-    #   tags: [ podman_pyload, podman_all ]
 
     - role: haproxy
       tags: [ haproxy, podman_all ]
