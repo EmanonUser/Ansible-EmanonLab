@@ -11,7 +11,6 @@
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
     state: directory
-  become_user: "{{ primary_user_username }}"
   loop: "{{ nfs4_mounts }}"
   loop_control:
     label: "NFSv4 Mountpoint: {{ item.target_mountpoint }}"
@@ -41,3 +40,11 @@
     - Daemon-reload nfsv4_client systemd
     - Enable nfsv4_mount service(s)
     - Start nfsv4_mount service(s)
+
+- name: Start nfsv4_mount service(s)
+  ansible.builtin.systemd:
+    name: nfsv4_mount@{{ item.mount }}.service
+    state: started
+  loop: "{{ nfs4_mounts }}"
+  loop_control:
+    label: "NFSv4 Mount name: {{ item.mount }}"
