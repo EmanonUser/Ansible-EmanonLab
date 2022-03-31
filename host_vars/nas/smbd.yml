@@ -4,6 +4,7 @@ host_smb_shares:
     browseable: 'yes'
     writeable: 'yes'
     read_only: 'no'
+    comment: "Samba ZFS media share"
     authorized_users: ['emanon']
 
   - share: emanonlab
@@ -11,6 +12,7 @@ host_smb_shares:
     browseable: 'yes'
     writeable: 'yes'
     read_only: 'no'
+    comment: "Samba ZFS emanonlab share"
     authorized_users: ['emanon']
 
   - share: emanon
@@ -18,4 +20,5 @@ host_smb_shares:
     browseable: 'yes'
     writeable: 'yes'
     read_only: 'no'
+    comment: "Samba ZFS emanon share"
     authorized_users: ['emanon']

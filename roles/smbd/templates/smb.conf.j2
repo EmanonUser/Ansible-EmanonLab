@@ -15,6 +15,7 @@
     browseable = {{ share.browseable }}
     writeable = {{ share.writeable }}
     read only = {{ share.read_only }}
+    comment = {{ share.comment }}
     guest ok = no
     public = no
     valid users = {% for user in share.authorized_users %}{{ user }} {% endfor +%}
