@@ -59,3 +59,9 @@ grp_podman_networking:
     fulldomain: emanon.moe
     webui_port: 9999
     lan_access: false
+
+grp_podman_networking_tcp:
+  minecraft:
+    fulldomain: "minecraft.{{ grp_local_domain }}"
+    port: 12222
+    lan_access: yes

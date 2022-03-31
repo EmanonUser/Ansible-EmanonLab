@@ -22,9 +22,6 @@
     - role: systemd_timesyncd
       tags: [ systemd_timesyncd, init ]
 
-    - role: podman/podman
-      tags: [ podman_all ]
-
     - role: is_alive
       tags: [ is_alive, services ]
 
@@ -54,6 +51,9 @@
 
     - role: podman/podman_syncthing
       tags: [ podman_syncthing, podman_all ]
+
+    - role: podman/podman_minecraft
+      tags: [ podman_minecraft, podman_all ]
 
     - role: haproxy
       tags: [ haproxy, podman_all ]

@@ -1,0 +1,13 @@
+---
+podman_minecraft_image: "{{ host_podman_minecraft_image | default('docker.io/itzg/minecraft-server') }}"
+podman_minecraft_image_version: "{{ host_podman_minecraft_image_version | default('2022.5.0') }}"
+# https://hub.docker.com/r/itzg/minecraft-server/tags
+
+podman_minecraft_ports:
+  - "{% if grp_podman_networking_tcp.minecraft.lan_access %}[::]:{{ grp_podman_networking_tcp.minecraft.port }}{% else %}127.0.0.1:{{ grp_podman_networking_tcp.minecraft.port }}{% endif %}:25565/tcp"
+  - "{% if grp_podman_networking_tcp.minecraft.lan_access %}[::]:{{ grp_podman_networking_tcp.minecraft.port }}{% else %}[::1]:{{ grp_podman_networking_tcp.minecraft.port }}{% endif %}:25565/tcp"
+
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+podman_minecraft_firewalld_ports: "{{ grp_podman_networking_tcp.minecraft.port }}/tcp"
+
+podman_minecraft_volumes: "{{ host_podman_minecraft_path }}:/data"

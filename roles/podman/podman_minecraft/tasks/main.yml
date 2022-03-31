@@ -1,0 +1,48 @@
+---
+- name: Run minecraft podman container
+  containers.podman.podman_container:
+    name: minecraft_ansible
+    image: "{{ podman_minecraft_image }}:{{ podman_minecraft_image_version }}"
+    publish: "{{ podman_minecraft_ports }}"
+    volume: "{{ podman_minecraft_volumes }}"
+    state: started
+    recreate: yes
+    #user: 'root'
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
+    env:
+      EULA: 'TRUE'
+      TYPE: 'FABRIC'
+      VERSION: '1.18.2'
+      FABRIC_LAUNCHER_VERSION: '0.10.2'
+      FABRIC_LOADER_VERSION: '0.12.0'
+      DATAPACKS: "https://static.planetminecraft.com/files/resource_media/datapack/terralith-v2-2-1a.zip"
+      FORCE_REDOWNLOAD: 'true'
+      OVERRIDE_SERVER_PROPERTIES: 'TRUE'
+      MOTD: "Kino der Toten"
+      DIFFICULTY: normal
+      MODE: survival
+      WHITELIST: EmanonUser,electroatn
+      OPS: EmanonUser,electroatn
+      ENFORCE_WHITELIST: 'TRUE'
+      MAX_PLAYERS: '5'
+      ENABLE_COMMAND_BLOCK: 'true'
+      SPAWN_ANIMALS: 'true'
+      SPAWN_MONSTERS: 'true'
+      SPAWN_NPCS: 'true'
+      GENERATE_STRUCTURES: 'true'
+      MEMORY: '1900M'
+      #VIEW_DISTANCE: '64'
+      MAX_TICK_TIME: '60000'
+      MAX_BUILD_HEIGHT: '256'
+  become_user: "{{ primary_user_username }}"
+  notify: Enable minecraft_ansible podman service
+
+- name: Open minecraft firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ podman_minecraft_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled

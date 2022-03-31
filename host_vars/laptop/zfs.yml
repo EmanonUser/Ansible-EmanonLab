@@ -20,3 +20,5 @@ host_zfs_pools:
         recordsize: 1M
       - dataset: misc
         recordsize: 1M
+      - dataset: minecraft
+      - dataset: minecraft_02
