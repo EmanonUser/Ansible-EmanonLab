@@ -11,7 +11,7 @@
     dest: "/etc/tgt/conf.d/{{ item.iqn }}.conf"
     owner: root
     group: root
-    mode: u=rw,g=r,o=r
+    mode: u=rw,g=r,o=
   loop: "{{ host_iscsi_targets }}"
   loop_control:
     label: "iSCSI Target: {{ item.iqn }}"
