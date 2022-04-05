@@ -182,14 +182,15 @@
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume | regex_replace('-', '/') }}"
 
-# - name: Set ZFS datatsets base permissions
-#   ansible.builtin.file:
-#     path: >-
-#           {% if item.1.mountpoint is not defined %}{{ item.0.base_path }}/{{ item.1.dataset | regex_replace('-', '/') -}}
-#           {% elif item.1.mountpoint is defined %}{{ item.1.mountpoint }}{% endif %}
-#     owner: "{{ primary_user_username }}"
-#     group: "{{ primary_user_username }}"
-#     mode: u=rwx,g=,o=
-#   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
-#   loop_control:
-#     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+- name: Set ZFS datatsets base permissions
+  ansible.builtin.file:
+    path: >-
+          {% if item.1.mountpoint is not defined %}{{ item.0.base_path }}/{{ item.1.dataset | regex_replace('-', '/') -}}
+          {% elif item.1.mountpoint is defined %}{{ item.1.mountpoint }}{% endif %}
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=,o=
+  when: item.1.dataset not in zfs_set_permissions_blacklist
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"

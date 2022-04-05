@@ -2,6 +2,7 @@
 zfs_pools: "{{ host_zfs_pools }}"
 zfs_datasets_keylocation: "{{ host_zfs_datasets_keylocation | default('/root/zfs_datasets_keys') }}"
 zfs_volumes_keylocation: "{{ host_zfs_volumes_keylocation | default('/root/zfs_volumes_keys') }}"
+zfs_set_permissions_blacklist: "{{ host_zfs_set_permissions_blacklist | default([]) }}"
 systemd_on_calendar_scrubing_timer: "{{ host_zfs_systemd_on_calendar_scrubing_timer | default('Sat 00:00:00') }}"
 systemd_on_calendar_trim_timer: "{{ host_zfs_systemd_on_calendar_trim_timer | default('Sat 12:00:00') }}"
 zfs_arc_max: "{{ host_zfs_arc_max | default('2147483648') }}" # At least 2 Gibibytes
