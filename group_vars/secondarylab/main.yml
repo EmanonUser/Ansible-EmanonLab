@@ -63,5 +63,5 @@ grp_podman_networking:
 grp_podman_networking_tcp:
   minecraft:
     fulldomain: "minecraft.{{ grp_local_domain }}"
-    port: 12222
+    port: 25565
     lan_access: yes
