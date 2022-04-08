@@ -2,7 +2,7 @@
 ![AnsibleLint](https://github.com/EmanonUser/Ansible-EmanonLab/actions/workflows/ansible-lint.yml/badge.svg)
 
 TODO:
- 
+
     - smartd role
     - Add basic auth to prometheus TSDB, Loki, Promtail
     - Reduce zsh prompt loading time, maybe zinit?
@@ -22,3 +22,4 @@ TODO:
     - add upstream IPv6 servers to coredns when the tunnel will be stable ( or native IPv6 )
     - Start mount nfsv4 is always changed
     - Haproxy breaking if no ssl
+    - add zfs allow list to primary user
