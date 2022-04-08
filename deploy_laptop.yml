@@ -34,6 +34,9 @@
     - role: zrepl
       tags: [ zrepl, services ]
 
+    - role: restic
+      tags: [ restic, services ]
+
     - role: podman/podman
       tags: [ podman, podman_all ]
 
