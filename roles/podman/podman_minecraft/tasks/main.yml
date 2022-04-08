@@ -20,7 +20,7 @@
       DIFFICULTY: normal
       MODE: survival
       WHITELIST: EmanonUser,electroatn,Papy_Castor
-      OPS: EmanonUser
+      OPS: EmanonUser,Papy_Castor
       ENFORCE_WHITELIST: 'TRUE'
       MAX_PLAYERS: '5'
       ENABLE_COMMAND_BLOCK: 'true'
