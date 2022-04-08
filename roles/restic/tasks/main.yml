@@ -1,0 +1,64 @@
+---
+- name: Create restic user
+  ansible.builtin.user:
+    name: restic
+    create_home: yes
+    shell: /usr/bin/bash
+    system: yes
+    comment: Restic user created by Ansible
+    state: present
+
+- name: Install restic
+  ansible.builtin.apt:
+    name: restic
+    state: present
+
+- name: Create restic repositories
+  ansible.builtin.command:
+    cmd: "restic init -r {{ item.path }}"
+    creates: "{{ item.path }}"
+  environment:
+    RESTIC_PASSWORD: "{{ item.password }}"
+  become_user: restic
+  loop: "{{ restic_repos }}"
+  loop_control:
+    label: "Restic repository path: {{ item.path }}"
+
+- name: Configure restic backup tasks env files
+  ansible.builtin.template:
+    src: restic.env.j2
+    dest: /etc/systemd/system/restic-{{ item.repo }}.env
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  loop: "{{ restic_repos }}"
+  loop_control:
+    label: "Restic env file path: /etc/systemd/system/restic-{{ item.repo }}.env"
+
+- name: Configure restic services files
+  ansible.builtin.template:
+    src: restic.service.j2
+    dest: /etc/systemd/system/restic-{{ item.task }}.service
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  loop: "{{ restic_tasks }}"
+  loop_control:
+    label: "Restic service file path: /etc/systemd/system/restic-{{ item.task }}.service"
+  notify:
+    - Daemon-reload restic systemd
+
+- name: Configure restic timer files
+  ansible.builtin.template:
+    src: restic.timer.j2
+    dest: /etc/systemd/system/restic-{{ item.task }}.timer
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  loop: "{{ restic_tasks }}"
+  loop_control:
+    label: "Restic timer file path: /etc/systemd/system/restic-{{ item.task }}.timer"
+  notify:
+    - Daemon-reload restic systemd
+    - Enable restic(s) timer(s)
+    - Start restic(s) timer(s)

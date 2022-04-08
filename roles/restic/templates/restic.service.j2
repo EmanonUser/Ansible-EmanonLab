@@ -1,0 +1,16 @@
+[Unit]
+Description=Restic {{ item.task }} backup service
+
+[Service]
+Type=simple
+User=restic
+Group=restic
+{% if item.need_read_privilege %}
+AmbientCapabilities=CAP_DAC_READ_SEARCH
+{% endif %}
+EnvironmentFile=/etc/systemd/system/restic-{{ item.dest_repo }}.env
+ExecStart=/usr/bin/restic backup {% for files in item.files_backup %}{{ files }} {% endfor %}
+
+
+[Install]
+WantedBy=multi-user.target
