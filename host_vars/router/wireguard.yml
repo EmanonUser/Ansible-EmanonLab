@@ -1,23 +1,27 @@
 ---
-host_wireguard_subnet: "172.16.0"
-host_wireguard_server_address: "{{ host_wireguard_subnet }}.1/24"
-host_wireguard_server_private_key: "{{ host_vault_wireguard_server_private_key }}"
-# host_wireguard_server_public_key: "{{ host_vault_wireguard_server_public_key }}"                Unused for now maybe for client conf generation
+host_wireguard_subnet:
+  v4: "172.16.0"
+host_wireguard_server_addresses:
+  - "{{ host_wireguard_subnet.v4 }}.1/24"
+host_wireguard_server_private_key: "{{ vhost_wireguard_server_private_key }}"
 host_wireguard_peers:
   - peer: arch
-    private_key: "{{ host_vault_peer1_private_key }}"
-    public_key: "{{ host_vault_peer1_public_key }}"
-    preshared_key: "{{ host_vault_peer1_preshared_key }}"
-    ip_address: "{{ host_wireguard_subnet }}.2/32"
+    private_key: "{{ vhost_peer1_private_key }}"
+    public_key: "{{ vhost_peer1_public_key }}"
+    preshared_key: "{{ vhost_peer1_preshared_key }}"
+    ip_addresses:
+      - "{{ host_wireguard_subnet.v4 }}.2/32"
 
   - peer: one
-    private_key: "{{ host_vault_peer2_private_key }}"
-    public_key: "{{ host_vault_peer2_public_key }}"
-    preshared_key: "{{ host_vault_peer2_preshared_key }}"
-    ip_address: "{{ host_wireguard_subnet }}.3/32"
+    private_key: "{{ vhost_peer2_private_key }}"
+    public_key: "{{ vhost_peer2_public_key }}"
+    preshared_key: "{{ vhost_peer2_preshared_key }}"
+    ip_addresses:
+      - "{{ host_wireguard_subnet.v4 }}.3/32"
 
   - peer: w10
-    private_key: "{{ host_vault_peer3_private_key }}"
-    public_key: "{{ host_vault_peer3_public_key }}"
-    preshared_key: "{{ host_vault_peer3_preshared_key }}"
-    ip_address: "{{ host_wireguard_subnet }}.4/32"
+    private_key: "{{ vhost_peer3_private_key }}"
+    public_key: "{{ vhost_peer3_public_key }}"
+    preshared_key: "{{ vhost_peer3_preshared_key }}"
+    ip_addresses:
+      - "{{ host_wireguard_subnet.v4 }}.4/32"

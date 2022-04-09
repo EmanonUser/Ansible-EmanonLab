@@ -1,5 +1,5 @@
 [Interface]
-Address = {{ host_wireguard_server_address }}
+Address = {% for ip in host_wireguard_server_addresses %}{{ ip }}{% if not loop.last %}, {% endif %}{% endfor +%}
 ListenPort = {{ wireguard_server_port }}
 PrivateKey = {{ host_wireguard_server_private_key }}
 
@@ -8,6 +8,6 @@ PrivateKey = {{ host_wireguard_server_private_key }}
 # {{ peer.peer }}
 PublicKey =  {{ peer.public_key }}
 PresharedKey = {{ peer.preshared_key }}
-AllowedIPs = {{ peer.ip_address }}
+AllowedIPs = {% for ip in peer.ip_addresses %}{{ ip }}{% if not loop.last %}, {% endif %}{% endfor +%}
 
 {% endfor %}
