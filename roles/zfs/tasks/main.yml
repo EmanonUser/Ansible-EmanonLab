@@ -194,3 +194,12 @@
   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+
+- name: Create symlink for ZFS binaries
+  ansible.builtin.file:
+    src: "/sbin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    state: link
+  loop: ["zpool", "zfs", "arcstart", "arc_summary"]
