@@ -202,4 +202,4 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     state: link
-  loop: ["zpool", "zfs", "arcstart", "arc_summary"]
+  loop: ["zpool", "zfs", "arcstat", "arc_summary"]
