@@ -1,4 +1,5 @@
-stork_agent_cloudsmith_gpg_key: "{{ host_stork_agent_cloudsmith_gpg_key | default('gpg.77F64EC28053D1FB.key') }}"     # https://cloudsmith.io/~isc/repos/stork/signing/
+stork_agent_cloudsmith_gpg_key: "{{ host_stork_agent_cloudsmith_gpg_key | default('gpg.77F64EC28053D1FB.key') }}"
+# https://cloudsmith.io/~isc/repos/stork/signing/
 stork_agent_host: "{{ host_stork_agent_host | default('192.168.5.1') }}"
 stork_agent_port: "{{ host_stork_agent_port | default('6763') }}"
 

@@ -1,4 +1,6 @@
 ---
-gad_version: "{{ host_gad_version | default('1.4.3') }}"       # https://github.com/brianreumere/gandi-automatic-dns/releases
+gad_version: "{{ host_gad_version | default('1.4.3') }}"
+# https://github.com/brianreumere/gandi-automatic-dns/releases
+
 gad_path: "{{ host_gad_path | default('/opt')}}"
 gad_use_ipv6: "{{ host_gad_use_ipv6 | default(true) }}"
