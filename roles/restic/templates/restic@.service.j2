@@ -1,0 +1,11 @@
+[Unit]
+Description=Restic %i backup service
+
+[Service]
+Type=simple
+User=restic
+Group=restic
+ExecStart=/usr/bin/restic backup $RESTIC_BACKUPS
+
+[Install]
+WantedBy=multi-user.target

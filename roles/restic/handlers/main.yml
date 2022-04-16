@@ -5,16 +5,16 @@
 
 - name: Enable restic(s) timer(s)
   ansible.builtin.systemd:
-    name: "restic-{{ item.task }}.timer"
+    name: "restic@{{ item.task }}.timer"
     enabled: yes
   loop: "{{ restic_tasks }}"
   loop_control:
-    label: "Restic timer name: {{ item.task }}"
+    label: "restic@{{ item.task }}.timer"
 
 - name: Start restic(s) timer(s)
   ansible.builtin.systemd:
-    name: "restic-{{ item.task }}.timer"
+    name: "restic@{{ item.task }}.timer"
     state: started
   loop: "{{ restic_tasks }}"
   loop_control:
-    label: "Restic timer name: {{ item.task }}"
+    label: "restic@{{ item.task }}.timer"

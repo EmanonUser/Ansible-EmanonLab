@@ -24,41 +24,48 @@
   loop_control:
     label: "Restic repository path: {{ item.path }}"
 
-- name: Configure restic backup tasks env files
+- name: Create restic backup(s) drop-in directories
+  ansible.builtin.file:
+    path: /etc/systemd/system/restic@{{ item.0.task }}.{{ item.1 }}.d
+    owner: root
+    group: root
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ restic_tasks | product(['service', 'timer']) }}"
+  loop_control:
+    label: "Directory: /etc/systemd/system/restic@{{ item.0.task }}.{{ item.1 }}.d"
+
+- name: Configure restic backup drop-in services files
   ansible.builtin.template:
-    src: restic.env.j2
-    dest: /etc/systemd/system/restic-{{ item.repo }}.env
+    src: 10-override.service.j2
+    dest: /etc/systemd/system/restic@{{ item.0.task }}.service.d/10-override.conf
     owner: root
     group: root
     mode: u=rw,g=,o=
-  loop: "{{ restic_repos }}"
+  loop: "{{ restic_tasks | zip(restic_repos) }}"
   loop_control:
-    label: "Restic env file path: /etc/systemd/system/restic-{{ item.repo }}.env"
+    label: /etc/systemd/system/restic@{{ item.0.task }}.service.d/10-repo-override.conf
+  notify: ['Daemon-reload restic systemd', 'Enable restic(s) timer(s)', Start restic(s) timer(s)]
 
-- name: Configure restic services files
+- name: Configure restic backup drop-in timers files
   ansible.builtin.template:
-    src: restic.service.j2
-    dest: /etc/systemd/system/restic-{{ item.task }}.service
+    src: 10-override.timer.j2
+    dest: /etc/systemd/system/restic@{{ item.task }}.timer.d/10-override.conf
     owner: root
     group: root
     mode: u=rw,g=,o=
   loop: "{{ restic_tasks }}"
   loop_control:
-    label: "Restic service file path: /etc/systemd/system/restic-{{ item.task }}.service"
-  notify:
-    - Daemon-reload restic systemd
+    label: /etc/systemd/system/restic@{{ item.task }}.timer.d/10-repo-override.conf
+  notify: Daemon-reload restic systemd
 
-- name: Configure restic timer files
+- name: Place restic services files
   ansible.builtin.template:
-    src: restic.timer.j2
-    dest: /etc/systemd/system/restic-{{ item.task }}.timer
+    src: restic@.{{ item }}.j2
+    dest: /etc/systemd/system/restic@.{{ item }}
     owner: root
     group: root
     mode: u=rw,g=,o=
-  loop: "{{ restic_tasks }}"
+  loop: ["service", "timer"]
   loop_control:
-    label: "Restic timer file path: /etc/systemd/system/restic-{{ item.task }}.timer"
-  notify:
-    - Daemon-reload restic systemd
-    - Enable restic(s) timer(s)
-    - Start restic(s) timer(s)
+    label: /etc/systemd/system/restic@.{{ item }}.j2

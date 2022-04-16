@@ -1,0 +1,9 @@
+[Unit]
+Description=Restic %i backup timer
+
+[Timer]
+OnStartupSec=5m
+Unit=restic@%i.service
+
+[Install]
+WantedBy=timers.target
