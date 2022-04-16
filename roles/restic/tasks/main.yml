@@ -35,6 +35,14 @@
   loop_control:
     label: "Directory: /etc/systemd/system/restic@{{ item.0.task }}.{{ item.1 }}.d"
 
+- name: Construct new ansible list
+  ansible.builtin.set_fact:
+    restic_task_repo: "{{ restic_task_repo | default([]) + [item] }}"
+  when: item.0.dest_repo == item.1.repo
+  loop: "{{ host_restic_tasks | product(host_restic_repos) }}"
+  loop_control:
+    label: "task: {{ item.0.task }}, repo: {{ item.1.repo }}"
+
 - name: Configure restic backup drop-in services files
   ansible.builtin.template:
     src: 10-override.service.j2
@@ -42,7 +50,7 @@
     owner: root
     group: root
     mode: u=rw,g=,o=
-  loop: "{{ restic_tasks | zip(restic_repos) }}"
+  loop: "{{ restic_task_repo }}"
   loop_control:
     label: /etc/systemd/system/restic@{{ item.0.task }}.service.d/10-repo-override.conf
   notify: ['Daemon-reload restic systemd', 'Enable restic(s) timer(s)', Start restic(s) timer(s)]
