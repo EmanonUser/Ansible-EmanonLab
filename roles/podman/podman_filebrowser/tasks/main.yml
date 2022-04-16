@@ -10,7 +10,7 @@
 
 - name: Import filebrowser base config
   ansible.builtin.copy:
-    src: filebrowser.json
+    src: settings.json
     dest: "{{ podman_filebrowser_files.config }}"
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"

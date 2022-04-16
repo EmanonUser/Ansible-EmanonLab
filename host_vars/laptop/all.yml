@@ -56,8 +56,8 @@ host_podman_filebrowser_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.filebrowser.webui_port }}", proto: tcp }
 
 host_podman_filebrowser_volumes:
-  - "{{ host_podman_volumes_path }}/filebrowser/database.db:/database.db"
-  - "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json:/.filebrowser.json"
+  - "{{ host_podman_volumes_path }}/filebrowser/config/settings.json:/config/settings.json"
+  - "{{ host_podman_volumes_path }}/filebrowser/database/database.db:/database/database.db"
   - "{{ host_podman_files_path }}:/srv"
 
 

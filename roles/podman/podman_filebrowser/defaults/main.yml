@@ -13,13 +13,15 @@ podman_filebrowser_firewalld_rich_rules: "{{ host_podman_filebrowser_firewalld_r
 podman_filebrowser_directories:
   - "{{ host_podman_volumes_path }}/filebrowser"
   - "{{ host_podman_volumes_path }}/filebrowser/data"
+  - "{{ host_podman_volumes_path }}/filebrowser/config"
+  - "{{ host_podman_volumes_path }}/filebrowser/database"
 
 podman_filebrowser_files:
-  config: "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json"
-  database: "{{ host_podman_volumes_path }}/filebrowser/database.db"
+  config: "{{ host_podman_volumes_path }}/filebrowser/config/settings.json"
+  database: "{{ host_podman_volumes_path }}/filebrowser/database/database.db"
 
 podman_filebrowser_volumes: "{{ host_podman_filebrowser_volumes | default(podman_filebrowser_volumes_default) }}"
 podman_filebrowser_volumes_default:
-  - "{{ host_podman_volumes_path }}/filebrowser/database.db:/database.db"
-  - "{{ host_podman_volumes_path }}/filebrowser/.filebrowser.json:/.filebrowser.json"
+  - "{{ host_podman_volumes_path }}/filebrowser/config/settings.json:/config/settings.json"
+  - "{{ host_podman_volumes_path }}/filebrowser/database/database.db:/database/database.db"
   - "{{ host_podman_volumes_path }}/filebrowser/data:/srv"
