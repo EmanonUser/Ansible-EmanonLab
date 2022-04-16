@@ -10,4 +10,4 @@ host_restic_tasks:
     need_read_privilege: yes
     systemd_timer_interval: 6h
     files_backup:
-      - /tank/minecraft_02
+      - /tank/minecraft

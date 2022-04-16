@@ -17,7 +17,7 @@ host_podman_media_path: "{{ host_zfs_primary_pools[0].path }}/media"
 host_podman_media_2_path: "{{ host_zfs_primary_pools[0].path }}/emanon/media"
 host_podman_files_path: "{{ host_zfs_primary_pools[0].path }}/emanon/files"
 host_podman_misc_path: "{{ host_zfs_primary_pools[0].path }}/misc"
-host_podman_minecraft_path: "{{ host_zfs_primary_pools[0].path }}/minecraft_02"
+host_podman_minecraft_path: "{{ host_zfs_primary_pools[0].path }}/minecraft"
 ########## Podman ##########
 
 

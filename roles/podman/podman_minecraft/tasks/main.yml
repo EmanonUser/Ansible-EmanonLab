@@ -6,6 +6,7 @@
     publish: "{{ podman_minecraft_ports }}"
     volume: "{{ podman_minecraft_volumes }}"
     state: started
+    user: root
     generate_systemd:
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/
