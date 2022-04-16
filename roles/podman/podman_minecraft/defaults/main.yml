@@ -1,6 +1,6 @@
 ---
 podman_minecraft_image: "{{ host_podman_minecraft_image | default('docker.io/itzg/minecraft-server') }}"
-podman_minecraft_image_version: "{{ host_podman_minecraft_image_version | default('2022.5.0') }}"
+podman_minecraft_image_version: "{{ host_podman_minecraft_image_version | default('2022.6.0') }}"
 # https://hub.docker.com/r/itzg/minecraft-server/tags
 
 podman_minecraft_ports:

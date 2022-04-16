@@ -1,6 +1,6 @@
 ---
 podman_homeassistant_image: "{{ host_podman_homeassistant_image | default('docker.io/homeassistant/home-assistant') }}"
-podman_homeassistant_image_version: "{{ host_podman_homeassistant_image_version | default('2022.2.9') }}"
+podman_homeassistant_image_version: "{{ host_podman_homeassistant_image_version | default('2022.4.4') }}"
 # https://github.com/home-assistant/core/pkgs/container/home-assistant/versions
 
 podman_homeassistant_ports:

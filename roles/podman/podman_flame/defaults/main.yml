@@ -1,6 +1,6 @@
 ---
 podman_flame_image: "{{ host_podman_flame_image | default('docker.io/pawelmalak/flame') }}"
-podman_flame_image_version: "{{ host_podman_flame_image_version | default('multiarch2.2.1') }}"
+podman_flame_image_version: "{{ host_podman_flame_image_version | default('multiarch2.3.0') }}"
 # https://hub.docker.com/r/pawelmalak/flame/tags
 
 podman_flame_ports:

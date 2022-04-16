@@ -1,6 +1,6 @@
 ---
 podman_pyload_image: "{{ host_podman_pyload_image | default('ghcr.io/linuxserver/pyload') }}"
-podman_pyload_image_version: "{{ host_podman_pyload_image | default('version-f4f8bbaf') }}"
+podman_pyload_image_version: "{{ host_podman_pyload_image | default('version-360b2295') }}"
 # https://github.com/linuxserver/docker-pyload/pkgs/container/pyload
 
 podman_pyload_ports:

@@ -1,6 +1,6 @@
 ---
 podman_filebrowser_image: "{{ host_podman_filebrowser_image | default('docker.io/filebrowser/filebrowser') }}"
-podman_filebrowser_image_version: "{{ host_podman_filebrowser_image_version | default('v2.19.0') }}"
+podman_filebrowser_image_version: "{{ host_podman_filebrowser_image_version | default('v2-s6') }}"
 # https://hub.docker.com/r/filebrowser/filebrowser/tags
 
 podman_filebrowser_ports:

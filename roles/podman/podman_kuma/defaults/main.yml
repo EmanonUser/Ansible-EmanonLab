@@ -1,6 +1,6 @@
 ---
 podman_kuma_image: "{{ host_podman_kuma_image | default('docker.io/louislam/uptime-kuma') }}"
-podman_kuma_image_version: "{{ host_podman_kuma_image_version | default('1.12.1-alpine') }}"
+podman_kuma_image_version: "{{ host_podman_kuma_image_version | default('1.14.0-alpine') }}"
 # https://hub.docker.com/r/louislam/uptime-kuma/tags
 
 podman_kuma_ports:
