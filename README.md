@@ -22,4 +22,4 @@ TODO:
     - add upstream IPv6 servers to coredns when the tunnel will be stable ( or native IPv6 )
     - Start mount nfsv4 is always changed
     - Haproxy breaking if no ssl
-    - add zfs allow list to primary user
+    - convert restic.service to dynamic by adding custom vars in .env files
