@@ -1,0 +1,57 @@
+---
+- name: Install cryptography python3 module
+  ansible.builtin.apt:
+    name: python3-cryptography
+    state: present
+
+- name: Create openssl dir(s)
+  ansible.builtin.file:
+    path: "{{ openssl_path }}/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=,o=
+  loop: ["keys", "csrs", "certs"]
+
+- name: Generate private key
+  community.crypto.openssl_privatekey:
+    path: "{{ openssl_path }}/keys/{{ local_domain_name }}.key"
+    type: RSA
+    size: 4096
+    owner: root
+    group: root
+    mode: u=rw,g=,u=
+
+- name: Generate an OpenSSL Certificate Signing Request
+  community.crypto.openssl_csr:
+    path: "{{ openssl_path }}/csrs/{{ local_domain_name }}.csr"
+    privatekey_path: "{{ openssl_path }}/keys/{{ local_domain_name }}.key"
+    country_name: FR
+    organization_name: EmanonLab
+    email_address: emanon@emanonlab.moe
+    common_name: iwakura.emanon.moe
+    owner: root
+    group: root
+    mode: u=rw,g=,u=
+
+- name: Generate a Self Signed OpenSSL certificate
+  community.crypto.x509_certificate:
+    path: "{{ openssl_path }}/certs/{{ local_domain_name }}.pem"
+    privatekey_path: "{{ openssl_path }}/keys/{{ local_domain_name }}.key"
+    csr_path: "{{ openssl_path }}/csrs/{{ local_domain_name }}.csr"
+    provider: selfsigned
+    owner: root
+    group: root
+    mode: u=rw,g=,u=
+
+- name: Create symlink for haproxy's certs
+  ansible.builtin.file:
+    src: "{{ openssl_path }}/certs/{{ local_domain_name }}.pem"
+    dest: "/etc/haproxy/ssl/*.{{ local_domain_name }}.pem"
+    state: link
+
+- name: Create symlink for haproxy's privkey
+  ansible.builtin.file:
+    src: "{{ openssl_path }}/keys/{{ local_domain_name }}.key"
+    dest: "/etc/haproxy/ssl/*.{{ local_domain_name }}.pem.key"
+    state: link

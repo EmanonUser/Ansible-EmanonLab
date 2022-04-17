@@ -49,5 +49,8 @@
     - role: podman/podman_flame
       tags: [ podman_flame, podman_all ]
 
+    - role: self_certificates
+      tags: [ self_certificates, podman_all ]
+
     - role: haproxy
       tags: [ haproxy, podman_all ]

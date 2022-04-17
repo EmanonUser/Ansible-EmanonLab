@@ -1,0 +1,3 @@
+---
+openssl_path: /etc/ssl/ansible
+local_domain_name: "{{ grp_local_domain }}"
