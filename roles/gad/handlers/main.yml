@@ -3,32 +3,14 @@
   ansible.builtin.systemd:
     daemon_reload: yes
 
-- name: Enable gad4 timer
+- name: Enable gad timer
   ansible.builtin.systemd:
-    name: gad4.timer
+    name: "gad@{{ item }}.timer"
     enabled: yes
+  loop: [IPv4, IPv6]
 
-- name: Enable gad6 timer
+- name: Start gad timer
   ansible.builtin.systemd:
-    name: gad6.timer
-    enabled: yes
-
-- name: Start gad4 timer
-  ansible.builtin.systemd:
-    name: gad4.timer
+    name: "gad@{{ item }}.timer"
     state: started
-
-- name: Start gad6 timer
-  ansible.builtin.systemd:
-    name: gad6.timer
-    state: started
-
-- name: Restart gad4 timer
-  ansible.builtin.systemd:
-    name: gad4.timer
-    state: restarted
-
-- name: Restart gad6 timer
-  ansible.builtin.systemd:
-    name: gad6.timer
-    state: restarted
+  loop: [IPv4, IPv6]

@@ -1,0 +1,9 @@
+[Unit]
+Description=Update Gandi DNS Records timer
+
+[Timer]
+OnStartupSec=5m
+Unit=gad@%i.service
+
+[Install]
+WantedBy=timers.target

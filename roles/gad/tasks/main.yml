@@ -34,39 +34,49 @@
     mode: u=rwx,g=,o=
     state: directory
 
-- name: Install systemd gad4 service files
-  ansible.builtin.template:
-    src: "{{ item }}.j2"
-    dest: /etc/systemd/system/{{ item }}
+- name: Create gad drop-in directories
+  ansible.builtin.file:
+    path: /etc/systemd/system/gad@{{ item.0 }}.{{ item.1 }}.d
     owner: root
     group: root
-    mode: u=rw,g=,o=
-    force: yes
-  loop:
-    - gad.env
-    - gad4.service
-    - gad4.timer
-  notify:
-    - Daemon-reload gad systemd
-    - Enable gad4 timer
-    - Start gad4 timer
-    - Restart gad4 timer
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ ['IPv4', 'IPv6'] | list | product(['service', 'timer']) }}"
 
-- name: Install systemd gad6 service files
+- name: Configure gad services file
   ansible.builtin.template:
-    src: "{{ item }}.j2"
-    dest: /etc/systemd/system/{{ item }}
+    src: 10-override.service.j2
+    dest: /etc/systemd/system/gad@{{ item.ip_version }}.service.d/10-override.conf
     owner: root
     group: root
     mode: u=rw,g=,o=
-    force: yes
   loop:
-    - gad.env
-    - gad6.service
-    - gad6.timer
-  when: gad_use_ipv6
+    - { ip_version: "IPv4" }
+    - { ip_version: "IPv6", gad_arg: "-6"}
   notify:
     - Daemon-reload gad systemd
-    - Enable gad6 timer
-    - Start gad6 timer
-    - Restart gad6 timer
+    - Enable gad timer
+    - Start gad timer
+
+- name: Configure gad timers file
+  ansible.builtin.template:
+    src: 10-override.timer.j2
+    dest: /etc/systemd/system/gad@{{ item }}.timer.d/10-override.conf
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  loop: [IPv4, IPv6]
+  notify: Daemon-reload gad systemd
+
+
+- name: Place restic services files
+  ansible.builtin.template:
+    src: gad@.{{ item }}.j2
+    dest: /etc/systemd/system/gad@.{{ item }}
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  loop: ["service", "timer"]
+  notify:
+    - Enable gad timer
+    - Start gad timer
