@@ -65,3 +65,6 @@ host_zfs_pools:
       - volume: zvol_01
         zrepl_snapshot_policy: zrepl_P3
         volsize: 35G
+      - volume: zvol_02
+        zrepl_snapshot_policy: zrepl_P3
+        volsize: 35G
