@@ -1,0 +1,26 @@
+---
+- name: Install ansible
+  ansible.builtin.apt:
+    name: ansible
+    state: present
+
+- name: Pull latest source files from github
+  ansible.builtin.git:
+    repo: https://github.com/EmanonUser/Ansible-EmanonLab
+    dest: Ansible-EmanonLab
+    single_branch: yes
+    version: main
+    force: yes
+
+- name: Set files permissions for the git repo
+  ansible.builtin.file:
+    path: Ansible-EmanonLab
+    owner: ansible
+    group: ansible
+    mode: u=rwx,g=,o=
+    recurse: yes
+
+- name: Install collections and roles together
+  community.general.ansible_galaxy_install:
+    type: both
+    requirements_file: /home/ansible/Ansible-EmanonLab/requirements.yml

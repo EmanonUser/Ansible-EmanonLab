@@ -117,3 +117,12 @@
     state: link
     mode: u=rw,g=,o=
   loop: "{{ grp_acme_dns_domain_name }}"
+
+- name: debug
+  debug:
+    msg: "{{ ansible_host }}"
+
+- name: Import setup_auto_renew playbook
+  include_tasks: setup_auto_renew.yml
+  when:
+    - acme_dns_setup_auto_renew
