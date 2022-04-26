@@ -126,3 +126,4 @@
   include_tasks: setup_auto_renew.yml
   when:
     - acme_dns_setup_auto_renew
+    - ansible_connection != "local"
