@@ -4,5 +4,6 @@ collections:
   - ansible.posix
   - community.general
   - community.grafana
+  - community.gandi_livedns
   - containers.podman
   - community.crypto
