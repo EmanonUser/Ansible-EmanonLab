@@ -34,9 +34,13 @@
     volumes: "{{ podman_filebrowser_volumes }}"
     restart_policy: unless-stopped
     state: started
+    user: root
     generate_systemd:
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/
+    env:
+      PUID: "0"
+      PGID: "0"
   become_user: "{{ primary_user_username }}"
   notify: Enable filebrowser_ansible podman service
 
