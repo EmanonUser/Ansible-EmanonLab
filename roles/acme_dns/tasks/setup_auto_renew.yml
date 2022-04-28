@@ -12,15 +12,31 @@
     version: main
     force: yes
 
-- name: Set files permissions for the git repo
-  ansible.builtin.file:
-    path: Ansible-EmanonLab
+- name: Place ansible vault password file
+  ansible.builtin.lineinfile:
+    path: .VAULT_PASS
+    line: "{{ grp_vault_password }}"
     owner: ansible
     group: ansible
-    mode: u=rwx,g=,o=
-    recurse: yes
+    mode: u=r,g=,o=
+    create: yes
+    state: present
 
-- name: Install collections and roles together
+- name: Install collections from requirements.yml
   community.general.ansible_galaxy_install:
-    type: both
+    type: collection
     requirements_file: /home/ansible/Ansible-EmanonLab/requirements.yml
+    dest: /home/ansible/.ansible/collections/ansible_collections/
+
+- name: Place ansible_acme_renew systemd files
+  ansible.builtin.template:
+    src: "ansible_acme_renew.{{ item }}.j2"
+    dest: "/etc/systemd/system/ansible_acme_renew.{{ item }}"
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  loop: ["service", "timer"]
+  notify:
+    - Daemon-reload acme_dns systemd
+    - Enable ansible_acme_renew timer
+    - Start ansible_acme_renew timer

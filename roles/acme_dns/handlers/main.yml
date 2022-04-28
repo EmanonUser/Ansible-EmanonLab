@@ -3,3 +3,17 @@
   ansible.builtin.systemd:
     name: haproxy.service
     state: reloaded
+
+- name: Daemon-reload acme_dns systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Enable ansible_acme_renew timer
+  ansible.builtin.systemd:
+    name: "ansible_acme_renew.timer"
+    enabled: yes
+
+- name: Start ansible_acme_renew timer
+  ansible.builtin.systemd:
+    name: "ansible_acme_renew.timer"
+    state: started
