@@ -68,7 +68,8 @@
     url_username: "admin"
     url_password: "{{ podman_grafana_admin_password }}"
     ds_type: prometheus
-    ds_url: "http://{{ grp_podman_networking.prometheus.fulldomain }}"
+    ds_url: "https://{{ grp_podman_networking.prometheus.fulldomain }}"
+    tls_skip_verify: yes
     is_default: yes
 
 - name: Create grafana network folder
