@@ -1,5 +1,5 @@
 ---
-- name: Install nftables from backports
+- name: Install nftables
   ansible.builtin.apt:
     name: nftables
     state: present
