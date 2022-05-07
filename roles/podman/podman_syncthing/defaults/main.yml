@@ -1,6 +1,6 @@
 ---
 podman_syncthing_image: "{{ host_podman_syncthing_image | default('quay.io/linuxserver.io/syncthing') }}"
-podman_syncthing_image_version: "{{ host_podman_syncthing_image_version | default('1.19.2') }}"
+podman_syncthing_image_version: "{{ host_podman_syncthing_image_version | default('1.20.1') }}"
 # https://quay.io/repository/linuxserver.io/syncthing?tag=latest&tab=tags
 
 podman_syncthing_ports:
