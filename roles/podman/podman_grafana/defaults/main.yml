@@ -1,6 +1,6 @@
 ---
 podman_grafana_image: "{{ host_podman_grafana_image | default('docker.io/grafana/grafana') }}"
-podman_grafana_image_version: "{{ host_podman_grafana_image_version | default('8.4.6') }}"
+podman_grafana_image_version: "{{ host_podman_grafana_image_version | default('8.5.1') }}"
 # https://hub.docker.com/r/grafana/grafana/tags
 
 podman_grafana_ports:
@@ -27,4 +27,4 @@ podman_grafana_dashboards_path:
     - "{{ host_podman_volumes_path }}/grafana/dashboards/shp.json"
     - "{{ host_podman_volumes_path }}/grafana/dashboards/tmp117.json"
 
-podman_grafana_url: "http://127.0.0.1:{{ grp_podman_networking.grafana.webui_port }}"
+podman_grafana_url: "http://localhost:{{ grp_podman_networking.grafana.webui_port }}"
