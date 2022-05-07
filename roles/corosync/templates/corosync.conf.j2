@@ -1,0 +1,27 @@
+totem {
+	version: 2
+	secauth: on
+	cluster_name: {{ corosync_cluster_name }}
+	transport: knet
+	knet_compression_model: lz4
+	knet_compression_threshold: 1
+	knet_compression_level: 3
+}
+
+nodelist {
+{% for node in corosync_nodes %}
+    node {
+        name: {{ node.node }}
+        nodeid: {{ loop.index }}
+        ring0_addr: {{ node.ipv4_addr }}
+    }
+{% endfor %}
+}
+
+quorum {
+	provider: corosync_votequorum
+	two_node: 1
+	wait_for_all: 1
+	last_man_standing: 1
+	auto_tie_breaker: 0
+}

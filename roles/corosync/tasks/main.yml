@@ -1,0 +1,30 @@
+---
+- name: Install corosync
+  ansible.builtin.apt:
+    name: corosync
+    state: present
+
+- name: Open corosync firewalld port
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: 5405/udp
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Place corosync authkey
+  ansible.builtin.copy:
+    dest: /etc/corosync/authkey
+    content: "{{ corosync_authkey }}"
+    owner: root
+    group: root
+    mode: u=r,g=,o=
+  notify: Restart corosync service
+
+- name: Configure corosync
+  ansible.builtin.template:
+    src: corosync.conf.j2
+    dest: /etc/corosync/corosync.conf
+  notify:
+    - Restart corosync service
+    - Enable corosync service

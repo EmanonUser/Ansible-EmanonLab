@@ -1,0 +1,6 @@
+---
+pacemaker_default_ipv4_vip: "{{ host_pacemaker_default_ipv4_vip | default('192.168.10.10') }}"
+pacemaker_default_ipv4_cidr_vip: "{{ host_pacemaker_default_ipv4_cidr_vip | default('24') }}"
+
+pacemaker_default_ipv6_vip: "{{ host_pacemaker_default_ipv6_vip | default('{{ grp_ipv6_prefix }}:20:ffff::') }}"
+pacemaker_default_ipv6_cidr_vip: "{{ host_pacemaker_default_ipv6_cidr_vip | default('64') }}"

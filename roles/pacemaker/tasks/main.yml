@@ -1,0 +1,36 @@
+---
+- name: Install pacemaker and cmrsh
+  ansible.builtin.apt:
+    name: [pacemaker, crmsh]
+    state: present
+
+- name: Get pacemaker current configuration
+  ansible.builtin.command:
+    cmd: crm configure show
+  register: pacemaker_conf
+  changed_when: no
+  run_once: yes
+
+- name: Disable fencing/s.o.n.i.t.h
+  ansible.builtin.command:
+    cmd: crm configure property stonith-enabled=false
+  when: "'stonith-enabled=false' not in pacemaker_conf.stdout"
+  run_once: yes
+
+- name: Configure IPv4 vip
+  ansible.builtin.command:
+    cmd: crm configure primitive virtual_IP4 ocf:heartbeat:IPaddr2 params ip={{ pacemaker_default_ipv4_vip }} cidr_netmask={{ pacemaker_default_ipv4_cidr_vip }} nic="enp1s0" op monitor interval="10s"
+  when: "'primitive virtual_IP4' not in pacemaker_conf.stdout"
+  run_once: yes
+
+- name: Configure IPv6 vip
+  ansible.builtin.command:
+    cmd: crm configure primitive virtual_IP6 ocf:heartbeat:IPaddr2 params ip={{ pacemaker_default_ipv6_vip }} cidr_netmask={{ pacemaker_default_ipv6_cidr_vip }} nic="enp1s0" op monitor interval="10s"
+  when: "'primitive virtual_IP6' not in pacemaker_conf.stdout"
+  run_once: yes
+
+- name: Configure vips colocation
+  ansible.builtin.command:
+    cmd: "crm configure colocation virtual_IP46 inf: virtual_IP4 virtual_IP6"
+  when: "'colocation virtual_IP46 inf: virtual_IP4 virtual_IP6' not in pacemaker_conf.stdout"
+  run_once: yes
