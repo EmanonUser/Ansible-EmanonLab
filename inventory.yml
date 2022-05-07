@@ -10,6 +10,14 @@ homelab:
       ansible_host: pi.local.emanon
     nas:
       ansible_host: nas.local.emanon
+  children:
+    cluster:
+      hosts:
+        node_01:
+          ansible_host: 192.168.22.210
+        node_02:
+          ansible_host: 192.168.22.156
+
 secondarylab:
   vars:
     ansible_user: ansible

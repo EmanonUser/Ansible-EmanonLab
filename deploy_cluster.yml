@@ -1,0 +1,23 @@
+---
+- name: Provisioning cluster servers
+  hosts: cluster
+  become: yes
+  gather_facts: yes
+  roles:
+    - role: device_init
+      tags: [ device_init, init ]
+
+    - role: starship
+      tags: [ starship, init ]
+
+    - role: firewalld
+      tags: [ firewalld, init ]
+
+    - role: systemd_timesyncd
+      tags: [ systemd_timesyncd, init ]
+
+    - role: corosync
+      tags: [ corosync, init, ha ]
+
+    - role: pacemaker
+      tags: [ corosync, init, ha ]
