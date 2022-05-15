@@ -1,0 +1,13 @@
+---
+host_network_interfaces:
+    - interface: enp1s0
+      ipv4: yes
+      ipv6: no
+      configuration:
+        v4: static
+      addresses:
+        v4: ["192.168.22.20"]
+      gateway:
+        v4: "192.168.22.1"
+      dns_servers:
+        v4: ["9.9.9.9", "1.1.1.1"]
