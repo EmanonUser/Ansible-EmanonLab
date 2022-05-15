@@ -13,10 +13,10 @@ homelab:
   children:
     cluster:
       hosts:
-        node_01:
-          ansible_host: 192.168.22.210
-        node_02:
-          ansible_host: 192.168.22.156
+        bullseye-01:
+          ansible_host: bullseye-01
+        bullseye-02:
+          ansible_host: bullseye-02
 
 secondarylab:
   vars:
