@@ -70,3 +70,6 @@
     cmd: "crm configure colocation virtual_IP46 inf: virtual_IP4 virtual_IP6"
   when: "'colocation virtual_IP46 inf: virtual_IP4 virtual_IP6' not in pacemaker_conf.stdout"
   run_once: yes
+
+- name: conf nginx
+  ansible.builtin.import_tasks: nginx.yml
