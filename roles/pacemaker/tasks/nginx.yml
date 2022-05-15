@@ -4,6 +4,7 @@
   ansible.builtin.command:
     cmd: primitive nginxHA nginx op monitor interval=10s
   when: "'primitive nginxHA nginx' not in pacemaker_conf.stdout"
+  run_once: yes
 
 - name: Configure nginx colocation with VIPs
   ansible.builtin.command:
