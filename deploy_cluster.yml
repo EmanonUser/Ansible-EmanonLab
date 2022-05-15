@@ -7,6 +7,9 @@
     - role: device_init
       tags: [ device_init, init ]
 
+    - role: interfaces
+      tags: [ interfaces, init ]
+
     - role: starship
       tags: [ starship, init ]
 
@@ -20,4 +23,4 @@
       tags: [ corosync, init, ha ]
 
     - role: pacemaker
-      tags: [ corosync, init, ha ]
+      tags: [ pacemaker, init, ha ]
