@@ -63,3 +63,14 @@
     group: root
     mode: u=rw,g=r,o=r
     state: present
+
+- name: Enable IP forwarding
+  ansible.builtin.sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+  loop:
+    - { name: "net.ipv4.ip_forward", value: "1" }
+    - { name: "net.ipv6.conf.default.forwarding", value: "1" }
+    - { name: "net.ipv6.conf.all.forwarding", value: "1" }

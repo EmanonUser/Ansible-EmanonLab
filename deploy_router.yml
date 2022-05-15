@@ -13,9 +13,6 @@
     - role: interfaces
       tags: [ interfaces, init ]
 
-    - role: sysctl
-      tags: [ sysctl, init ]
-
     - role: vnstat
       tags: [ vnstat, init, monitoring ]
 
