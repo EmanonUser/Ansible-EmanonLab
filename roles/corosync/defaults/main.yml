@@ -1,2 +1,3 @@
 ---
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+corosync_cluster_name: debian-ha

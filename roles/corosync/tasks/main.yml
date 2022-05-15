@@ -4,6 +4,14 @@
     name: corosync
     state: present
 
+- name: Configure /etc/hosts
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
 - name: Open corosync firewalld port
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
@@ -12,10 +20,22 @@
     immediate: yes
     state: enabled
 
+- name: Generate corosync authkey
+  ansible.builtin.command:
+    cmd: corosync-keygen -k /etc/corosync/authkey
+    creates: /etc/corosync/authkey
+  run_once: yes
+
+- name: Fetch corosync authkey into memory
+  ansible.builtin.slurp:
+    src: /etc/corosync/authkey
+  register: corosync_authkey
+  run_once: yes
+
 - name: Place corosync authkey
   ansible.builtin.copy:
     dest: /etc/corosync/authkey
-    content: "{{ corosync_authkey }}"
+    content: "{{ corosync_authkey.content | b64decode }}"
     owner: root
     group: root
     mode: u=r,g=,o=
@@ -25,6 +45,11 @@
   ansible.builtin.template:
     src: corosync.conf.j2
     dest: /etc/corosync/corosync.conf
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
   notify:
     - Restart corosync service
     - Enable corosync service
+    - Restart pacemaker service
+    - Enable pacemaker service

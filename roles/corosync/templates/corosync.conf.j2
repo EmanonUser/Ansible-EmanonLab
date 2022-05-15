@@ -9,11 +9,11 @@ totem {
 }
 
 nodelist {
-{% for node in corosync_nodes %}
+{% for host in groups['cluster'] %}
     node {
-        name: {{ node.node }}
+        name: {{ host }}
         nodeid: {{ loop.index }}
-        ring0_addr: {{ node.ipv4_addr }}
+        ring0_addr: {{ host }}
     }
 {% endfor %}
 }
