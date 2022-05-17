@@ -4,14 +4,6 @@
     name: [pacemaker, crmsh]
     state: present
 
-- name: Create ssh directory
-  ansible.builtin.file:
-    path: /root/.ssh
-    owner: root
-    group: root
-    mode: u=rwx,g=rw,o=
-    state: directory
-
 - name: Generate an OpenSSH keypair
   community.crypto.openssh_keypair:
     path: /root/.ssh/id_ed25519
@@ -27,6 +19,7 @@
   ansible.posix.authorized_key:
     user: root
     key: "{{ hostvars[item].openssh_pubkey.content | b64decode }}"
+    manage_dir: yes
     state: present
   loop: "{{ groups['cluster'] }}"
 
@@ -71,5 +64,5 @@
   when: "'colocation virtual_IP46 inf: virtual_IP4 virtual_IP6' not in pacemaker_conf.stdout"
   run_once: yes
 
-- name: conf nginx
-  ansible.builtin.import_tasks: nginx.yml
+# - name: conf nginx
+#   ansible.builtin.import_tasks: nginx.yml
