@@ -23,4 +23,7 @@
       tags: [ corosync, init, ha ]
 
     - role: pacemaker
-      tags: [ pacemaker, init, ha ]
+      tags: [ pacemaker, ha ]
+
+    - role: libvirtd
+      tags: [ libvirtd, vm ]
