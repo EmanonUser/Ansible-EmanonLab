@@ -4,6 +4,14 @@
     name: [pacemaker, crmsh]
     state: present
 
+- name: Create .ssh directory
+  ansible.builtin.file:
+    path: /root/.ssh
+    owner: root
+    group: root
+    mode: u=rwx,g=,o=
+    state: directory
+
 - name: Generate an OpenSSH keypair
   community.crypto.openssh_keypair:
     path: /root/.ssh/id_ed25519
