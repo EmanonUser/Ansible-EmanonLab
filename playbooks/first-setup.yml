@@ -1,0 +1,28 @@
+---
+- name: Setup a target to be ansible-ready
+  become: yes
+  hosts: all
+  tasks:
+    - name: Create ansible user
+      ansible.builtin.user:
+        name: ansible
+        create_home: yes
+        shell: /usr/bin/bash
+        system: yes
+        state: present
+
+    - name: Add ansible user to sudoers and allow all
+      community.general.sudoers:
+        name: ansible_admin
+        state: present
+        user: ansible
+        nopassword: yes
+        commands: ALL
+
+    - name: Add SSH key to ansible user
+      ansible.posix.authorized_key:
+        user: "ansible"
+        key: "{{ lookup('file', '~/.ssh/AnsibleMaster_key_ed25519.pub') }}"
+        state: present
+
+    
