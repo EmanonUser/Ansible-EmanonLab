@@ -1,0 +1,22 @@
+---
+- name: Install kvm / qemu / libvirtd stack
+  ansible.builtin.apt:
+    name: [qemu-system-x86, libvirt-clients, libvirt-daemon-system, virtinst]
+    state: present
+
+- name: Get installed firewalld zones
+  ansible.builtin.command:
+    cmd: firewall-cmd --get-zones
+  register: installed_firewalld_zones
+  changed_when: no
+
+- name: Restart firewalld to add libvirtd zone
+  ansible.builtin.systemd:
+    name: firewalld
+    state: restarted
+  when: "'libvirt' not in installed_firewalld_zones.stdout"
+
+- name: Start libvirtd default network
+  community.libvirt.virt_net:
+    name: default
+    command: create
