@@ -20,8 +20,6 @@ host_isc_kea_dhcp4:
     options_data:
       - option_data: "routers"
         data: ["192.168.10.1"]
-      - option_data: "tftp-server-name"
-        data: ["192.168.10.25"]
 
   - subnet: 192.168.20.0/24
     pools:
