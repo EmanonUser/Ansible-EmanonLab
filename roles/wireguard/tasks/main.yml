@@ -20,3 +20,7 @@
     - Enable wireguard service
     - Start wireguard service
     - Reload wireguard service
+
+- name: Import tasks for cluster deployment
+  ansible.builtin.include_tasks: ha.yml
+  when: ansible_play_hosts[0] in groups["cluster"]

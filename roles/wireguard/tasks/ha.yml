@@ -1,0 +1,28 @@
+---
+- name: Open wireguard firewalld port
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: 51820/udp
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Get pacemaker current configuration
+  ansible.builtin.command:
+    cmd: crm configure show
+  register: pacemaker_conf
+  changed_when: no
+  run_once: yes
+  notify: Disable wireguard service
+
+- name: Configure wireguard pacemaker ressource
+  ansible.builtin.command:
+    cmd: "crm configure primitive wireguard_HA systemd:wg-quick@{{ wireguard_interface_name }} op monitor interval=10s"
+  when: "'primitive wireguard_HA' not in pacemaker_conf.stdout"
+  run_once: yes
+
+- name: Configure wireguard colocation with VIPs
+  ansible.builtin.command:
+    cmd: "crm configure colocation wireguard_VIP inf: wireguard_HA virtual_IP4 virtual_IP6"
+  when: "'colocation wireguard_VIP inf: wireguard_HA virtual_IP4 virtual_IP6' not in pacemaker_conf.stdout"
+  run_once: yes
