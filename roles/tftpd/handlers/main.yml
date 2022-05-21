@@ -1,0 +1,15 @@
+---
+- name: Enable tftpd-hpa service
+  ansible.builtin.systemd:
+    name: tftpd-hpa.service
+    enabled: yes
+
+- name: Start tftpd-hpa service
+  ansible.builtin.systemd:
+    name: tftpd-hpa.service
+    state: started
+
+- name: Restart tftpd-hpa service
+  ansible.builtin.systemd:
+    name: tftpd-hpa.service
+    state: restarted
