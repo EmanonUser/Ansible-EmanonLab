@@ -31,7 +31,6 @@
   ansible.builtin.systemd:
     name: "zpool-trim@{{ item.pool }}.timer"
     enabled: yes
-  when: item.enable_trim
   loop: "{{ zfs_pools }}"
   loop_control:
     label: "ZFS pool Name: {{ item.pool }}"
@@ -40,7 +39,6 @@
   ansible.builtin.systemd:
     name: "zpool-trim@{{ item.pool }}.timer"
     state: started
-  when: item.enable_trim
   loop: "{{ zfs_pools }}"
   loop_control:
     label: "ZFS pool Name: {{ item.pool }}"
@@ -49,7 +47,6 @@
   ansible.builtin.systemd:
     name: "zpool-trim@{{ item.pool }}.timer"
     state: restarted
-  when: item.enable_trim
   loop: "{{ zfs_pools }}"
   loop_control:
     label: "ZFS pool Name: {{ item.pool }}"
