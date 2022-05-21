@@ -1,15 +1,32 @@
 ---
+- name: Disable wireguard service
+  ansible.builtin.systemd:
+    name: wg-quick@{{ item }}.service
+    enabled: no
+  loop: "{{ wireguard_res.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='wireguard') | list }}"
+  loop_control:
+    label: Disable wg-quick@{{ item }}.service
+
 - name: Enable wireguard service
   ansible.builtin.systemd:
-    name: wg-quick@{{ wireguard_interface_name }}.service
+    name: wg-quick@{{ item }}.service
     enabled: yes
+  loop: "{{ wireguard_res.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='wireguard') | list }}"
+  loop_control:
+    label: Enable wg-quick@{{ item }}.service
 
 - name: Start wireguard service
   ansible.builtin.systemd:
-    name: wg-quick@{{ wireguard_interface_name }}.service
+    name: wg-quick@{{ item }}.service
     state: started
+  loop: "{{ wireguard_res.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='wireguard') | list }}"
+  loop_control:
+    label: Start wg-quick@{{ item }}.service
 
 - name: Reload wireguard service
   ansible.builtin.systemd:
-    name: wg-quick@{{ wireguard_interface_name }}.service
+    name: wg-quick@{{ item }}.service
     state: reloaded
+  loop: "{{ wireguard_res.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='wireguard') | list }}"
+  loop_control:
+    label: Reload wg-quick@{{ item }}.service

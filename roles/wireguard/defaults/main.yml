@@ -1,3 +1,2 @@
 ---
-wireguard_interface_name: "{{ host_wireguard_interface_name | default('wg0') }}"
-wireguard_server_port: "{{ host_wireguard_server_port | default('51820') }}"
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
