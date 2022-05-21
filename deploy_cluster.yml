@@ -26,4 +26,7 @@
       tags: [ pacemaker, ha ]
 
     - role: libvirtd
-      tags: [ libvirtd, vm ]
+      tags: [ libvirtd, service ]
+
+    - role: wireguard
+      tags: [ wireguard, service ]
