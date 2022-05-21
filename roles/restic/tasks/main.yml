@@ -26,45 +26,39 @@
 
 - name: Create restic backup(s) drop-in directories
   ansible.builtin.file:
-    path: /etc/systemd/system/restic@{{ item.0.task }}.{{ item.1 }}.d
+    path: /etc/systemd/system/restic@{{ item.0.1.task }}.{{ item.1 }}.d
     owner: root
     group: root
     mode: u=rwx,g=,o=
     state: directory
-  loop: "{{ restic_tasks | product(['service', 'timer']) }}"
+  loop: "{{ restic_repos | subelements('tasks') | product(['service', 'timer']) }}"
   loop_control:
-    label: "Directory: /etc/systemd/system/restic@{{ item.0.task }}.{{ item.1 }}.d"
-
-- name: Construct new ansible list
-  ansible.builtin.set_fact:
-    restic_task_repo: "{{ restic_task_repo | default([]) + [item] }}"
-  when: item.0.dest_repo == item.1.repo
-  loop: "{{ host_restic_tasks | product(host_restic_repos) }}"
-  loop_control:
-    label: "task: {{ item.0.task }}, repo: {{ item.1.repo }}"
+    label: "/etc/systemd/system/restic@{{ item.0.1.task }}.{{ item.1 }}.d"
 
 - name: Configure restic backup drop-in services files
   ansible.builtin.template:
     src: 10-override.service.j2
-    dest: /etc/systemd/system/restic@{{ item.0.task }}.service.d/10-override.conf
+    dest: /etc/systemd/system/restic@{{ item.1.task }}.service.d/10-override.conf
     owner: root
     group: root
     mode: u=rw,g=,o=
-  loop: "{{ restic_task_repo }}"
+  loop: "{{ restic_repos | subelements('tasks') }}"
   loop_control:
-    label: /etc/systemd/system/restic@{{ item.0.task }}.service.d/10-repo-override.conf
+    label: /etc/systemd/system/restic@{{ item.1.task }}.service.d/10-repo-override.conf
+  register: restic_res
   notify: ['Daemon-reload restic systemd', 'Enable restic(s) timer(s)', Start restic(s) timer(s)]
 
 - name: Configure restic backup drop-in timers files
   ansible.builtin.template:
     src: 10-override.timer.j2
-    dest: /etc/systemd/system/restic@{{ item.task }}.timer.d/10-override.conf
+    dest: /etc/systemd/system/restic@{{ item.1.task }}.timer.d/10-override.conf
     owner: root
     group: root
     mode: u=rw,g=,o=
-  loop: "{{ restic_tasks }}"
+  loop: "{{ restic_repos | subelements('tasks') }}"
   loop_control:
-    label: /etc/systemd/system/restic@{{ item.task }}.timer.d/10-repo-override.conf
+    label: /etc/systemd/system/restic@{{ item.1.task }}.timer.d/10-repo-override.conf
+  register: restic_res
   notify: Daemon-reload restic systemd
 
 - name: Place restic services files

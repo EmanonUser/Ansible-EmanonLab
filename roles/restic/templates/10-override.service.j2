@@ -1,7 +1,7 @@
 [Service]
-Environment="RESTIC_PASSWORD={{ item.1.password }}"
-Environment="RESTIC_REPOSITORY={{ item.1.path }}"
-Environment="RESTIC_BACKUPS={% for files in item.0.files_backup %}{{ files }}{%if not loop.last %} {% endif %}{% endfor %}"
-{% if item.0.need_read_privilege %}
+Environment="RESTIC_PASSWORD={{ item.0.password }}"
+Environment="RESTIC_REPOSITORY={{ item.0.path }}"
+Environment="RESTIC_BACKUPS={% for files in item.1.files_backup %}{{ files }}{%if not loop.last %} {% endif %}{% endfor %}"
+{% if item.1.need_read_privilege %}
 AmbientCapabilities=CAP_DAC_READ_SEARCH
 {% endif %}
