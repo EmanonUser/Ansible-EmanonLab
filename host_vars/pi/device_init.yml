@@ -8,6 +8,7 @@ host_debian_stable_packages:
   - gnupg2
   - curl
   - git
+  - open-iscsi
   - zsh
   - neovim
   - unzip
