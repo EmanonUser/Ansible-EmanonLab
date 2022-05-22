@@ -1,114 +1,108 @@
 ---
 host_nfs_exports:
-  - export: /vault
-    path: /srv/nfs4/vault
+  - export: root
+    path: /srv/nfs4/
     authorized_clients:
       - client: "{{ grp_device.pi.ipv6_addr }}"
-        options: "(ro,no_root_squash,fsid=root,crossmnt)"
+        options: "(ro,no_root_squash,fsid=root)"
       - client: "{{ grp_device.pi.ipv4_addr }}"
-        options: "(ro,no_root_squash,fsid=root,crossmnt)"
+        options: "(ro,no_root_squash,fsid=root)"
       - client: "{{ grp_device.arch.ipv6_addr }}"
-        options: "(ro,no_root_squash,fsid=root,crossmnt)"
+        options: "(ro,no_root_squash,fsid=root)"
       - client: "{{ grp_device.arch.ipv4_addr }}"
-        options: "(ro,no_root_squash,fsid=root,crossmnt)"
+        options: "(ro,no_root_squash,fsid=root)"
       - client: "172.16.0.0/24"
-        options: "(ro,no_root_squash,fsid=root,crossmnt)"
-
-  - export: /vault/emanonlab
-    path: /srv/nfs4/vault/emanonlab
-    authorized_clients:
-      - client: "{{ grp_device.arch.ipv6_addr }}"
-      - client: "{{ grp_device.arch.ipv4_addr }}"
-      - client: "172.16.0.0/24"
+        options: "(ro,no_root_squash,fsid=root)"
 
   - export: /vault/emanonlab/tmp
-    path: /srv/nfs4/vault/emanonlab_tmp
+    path: /srv/nfs4/emanonlab_tmp
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/emanonlab/dev
-    path: /srv/nfs4/vault/emanonlab_dev
+    path: /srv/nfs4/emanonlab_dev
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/emanonlab/misc
-    path: /srv/nfs4/vault/emanonlab_misc
+    path: /srv/nfs4/emanonlab_misc
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
+      - client: "{{ grp_device.pi.ipv6_addr }}"
+      - client: "{{ grp_device.pi.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/emanonlab/secrets/keepassxc
-    path: /srv/nfs4/vault/emanonlab_secrets_keepassxc
+    path: /srv/nfs4/emanonlab_secrets_keepassxc
     authorized_clients:
       - client: "{{ grp_device.pi.ipv6_addr }}"
       - client: "{{ grp_device.pi.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/emanon/documents
-    path: /srv/nfs/vault/emanon-documents
+    path: /srv/nfs4/emanon_documents
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/emanon/other_users
-    path: /srv/nfs4/vault/emanon_other_users
+    path: /srv/nfs4/emanon_other_users
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
-      - client: "172.16.0.0/24"
-
-  - export: /vault/media
-    path: /srv/nfs4/vault/media
-    authorized_clients:
-      - client: "{{ grp_device.arch.ipv6_addr }}"
-      - client: "{{ grp_device.arch.ipv4_addr }}"
-      - client: "{{ grp_device.pi.ipv6_addr }}"
-      - client: "{{ grp_device.pi.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/media/animes
-    path: /srv/nfs4/vault/animes
+    path: /srv/nfs4/media_animes
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
+      - client: "{{ grp_device.pi.ipv6_addr }}"
+      - client: "{{ grp_device.pi.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/media/series
-    path: /srv/nfs4/vault/series
+    path: /srv/nfs4/media_series
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
+      - client: "{{ grp_device.pi.ipv6_addr }}"
+      - client: "{{ grp_device.pi.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/media/movies
-    path: /srv/nfs4/vault/movies
+    path: /srv/nfs4/media_movies
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
+      - client: "{{ grp_device.pi.ipv6_addr }}"
+      - client: "{{ grp_device.pi.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/media/tmp
-    path: /srv/nfs4/vault/media-tmp
+    path: /srv/nfs4/media_tmp
     authorized_clients:
       - client: "{{ grp_device.arch.ipv6_addr }}"
       - client: "{{ grp_device.arch.ipv4_addr }}"
+      - client: "{{ grp_device.pi.ipv6_addr }}"
+      - client: "{{ grp_device.pi.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
   - export: /vault/emanonlab/containers
-    path: /srv/nfs4/vault/emanonlab-containers
+    path: /srv/nfs4/containers
     authorized_clients:
       - client: "{{ grp_device.pi.ipv6_addr }}"
       - client: "{{ grp_device.pi.ipv4_addr }}"
       - client: "172.16.0.0/24"
 
-  - export: /vault/emanonlab/pi_boot_c7d13139
-    path: /srv/nfs4/vault/pi_boot_c7d13139
+  - export: /vault/emanonlab/pi_boot_c7d13139/c7d13139
+    path: /srv/nfs4/pi_boot_c7d13139
     authorized_clients:
       - client: "{{ grp_device.pi.ipv6_addr }}"
       - client: "{{ grp_device.pi.ipv4_addr }}"
