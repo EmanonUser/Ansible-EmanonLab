@@ -1,5 +1,6 @@
 ---
-grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch
+grp_primary_user_ssh_pubkey:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch
 grp_device:
     router:
       ipv4_addr: 192.168.5.1

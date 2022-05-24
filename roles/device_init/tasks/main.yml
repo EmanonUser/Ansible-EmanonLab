@@ -36,8 +36,9 @@
 - name: Add SSH key to primary user
   ansible.posix.authorized_key:
     user: "{{ primary_user_username }}"
-    key: "{{ grp_primary_user_ssh_pubkey }}"
+    key: "{{ item }}"
     state: present
+  loop: "{{ grp_primary_user_ssh_pubkey }}"
 
 - name: Enable SSH PubkeyAuthentication
   ansible.builtin.lineinfile:
