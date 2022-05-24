@@ -15,7 +15,7 @@
 - name: Place ansible vault password file
   ansible.builtin.lineinfile:
     path: .VAULT_PASS
-    line: "{{ grp_vault_password }}"
+    line: "{{ lookup('file', ~/.ansible/.VAULT_PASS) }}"
     owner: ansible
     group: ansible
     mode: u=r,g=,o=
