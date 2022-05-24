@@ -25,8 +25,9 @@
 - name: Install collections from requirements.yml
   community.general.ansible_galaxy_install:
     type: collection
-    requirements_file: /home/ansible/Ansible-EmanonLab/requirements.yml
+    requirements_file: "{{ item }}"
     dest: /home/ansible/.ansible/collections/ansible_collections/
+  loop: [community.general, community.crypto]
 
 - name: Place ansible_acme_renew systemd files
   ansible.builtin.template:
