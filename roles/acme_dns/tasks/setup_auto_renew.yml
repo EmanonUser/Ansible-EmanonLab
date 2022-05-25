@@ -15,7 +15,7 @@
 - name: Place ansible vault password file
   ansible.builtin.lineinfile:
     path: .VAULT_PASS
-    line: "{{ lookup('file', ~/.ansible/.VAULT_PASS) }}"
+    line: "{{ lookup('file', '~/.ansible/.VAULT_PASS') }}"
     owner: ansible
     group: ansible
     mode: u=r,g=,o=
@@ -25,7 +25,7 @@
 - name: Install collections from requirements.yml
   community.general.ansible_galaxy_install:
     type: collection
-    requirements_file: "{{ item }}"
+    name: "{{ item }}"
     dest: /home/ansible/.ansible/collections/ansible_collections/
   loop: [community.general, community.crypto]
 
