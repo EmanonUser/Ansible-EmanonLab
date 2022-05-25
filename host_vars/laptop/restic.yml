@@ -1,13 +1,11 @@
 ---
-host_restic_repos:
+restic_repos:
   - repo: minecraft
     path: /home/restic/minecraft
     password: "{{ vhost_restic_minecraft_password }}"
-
-host_restic_tasks:
-  - task: minecraft
-    dest_repo: minecraft
-    need_read_privilege: yes
-    systemd_timer_interval: 6h
-    files_backup:
-      - /tank/minecraft
+    tasks:
+      - task: minecraft
+        need_read_privilege: yes
+        systemd_timer_interval: 6h
+        files_backup:
+          - /tank/minecraft

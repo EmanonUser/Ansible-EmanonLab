@@ -1,0 +1,5 @@
+---
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+tftpd_username: "root"
+tftpd_directory: "/vault/emanonlab/pi_boot_c7d13139"
+tftpd_address: ":69"

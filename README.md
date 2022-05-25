@@ -17,4 +17,3 @@ TODO:
     - add upstream IPv6 servers to coredns when the tunnel will be stable ( or native IPv6 )
     - Start mount nfsv4 is always changed
     - Remove VAULT_PASS from acme_dns, and add variables, check if no_log is needed
-    - Install only the needed collections not the whole requirements.yml for acme_dns

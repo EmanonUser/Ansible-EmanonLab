@@ -1,0 +1,24 @@
+- name: Install tftpd-hpa server
+  ansible.builtin.apt:
+    name: tftpd-hpa
+    state: present
+  notify:
+    - Enable tftpd-hpa service
+    - Start tftpd-hpa service
+
+- name: Configure tftpd-hpa
+  ansible.builtin.template:
+    src: tftpd-hpa
+    dest: "/etc/default/tftpd-hpa"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  notify: Restart tftpd-hpa service
+
+- name: Open tftp firewalld service
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    service: tftp
+    permanent: yes
+    immediate: yes
+    state: enabled

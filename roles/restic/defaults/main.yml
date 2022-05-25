@@ -1,3 +1,0 @@
----
-restic_repos: "{{ host_restic_repos }}"
-restic_tasks: "{{ host_restic_tasks }}"

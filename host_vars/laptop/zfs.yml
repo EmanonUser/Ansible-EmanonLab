@@ -6,7 +6,7 @@ host_zfs_set_permissions_blacklist: ['minecraft']
 host_zfs_pools:
   - pool: tank
     base_path: /tank
-    enable_trim: false
+    enable_trim: no
     datasets:
       - dataset: containers
         compression: zstd-6

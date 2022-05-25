@@ -1,7 +1,59 @@
 ---
+host_nfs4_directories:
+  - /mnt/media
 host_nfs4_mounts:
-  - mount: vault
+  - mount: animes
     target_addr: nas.local.emanon
-    target_path: /
-    target_mountpoint: /mnt
+    target_path: /media_animes
+    target_mountpoint: /mnt/media/animes
+    skip_creation: no
+    options: "vers=4.2,port=2049,proto=tcp"
+
+  - mount: series
+    target_addr: nas.local.emanon
+    target_path: /media_series
+    target_mountpoint: /mnt/media/series
+    skip_creation: no
+    options: "vers=4.2,port=2049,proto=tcp"
+
+  - mount: movies
+    target_addr: nas.local.emanon
+    target_path: /media_movies
+    target_mountpoint: /mnt/media/movies
+    skip_creation: no
+    options: "vers=4.2,port=2049,proto=tcp"
+
+  - mount: tmp
+    target_addr: nas.local.emanon
+    target_path: /media_tmp
+    target_mountpoint: /mnt/media/tmp
+    skip_creation: no
+    options: "vers=4.2,port=2049,proto=tcp"
+
+  - mount: misc
+    target_addr: nas.local.emanon
+    target_path: /emanonlab_misc
+    target_mountpoint: /mnt/media/misc
+    skip_creation: no
+    options: "vers=4.2,port=2049,proto=tcp"
+
+  - mount: containers
+    target_addr: nas.local.emanon
+    target_path: /containers
+    target_mountpoint: /mnt/containers
+    skip_creation: no
+    options: "vers=4.2,port=2049,proto=tcp"
+
+  - mount: keepassxc
+    target_addr: nas.local.emanon
+    target_path: /emanonlab_secrets_keepassxc
+    target_mountpoint: /mnt/keepassxc
+    skip_creation: no
+    options: "vers=4.2,port=2049,proto=tcp"
+
+  - mount: pi-boot
+    target_addr: nas.local.emanon
+    target_path: /pi_boot_c7d13139
+    target_mountpoint: /boot
+    skip_creation: yes
     options: "vers=4.2,port=2049,proto=tcp"

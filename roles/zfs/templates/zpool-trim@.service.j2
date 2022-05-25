@@ -1,5 +1,9 @@
 [Unit]
 Description=ZFS zpool %I trim service
+{% for pool in zfs_pools -%}
+{% if pool.enable_trim %}# Pools: {{ pool.pool }}{% endif %}{% if not loop.last %}, {% endif %}
+
+{% endfor %}
 
 [Service]
 Type=oneshot

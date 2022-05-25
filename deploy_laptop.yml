@@ -63,9 +63,3 @@
 
     - role: acme_dns
       tags: [ acme_dns, podman_all ]
-
-    # - role: samba_server
-    #   tags: [ samba_server, service ]
-
-    # - role: tgtd
-    #   tags: [ tgtd, service ]

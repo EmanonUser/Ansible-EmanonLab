@@ -1,6 +1,6 @@
 ---
 podman_grafana_image: "{{ host_podman_grafana_image | default('docker.io/grafana/grafana') }}"
-podman_grafana_image_version: "{{ host_podman_grafana_image_version | default('8.5.1') }}"
+podman_grafana_image_version: "{{ host_podman_grafana_image_version | default('8.5.3') }}"
 # https://hub.docker.com/r/grafana/grafana/tags
 
 podman_grafana_ports:

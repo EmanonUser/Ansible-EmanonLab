@@ -4,6 +4,15 @@
     name: nfs-common
     state: present
 
+- name: Create mount directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ nfs4_directories }}"
+
 - name: Create nfs mount point
   ansible.builtin.file:
     path: "{{ item.target_mountpoint }}"
@@ -11,6 +20,7 @@
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
     state: directory
+  when: not item.skip_creation
   loop: "{{ nfs4_mounts }}"
   loop_control:
     label: "NFSv4 Mountpoint: {{ item.target_mountpoint }}"
@@ -25,6 +35,9 @@
   loop: "{{ nfs4_mounts }}"
   loop_control:
     label: "NFSv4 Env file name: nfsv4_{{ item.mount }}.env"
+  notify:
+    - Daemon-reload nfsv4_client systemd
+    - Enable nfsv4_mount service(s)
 
 - name: Configure NFSv4 share(s)
   ansible.builtin.template:
@@ -33,13 +46,9 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-  loop: "{{ nfs4_mounts }}"
-  loop_control:
-    label: "NFSv4 Mount name: {{ item.mount }}"
   notify:
     - Daemon-reload nfsv4_client systemd
     - Enable nfsv4_mount service(s)
-    - Start nfsv4_mount service(s)
 
 - name: Start nfsv4_mount service(s)
   ansible.builtin.systemd:

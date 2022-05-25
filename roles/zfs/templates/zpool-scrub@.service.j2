@@ -1,5 +1,9 @@
 [Unit]
 Description=ZFS zpool %I scrubing service
+{% for pool in zfs_pools %}
+# Pools: {{ pool.pool }}{% if not loop.last %}, {% endif %}
+
+{% endfor %}
 
 [Service]
 Type=oneshot
