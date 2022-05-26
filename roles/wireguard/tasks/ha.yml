@@ -13,16 +13,21 @@
   register: pacemaker_conf
   changed_when: no
   run_once: yes
-  notify: Disable wireguard service
 
 - name: Configure wireguard pacemaker ressource
   ansible.builtin.command:
-    cmd: "crm configure primitive wireguard_HA systemd:wg-quick@{{ wireguard_interface_name }} op monitor interval=10s"
-  when: "'primitive wireguard_HA' not in pacemaker_conf.stdout"
+    cmd: "crm configure primitive wireguard_{{ item.wireguard }}_HA systemd:wg-quick@{{ item.wireguard }} op monitor interval=10s"
+  when: "'primitive wireguard_' + item.wireguard + '_HA' not in pacemaker_conf.stdout"
   run_once: yes
+  loop: "{{ wireguard_confs }}"
+  loop_control:
+    label: "{{ item.wireguard }}"
 
 - name: Configure wireguard colocation with VIPs
   ansible.builtin.command:
-    cmd: "crm configure colocation wireguard_VIP inf: wireguard_HA virtual_IP4 virtual_IP6"
-  when: "'colocation wireguard_VIP inf: wireguard_HA virtual_IP4 virtual_IP6' not in pacemaker_conf.stdout"
+    cmd: "crm configure colocation wireguard_{{ item.wireguard }}_VIP inf: wireguard_{{ item.wireguard }}_HA virtual_IP4 virtual_IP6"
+  when: "'colocation wireguard_' + item.wireguard + '_VIP inf:' not in pacemaker_conf.stdout"
   run_once: yes
+  loop: "{{ wireguard_confs }}"
+  loop_control:
+    label: "{{ item.wireguard }}"
