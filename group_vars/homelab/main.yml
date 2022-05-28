@@ -74,50 +74,25 @@ grp_device:
       hw_addr: "00:21:5a:e5:51:f9"
       hostname: printer
 
-grp_podman_networking:
-  adguard:
-    fulldomain: "adguard.{{ grp_local_domain }}"
-    webui_port: 4001
-    lan_access: no
+
+podman_containers:
+  - container: kuma
+    fulldomain: "kuma.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  transmission:
-    fulldomain: "transmission.{{ grp_local_domain }}"
-    webui_port: 4002
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50001
+
+  - container: jellyfin
+    fulldomain: "jellyfin.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  prometheus:
-    fulldomain: "prometheus.{{ grp_local_domain }}"
-    webui_port: 4003
-    lan_access: no
-    ssl_redirect: yes
-  grafana:
-    fulldomain: "grafana.{{ grp_local_domain }}"
-    webui_port: 4004
-    lan_access: no
-    ssl_redirect: yes
-  homeassistant:
-    fulldomain: "hass.{{ grp_local_domain }}"
-    webui_port: 4005
-    lan_access: no
-    ssl_redirect: no
-  syncthing:
-    fulldomain: "syncthing.{{ grp_local_domain }}"
-    webui_port: 4006
-    lan_access: no
-    ssl_redirect: yes
-  flame:
-    fulldomain: "flame.{{ grp_local_domain }}"
-    webui_port: 4007
-    lan_access: no
-    ssl_redirect: yes
-  loki:
-    fulldomain: "loki.{{ grp_local_domain }}"
-    webui_port: 4008
-    lan_access: yes
-  pyload:
-    fulldomain: "pyload.{{ grp_local_domain }}"
-    webui_port: 4009
-    lan_access: yes
+    backends:
+      - backend: localhost
+        port: 50002
 
 grp_local_domain: local.emanon
 grp_domain_name: emanon.moe
@@ -135,5 +110,4 @@ grp_nfs_mount_dir: /mnt/vault
 
 grp_dns_server_upstream_ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
 grp_dns_server_upstream_port: "10053"
-
 grp_ipv6_prefix: 2001:470:c86d # /48
