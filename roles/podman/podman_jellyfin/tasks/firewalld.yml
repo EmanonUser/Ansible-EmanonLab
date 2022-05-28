@@ -1,20 +1,22 @@
 ---
-- name: Open jellyfin firewalld ports to admin devices
+- name: Open jellyfin firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_jellyfin_firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    zone: "{{ firewalld_zone }}"
+    port: "{{ jellyfin_firewalld_ports }}"
     permanent: yes
     immediate: yes
     state: enabled
-  loop: "{{ podman_jellyfin_firewalld_rich_rules }}"
-  when: grp_podman_networking.jellyfin.lan_access
+  when:
+    - jellyfin_config.direct_access
+    - jellyfin_firewalld_ports is defined
 
-- name: Close jellyfin firewalld ports to admin devices
+- name: Close jellyfin firewalld ports
   ansible.posix.firewalld:
-    zone: "{{ podman_jellyfin_firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    zone: "{{ firewalld_zone }}"
+    port: "{{ jellyfin_firewalld_ports }}"
     permanent: yes
     immediate: yes
     state: disabled
-  loop: "{{ podman_jellyfin_firewalld_rich_rules }}"
-  when: not grp_podman_networking.jellyfin.lan_access
+  when:
+    - not jellyfin_config.direct_access
+    - jellyfin_firewalld_ports is defined

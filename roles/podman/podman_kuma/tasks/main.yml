@@ -1,7 +1,7 @@
 ---
 - name: Create kuma data volume dir
   ansible.builtin.file:
-    path: "{{ podman_kuma_directories }}"
+    path: "{{ kuma_directories }}"
     state: directory
     owner: emanon
     group: emanon
@@ -10,9 +10,9 @@
 - name: Run kuma podman container
   containers.podman.podman_container:
     name: kuma_ansible
-    image: "{{ podman_kuma_image }}:{{ podman_kuma_image_version }}"
-    publish: "{{ podman_kuma_ports }}"
-    volumes: "{{ podman_kuma_volumes }}"
+    image: "{{ kuma_image }}:{{ kuma_image_version }}"
+    publish: "{{ kuma_ports }}"
+    volumes: "{{ kuma_volumes }}"
     restart_policy: unless-stopped
     state: started
     generate_systemd:
@@ -21,22 +21,6 @@
   become_user: "{{ primary_user_username }}"
   notify: Enable kuma_ansible podman service
 
-- name: Open kuma firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  loop: "{{ podman_kuma_firewalld_rich_rules }}"
-  when: grp_podman_networking.kuma.lan_access
-
-- name: Close kuma firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  loop: "{{ podman_kuma_firewalld_rich_rules }}"
-  when: not grp_podman_networking.kuma.lan_access
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld

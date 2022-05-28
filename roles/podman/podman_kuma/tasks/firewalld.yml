@@ -1,0 +1,22 @@
+---
+- name: Open kuma firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ kuma_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when:
+    - kuma_config.direct_access
+    - kuma_firewalld_ports is defined
+
+- name: Close kuma firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ kuma_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when:
+    - not kuma_config.direct_access
+    - kuma_firewalld_ports is defined

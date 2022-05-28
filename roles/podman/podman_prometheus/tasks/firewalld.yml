@@ -1,0 +1,22 @@
+---
+- name: Open prometheus firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ prometheus_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when:
+    - prometheus_config.direct_access
+    - prometheus_firewalld_ports is defined
+
+- name: Close prometheus firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ prometheus_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when:
+    - not prometheus_config.direct_access
+    - prometheus_firewalld_ports is defined

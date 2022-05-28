@@ -6,14 +6,14 @@
     owner: emanon
     group: emanon
     mode: u=rwx,g=,o=
-  loop: "{{ podman_jellyfin_directories }}"
+  loop: "{{ jellyfin_directories }}"
 
 - name: Run jellyfin podman container
   containers.podman.podman_container:
     name: jellyfin_ansible
-    image: "{{ podman_jellyfin_image }}:{{ podman_jellyfin_image_version }}"
-    publish: "{{ podman_jellyfin_ports }}"
-    volume: "{{ podman_jellyfin_volumes }}"
+    image: "{{ jellyfin_image }}:{{ jellyfin_image_version }}"
+    publish: "{{ jellyfin_ports }}"
+    volume: "{{ jellyfin_volumes }}"
     restart_policy: unless-stopped
     state: started
     label: "io.containers.autoupdate=image"
@@ -22,3 +22,7 @@
       path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
   notify: Enable jellyfin_ansible podman service
+
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld
