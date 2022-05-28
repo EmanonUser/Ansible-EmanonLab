@@ -22,23 +22,3 @@
       path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
   notify: Enable jellyfin_ansible podman service
-
-- name: Open jellyfin firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ podman_jellyfin_firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  loop: "{{ podman_jellyfin_firewalld_rich_rules }}"
-  when: grp_podman_networking.jellyfin.lan_access
-
-- name: Close jellyfin firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ podman_jellyfin_firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  loop: "{{ podman_jellyfin_firewalld_rich_rules }}"
-  when: not grp_podman_networking.jellyfin.lan_access
