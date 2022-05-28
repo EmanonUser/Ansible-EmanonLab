@@ -83,10 +83,7 @@ host_isc_kea_dhcp4:
     pools:
       - start: 192.168.100.100
         end: 192.168.100.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.pi2.ipv4_addr }}"
-        hw_addr: "{{ grp_device.pi2.hw_addr }}"
-        hostname: "{{ grp_device.pi2.hostname }}"
+    reservations: []
     options_data:
       - option_data: "routers"
         data: ["192.168.100.1"]
@@ -143,7 +140,4 @@ host_isc_kea_dhcp6:
       - start: "{{ grp_ipv6_prefix }}:100::aaaa"
         end: "{{ grp_ipv6_prefix }}:100::ffff"
     options_data: []
-    reservations:
-      - ipv6_addr: ["{{ grp_device.pi2.ipv6_addr }}"]
-        hw_addr: "{{ grp_device.pi2.hw_addr }}"
-        hostname: "{{ grp_device.pi2.hostname }}"
+    reservations: []
