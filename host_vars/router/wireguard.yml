@@ -28,3 +28,16 @@ wireguard_confs:
         preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'windows') | map(attribute='preshared_key') | first }}"
         allowed_ips:
           - "172.16.0.4/32"
+
+  - wireguard: wg48
+    udp_port: 51821
+    server_addresses:
+      - 2a06:a003:50ca::2/48
+    server_private_key: "{{ wg48.private_key }}"
+    peers:
+      - peer: route48
+        public_key: W0pI832mL5u7JzJjiE68dyS95mIGBDqGgSxSZromEGY= # Not used but kept here
+        endpoint: 194.50.19.11:51949
+        allowed_ips:
+          - ::/1
+          - 8000::/1
