@@ -6,25 +6,25 @@ wireguard_confs:
     server_addresses:
       - 172.16.0.1/24
     server_public_key: "Bdh/0sldvQAiX8tr3IEr95g0cemojFmMDrdrrgTnfg8=" # Not used but kept here
-    server_private_key: "{{ wg_server.private_key }}"
+    server_private_key: "{{ wg0.private_key }}"
     peers:
       - peer: arch
-        public_key: "SX6OgjapX+UUaPYqrKaS1DYYJkN4dPf5r59woJVzgUs="
-        private_key: "{{ wg_peer_arch.private_key }}"
-        preshared_key: "{{ wg_peer_arch.preshared_key }}"
-        ip_addresses:
+        public_key: "SX6OgjapX+UUaPYqrKaS1DYYJkN4dPf5r59woJVzgUs=" # Not used but kept here
+        private_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'arch') | map(attribute='private_key') | first }}"
+        preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'arch') | map(attribute='preshared_key') | first }}"
+        allowed_ips:
           - "172.16.0.2/32"
 
       - peer: one
-        public_key: "+1g4W6PQiL8FhV5dsZ2ZsA8alM+79T2WRxE1bSHrzmk="
-        private_key: "{{ wg_peer_one.private_key }}"
-        preshared_key: "{{ wg_peer_one.preshared_key }}"
-        ip_addresses:
+        public_key: "+1g4W6PQiL8FhV5dsZ2ZsA8alM+79T2WRxE1bSHrzmk=" # Not used but kept here
+        private_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'one') | map(attribute='private_key') | first }}"
+        preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'one') | map(attribute='preshared_key') | first }}"
+        allowed_ips:
           - "172.16.0.3/32"
 
-      - peer: w10
-        public_key: "QauWBp+kMfQ2UK3EyB3tcRH3XMKS8cirrX2PtuseLTY="
-        private_key: "{{ wg_peer_w10.private_key }}"
-        preshared_key: "{{ wg_peer_w10.preshared_key }}"
-        ip_addresses:
+      - peer: windows
+        public_key: "QauWBp+kMfQ2UK3EyB3tcRH3XMKS8cirrX2PtuseLTY=" # Not used but kept here
+        private_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'windows') | map(attribute='preshared_key') | first }}"
+        preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'windows') | map(attribute='preshared_key') | first }}"
+        allowed_ips:
           - "172.16.0.4/32"
