@@ -40,9 +40,6 @@
     - role: node_exporter
       tags: [ node_exporter, monitoring ]
 
-    - role: promtail
-      tags: [ promtail, monitoring ]
-
     - role: gad
       tags: [ gad, services ]
 
