@@ -116,13 +116,13 @@ table inet firewall {
 
 	chain input {
 		type filter hook input priority filter; policy drop;
-		iifname vmap { $WAN : jump wan_input, $LAN : jump lan_input, , $R48 : jump lan_input, $WG : accept, lo : accept }
+		iifname vmap { $WAN : jump wan_input, $R48 : jump wan_input, $LAN : jump lan_input, $WG : accept, lo : accept }
 		ct state { established, related } counter accept
 	}
 
 	chain forward {
 		type filter hook forward priority filter; policy drop;
-		iifname vmap { $WAN : jump wan_forward, $LAN : jump lan_forward, $R48 : jump lan_forward, $WG : accept }
+		iifname vmap { $WAN : jump wan_forward, $R48 : jump wan_forward, $LAN : jump lan_forward, $WG : accept }
 		ct state { established, related } counter accept
 	}
 
