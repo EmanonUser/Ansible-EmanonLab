@@ -7,7 +7,8 @@ PrivateKey = {{ item.server_private_key }}
 [Peer]
 # {{ peer.peer }}
 PublicKey =  {{ peer.public_key }}
-PresharedKey = {{ peer.preshared_key }}
-AllowedIPs = {% for ip in peer.ip_addresses %}{{ ip }}{% if not loop.last %}, {% endif %}{% endfor +%}
+{% if peer.preshared_key is defined %}PresharedKey = {{ peer.preshared_key }}{% endif +%}
+AllowedIPs = {% for ip in peer.allowed_ips %}{{ ip }}{% if not loop.last %}, {% endif %}{% endfor +%}
+{% if peer.endpoint is defined %}Endpoint = {{ peer.endpoint }}{% endif %}
 
 {% endfor %}

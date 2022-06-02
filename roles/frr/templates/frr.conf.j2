@@ -3,7 +3,7 @@ hostname r
 log syslog informational
 service integrated-vtysh-config
 !
-ipv6 route ::/0 he-ipv6
+ipv6 route ::/0 wg48
 ipv6 route {{ grp_ipv6_prefix }}:10::/64 {{ grp_ipv6_prefix }}:5::2 bond0 onlink
 ipv6 route {{ grp_ipv6_prefix }}:20::/64 {{ grp_ipv6_prefix }}:5::2 bond0 onlink
 ipv6 route {{ grp_ipv6_prefix }}:50::/64 {{ grp_ipv6_prefix }}:5::2 bond0 onlink

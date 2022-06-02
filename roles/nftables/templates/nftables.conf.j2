@@ -4,7 +4,8 @@ flush ruleset
 
 define WAN = {{ grp_device.router.wan_interface }}
 define LAN = {{ lacp_interface_name }}
-define WG = {{ wireguard_interface_name }}
+define WG = {{ wireguard_confs | selectattr('wireguard', 'equalto', 'wg0') | map(attribute='wireguard') | first }}
+define R48 = {{ wireguard_confs | selectattr('wireguard', 'equalto', 'wg48') | map(attribute='wireguard') | first }}
 
 table inet routing {
 	chain prerouting {
@@ -41,7 +42,7 @@ table inet firewall {
 		jump wan_input_log
 		jump wan_input_filter
 		tcp dport ssh ct state new log level notice prefix "New SSH connexion from WAN: " counter accept
-		udp dport {{ wireguard_server_port }} ct state new log level notice prefix "New Wireguard connexion from WAN: " counter accept
+		udp dport {{ wireguard_confs | selectattr('wireguard', 'equalto', 'wg0') | map(attribute='udp_port') | first }} ct state new log level notice prefix "New Wireguard connexion from WAN: " counter accept
 	}
 
 	chain wan_input_log {
@@ -98,6 +99,7 @@ table inet firewall {
 	chain lan_forward {
 		ip saddr {{ grp_device.arch.ipv4_addr }} ip daddr 192.168.1.1 counter accept # Accept from admin to FAI modem
 		oifname $WAN ct state new counter accept # WAN traffic forwading
+		oifname $R48 ct state new counter accept # WAN IPv6 route48 traffic forwading
 		jump forward_filter
 	}
 
@@ -115,13 +117,13 @@ table inet firewall {
 
 	chain input {
 		type filter hook input priority filter; policy drop;
-		iifname vmap { $WAN : jump wan_input, $LAN : jump lan_input, $WG : accept, lo : accept }
+		iifname vmap { $WAN : jump wan_input, $R48 : jump wan_input, $LAN : jump lan_input, $WG : accept, lo : accept }
 		ct state { established, related } counter accept
 	}
 
 	chain forward {
 		type filter hook forward priority filter; policy drop;
-		iifname vmap { $WAN : jump wan_forward, $LAN : jump lan_forward, $WG : accept }
+		iifname vmap { $WAN : jump wan_forward, $R48 : jump wan_forward, $LAN : jump lan_forward, $WG : accept }
 		ct state { established, related } counter accept
 	}
 
