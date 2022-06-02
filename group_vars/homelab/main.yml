@@ -110,7 +110,7 @@ podman_containers:
     ssl_redirect: yes
     backends:
       - backend: localhost
-        port: 50005
+        port: 50004
 
   - container: syncthing
     fulldomain: "syncthing.local.emanon"

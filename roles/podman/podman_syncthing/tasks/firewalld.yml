@@ -2,7 +2,7 @@
 - name: Open syncthing firewalld ports
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
-    port: "{{ syncthing_firewalld_ports }}"
+    port: "{{ syncthing_firewalld_ports.webui }}"
     permanent: yes
     immediate: yes
     state: enabled
@@ -13,7 +13,7 @@
 - name: Close syncthing firewalld ports
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
-    port: "{{ syncthing_firewalld_ports }}"
+    port: "{{ syncthing_firewalld_ports.webui }}"
     permanent: yes
     immediate: yes
     state: disabled
