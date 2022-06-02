@@ -6,7 +6,7 @@ wireguard_confs:
     server_addresses:
       - 172.16.0.1/24
     server_public_key: "Bdh/0sldvQAiX8tr3IEr95g0cemojFmMDrdrrgTnfg8=" # Not used but kept here
-    server_private_key: "{{ wg_server.private_key }}"
+    server_private_key: "{{ wg0.private_key }}"
     peers:
       - peer: arch
         public_key: "SX6OgjapX+UUaPYqrKaS1DYYJkN4dPf5r59woJVzgUs="
