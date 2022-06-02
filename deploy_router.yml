@@ -34,12 +34,6 @@
     - role: ntpd
       tags: [ ntpd, services ]
 
-    # - role: stork_agent
-    #   tags: [ stork_agent, monitoring ]
-
-    - role: node_exporter
-      tags: [ node_exporter, monitoring ]
-
     - role: gad
       tags: [ gad, services ]
 
