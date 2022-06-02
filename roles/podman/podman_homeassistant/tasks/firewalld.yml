@@ -1,46 +1,46 @@
 ---
-- name: Open prometheus firewalld ports
+- name: Open homeassistant firewalld ports
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
-    port: "{{ prometheus_firewalld_ports }}"
+    port: "{{ homeassistant_firewalld_ports }}"
     permanent: yes
     immediate: yes
     state: enabled
   when:
-    - prometheus_config.direct_access
-    - not prometheus_use_rich_firewalld_rules
+    - homeassistant_config.direct_access
+    - not homeassistant_use_rich_firewalld_rules
 
-- name: Close prometheus firewalld ports
+- name: Close homeassistant firewalld ports
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
-    port: "{{ prometheus_firewalld_ports }}"
+    port: "{{ homeassistant_firewalld_ports }}"
     permanent: yes
     immediate: yes
     state: disabled
   when:
-    - not prometheus_config.direct_access or
-      prometheus_use_rich_firewalld_rules
+    - not homeassistant_config.direct_access or
+      homeassistant_use_rich_firewalld_rules
 
-- name: Set firewalld rich rules for prometheus webui
+- name: Set firewalld rich rules for homeassistant webui
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: enabled
-  loop: "{{ prometheus_firewalld_rich_rules }}"
+  loop: "{{ homeassistant_firewalld_rich_rules }}"
   when:
-    - prometheus_config.direct_access
-    - prometheus_use_rich_firewalld_rules
+    - homeassistant_config.direct_access
+    - homeassistant_use_rich_firewalld_rules
 
-- name: Remove firewalld rich rules for prometheus webui
+- name: Remove firewalld rich rules for homeassistant webui
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: disabled
-  loop: "{{ prometheus_firewalld_rich_rules }}"
+  loop: "{{ homeassistant_firewalld_rich_rules }}"
   when:
-    - host_prometheus_firewalld_rich_rules is defined
-    - not prometheus_use_rich_firewalld_rules
+    - host_homeassistant_firewalld_rich_rules is defined
+    - not homeassistant_use_rich_firewalld_rules

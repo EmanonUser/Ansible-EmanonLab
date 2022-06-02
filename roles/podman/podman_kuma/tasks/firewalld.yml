@@ -8,7 +8,7 @@
     state: enabled
   when:
     - kuma_config.direct_access
-    - kuma_firewalld_ports is defined
+    - not kuma_use_rich_firewalld_rules
 
 - name: Close kuma firewalld ports
   ansible.posix.firewalld:
@@ -18,5 +18,29 @@
     immediate: yes
     state: disabled
   when:
-    - not kuma_config.direct_access
-    - kuma_firewalld_ports is defined
+    - not kuma_config.direct_access or
+      kuma_use_rich_firewalld_rules
+
+- name: Set firewalld rich rules for kuma webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop: "{{ kuma_firewalld_rich_rules }}"
+  when:
+    - kuma_config.direct_access
+    - kuma_use_rich_firewalld_rules
+
+- name: Remove firewalld rich rules for kuma webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  loop: "{{ kuma_firewalld_rich_rules }}"
+  when:
+    - host_kuma_firewalld_rich_rules is defined
+    - not kuma_use_rich_firewalld_rules

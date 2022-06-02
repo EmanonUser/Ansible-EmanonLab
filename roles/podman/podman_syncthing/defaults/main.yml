@@ -1,30 +1,32 @@
 ---
-podman_syncthing_image: "{{ host_podman_syncthing_image | default('quay.io/linuxserver.io/syncthing') }}"
-podman_syncthing_image_version: "{{ host_podman_syncthing_image_version | default('1.20.1') }}"
+syncthing_image: "{{ host_syncthing_image | default('quay.io/linuxserver.io/syncthing') }}"
+syncthing_image_version: "{{ host_syncthing_image_version | default('1.20.1') }}"
 # https://quay.io/repository/linuxserver.io/syncthing?tag=latest&tab=tags
 
-podman_syncthing_ports:
-  - "{% if grp_podman_networking.syncthing.lan_access %}[::]:{{ grp_podman_networking.syncthing.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.syncthing.webui_port }}{% endif %}:8384/tcp"
-  - "{% if grp_podman_networking.syncthing.lan_access %}[::]:{{ grp_podman_networking.syncthing.webui_port }}{% else %}[::1]:{{ grp_podman_networking.syncthing.webui_port }}{% endif %}:8384/tcp"
+syncthing_config: "{{ podman_containers | selectattr('container', 'equalto', 'syncthing') | first }}"
+syncthing_ports:
+  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}{% else %}127.0.0.1:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
+  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}{% else %}[::1]:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
   - "22000:22000/tcp"
   - "22000:22000/udp"
   - "21027:21027/udp"
 
-firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-podman_syncthing_firewalld_ports:
-  webui: "{{ grp_podman_networking.syncthing.webui_port }}/tcp"
-  p2p_tcp: "22000/tcp"
-  p2p_udp: "22000/udp"
-  discovery: "21027/udp"
-
-podman_syncthing_firewalld_rich_rules: "{{ host_podman_syncthing_firewalld_rich_rules }}"
-
-podman_syncthing_directories:
+syncthing_directories:
   - "{{ host_podman_volumes_path }}/syncthing"
   - "{{ host_podman_volumes_path }}/syncthing/config"
   - "{{ host_podman_volumes_path }}/syncthing/data"
 
-podman_syncthing_volumes: "{{ host_podman_syncthing_volumes | default(podman_syncthing_volumes_default) }}"
-podman_syncthing_volumes_default:
+syncthing_volumes_default:
   - "{{ host_podman_volumes_path }}/syncthing/config:/config"
   - "{{ host_podman_volumes_path }}/syncthing/data:/data"
+syncthing_volumes: "{{ host_podman_syncthing_volumes | default(syncthing_volumes_default) }}"
+
+# firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+syncthing_firewalld_ports:
+  webui: "{{ syncthing_config.backends[0].port }}/tcp"
+  p2p_tcp: "22000/tcp"
+  p2p_udp: "22000/udp"
+  discovery: "21027/udp"
+syncthing_use_rich_firewalld_rules: "{{ host_syncthing_use_rich_firewalld_rules | default(false) }}"
+syncthing_firewalld_rich_rules: "{{ host_syncthing_firewalld_rich_rules }}"

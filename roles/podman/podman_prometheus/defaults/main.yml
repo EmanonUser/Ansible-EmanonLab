@@ -8,9 +8,6 @@ prometheus_ports:
   - "{% if prometheus_config.direct_access %}[::]:{{ prometheus_config.backends[0].port }}{% else %}127.0.0.1:{{ prometheus_config.backends[0].port }}{% endif %}:9090/tcp"
   - "{% if prometheus_config.direct_access %}[::]:{{ prometheus_config.backends[0].port }}{% else %}[::1]:{{ prometheus_config.backends[0].port }}{% endif %}:9090/tcp"
 
-firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-prometheus_firewalld_ports: "{{ prometheus_config.backends[0].port }}/tcp"
-
 prometheus_directories:
  - "{{ host_podman_volumes_path }}/prometheus"
  - "{{ host_podman_volumes_path }}/prometheus/data"
@@ -20,3 +17,9 @@ prometheus_volumes:
   - "{{ host_podman_volumes_path }}/prometheus:/etc/prometheus"
 
 prometheus_config_path: "{{ host_podman_volumes_path }}/prometheus/prometheus.yml"
+
+# firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+prometheus_firewalld_ports: "{{ prometheus_config.backends[0].port }}/tcp"
+prometheus_use_rich_firewalld_rules: "{{ host_prometheus_use_rich_firewalld_rules | default(false) }}"
+prometheus_firewalld_rich_rules: "{{ host_prometheus_firewalld_rich_rules }}"

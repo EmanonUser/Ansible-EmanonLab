@@ -103,6 +103,42 @@ podman_containers:
       - backend: localhost
         port: 50003
 
+  - container: grafana
+    fulldomain: "grafana.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 50005
+
+  - container: syncthing
+    fulldomain: "syncthing.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 50005
+
+  - container: homeassistant
+    fulldomain: "hass.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 50006
+
+  - container: transmission
+    fulldomain: "transmission.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 50007
+
 grp_local_domain: local.emanon
 grp_domain_name: emanon.moe
 grp_subdomain: iwakura

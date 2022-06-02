@@ -1,20 +1,58 @@
 ---
-- name: Open syncthing firewalld ports to admin devices
+- name: Open syncthing firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ syncthing_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when:
+    - syncthing_config.direct_access
+    - not syncthing_use_rich_firewalld_rules
+
+- name: Close syncthing firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ syncthing_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when:
+    - not syncthing_config.direct_access or
+      syncthing_use_rich_firewalld_rules
+
+- name: Set firewalld rich rules for syncthing webui
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: enabled
-  loop: "{{ podman_syncthing_firewalld_rich_rules }}"
-  when: grp_podman_networking.syncthing.lan_access
+  loop: "{{ syncthing_firewalld_rich_rules }}"
+  when:
+    - syncthing_config.direct_access
+    - syncthing_use_rich_firewalld_rules
 
-- name: Close syncthing firewalld ports to admin devices
+- name: Remove firewalld rich rules for syncthing webui
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: disabled
-  loop: "{{ podman_syncthing_firewalld_rich_rules }}"
-  when: not grp_podman_networking.syncthing.lan_access
+  loop: "{{ syncthing_firewalld_rich_rules }}"
+  when:
+    - host_syncthing_firewalld_rich_rules is defined
+    - not syncthing_use_rich_firewalld_rules
+
+- name: Open syncthing common firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ item }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop:
+    - "{{ syncthing_firewalld_ports.p2p_tcp }}"
+    - "{{ syncthing_firewalld_ports.p2p_udp }}"
+    - "{{ syncthing_firewalld_ports.discovery }}"

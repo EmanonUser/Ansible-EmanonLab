@@ -5,7 +5,7 @@ kuma_image_version: "{{ host_kuma_image_version | default('1.15.1-alpine') }}"
 
 kuma_config: "{{ podman_containers | selectattr('container', 'equalto', 'kuma') | first }}"
 kuma_ports:
-  - "{% if kuma_config.direct_access %}[::]{{ kuma_config.backends[0].port }}{% else %}127.0.0.1:{{ kuma_config.backends[0].port }}{% endif %}:3001/tcp"
+  - "{% if kuma_config.direct_access %}[::]:{{ kuma_config.backends[0].port }}{% else %}127.0.0.1:{{ kuma_config.backends[0].port }}{% endif %}:3001/tcp"
   - "{% if kuma_config.direct_access %}[::]:{{ kuma_config.backends[0].port }}{% else %}[::1]:{{ kuma_config.backends[0].port }}{% endif %}:3001/tcp"
 
 kuma_directories: "{{ host_podman_volumes_path }}/kuma"
@@ -14,3 +14,5 @@ kuma_volumes: "{{ host_podman_volumes_path }}/kuma:/app/data"
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 kuma_firewalld_ports: "{{ kuma_config.backends[0].port }}/tcp"
+kuma_use_rich_firewalld_rules: "{{ host_kuma_use_rich_firewalld_rules | default(false) }}"
+kuma_firewalld_rich_rules: "{{ host_kuma_firewalld_rich_rules }}"

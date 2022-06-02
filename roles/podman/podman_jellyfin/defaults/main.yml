@@ -20,4 +20,6 @@ jellyfin_volumes: "{{ host_podman_jellyfin_volumes | default(jellyfin_default_vo
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-kuma_firewalld_ports: "{{ kuma_config.backends[0].port }}/tcp"
+jellyfin_firewalld_ports: "{{ jellyfin_config.backends[0].port }}/tcp"
+jellyfin_use_rich_firewalld_rules: "{{ host_jellyfin_use_rich_firewalld_rules | default(false) }}"
+jellyfin_firewalld_rich_rules: "{{ host_jellyfin_firewalld_rich_rules }}"

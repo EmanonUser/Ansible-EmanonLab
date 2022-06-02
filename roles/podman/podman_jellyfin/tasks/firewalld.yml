@@ -8,7 +8,7 @@
     state: enabled
   when:
     - jellyfin_config.direct_access
-    - jellyfin_firewalld_ports is defined
+    - not jellyfin_use_rich_firewalld_rules
 
 - name: Close jellyfin firewalld ports
   ansible.posix.firewalld:
@@ -18,5 +18,29 @@
     immediate: yes
     state: disabled
   when:
-    - not jellyfin_config.direct_access
-    - jellyfin_firewalld_ports is defined
+    - not jellyfin_config.direct_access or
+      jellyfin_use_rich_firewalld_rules
+
+- name: Set firewalld rich rules for jellyfin webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop: "{{ jellyfin_firewalld_rich_rules }}"
+  when:
+    - jellyfin_config.direct_access
+    - jellyfin_use_rich_firewalld_rules
+
+- name: Remove firewalld rich rules for jellyfin webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  loop: "{{ jellyfin_firewalld_rich_rules }}"
+  when:
+    - host_jellyfin_firewalld_rich_rules is defined
+    - not jellyfin_use_rich_firewalld_rules
