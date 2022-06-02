@@ -1,5 +1,5 @@
 ---
-host_isc_kea_dhcp4:
+host_kea_dhcp4:
   - subnet: 192.168.10.0/24
     pools:
       - start: 192.168.10.100
@@ -88,7 +88,7 @@ host_isc_kea_dhcp4:
       - option_data: "routers"
         data: ["192.168.100.1"]
 
-host_isc_kea_dhcp6:
+host_kea_dhcp6:
   - subnet: "{{ grp_ipv6_prefix }}:10::/64"
     pools:
       - start: "{{ grp_ipv6_prefix }}:10::aaaa"
