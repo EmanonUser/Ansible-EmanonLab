@@ -10,11 +10,11 @@ local.emanon.        IN  SOA r.local.emanon. moemanon.pm.me. 12 7200 3600 120960
 
 $TTL 2100
 {% for _, device in grp_device.items() %}
-{% if device.ipv4_addr is defined %}{{ device.ipv4_addr |  ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ grp_local_domain }}.
+{% if device.ipv4_addr is defined %}{{ device.ipv4_addr | ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ grp_local_domain }}.
 {% endif %}{% endfor %}
 
 {% for _, device in grp_device.items() %}
-{% if device.ipv6_addr is defined %}{{ device.ipv6_addr |  ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ grp_local_domain }}.
+{% if device.ipv6_addr is defined %}{{ device.ipv6_addr | ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ grp_local_domain }}.
 {% endif %}{% endfor %}
 
 {% for _, container in grp_podman_networking.items() %}
