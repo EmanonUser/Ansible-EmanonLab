@@ -9,8 +9,9 @@ define WG = {{ wireguard_interface_name }}
 table inet routing {
 	chain prerouting {
 		type nat hook prerouting priority dstnat; policy accept
-		iifname $WAN tcp dport 22000 dnat ip to {{ grp_device.pi.ipv4_addr }}:22000 # Syncthing TCP DNAT
-		iifname $WAN udp dport 22000 dnat ip to {{ grp_device.pi.ipv4_addr }}:22000 # Syncthing TCP DNAT
+		iifname $WAN tcp dport 22000 dnat ip to {{ grp_device.nas.ipv4_addr }}:22000 # Syncthing TCP P2P DNAT
+		iifname $WAN udp dport 22000 dnat ip to {{ grp_device.nas.ipv4_addr }}:22000 # Syncthing UDP P2P DNAT
+		iifname $WAN udp dport 21027 dnat ip to {{ grp_device.nas.ipv4_addr }}:21027 # Syncthing UDP Discovery
 		iifname $WAN tcp dport 8000 dnat ip to {{ grp_device.arch.ipv4_addr }}:8000 # Temporary web server DNAT
 		iifname $LAN ip saddr 192.168.0.0/16 udp dport 51820 meta nftrace set 1 dnat ip to 192.168.1.2:51820
 	}
