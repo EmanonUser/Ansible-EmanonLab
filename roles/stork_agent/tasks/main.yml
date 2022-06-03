@@ -1,3 +1,4 @@
+---
 - name: Add Cloudsmith Stork GPG Key
   ansible.builtin.get_url:
     url: https://dl.cloudsmith.io/public/isc/stork/{{ stork_agent_cloudsmith_gpg_key }}

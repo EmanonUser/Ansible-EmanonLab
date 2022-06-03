@@ -1,9 +1,10 @@
+---
 stork_agent_cloudsmith_gpg_key: "{{ host_stork_agent_cloudsmith_gpg_key | default('gpg.77F64EC28053D1FB.key') }}"
 # https://cloudsmith.io/~isc/repos/stork/signing/
-stork_agent_host: "{{ host_stork_agent_host | default('192.168.5.1') }}"
+stork_agent_host: "{{ host_stork_agent_host | default('0.0.0.0') }}"
 stork_agent_port: "{{ host_stork_agent_port | default('6763') }}"
 
-stork_agent_listen_stork_only: "{{ host_stork_agent_listen_stork_only | default('false') }}"
+stork_agent_listen_stork_only: "{{ host_stork_agent_listen_stork_only | default('true') }}"
 stork_agent_listen_prometheus_only: "{{ host_stork_agent_listen_prometheus_only | default('false') }}"
 
 stork_agent_prometheus_kea_exporter_address: "{{ host_stork_agent_prometheus_kea_exporter_address | default('0.0.0.0') }}"
@@ -14,4 +15,4 @@ stork_agent_prometheus_bind9_exporter_address: "{{ host_stork_agent_prometheus_b
 stork_agent_prometheus_bind9_exporter_port: "{{ host_stork_agent_prometheus_bind9_exporter_port | default('9119')}}"
 stork_agent_prometheus_bind9_exporter_interval: "{{ host_stork_agent_prometheus_bind9_exporter_interval | default('10') }}"
 
-stork_agent_server_url: "{{ host_stork_agent_server_url | default('http://localhost') }}"
+stork_agent_server_url: "{{ host_stork_agent_server_url | default('http://stork.local.emanon') }}"
