@@ -45,17 +45,17 @@ frontend main-frontend
 	http-request deny if HTTP_1.0
 
 
-{% for container in podman_containers %}{% if not container.direct_access %}
-use_backend {{ container.container }}-backend if { hdr(host) -i {{ container.fulldomain }} }
+{% for service in tcp_services %}{% if not service.direct_access %}
+use_backend {{ service.service }}-backend if { hdr(host) -i {{ service.fulldomain }} }
 {% endif %}{% endfor %}
 
 
-{% for container in podman_containers %}{% if not container.direct_access %}
-backend {{ container.container }}-backend
-{% if container.ssl_redirect %}
+{% for service in tcp_services %}{% if not service.direct_access %}
+backend {{ service.service }}-backend
+{% if service.ssl_redirect %}
 	http-request redirect scheme https unless { ssl_fc }
 {% endif %}
-{% for backend in container.backends %}
+{% for backend in service.backends %}
 	server srv {{ backend.backend }}:{{ backend.port }} check maxconn {{ haproxy_backend_maxconn }}
 
 {% endfor %}{% endif %}{% endfor %}
