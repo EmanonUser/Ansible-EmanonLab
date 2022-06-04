@@ -86,6 +86,7 @@ table inet firewall {
 	}
 
 	chain wan_forward {
+		oifname $LAN icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } counter accept
 		oifname $LAN ip daddr {{ grp_device.pi.ipv4_addr }} tcp dport 22000 counter accept # Syncthing Port Forwarding
 		oifname $LAN ip daddr {{ grp_device.pi.ipv4_addr }} udp dport 22000 counter accept # Syncthing Port Forwarding
 		oifname $LAN ip daddr {{ grp_device.arch.ipv4_addr }} tcp dport 8000 counter accept # Temporary web server Port Forwading
