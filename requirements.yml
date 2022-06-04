@@ -3,6 +3,5 @@
 collections:
   - ansible.posix
   - community.general
-  - community.grafana
   - containers.podman
   - community.crypto
