@@ -3,7 +3,7 @@ homeassistant_image: "{{ host_homeassistant_image | default('docker.io/homeassis
 homeassistant_image_version: "{{ host_homeassistant_image_version | default('2022.5.5') }}"
 # https://github.com/home-assistant/core/pkgs/container/home-assistant/versions
 
-homeassistant_config: "{{ podman_containers | selectattr('container', 'equalto', 'homeassistant') | first }}"
+homeassistant_config: "{{ tcp_services | selectattr('service', 'equalto', 'homeassistant') | first }}"
 homeassistant_ports:
   - "{% if homeassistant_config.direct_access %}[::]:{{ homeassistant_config.backends[0].port }}{% else %}127.0.0.1:{{ homeassistant_config.backends[0].port }}{% endif %}:8123/tcp"
   - "{% if homeassistant_config.direct_access %}[::]:{{ homeassistant_config.backends[0].port }}{% else %}[::1]:{{ homeassistant_config.backends[0].port }}{% endif %}:8123/tcp"

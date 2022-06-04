@@ -3,7 +3,7 @@ jellyfin_image: "{{ host_jellyfin_image | default('docker.io/jellyfin/jellyfin')
 jellyfin_image_version: "{{ host_jellyfin_image_version | default('10.8.0-beta3') }}"
 # https://hub.docker.com/r/jellyfin/jellyfin/tags
 
-jellyfin_config: "{{ podman_containers | selectattr('container', 'equalto', 'jellyfin') | first }}"
+jellyfin_config: "{{ tcp_services | selectattr('service', 'equalto', 'jellyfin') | first }}"
 jellyfin_ports:
   - "{% if jellyfin_config.direct_access %}[::]{{ jellyfin_config.backends[0].port }}{% else %}127.0.0.1:{{ jellyfin_config.backends[0].port }}{% endif %}:8096/tcp"
   - "{% if jellyfin_config.direct_access %}[::]:{{ jellyfin_config.backends[0].port }}{% else %}[::1]:{{ jellyfin_config.backends[0].port }}{% endif %}:8096/tcp"

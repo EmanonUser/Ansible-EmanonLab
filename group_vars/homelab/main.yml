@@ -75,8 +75,8 @@ grp_device:
       hostname: printer
 
 
-podman_containers:
-  - container: kuma
+tcp_services:
+  - service: kuma
     fulldomain: "kuma.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
@@ -85,7 +85,7 @@ podman_containers:
       - backend: localhost
         port: 50001
 
-  - container: jellyfin
+  - service: jellyfin
     fulldomain: "jellyfin.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
@@ -94,7 +94,7 @@ podman_containers:
       - backend: localhost
         port: 50002
 
-  - container: prometheus
+  - service: prometheus
     fulldomain: "prometheus.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
@@ -103,7 +103,7 @@ podman_containers:
       - backend: localhost
         port: 50003
 
-  - container: grafana
+  - service: grafana
     fulldomain: "grafana.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
@@ -112,7 +112,7 @@ podman_containers:
       - backend: localhost
         port: 50004
 
-  - container: syncthing
+  - service: syncthing
     fulldomain: "syncthing.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
@@ -121,7 +121,7 @@ podman_containers:
       - backend: localhost
         port: 50005
 
-  - container: homeassistant
+  - service: homeassistant
     fulldomain: "hass.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
@@ -130,7 +130,7 @@ podman_containers:
       - backend: localhost
         port: 50006
 
-  - container: transmission
+  - service: transmission
     fulldomain: "transmission.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
@@ -139,7 +139,7 @@ podman_containers:
       - backend: localhost
         port: 50007
 
-  - container: stork
+  - service: stork
     fulldomain: "stork.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
