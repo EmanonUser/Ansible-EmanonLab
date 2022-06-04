@@ -1,30 +1,39 @@
 ---
-podman_transmission_image: "{{ host_podman_transmission_image | default('docker.io/haugene/transmission-openvpn') }}"
-podman_transmission_image_version: "{{ host_podman_transmission_image_version | default('4.0') }}"
+transmission_image: "{{ host_transmission_image | default('docker.io/haugene/transmission-openvpn') }}"
+transmission_image_version: "{{ host_transmission_image_version | default('4.0') }}"
 # https://hub.docker.com/r/haugene/transmission-openvpn/tags
 
-podman_transmission_ports:
-  - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
-  - "{% if grp_podman_networking.transmission.lan_access %}[::]:{{ grp_podman_networking.transmission.webui_port }}{% else %}[::1]:{{ grp_podman_networking.transmission.webui_port }}{% endif %}:9091/tcp"
 
-firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-spe_firewalld_handling: "{{ host_spe_firewalld_handling | default(false) }}"
-podman_transmission_firewalld_ports: "{{ grp_podman_networking.transmission.webui_port }}/tcp"
-podman_transmission_firewalld_rich_rules: "{{ host_podman_transmission_firewalld_rich_rules }}"
+transmission_config: "{{ tcp_services | selectattr('service', 'equalto', 'transmission') | first }}"
+transmission_ports:
+  - "{% if transmission_config.direct_access %}[::]:{{ transmission_config.backends[0].port }}{% else %}127.0.0.1:{{ transmission_config.backends[0].port }}{% endif %}:9091/tcp"
+  - "{% if transmission_config.direct_access %}[::]:{{ transmission_config.backends[0].port }}{% else %}[::1]:{{ transmission_config.backends[0].port }}{% endif %}:9091/tcp"
 
-podman_transmission_directories:
+transmission_directories:
+  - "{{ host_podman_volumes_path }}/transmission"
   - "{{ host_podman_volumes_path }}/transmission/home"
   - "{{ host_podman_volumes_path }}/transmission/completed"
   - "{{ host_podman_volumes_path }}/transmission/incompleted"
   - "{{ host_podman_volumes_path }}/transmission/watch"
 
-podman_transmission_volumes: "{{ host_podman_transmission_volumes | default(host_podman_volumes_path + '/transmission:/transmission') }}"
+transmission_default_volumes:
+  - "{{ host_podman_volumes_path }}/transmission/home:/transmission/home:rw"
+  - "{{ host_podman_volumes_path }}/transmission/completed:/transmission/completed:rw"
+  - "{{ host_podman_volumes_path }}/transmission/incompleted:/transmission/incompleted:rw"
+  - "{{ host_podman_volumes_path }}/transmission/watch:/transmission/watch:rw"
+transmission_volumes: "{{ host_transmission_volumes | default(transmission_default_volumes) }}"
 
 
-podman_transmission_env_home_path: "{{ host_podman_transmission_env_home_path | default('/transmission/home') }}"
-podman_transmission_env_download_path: "{{ host_podman_transmission_env_download_path | default('/transmission/completed')}}"
-podman_transmission_env_incomplete_path: "{{ host_podman_transmission_env_incomplete_path | default('/transmission/incompleted') }}"
-podman_transmission_env_watch_path: "{{ host_podman_transmission_env_watch_path | default('/transmission/watch') }}"
+transmission_env_home_path: "{{ host_transmission_env_home_path | default('/transmission/home') }}"
+transmission_env_download_path: "{{ host_transmission_env_download_path | default('/transmission/completed')}}"
+transmission_env_incomplete_path: "{{ host_transmission_env_incomplete_path | default('/transmission/incompleted') }}"
+transmission_env_watch_path: "{{ host_transmission_env_watch_path | default('/transmission/watch') }}"
 
-podman_transmission_env_web_ui: "{{ host_podman_transmission_env_web_ui | default('flood-for-transmission') }}"
-podman_transmission_env_local_network: "{{ host_podman_transmission_env_local_network | default('192.168.0.0/16') }}"
+transmission_env_web_ui: "{{ host_transmission_env_web_ui | default('flood-for-transmission') }}"
+transmission_env_local_network: "{{ host_transmission_env_local_network | default('192.168.0.0/16') }}"
+
+# firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+transmission_firewalld_ports: "{{ transmission_config.backends[0].port }}/tcp"
+transmission_use_rich_firewalld_rules: "{{ host_transmission_use_rich_firewalld_rules | default(false) }}"
+transmission_firewalld_rich_rules: "{{ host_transmission_firewalld_rich_rules }}"

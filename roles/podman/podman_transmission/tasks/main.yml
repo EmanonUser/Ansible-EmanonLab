@@ -6,15 +6,15 @@
     owner: emanon
     group: emanon
     mode: u=rwx,g=,o=
-  loop: "{{ podman_transmission_directories }}"
+  loop: "{{ transmission_directories }}"
   become_user: "{{ primary_user_username }}"
 
 - name: Run transmission podman container
   containers.podman.podman_container:
     name: transmission_ansible
-    image: "{{ podman_transmission_image }}:{{ podman_transmission_image_version }}"
-    publish: "{{ podman_transmission_ports }}"
-    volumes: "{{ podman_transmission_volumes }}"
+    image: "{{ transmission_image }}:{{ transmission_image_version }}"
+    publish: "{{ transmission_ports }}"
+    volumes: "{{ transmission_volumes }}"
     log_driver: k8s-file
     log_options: max_size=10m
     restart_policy: unless-stopped
@@ -24,40 +24,22 @@
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
-      TRANSMISSION_RPC_USERNAME: "{{ podman_transmission_env_rpc_username }}"
-      TRANSMISSION_RPC_PASSWORD: "{{ podman_transmission_env_rpc_password }}"
-      TRANSMISSION_RPC_AUTHENTICATION_REQUIRED: "{{ podman_transmission_env_rpc_auth_required }}"
-      OPENVPN_PROVIDER: "{{ podman_transmission_env_openvpn_provider }}"
-      OPENVPN_CONFIG: "{{ podman_transmission_env_openvpn_config }}"
-      OPENVPN_USERNAME: "{{ podman_transmission_env_openvpn_username }}"
-      OPENVPN_PASSWORD: "{{ podman_transmission_env_openvpn_password }}"
-      TRANSMISSION_HOME: "{{ podman_transmission_env_home_path }}"
-      TRANSMISSION_DOWNLOAD_DIR: "{{ podman_transmission_env_download_path }}"
-      TRANSMISSION_INCOMPLETE_DIR: "{{ podman_transmission_env_incomplete_path }}"
-      TRANSMISSION_WATCH_DIR: "{{ podman_transmission_env_watch_path }}"
-      TRANSMISSION_WEB_UI: "{{ podman_transmission_env_web_ui }}"
-      LOCAL_NETWORK: "{{ podman_transmission_env_local_network }}"
+      TRANSMISSION_RPC_USERNAME: "{{ transmission_env_rpc_username }}"
+      TRANSMISSION_RPC_PASSWORD: "{{ transmission_env_rpc_password }}"
+      TRANSMISSION_RPC_AUTHENTICATION_REQUIRED: "{{ transmission_env_rpc_auth_required }}"
+      OPENVPN_PROVIDER: "{{ transmission_env_openvpn_provider }}"
+      OPENVPN_CONFIG: "{{ transmission_env_openvpn_config }}"
+      OPENVPN_USERNAME: "{{ transmission_env_openvpn_username }}"
+      OPENVPN_PASSWORD: "{{ transmission_env_openvpn_password }}"
+      TRANSMISSION_HOME: "{{ transmission_env_home_path }}"
+      TRANSMISSION_DOWNLOAD_DIR: "{{ transmission_env_download_path }}"
+      TRANSMISSION_INCOMPLETE_DIR: "{{ transmission_env_incomplete_path }}"
+      TRANSMISSION_WATCH_DIR: "{{ transmission_env_watch_path }}"
+      TRANSMISSION_WEB_UI: "{{ transmission_env_web_ui }}"
+      LOCAL_NETWORK: "{{ transmission_env_local_network }}"
   become_user: "{{ primary_user_username }}"
   notify: Enable transmission_ansible podman service
 
-- name: Open transmission firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_transmission_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  when: [not spe_firewalld_handling, grp_podman_networking.syncthing.lan_access]
-
-- name: Close transmission firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_transmission_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  when: [not spe_firewalld_handling, not grp_podman_networking.syncthing.lan_access]
-
 - name: Import firewalld tasks rules handling
   include_tasks: firewalld.yml
-  when: spe_firewalld_handling
+  when: podman_use_firewalld

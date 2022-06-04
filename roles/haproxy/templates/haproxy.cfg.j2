@@ -44,22 +44,21 @@ frontend main-frontend
 	http-response set-header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;"
 	http-request deny if HTTP_1.0
 
-{% for service, value in grp_podman_networking.items() %}
-{% if not value.lan_access %}
-use_backend {{ service }}-backend if { hdr(host) -i {{ value.fulldomain }} }
-{% endif %}
-{% endfor %}
 
-{% for service, value in grp_podman_networking.items() %}
-{% if not value.lan_access %}
-backend {{ service }}-backend
-{% if value.ssl_redirect %}
+{% for container in podman_containers %}{% if not container.direct_access %}
+use_backend {{ container.container }}-backend if { hdr(host) -i {{ container.fulldomain }} }
+{% endif %}{% endfor %}
+
+
+{% for container in podman_containers %}{% if not container.direct_access %}
+backend {{ container.container }}-backend
+{% if container.ssl_redirect %}
 	http-request redirect scheme https unless { ssl_fc }
 {% endif %}
-	server srv localhost:{{ value.webui_port }} check maxconn 30
+{% for backend in container.backends %}
+	server srv {{ backend.backend }}:{{ backend.port }} check maxconn {{ haproxy_backend_maxconn }}
 
-{% endif %}
-{% endfor %}
+{% endfor %}{% endif %}{% endfor %}
 
 {% if haproxy_stats %}
 frontend stats

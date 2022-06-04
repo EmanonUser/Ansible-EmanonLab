@@ -74,50 +74,79 @@ grp_device:
       hw_addr: "00:21:5a:e5:51:f9"
       hostname: printer
 
-grp_podman_networking:
-  adguard:
-    fulldomain: "adguard.{{ grp_local_domain }}"
-    webui_port: 4001
-    lan_access: no
+
+tcp_services:
+  - service: kuma
+    fulldomain: "kuma.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  transmission:
-    fulldomain: "transmission.{{ grp_local_domain }}"
-    webui_port: 4002
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50001
+
+  - service: jellyfin
+    fulldomain: "jellyfin.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  prometheus:
-    fulldomain: "prometheus.{{ grp_local_domain }}"
-    webui_port: 4003
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50002
+
+  - service: prometheus
+    fulldomain: "prometheus.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  grafana:
-    fulldomain: "grafana.{{ grp_local_domain }}"
-    webui_port: 4004
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50003
+
+  - service: grafana
+    fulldomain: "grafana.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  homeassistant:
-    fulldomain: "hass.{{ grp_local_domain }}"
-    webui_port: 4005
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50004
+
+  - service: syncthing
+    fulldomain: "syncthing.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 50005
+
+  - service: homeassistant
+    fulldomain: "hass.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 50006
+
+  - service: transmission
+    fulldomain: "transmission.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 50007
+
+  - service: stork
+    fulldomain: "stork.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: no
-  syncthing:
-    fulldomain: "syncthing.{{ grp_local_domain }}"
-    webui_port: 4006
-    lan_access: no
-    ssl_redirect: yes
-  flame:
-    fulldomain: "flame.{{ grp_local_domain }}"
-    webui_port: 4007
-    lan_access: no
-    ssl_redirect: yes
-  loki:
-    fulldomain: "loki.{{ grp_local_domain }}"
-    webui_port: 4008
-    lan_access: yes
-  pyload:
-    fulldomain: "pyload.{{ grp_local_domain }}"
-    webui_port: 4009
-    lan_access: yes
+    backends:
+      - backend: localhost
+        port: 8080
 
 grp_local_domain: local.emanon
 grp_domain_name: emanon.moe

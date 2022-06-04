@@ -22,8 +22,11 @@
     - role: frr
       tags: [ frr, services ]
 
-    - role: isc_kea
-      tags: [ isc_kea, services ]
+    - role: kea
+      tags: [ kea, services ]
+
+    - role: stork_agent
+      tags: [ stork_agent, services ]
 
     - role: coredns
       tags: [ coredns, services ]
@@ -33,15 +36,6 @@
 
     - role: ntpd
       tags: [ ntpd, services ]
-
-    # - role: stork_agent
-    #   tags: [ stork_agent, monitoring ]
-
-    - role: node_exporter
-      tags: [ node_exporter, monitoring ]
-
-    - role: promtail
-      tags: [ promtail, monitoring ]
 
     - role: gad
       tags: [ gad, services ]

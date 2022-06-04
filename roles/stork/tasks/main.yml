@@ -1,7 +1,7 @@
 ---
 - name: Add Cloudsmith Stork GPG Key
   ansible.builtin.get_url:
-    url: https://dl.cloudsmith.io/public/isc/stork/{{ stork_agent_cloudsmith_gpg_key }}
+    url: https://dl.cloudsmith.io/public/isc/stork/{{ stork_cloudsmith_gpg_key }}
     dest: /usr/share/keyrings/isc_stork-archive-keyring.key
     owner: root
     group: root
@@ -15,18 +15,16 @@
     state: present
   notify: ["Apt update", "Apt upgrade"]
 
-- name: Install stork agent
+- name: Install kea stork
   ansible.builtin.apt:
-    name: isc-stork-agent
+    name: isc-stork-server
     update_cache: yes
     state: present
-  notify: ["Enable stork-agent service", "Start stork-agent service"]
+  notify: ["Enable stork service", "Start stork-agent service"]
 
-- name: Template stork agent environnement file
-  ansible.builtin.template:
-    src: agent.env.j2
-    dest: /etc/stork/agent.env
-    owner: stork-agent
-    group: stork-agent
-    mode: u=rw,g=,o=
-  notify: Reload stork-agent service
+- name: Install postgresgl database
+  ansible.builtin.apt:
+    name: postgresql postgresql-client
+    update_cache: yes
+    state: present
+  notify: ["Enable postgresql service", "Start postgresql service"]

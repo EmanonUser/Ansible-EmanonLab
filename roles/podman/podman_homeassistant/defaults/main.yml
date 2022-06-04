@@ -1,14 +1,18 @@
 ---
-podman_homeassistant_image: "{{ host_podman_homeassistant_image | default('docker.io/homeassistant/home-assistant') }}"
-podman_homeassistant_image_version: "{{ host_podman_homeassistant_image_version | default('2022.5.5') }}"
+homeassistant_image: "{{ host_homeassistant_image | default('docker.io/homeassistant/home-assistant') }}"
+homeassistant_image_version: "{{ host_homeassistant_image_version | default('2022.5.5') }}"
 # https://github.com/home-assistant/core/pkgs/container/home-assistant/versions
 
-podman_homeassistant_ports:
-  - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
-  - "{% if grp_podman_networking.homeassistant.lan_access %}[::]:{{ grp_podman_networking.homeassistant.webui_port }}{% else %}[::1]:{{ grp_podman_networking.homeassistant.webui_port }}{% endif %}:8123/tcp"
+homeassistant_config: "{{ tcp_services | selectattr('service', 'equalto', 'homeassistant') | first }}"
+homeassistant_ports:
+  - "{% if homeassistant_config.direct_access %}[::]:{{ homeassistant_config.backends[0].port }}{% else %}127.0.0.1:{{ homeassistant_config.backends[0].port }}{% endif %}:8123/tcp"
+  - "{% if homeassistant_config.direct_access %}[::]:{{ homeassistant_config.backends[0].port }}{% else %}[::1]:{{ homeassistant_config.backends[0].port }}{% endif %}:8123/tcp"
 
+homeassistant_directories: "{{ host_podman_volumes_path }}/home_assistant"
+homeassistant_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
+
+# firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-podman_homeassistant_firewalld_ports: "{{ grp_podman_networking.homeassistant.webui_port }}/tcp"
-
-podman_homeassistant_directories: "{{ host_podman_volumes_path }}/home_assistant"
-podman_homeassistant_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
+homeassistant_firewalld_ports: "{{ homeassistant_config.backends[0].port }}/tcp"
+homeassistant_use_rich_firewalld_rules: "{{ host_homeassistant_use_rich_firewalld_rules | default(false) }}"
+homeassistant_firewalld_rich_rules: "{{ host_homeassistant_firewalld_rich_rules }}"

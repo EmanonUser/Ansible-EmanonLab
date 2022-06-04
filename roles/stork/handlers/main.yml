@@ -1,0 +1,33 @@
+---
+- name: Enable stork-agent service
+  ansible.builtin.systemd:
+    name: isc-stork-agent.service
+    enabled: yes
+
+- name: Start stork-agent service
+  ansible.builtin.systemd:
+    name: isc-stork-agent.service
+    state: started
+
+- name: Reload stork-agent service
+  ansible.builtin.systemd:
+    name: isc-stork-agent.service
+    state: reloaded
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Apt upgrade
+  ansible.builtin.apt:
+    upgrade: yes
+
+- name: Enable postgresql service
+  ansible.builtin.systemd:
+    name: postgresql.service
+    enabled: yes
+
+- name: Start postgresql service
+  ansible.builtin.systemd:
+    name: postgresql.service
+    state: started

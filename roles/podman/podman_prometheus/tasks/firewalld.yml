@@ -1,46 +1,46 @@
 ---
-- name: Open transmission firewalld ports
+- name: Open prometheus firewalld ports
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
-    port: "{{ transmission_firewalld_ports }}"
+    port: "{{ prometheus_firewalld_ports }}"
     permanent: yes
     immediate: yes
     state: enabled
   when:
-    - transmission_config.direct_access
-    - not transmission_use_rich_firewalld_rules
+    - prometheus_config.direct_access
+    - not prometheus_use_rich_firewalld_rules
 
-- name: Close transmission firewalld ports
+- name: Close prometheus firewalld ports
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
-    port: "{{ transmission_firewalld_ports }}"
+    port: "{{ prometheus_firewalld_ports }}"
     permanent: yes
     immediate: yes
     state: disabled
   when:
-    - not transmission_config.direct_access or
-      transmission_use_rich_firewalld_rules
+    - not prometheus_config.direct_access or
+      prometheus_use_rich_firewalld_rules
 
-- name: Set firewalld rich rules for transmission webui
+- name: Set firewalld rich rules for prometheus webui
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: enabled
-  loop: "{{ transmission_firewalld_rich_rules }}"
+  loop: "{{ prometheus_firewalld_rich_rules }}"
   when:
-    - transmission_config.direct_access
-    - transmission_use_rich_firewalld_rules
+    - prometheus_config.direct_access
+    - prometheus_use_rich_firewalld_rules
 
-- name: Remove firewalld rich rules for transmission webui
+- name: Remove firewalld rich rules for prometheus webui
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: disabled
-  loop: "{{ transmission_firewalld_rich_rules }}"
+  loop: "{{ prometheus_firewalld_rich_rules }}"
   when:
-    - host_transmission_firewalld_rich_rules is defined
-    - not transmission_use_rich_firewalld_rules
+    - host_prometheus_firewalld_rich_rules is defined
+    - not prometheus_use_rich_firewalld_rules

@@ -42,3 +42,33 @@
 
     - role: tgtd
       tags: [ tgtd, service ]
+
+    - role: self_certificates
+      tags: [ self_certificates, service ]
+
+    - role: haproxy
+      tags: [ haproxy, service ]
+
+    - role: podman/podman
+      tags: [ podman, podman_all ]
+
+    - role: podman/podman_kuma
+      tags: [ kuma, podman_all ]
+
+    - role: podman/podman_jellyfin
+      tags: [ jellyfin, podman_all ]
+
+    - role: podman/podman_prometheus
+      tags: [ prometheus, podman_all ]
+
+    - role: podman/podman_grafana
+      tags: [ grafana, podman_all ]
+
+    - role: podman/podman_syncthing
+      tags: [ syncthing, podman_all ]
+
+    - role: podman/podman_homeassistant
+      tags: [ hass, podman_all ]
+
+    - role: podman/podman_transmission
+      tags: [ transmission, podman_all ]

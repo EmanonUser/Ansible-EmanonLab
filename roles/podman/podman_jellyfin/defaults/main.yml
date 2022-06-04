@@ -1,18 +1,25 @@
 ---
-podman_jellyfin_image: "{{ host_podman_jellyfin_image | default('docker.io/jellyfin/jellyfin') }}"
-podman_jellyfin_image_version: "{{ host_podman_jellyfin_image_version | default('10.8.0-beta3') }}"
+jellyfin_image: "{{ host_jellyfin_image | default('docker.io/jellyfin/jellyfin') }}"
+jellyfin_image_version: "{{ host_jellyfin_image_version | default('10.8.0-beta3') }}"
 # https://hub.docker.com/r/jellyfin/jellyfin/tags
 
-podman_jellyfin_ports:
-  - "{% if grp_podman_networking.jellyfin.lan_access %}[::]{{ grp_podman_networking.jellyfin.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
-  - "{% if grp_podman_networking.jellyfin.lan_access %}[::]:{{ grp_podman_networking.jellyfin.webui_port }}{% else %}[::1]:{{ grp_podman_networking.jellyfin.webui_port }}{% endif %}:8096/tcp"
+jellyfin_config: "{{ tcp_services | selectattr('service', 'equalto', 'jellyfin') | first }}"
+jellyfin_ports:
+  - "{% if jellyfin_config.direct_access %}[::]{{ jellyfin_config.backends[0].port }}{% else %}127.0.0.1:{{ jellyfin_config.backends[0].port }}{% endif %}:8096/tcp"
+  - "{% if jellyfin_config.direct_access %}[::]:{{ jellyfin_config.backends[0].port }}{% else %}[::1]:{{ jellyfin_config.backends[0].port }}{% endif %}:8096/tcp"
 
-podman_jellyfin_firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-podman_jellyfin_firewalld_rich_rules: "{{ host_podman_jellyfin_firewalld_rich_rules }}"
+jellyfin_directories:
+  - "{{ host_podman_volumes_path }}/jellyfin/cache"
+  - "{{ host_podman_volumes_path }}/jellyfin/config"
+  - "{{ host_podman_volumes_path }}/jellyfin/media"
+jellyfin_default_volumes:
+  - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache:rw"
+  - "{{ host_podman_volumes_path }}/jellyfin/config:/config:rw"
+  - "{{ host_podman_volumes_path }}/jellyfin/media:/media:rw"
+jellyfin_volumes: "{{ host_podman_jellyfin_volumes | default(jellyfin_default_volumes) }}"
 
-podman_jellyfin_directories:
- - "{{ host_podman_volumes_path }}/jellyfin/cache"
- - "{{ host_podman_volumes_path }}/jellyfin/config"
- - "{{ host_podman_volumes_path }}/jellyfin/media"
-
-podman_jellyfin_volumes: "{{ host_podman_jellyfin_volumes | default(host_podman_volumes_path + '/jellyfin/media:/media') }}"
+# Firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+jellyfin_firewalld_ports: "{{ jellyfin_config.backends[0].port }}/tcp"
+jellyfin_use_rich_firewalld_rules: "{{ host_jellyfin_use_rich_firewalld_rules | default(false) }}"
+jellyfin_firewalld_rich_rules: "{{ host_jellyfin_firewalld_rich_rules }}"

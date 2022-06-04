@@ -1,46 +1,46 @@
 ---
-- name: Open transmission firewalld ports
+- name: Open grafana firewalld ports
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
-    port: "{{ transmission_firewalld_ports }}"
+    port: "{{ grafana_firewalld_ports }}"
     permanent: yes
     immediate: yes
     state: enabled
   when:
-    - transmission_config.direct_access
-    - not transmission_use_rich_firewalld_rules
+    - grafana_config.direct_access
+    - not grafana_use_rich_firewalld_rules
 
-- name: Close transmission firewalld ports
+- name: Close grafana firewalld ports
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
-    port: "{{ transmission_firewalld_ports }}"
+    port: "{{ grafana_firewalld_ports }}"
     permanent: yes
     immediate: yes
     state: disabled
   when:
-    - not transmission_config.direct_access or
-      transmission_use_rich_firewalld_rules
+    - not grafana_config.direct_access or
+      grafana_use_rich_firewalld_rules
 
-- name: Set firewalld rich rules for transmission webui
+- name: Set firewalld rich rules for grafana webui
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: enabled
-  loop: "{{ transmission_firewalld_rich_rules }}"
+  loop: "{{ grafana_firewalld_rich_rules }}"
   when:
-    - transmission_config.direct_access
-    - transmission_use_rich_firewalld_rules
+    - grafana_config.direct_access
+    - grafana_use_rich_firewalld_rules
 
-- name: Remove firewalld rich rules for transmission webui
+- name: Remove firewalld rich rules for grafana webui
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
     permanent: yes
     immediate: yes
     state: disabled
-  loop: "{{ transmission_firewalld_rich_rules }}"
+  loop: "{{ grafana_firewalld_rich_rules }}"
   when:
-    - host_transmission_firewalld_rich_rules is defined
-    - not transmission_use_rich_firewalld_rules
+    - host_grafana_firewalld_rich_rules is defined
+    - not grafana_use_rich_firewalld_rules

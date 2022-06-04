@@ -66,6 +66,16 @@ grp_podman_networking:
     lan_access: false
     ssl_redirect: yes
 
+podman_containers:
+  - container: kuma
+    fulldomain: "kuma.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 25104
+
 grp_podman_networking_tcp:
   minecraft:
     fulldomain: "minecraft.{{ grp_local_domain }}"

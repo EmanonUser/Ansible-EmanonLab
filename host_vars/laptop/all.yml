@@ -1,7 +1,6 @@
 ---
 ## firewalld ##
 host_firewalld_zone: dmz
-host_spe_firewalld_handling: yes
 
 ## is_alive ##
 host_is_alive_echo_request_target: iwakura.emanon.moe
@@ -22,6 +21,8 @@ host_podman_minecraft_path: "{{ host_zfs_primary_pools[0].path }}/minecraft"
 
 
 ## podman_transmission ##
+podman_use_firewalld: yes
+host_transmission_use_rich_firewalld_rules: yes
 host_podman_transmission_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.transmission.webui_port }}", proto: tcp }
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.transmission.webui_port }}", proto: tcp }
@@ -36,12 +37,13 @@ host_podman_transmission_env_download_path: "/misc"
 
 
 ## podman_jellyfin ##
-host_podman_jellyfin_firewalld_rich_rules:
+host_jellyfin_use_rich_firewalld_rules: yes
+host_jellyfin_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.jellyfin.webui_port }}", proto: tcp }
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.jellyfin.webui_port }}", proto: tcp }
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.jellyfin.webui_port }}", proto: tcp }
 
-host_podman_jellyfin_volumes:
+host_jellyfin_volumes:
   - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache"
   - "{{ host_podman_volumes_path }}/jellyfin/config:/config"
   - "{{ host_podman_media_path }}:/media"
@@ -50,29 +52,25 @@ host_podman_jellyfin_volumes:
 
 
 ## podman_filebrowser ##
-host_podman_filebrowser_firewalld_rich_rules:
+host_filebrowser_use_rich_firewalld_rules: yes
+host_filebrowser_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.filebrowser.webui_port }}", proto: tcp }
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.filebrowser.webui_port }}", proto: tcp }
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.filebrowser.webui_port }}", proto: tcp }
 
-host_podman_filebrowser_volumes:
+host_filebrowser_volumes:
   - "{{ host_podman_volumes_path }}/filebrowser/config/settings.json:/config/settings.json"
   - "{{ host_podman_volumes_path }}/filebrowser/database/database.db:/database/database.db"
   - "{{ host_podman_files_path }}:/srv"
 
 
-
-host_podman_kuma_firewalld_rich_rules:
-  - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
-  - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
-  - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.kuma.webui_port }}", proto: tcp }
-
 ## podman_syncthing ##
-host_podman_syncthing_firewalld_rich_rules:
+host_syncthing_use_rich_firewalld_rules: yes
+host_syncthing_firewalld_rich_rules:
   - { family: ipv4, source: "{{ grp_device.arch.ipv4_addr }}", port: "{{ grp_podman_networking.syncthing.webui_port }}", proto: tcp }
   - { family: ipv6, source: "{{ grp_device.arch.ipv6_addr_global }}", port: "{{ grp_podman_networking.syncthing.webui_port }}", proto: tcp }
   - { family: ipv4, source: "{{ grp_device.one.ipv4_addr }}", port: "{{ grp_podman_networking.syncthing.webui_port }}", proto: tcp }
 
 ## podman_minecraft ##
-host_podman_minecraft_volumes:
+host_minecraft_volumes:
   - "{{ host_podman_minecraft_path }}:/data"

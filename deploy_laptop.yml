@@ -41,22 +41,22 @@
       tags: [ podman, podman_all ]
 
     - role: podman/podman_jellyfin
-      tags: [ podman_jellyfin, podman_all ]
+      tags: [ jellyfin, podman_all ]
 
     - role: podman/podman_transmission
-      tags: [ podman_transmission, podman_all ]
+      tags: [ transmission, podman_all ]
 
     - role: podman/podman_filebrowser
-      tags: [ podman_filebrowser, podman_all ]
+      tags: [ filebrowser, podman_all ]
 
     - role: podman/podman_kuma
-      tags: [ podman_kuma, podman_all ]
+      tags: [ kuma, podman_all ]
 
     - role: podman/podman_syncthing
-      tags: [ podman_syncthing, podman_all ]
+      tags: [ syncthing, podman_all ]
 
     - role: podman/podman_minecraft
-      tags: [ podman_minecraft, podman_all ]
+      tags: [ minecraft, podman_all ]
 
     - role: haproxy
       tags: [ haproxy, podman_all ]

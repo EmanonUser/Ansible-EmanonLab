@@ -17,6 +17,6 @@ $TTL 2100
 {% if device.ipv6_addr is defined %}{{ device.ipv6_addr | ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ grp_local_domain }}.
 {% endif %}{% endfor %}
 
-{% for _, container in grp_podman_networking.items() %}
-{{ container.fulldomain }}.        IN CNAME   {{ grp_device.pi.hostname }}.{{ grp_local_domain }}.
+{% for service in tcp_services %}
+{{ service.fulldomain }}.        IN CNAME   {{ service.reverse_proxy }}.
 {% endfor %}
