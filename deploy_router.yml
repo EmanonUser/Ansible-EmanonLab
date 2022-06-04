@@ -25,6 +25,9 @@
     - role: kea
       tags: [ kea, services ]
 
+    - role: stork_agent
+      tags: [ stork_agent, services ]
+
     - role: coredns
       tags: [ coredns, services ]
 
