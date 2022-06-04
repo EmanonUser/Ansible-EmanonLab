@@ -75,7 +75,7 @@
 
      {
         "subnet": "{{ subnet.subnet }}",
-        "pools" : [{% for pool in subnet.pools %}
+        "pools" : [{% for pool in subnet.pools +%}
           {
             "pool": "{{ pool.start }}-{{ pool.end }}"
           }{% if not loop.last %},{% endif %}{% endfor %}
