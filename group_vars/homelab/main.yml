@@ -75,7 +75,7 @@ grp_device:
       hostname: printer
 
 
-tcp_services:
+http_services:
   - service: kuma
     fulldomain: "kuma.local.emanon"
     reverse_proxy: "nas.local.emanon"

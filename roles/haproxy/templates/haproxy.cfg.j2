@@ -34,7 +34,7 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-frontend main-frontend
+frontend http-frontend
 	bind :::80 interface {{ ansible_default_ipv4.interface }}
 	bind :::443 interface {{ ansible_default_ipv4.interface }} ssl crt /etc/haproxy/ssl/ alpn h2,http/1.1
 	http-response set-header X-Frame-Options SAMEORIGIN
@@ -45,12 +45,12 @@ frontend main-frontend
 	http-request deny if HTTP_1.0
 
 
-{% for service in tcp_services %}{% if not service.direct_access %}
+{% for service in http_services %}{% if not service.direct_access %}
 use_backend {{ service.service }}-backend if { hdr(host) -i {{ service.fulldomain }} }
 {% endif %}{% endfor %}
 
 
-{% for service in tcp_services %}{% if not service.direct_access %}
+{% for service in http_services %}{% if not service.direct_access %}
 backend {{ service.service }}-backend
 {% if service.ssl_redirect %}
 	http-request redirect scheme https unless { ssl_fc }

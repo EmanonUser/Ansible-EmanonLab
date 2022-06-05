@@ -3,7 +3,7 @@ kuma_image: "{{ host_kuma_image | default('docker.io/louislam/uptime-kuma') }}"
 kuma_image_version: "{{ host_kuma_image_version | default('1.15.1-alpine') }}"
 # https://hub.docker.com/r/louislam/uptime-kuma/tags
 
-kuma_config: "{{ tcp_services | selectattr('service', 'equalto', 'kuma') | first }}"
+kuma_config: "{{ http_services | selectattr('service', 'equalto', 'kuma') | first }}"
 kuma_ports:
   - "{% if kuma_config.direct_access %}[::]:{{ kuma_config.backends[0].port }}{% else %}127.0.0.1:{{ kuma_config.backends[0].port }}{% endif %}:3001/tcp"
   - "{% if kuma_config.direct_access %}[::]:{{ kuma_config.backends[0].port }}{% else %}[::1]:{{ kuma_config.backends[0].port }}{% endif %}:3001/tcp"

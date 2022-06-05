@@ -3,7 +3,7 @@ syncthing_image: "{{ host_syncthing_image | default('quay.io/linuxserver.io/sync
 syncthing_image_version: "{{ host_syncthing_image_version | default('1.20.1') }}"
 # https://quay.io/repository/linuxserver.io/syncthing?tag=latest&tab=tags
 
-syncthing_config: "{{ tcp_services | selectattr('service', 'equalto', 'syncthing') | first }}"
+syncthing_config: "{{ http_services | selectattr('service', 'equalto', 'syncthing') | first }}"
 syncthing_ports:
   - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}{% else %}127.0.0.1:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
   - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}{% else %}[::1]:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
