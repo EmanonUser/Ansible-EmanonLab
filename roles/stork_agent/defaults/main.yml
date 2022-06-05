@@ -1,7 +1,7 @@
 ---
 stork_agent_cloudsmith_gpg_key: "{{ host_stork_agent_cloudsmith_gpg_key | default('gpg.77F64EC28053D1FB.key') }}"
 # https://cloudsmith.io/~isc/repos/stork/signing/
-stork_agent_host: "{{ host_stork_agent_host | default('0.0.0.0') }}"
+stork_agent_host: "{{ host_stork_agent_host | default(ansible_hostname + '.' + grp_local_domain) }}"
 stork_agent_port: "{{ host_stork_agent_port | default('6763') }}"
 
 stork_agent_listen_stork_only: "{{ host_stork_agent_listen_stork_only | default('true') }}"
