@@ -100,6 +100,7 @@ table inet firewall {
 		ip saddr {{ grp_device.arch.ipv4_addr }} ip daddr 192.168.1.1 counter accept # Accept from admin to FAI modem
 		oifname $WAN ct state new counter accept # WAN traffic forwading
 		oifname $R48 ct state new counter accept # WAN IPv6 route48 traffic forwading
+		oifname $WG ct state new counter accept # WAN IPv6 wireguard traffic forwading
 		jump forward_filter
 	}
 
