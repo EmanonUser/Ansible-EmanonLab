@@ -34,51 +34,58 @@ grp_device:
       # android does not support statefull dhcpv6, and the livebox 5 is not capable of delegating prefix anyway
       hostname: arch
 
-grp_podman_networking:
-  jellyfin:
+  - service: jellyfin
     fulldomain: jellyfin.emanon.moe
-    webui_port: 25101
-    lan_access: false
+    direct_access: false
     ssl_redirect: yes
-  filebrowser:
-    fulldomain: file.emanon.moe
-    webui_port: 25102
-    lan_access: false
-    ssl_redirect: yes
-  transmission:
-    fulldomain: transmission.emanon.moe
-    webui_port: 25103
-    lan_access: true
-    ssl_redirect: no
-  kuma:
-    fulldomain: kuma.emanon.moe
-    webui_port: 25104
-    lan_access: false
-    ssl_redirect: yes
-  syncthing:
-    fulldomain: syncthing.emanon.moe
-    webui_port: 25105
-    lan_access: true
-    ssl_redirect: no
-  emanon:
-    fulldomain: emanon.moe
-    webui_port: 9999
-    lan_access: false
-    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 25101
 
-podman_containers:
-  - container: kuma
-    fulldomain: "kuma.local.emanon"
-    reverse_proxy: "nas.local.emanon"
-    direct_access: no
+  - service: filebrowser
+    fulldomain: file.emanon.moe
+    direct_access: false
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 25102
+
+  - service: transmission
+    fulldomain: transmission.emanon.moe
+    direct_access: true
+    ssl_redirect: no
+    backends:
+      - backend: localhost
+        port: 25103
+
+  - service: kuma
+    fulldomain: kuma.emanon.moe
+    direct_access: false
     ssl_redirect: yes
     backends:
       - backend: localhost
         port: 25104
 
-grp_podman_networking_tcp:
-  minecraft:
-    fulldomain: "minecraft.{{ grp_local_domain }}"
-    port: 25565
-    lan_access: yes
+  - service: syncthing
+    fulldomain: syncthing.emanon.moe
+    direct_access: true
+    ssl_redirect: no
+    backends:
+      - backend: localhost
+        port: 25105
+
+  - service: emanon
+    fulldomain: emanon.moe
+    direct_access: false
     ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 9999
+
+tcp_services:
+  - service: minecraft
+    fulldomain: minecraft.emanon.moe
+    direct_access: yes
+    backends:
+      - backend: localhost
+        port: 25565
