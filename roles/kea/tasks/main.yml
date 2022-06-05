@@ -49,7 +49,7 @@
     owner:  _kea
     group:  _kea
     mode: u=rw,g=r,o=r
-    # validate: /usr/sbin/kea-dhcp6 -t %s
+    validate: /usr/sbin/kea-dhcp6 -t %s
   notify: Reload kea-dhcp6 service
 
 - name: Template kea-ctrl-agent configuration
