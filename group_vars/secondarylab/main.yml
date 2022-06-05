@@ -34,6 +34,8 @@ grp_device:
       # android does not support statefull dhcpv6, and the livebox 5 is not capable of delegating prefix anyway
       hostname: arch
 
+
+http_services:
   - service: jellyfin
     fulldomain: jellyfin.emanon.moe
     direct_access: false
