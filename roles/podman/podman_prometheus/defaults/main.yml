@@ -3,7 +3,7 @@ prometheus_image: "{{ host_prometheus_image | default('docker.io/prom/prometheus
 prometheus_image_version: "{{ host_prometheus_image_version | default('v2.35.0') }}"
 # https://hub.docker.com/r/prom/prometheus/tags
 
-prometheus_config: "{{ tcp_services | selectattr('service', 'equalto', 'prometheus') | first }}"
+prometheus_config: "{{ http_services | selectattr('service', 'equalto', 'prometheus') | first }}"
 prometheus_ports:
   - "{% if prometheus_config.direct_access %}[::]:{{ prometheus_config.backends[0].port }}{% else %}127.0.0.1:{{ prometheus_config.backends[0].port }}{% endif %}:9090/tcp"
   - "{% if prometheus_config.direct_access %}[::]:{{ prometheus_config.backends[0].port }}{% else %}[::1]:{{ prometheus_config.backends[0].port }}{% endif %}:9090/tcp"

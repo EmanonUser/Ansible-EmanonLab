@@ -6,12 +6,12 @@
     owner: emanon
     group: emanon
     mode: u=rwx,g=,o=
-  loop: "{{ podman_filebrowser_directories }}"
+  loop: "{{ filebrowser_directories }}"
 
 - name: Import filebrowser base config
   ansible.builtin.copy:
     src: settings.json
-    dest: "{{ podman_filebrowser_files.config }}"
+    dest: "{{ filebrowser_files.config }}"
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rw,g=,o=
@@ -20,7 +20,7 @@
 - name: Create filebrowser empty database
   ansible.builtin.copy:
     content: ""
-    dest: "{{ podman_filebrowser_files.database }}"
+    dest: "{{ filebrowser_files.database }}"
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rw,g=,o=
@@ -29,9 +29,9 @@
 - name: Run filebrowser podman container
   containers.podman.podman_container:
     name: filebrowser_ansible
-    image: "{{ podman_filebrowser_image }}:{{ podman_filebrowser_image_version }}"
-    publish: "{{ podman_filebrowser_ports }}"
-    volumes: "{{ podman_filebrowser_volumes }}"
+    image: "{{ filebrowser_image }}:{{ filebrowser_image_version }}"
+    publish: "{{ filebrowser_ports }}"
+    volumes: "{{ filebrowser_volumes }}"
     restart_policy: unless-stopped
     state: started
     user: root
@@ -44,22 +44,6 @@
   become_user: "{{ primary_user_username }}"
   notify: Enable filebrowser_ansible podman service
 
-- name: Open filebrowser firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  loop: "{{ podman_filebrowser_firewalld_rich_rules }}"
-  when: grp_podman_networking.filebrowser.lan_access
-
-- name: Close filebrowser firewalld ports to admin devices
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  loop: "{{ podman_filebrowser_firewalld_rich_rules }}"
-  when: not grp_podman_networking.filebrowser.lan_access
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld

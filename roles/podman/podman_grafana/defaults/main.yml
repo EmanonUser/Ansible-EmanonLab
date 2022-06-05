@@ -3,7 +3,7 @@ grafana_image: "{{ host_grafana_image | default('docker.io/grafana/grafana') }}"
 grafana_image_version: "{{ host_grafana_image_version | default('8.5.3') }}"
 # https://hub.docker.com/r/grafana/grafana/tags
 
-grafana_config: "{{ tcp_services | selectattr('service', 'equalto', 'grafana') | first }}"
+grafana_config: "{{ http_services | selectattr('service', 'equalto', 'grafana') | first }}"
 grafana_ports:
   - "{% if grafana_config.direct_access %}[::]:{{ grafana_config.backends[0].port }}{% else %}127.0.0.1:{{ grafana_config.backends[0].port }}{% endif %}:3000/tcp"
   - "{% if grafana_config.direct_access %}[::]:{{ grafana_config.backends[0].port }}{% else %}[::1]:{{ grafana_config.backends[0].port }}{% endif %}:3000/tcp"

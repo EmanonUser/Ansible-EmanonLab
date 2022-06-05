@@ -2,9 +2,9 @@
 - name: Run minecraft podman container
   containers.podman.podman_container:
     name: minecraft_ansible
-    image: "{{ podman_minecraft_image }}:{{ podman_minecraft_image_version }}"
-    publish: "{{ podman_minecraft_ports }}"
-    volume: "{{ podman_minecraft_volumes }}"
+    image: "{{ minecraft_image }}:{{ minecraft_image_version }}"
+    publish: "{{ minecraft_ports }}"
+    volume: "{{ minecraft_volumes }}"
     state: started
     user: root
     generate_systemd:
@@ -36,10 +36,6 @@
   become_user: "{{ primary_user_username }}"
   notify: Enable minecraft_ansible podman service
 
-- name: Open minecraft firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_minecraft_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld
