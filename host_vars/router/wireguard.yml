@@ -8,6 +8,7 @@ wireguard_confs:
       - 2a06:a003:50ca:6::1/64
     server_public_key: "Bdh/0sldvQAiX8tr3IEr95g0cemojFmMDrdrrgTnfg8=" # Not used but kept here
     server_private_key: "{{ wg0.private_key }}"
+    server_mtu: 1280
     peers:
       - peer: arch
         public_key: "SX6OgjapX+UUaPYqrKaS1DYYJkN4dPf5r59woJVzgUs=" # Not used but kept here
@@ -15,7 +16,7 @@ wireguard_confs:
         preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'arch') | map(attribute='preshared_key') | first }}"
         allowed_ips:
           - "172.16.0.2/32"
-          - 2a06:a003:50ca:6::2/64
+          - 2a06:a003:50ca:6::2/128
 
       - peer: one
         public_key: "+1g4W6PQiL8FhV5dsZ2ZsA8alM+79T2WRxE1bSHrzmk=" # Not used but kept here
