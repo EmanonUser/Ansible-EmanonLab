@@ -2,13 +2,17 @@
 Address = {% for ip in item.server_addresses %}{{ ip }}{% if not loop.last %}, {% endif %}{% endfor +%}
 ListenPort = {{ item.udp_port }}
 PrivateKey = {{ item.server_private_key }}
+{% if item.server_mtu is defined %}MTU = {{ item.server_mtu }}
+{% endif %}
 
 {% for peer in item.peers %}
 [Peer]
 # {{ peer.peer }}
 PublicKey =  {{ peer.public_key }}
-{% if peer.preshared_key is defined %}PresharedKey = {{ peer.preshared_key }}{% endif +%}
+{% if peer.preshared_key is defined %}PresharedKey = {{ peer.preshared_key }}
+{% endif %}
 AllowedIPs = {% for ip in peer.allowed_ips %}{{ ip }}{% if not loop.last %}, {% endif %}{% endfor +%}
-{% if peer.endpoint is defined %}Endpoint = {{ peer.endpoint }}{% endif %}
+{% if peer.endpoint is defined %}Endpoint = {{ peer.endpoint }}
+{% endif %}
 
 {% endfor %}
