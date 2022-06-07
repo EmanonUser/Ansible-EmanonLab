@@ -18,6 +18,3 @@
 
     - role: firewalld
       tags: [ firewalld, init ]
-
-    - role: node_exporter
-      tags: [ node_exporter, monitoring ]
