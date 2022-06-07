@@ -99,7 +99,7 @@ host_kea_dhcp6:
         hw_addr: "{{ grp_device.nas.hw_addr }}"
         hostname: "{{ grp_device.nas.hostname }}"
       - ipv6_addr: ["{{ grp_device.ipmi.ipv6_addr }}"]
-        hw_addr: "{{ grp_device.ipmi.hw_addr }}"
+        duid: "{{ grp_device.ipmi.duid }}"
         hostname: "{{ grp_device.ipmi.hostname }}"
       - ipv6_addr: ["{{ grp_device.pi.ipv6_addr }}"]
         hw_addr: "{{ grp_device.pi.hw_addr }}"

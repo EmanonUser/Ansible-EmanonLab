@@ -29,6 +29,7 @@ grp_device:
       ipv4_addr: 192.168.10.26
       ipv6_addr: "{{ grp_ipv6_prefix }}:10::26"
       hw_addr: "ac:1f:6b:77:c8:78"
+      duid: "00:01:00:01:2a:16:93:14:00:00:00:00:00:00"
       hostname: ipmi
     aclite:
       ipv4_addr: 192.168.10.40
