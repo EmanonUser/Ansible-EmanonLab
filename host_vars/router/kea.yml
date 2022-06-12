@@ -112,9 +112,19 @@ host_kea_dhcp6:
     pools:
       - start: "{{ grp_ipv6_prefix }}:20::1:1"
         end: "{{ grp_ipv6_prefix }}:20:ffff:ffff:ffff:ffff"
+    pd_pools:
+      - prefix: "{{ grp_ipv6_prefix }}:b000::"
+        prefix_len: 52
+        delegated_len: 64
+      - prefix: "{{ grp_ipv6_prefix }}:c000::"
+        prefix_len: 52
+        delegated_len: 64
+        excluded_prefix: "{{ grp_ipv6_prefix }}:c000:2::"
+        excluded_prefix_len: 72
     options_data: []
     reservations:
       - ipv6_addr: ["{{ grp_device.arch.ipv6_addr }}", "{{ grp_ipv6_prefix }}:20::beef"]
+        prefixes: ["{{ grp_ipv6_prefix }}:b030::/64", "{{ grp_ipv6_prefix }}:b060::/64"]
         duid: "{{ grp_device.arch.duid }}"
         hostname: "{{ grp_device.arch.hostname }}"
 

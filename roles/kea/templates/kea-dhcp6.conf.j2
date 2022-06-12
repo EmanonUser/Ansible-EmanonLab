@@ -81,6 +81,20 @@
           }{% if not loop.last %},{% endif %}{% endfor %}
 
         ],
+        {%- if subnet.pd_pools is defined %}
+
+        "pd-pools": [{% for pd_pool in subnet.pd_pools +%}
+          {
+            "prefix": "{{ pd_pool.prefix }}",
+            "prefix-len": {{ pd_pool.prefix_len }},
+            "delegated-len": {{ pd_pool.delegated_len }}{% if pd_pool.excluded_prefix is defined %},{% endif +%}
+            {% if pd_pool.excluded_prefix is defined %}"excluded-prefix": "{{ pd_pool.excluded_prefix }}",
+            {% endif -%}
+            {% if pd_pool.excluded_prefix_len is defined %}"excluded-prefix-len": {{ pd_pool.excluded_prefix_len }}
+            {% endif -%}
+          }{% if not loop.last %},{% endif %}{% endfor %}
+
+        ],{% endif %}
 
         "option-data": [{% for option_data in subnet.options_data %}
 
@@ -98,6 +112,8 @@
             {% if reservation.duid is defined and reservation.hw_addr is not defined %}"duid": "{{ reservation.duid }}",
             {% endif -%}
             "ip-addresses": [{% for ipv6_addr in reservation.ipv6_addr %}"{{ ipv6_addr }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+            {% if reservation.prefixes is defined %}"prefixes": [{% for prefixes in reservation.prefixes %}"{{ prefixes }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+            {% endif -%}
             "hostname": "{{ reservation.hostname }}"
           }{% if not loop.last %},{% endif %}{% endfor %}
 
