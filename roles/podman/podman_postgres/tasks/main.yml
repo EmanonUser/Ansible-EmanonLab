@@ -1,0 +1,37 @@
+---
+- name: Create postgres volumes dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    group: emanon
+    mode: u=rwx,g=,o=
+  loop: "{{ postgres_directories }}"
+
+- name: Install ansible-postgres requirements
+  ansible.builtin.apt:
+    name: python3-psycopg2
+    state: present
+
+- name: Run postgres podman container
+  containers.podman.podman_container:
+    name: postgres_ansible
+    image: "{{ postgres_image }}:{{ postgres_image_version }}"
+    publish: "{{ postgres_ports }}"
+    volume: "{{ postgres_volumes }}"
+    state: started
+    generate_systemd:
+      container_prefix: podman
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
+    env:
+      POSTGRES_USER: "{{ postgres_default_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_default_password }}"
+      POSTGRES_DB: postgres_default_db
+  become_user: "{{ primary_user_username }}"
+  notify: Enable postgres_ansible podman service
+
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld
+
+- name: Import stork database tasks
+  include_tasks: stork_db.yml

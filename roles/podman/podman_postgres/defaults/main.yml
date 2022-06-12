@@ -1,0 +1,21 @@
+---
+postgres_image: "{{ host_postgres_image | default('docker.io/postgres') }}"
+postgres_image_version: "{{ host_postgres_image_version | default('14.3-bullseye') }}"
+# https://hub.docker.com/r/postgres/postgres/tags
+
+postgres_config: "{{ http_services | selectattr('service', 'equalto', 'postgres') | first }}"
+postgres_ports:
+  - "{% if postgres_config.direct_access %}[::]5432{% else %}127.0.0.1:5432{% endif %}:5432/tcp"
+  - "{% if postgres_config.direct_access %}[::]:5432{% else %}[::1]:5432{% endif %}:5432/tcp"
+postgres_directories:
+  - "{{ host_podman_volumes_path }}/postgres"
+  - "{{ host_podman_volumes_path }}/postgres/data"
+postgres_default_volumes:
+  - "{{ host_podman_volumes_path }}/postgres/data:/var/lib/postgresql/data:rw"
+postgres_volumes: "{{ host_postgres_volumes | default(postgres_default_volumes) }}"
+
+# Firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+postgres_firewalld_ports: "{{ postgres_config.backends[0].port }}/tcp"
+postgres_use_rich_firewalld_rules: "{{ host_postgres_use_rich_firewalld_rules | default(false) }}"
+postgres_firewalld_rich_rules: "{{ host_postgres_firewalld_rich_rules }}"

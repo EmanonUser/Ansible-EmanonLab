@@ -149,6 +149,15 @@ http_services:
       - backend: localhost
         port: 8080
 
+  - service: postgres
+    fulldomain: "postgres.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: no
+    backends:
+      - backend: localhost
+        port: 50008
+
 grp_local_domain: local.emanon
 grp_domain_name: emanon.moe
 grp_subdomain: iwakura
@@ -166,4 +175,4 @@ grp_nfs_mount_dir: /mnt/vault
 grp_dns_server_upstream_ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
 grp_dns_server_upstream_port: "10053"
 
-grp_ipv6_prefix: 2a06:a003:50ca # /48
+grp_ipv6_prefix: 2a06:a004:300a # /48
