@@ -15,30 +15,30 @@ grp_device:
       hostname: sw
     arch:
       ipv4_addr: 192.168.20.20
-      ipv6_addr: "{{ grp_ipv6_prefix }}:20::20"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae20::20"
       hw_addr: "00:d8:61:57:9c:fb"
       duid: "00:02:00:00:ab:11:57:c4:3c:6f:2e:8a:90:62"
       hostname: arch
     nas:
       ipv4_addr: 192.168.10.25
-      ipv6_addr: "{{ grp_ipv6_prefix }}:10::25"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::25"
       hw_addr: "ec:cc:32:4b:17:b0"
       hostname: nas
       lan_interfaces: [eno1, eno2]
     ipmi:
       ipv4_addr: 192.168.10.26
-      ipv6_addr: "{{ grp_ipv6_prefix }}:10::26"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::26"
       hw_addr: "ac:1f:6b:77:c8:78"
       duid: "00:01:00:01:2a:16:93:14:00:00:00:00:00:00"
       hostname: ipmi
     aclite:
       ipv4_addr: 192.168.10.40
-      ipv6_addr: "{{ grp_ipv6_prefix }}:10::40"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::40"
       hw_addr: "b4:fb:e4:90:49:50"
       hostname: ubnt
     pi:
       ipv4_addr: 192.168.10.30
-      ipv6_addr: "{{ grp_ipv6_prefix }}:10::30"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::30"
       hw_addr: dc:a6:32:25:7f:cc
       hostname: pi
     shp1:
@@ -71,7 +71,7 @@ grp_device:
       hostname: tmp117
     printer:
       ipv4_addr: 192.168.70.5
-      ipv6_addr: "{{ grp_ipv6_prefix }}:70::5"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae70::5"
       hw_addr: "00:21:5a:e5:51:f9"
       hostname: printer
 
