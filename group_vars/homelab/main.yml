@@ -23,6 +23,7 @@ grp_device:
       ipv4_addr: 192.168.10.25
       ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::25"
       hw_addr: "ec:cc:32:4b:17:b0"
+      duid: "00:01:00:01:2a:2b:d3:e7:ec:cc:32:4b:17:b0"
       hostname: nas
       lan_interfaces: [eno1, eno2]
     ipmi:
@@ -144,7 +145,7 @@ http_services:
     fulldomain: "stork.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
-    ssl_redirect: no
+    ssl_redirect: yes
     backends:
       - backend: localhost
         port: 8080
@@ -152,11 +153,11 @@ http_services:
   - service: postgres
     fulldomain: "postgres.local.emanon"
     reverse_proxy: "nas.local.emanon"
-    direct_access: no
+    direct_access: yes
     ssl_redirect: no
     backends:
       - backend: localhost
-        port: 50008
+        port: 5432
 
 grp_local_domain: local.emanon
 grp_domain_name: emanon.moe

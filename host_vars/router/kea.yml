@@ -96,7 +96,7 @@ host_kea_dhcp6:
     options_data: []
     reservations:
       - ipv6_addr: ["{{ grp_device.nas.ipv6_addr }}"]
-        hw_addr: "{{ grp_device.nas.hw_addr }}"
+        duid: "{{ grp_device.nas.duid }}"
         hostname: "{{ grp_device.nas.hostname }}"
       - ipv6_addr: ["{{ grp_device.ipmi.ipv6_addr }}"]
         duid: "{{ grp_device.ipmi.duid }}"
