@@ -1,0 +1,26 @@
+- name: Add postgres user for zabbix database
+  community.postgresql.postgresql_user:
+    login_host: localhost
+    login_user: "{{ postgres_default_user }}"
+    login_password: "{{ postgres_default_password }}"
+    db: postgres_default_db
+    name: "{{ postgres_zabbix_server_user }}"
+    password: "{{ postgres_zabbix_server_password }}"
+    comment: Created by ansible
+
+- name: Create database zabbix
+  community.postgresql.postgresql_db:
+    login_host: localhost
+    login_user: "{{ postgres_default_user }}"
+    login_password: "{{ postgres_default_password }}"
+    name: zabbix
+
+- name: Grant all privileges on zabbix database
+  community.postgresql.postgresql_privs:
+    login_host: localhost
+    login_user: "{{ postgres_default_user }}"
+    login_password: "{{ postgres_default_password }}"
+    db: zabbix
+    type: database
+    privs: ALL
+    role: "{{ postgres_zabbix_server_user }}"
