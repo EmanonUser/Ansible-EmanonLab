@@ -1,22 +1,29 @@
+frr version 8.2.2
 frr defaults traditional
-hostname r
+hostname {{ ansible_hostname }}
 log syslog informational
 service integrated-vtysh-config
 !
 ipv6 route ::/0 wg48
-ipv6 route {{ grp_ipv6_prefix }}:ae10::/64 {{ grp_ipv6_prefix }}:5::2 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:ae20::/64 {{ grp_ipv6_prefix }}:5::2 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:ae50::/64 {{ grp_ipv6_prefix }}:5::2 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:ae70::/64 {{ grp_ipv6_prefix }}:5::2 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:ae80::/64 {{ grp_ipv6_prefix }}:5::2 bond0 onlink
+ipv6 route {{ grp_ipv6_prefix }}:ae10::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ grp_ipv6_prefix }}:ae20::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ grp_ipv6_prefix }}:ae50::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ grp_ipv6_prefix }}:ae70::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ grp_ipv6_prefix }}:ae80::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+!
+interface lo
+ ip address 172.24.0.1/32
+exit
 !
 interface bond0
- ip ospf area 0
- ip ospf network non-broadcast
+ ip ospf area 0 192.168.5.1
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 {{ frr_ospf_key }}
+ no ip ospf passive
+exit
 !
 router ospf
- ospf router-id {{ frr_ospf_router_id }}
- neighbor {{ brocade_static_ip }}
-!
-line vty
+ ospf router-id 172.24.0.1
+ passive-interface default
+exit
 !
