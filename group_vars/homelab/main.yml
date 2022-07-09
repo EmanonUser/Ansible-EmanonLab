@@ -41,6 +41,7 @@ grp_device:
       ipv4_addr: 192.168.10.30
       ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::30"
       hw_addr: dc:a6:32:25:7f:cc
+      duid: "00:01:00:01:2a:55:fb:32:dc:a6:32:25:7f:cc"
       hostname: pi
     shp1:
       ipv4_addr: 192.168.50.50

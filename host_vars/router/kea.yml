@@ -102,7 +102,7 @@ host_kea_dhcp6:
         duid: "{{ grp_device.ipmi.duid }}"
         hostname: "{{ grp_device.ipmi.hostname }}"
       - ipv6_addr: ["{{ grp_device.pi.ipv6_addr }}"]
-        hw_addr: "{{ grp_device.pi.hw_addr }}"
+        duid: "{{ grp_device.pi.duid }}"
         hostname: "{{ grp_device.pi.hostname }}"
       - ipv6_addr: ["{{ grp_device.aclite.ipv6_addr }}"]
         hw_addr: "{{ grp_device.aclite.hw_addr }}"
