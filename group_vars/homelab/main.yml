@@ -128,7 +128,7 @@ http_services:
     fulldomain: "hass.local.emanon"
     reverse_proxy: "nas.local.emanon"
     direct_access: no
-    ssl_redirect: yes
+    ssl_redirect: no
     backends:
       - backend: localhost
         port: 50006
