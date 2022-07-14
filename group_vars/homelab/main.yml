@@ -4,14 +4,14 @@ grp_device:
     router:
       ipv4_addr: 192.168.5.1
       ipv4_addr_cidr: 192.168.5.1/24
-      ipv6_addr: "{{ grp_ipv6_prefix }}:5::1"
-      ipv6_addr_cidr: "{{ grp_ipv6_prefix }}:5::1/64"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae05::1"
+      ipv6_addr_cidr: "{{ grp_ipv6_prefix }}:ae05::1/64"
       hostname: r
       wan_interface: enp1s0
       lan_interfaces: [enp2s0, enp3s0]
     brocade:
       ipv4_addr: 192.168.5.2
-      ipv6_addr: "{{ grp_ipv6_prefix }}:5::2"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae05::2"
       hostname: sw
     arch:
       ipv4_addr: 192.168.20.20
