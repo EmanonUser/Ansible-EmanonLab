@@ -5,31 +5,32 @@ wireguard_confs:
     udp_port: 51820
     server_addresses:
       - 172.16.0.1/24
-      - "{{ grp_ipv6_prefix }}:6::1/64"
+      - "{{ grp_ipv6_prefix }}:af05::1/64"
     server_public_key: "Bdh/0sldvQAiX8tr3IEr95g0cemojFmMDrdrrgTnfg8=" # Not used but kept here
     server_private_key: "{{ wg0.private_key }}"
     server_mtu: 1280
+    disable_routing: yes
     peers:
       - peer: arch
         public_key: "SX6OgjapX+UUaPYqrKaS1DYYJkN4dPf5r59woJVzgUs="
         preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'arch') | map(attribute='preshared_key') | first }}"
         allowed_ips:
           - "172.16.0.2/32"
-          - "{{ grp_ipv6_prefix }}:6::2/128"
+          - "{{ grp_ipv6_prefix }}:af05::2/128"
 
       - peer: one
         public_key: "+1g4W6PQiL8FhV5dsZ2ZsA8alM+79T2WRxE1bSHrzmk="
         preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'one') | map(attribute='preshared_key') | first }}"
         allowed_ips:
           - 172.16.0.3/32
-          - "{{ grp_ipv6_prefix }}:6::3/128"
+          - "{{ grp_ipv6_prefix }}:af05::3/128"
 
       - peer: windows
         public_key: "QauWBp+kMfQ2UK3EyB3tcRH3XMKS8cirrX2PtuseLTY="
         preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'windows') | map(attribute='preshared_key') | first }}"
         allowed_ips:
           - 172.16.0.4/32
-          - "{{ grp_ipv6_prefix }}:6::4/128"
+          - "{{ grp_ipv6_prefix }}:af05::4/128"
 
   - wireguard: wg48
     udp_port: 51821
