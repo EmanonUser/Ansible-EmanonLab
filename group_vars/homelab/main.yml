@@ -142,6 +142,15 @@ http_services:
       - backend: localhost
         port: 50007
 
+  - service: flame
+    fulldomain: "flame.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 50008
+
   - service: stork
     fulldomain: "stork.local.emanon"
     reverse_proxy: "nas.local.emanon"

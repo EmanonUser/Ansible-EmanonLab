@@ -1,7 +1,7 @@
 ---
 - name: Create flame volume directory
   ansible.builtin.file:
-    path: "{{ podman_flame_directories }}"
+    path: "{{ flame_directories }}"
     owner: emanon
     group: emanon
     mode: u=rwx,g=,o=
@@ -11,33 +11,20 @@
 - name: Run flame podman container
   containers.podman.podman_container:
     name: flame_ansible
-    image: "{{ podman_flame_image }}:{{ podman_flame_image_version }}"
-    publish: "{{ podman_flame_ports }}"
-    volume: "{{ podman_flame_volumes }}"
+    image: "{{ flame_image }}:{{ flame_image_version }}"
+    publish: "{{ flame_ports }}"
+    volume: "{{ flame_volumes }}"
     restart_policy: unless-stopped
+    user: 'root'
     state: started
     generate_systemd:
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
-      PASSWORD: "{{ podman_flame_password }}"
+      PASSWORD: "{{ flame_password }}"
   become_user: "{{ primary_user_username }}"
   notify: Enable flame_ansible podman service
 
-- name: Open flame firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_flame_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  when: grp_podman_networking.flame.lan_access
-
-- name: Close flame firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_flame_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  when: not grp_podman_networking.flame.lan_access
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld
