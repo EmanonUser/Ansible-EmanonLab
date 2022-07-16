@@ -5,7 +5,7 @@ postgres_image_version: "{{ host_postgres_image_version | default('14.3-bullseye
 
 postgres_config: "{{ http_services | selectattr('service', 'equalto', 'postgres') | first }}"
 postgres_ports:
-  - "{% if postgres_config.direct_access %}[::]5432{% else %}127.0.0.1:5432{% endif %}:5432/tcp"
+  - "{% if postgres_config.direct_access %}[::]:5432{% else %}127.0.0.1:5432{% endif %}:5432/tcp"
   - "{% if postgres_config.direct_access %}[::]:5432{% else %}[::1]:5432{% endif %}:5432/tcp"
 postgres_directories:
   - "{{ host_podman_volumes_path }}/postgres"
