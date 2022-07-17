@@ -14,6 +14,7 @@ wireguard_confs:
       - peer: arch
         public_key: "SX6OgjapX+UUaPYqrKaS1DYYJkN4dPf5r59woJVzgUs="
         preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'arch') | map(attribute='preshared_key') | first }}"
+        keepalive: 60
         allowed_ips:
           - "172.16.0.2/32"
           - "{{ grp_ipv6_prefix }}:af05::2/128"
@@ -21,6 +22,7 @@ wireguard_confs:
       - peer: one
         public_key: "+1g4W6PQiL8FhV5dsZ2ZsA8alM+79T2WRxE1bSHrzmk="
         preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'one') | map(attribute='preshared_key') | first }}"
+        keepalive: 60
         allowed_ips:
           - 172.16.0.3/32
           - "{{ grp_ipv6_prefix }}:af05::3/128"
@@ -28,6 +30,7 @@ wireguard_confs:
       - peer: windows
         public_key: "QauWBp+kMfQ2UK3EyB3tcRH3XMKS8cirrX2PtuseLTY="
         preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'windows') | map(attribute='preshared_key') | first }}"
+        keepalive: 60
         allowed_ips:
           - 172.16.0.4/32
           - "{{ grp_ipv6_prefix }}:af05::4/128"
@@ -40,7 +43,8 @@ wireguard_confs:
     peers:
       - peer: route48
         public_key: "W0pI832mL5u7JzJjiE68dyS95mIGBDqGgSxSZromEGY="
-        endpoint: 185.10.17.245:51851
+        endpoint: par-fr.node.route48.org:51851
+        keepalive: 60
         allowed_ips:
           - ::/1
           - 8000::/1
