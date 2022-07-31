@@ -1,0 +1,46 @@
+---
+- name: Open minecraft firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ minecraft_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when:
+    - minecraft_config.direct_access
+    - not minecraft_use_rich_firewalld_rules
+
+- name: Close minecraft firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ minecraft_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when:
+    - not minecraft_config.direct_access or
+      minecraft_use_rich_firewalld_rules
+
+- name: Set firewalld rich rules for minecraft webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop: "{{ minecraft_firewalld_rich_rules }}"
+  when:
+    - minecraft_config.direct_access
+    - minecraft_use_rich_firewalld_rules
+
+- name: Remove firewalld rich rules for minecraft webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  loop: "{{ minecraft_firewalld_rich_rules }}"
+  when:
+    - host_minecraft_firewalld_rich_rules is defined
+    - not minecraft_use_rich_firewalld_rules

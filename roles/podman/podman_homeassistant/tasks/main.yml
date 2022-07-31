@@ -1,7 +1,7 @@
 ---
 - name: Create home assistant volume directory
   ansible.builtin.file:
-    path: "{{ podman_homeassistant_directories }}"
+    path: "{{ homeassistant_directories }}"
     owner: emanon
     group: emanon
     mode: u=rwx,g=,o=
@@ -11,9 +11,9 @@
 - name: Run home assistant podman container
   containers.podman.podman_container:
     name: home_assistant_ansible
-    image: "{{ podman_homeassistant_image }}:{{ podman_homeassistant_image_version }}"
-    publish: "{{ podman_homeassistant_ports }}"
-    volume: "{{ podman_homeassistant_volumes }}"
+    image: "{{ homeassistant_image }}:{{ homeassistant_image_version }}"
+    publish: "{{ homeassistant_ports }}"
+    volume: "{{ homeassistant_volumes }}"
     restart_policy: unless-stopped
     state: started
     label: "io.containers.autoupdate=image"
@@ -25,20 +25,6 @@
   become_user: "{{ primary_user_username }}"
   notify: Enable home_assistant_ansible podman service
 
-- name: Open homeassistant webui firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_homeassistant_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  when: grp_podman_networking.homeassistant.lan_access
-
-- name: Close homeassistant webui firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_homeassistant_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  when: not grp_podman_networking.homeassistant.lan_access
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld

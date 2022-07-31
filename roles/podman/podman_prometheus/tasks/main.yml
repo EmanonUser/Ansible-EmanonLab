@@ -6,13 +6,13 @@
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
     state: directory
-  loop: "{{ podman_prometheus_directories }}"
+  loop: "{{ prometheus_directories }}"
   become_user: "{{ primary_user_username }}"
 
 - name: Configure prometheus TSDB
   ansible.builtin.template:
     src: prometheus.yml.j2
-    dest: "{{ podman_prometheus_config_path }}"
+    dest: "{{ prometheus_config_path }}"
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
@@ -22,9 +22,9 @@
 - name: Run prometheus podman container
   containers.podman.podman_container:
     name: prometheus_ansible
-    image: "{{ podman_prometheus_image }}:{{ podman_prometheus_image_version }}"
-    publish: "{{ podman_prometheus_ports }}"
-    volume: "{{ podman_prometheus_volumes }}"
+    image: "{{ prometheus_image }}:{{ prometheus_image_version }}"
+    publish: "{{ prometheus_ports }}"
+    volume: "{{ prometheus_volumes }}"
     restart_policy: unless-stopped
     state: started
     recreate: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
@@ -42,20 +42,6 @@
   become_user: "{{ primary_user_username }}"
   notify: Enable prometheus_ansible podman service
 
-- name: Open prometheus firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_prometheus_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  when: grp_podman_networking.prometheus.lan_access
-
-- name: Close prometheus firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_prometheus_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  when: not grp_podman_networking.prometheus.lan_access
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld

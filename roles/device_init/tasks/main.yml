@@ -108,7 +108,7 @@
 
 - name: Fetch zsh history-search-multi-word plugin from github
   ansible.builtin.git:
-    repo: "https://github.com/z-shell/history-search-multi-word"
+    repo: "https://github.com/zdharma-continum/history-search-multi-word"
     dest: "{{ item }}"
     umask: "022"
   loop:

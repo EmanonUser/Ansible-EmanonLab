@@ -1,14 +1,15 @@
 ---
-podman_flame_image: "{{ host_podman_flame_image | default('docker.io/pawelmalak/flame') }}"
-podman_flame_image_version: "{{ host_podman_flame_image_version | default('multiarch2.3.0') }}"
+flame_image: "{{ host_flame_image | default('docker.io/pawelmalak/flame') }}"
+flame_image_version: "{{ host_flame_image_version | default('multiarch2.3.0') }}"
 # https://hub.docker.com/r/pawelmalak/flame/tags
 
-podman_flame_ports:
-  - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}127.0.0.1:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
-  - "{% if grp_podman_networking.flame.lan_access %}[::]:{{ grp_podman_networking.flame.webui_port }}{% else %}[::1]:{{ grp_podman_networking.flame.webui_port }}{% endif %}:5005/tcp"
+flame_config: "{{ http_services | selectattr('service', 'equalto', 'flame') | first }}"
+flame_ports:
+  - "{% if flame_config.direct_access %}[::]:{{ flame_config.backends[0].port }}{% else %}127.0.0.1:{{ flame_config.backends[0].port }}{% endif %}:5005/tcp"
+  - "{% if flame_config.direct_access %}[::]:{{ flame_config.backends[0].port }}{% else %}[::1]:{{ flame_config.backends[0].port }}{% endif %}:5005/tcp"
 
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-podman_flame_firewalld_ports: "{{ grp_podman_networking.flame.webui_port }}/tcp"
+flame_firewalld_ports: "{{ flame_config.backends[0].port }}/tcp"
 
-podman_flame_directories: "{{ host_podman_volumes_path }}/flame"
-podman_flame_volumes: "{{ host_podman_volumes_path }}/flame:/app/data"
+flame_directories: "{{ host_podman_volumes_path }}/flame"
+flame_volumes: "{{ host_podman_volumes_path }}/flame:/app/data"

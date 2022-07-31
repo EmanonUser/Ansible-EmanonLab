@@ -1,20 +1,20 @@
 ---
-- name: Create syncthing dir
+- name: Create syncthing directories
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: emanon
     group: emanon
     mode: u=rwx,g=,o=
-  loop: "{{ podman_syncthing_directories }}"
+  loop: "{{ syncthing_directories }}"
   become_user: "{{ primary_user_username }}"
 
 - name: Run syncthing podman container
   containers.podman.podman_container:
     name: syncthing_ansible
-    image: "{{ podman_syncthing_image }}:{{ podman_syncthing_image_version }}"
-    publish: "{{ podman_syncthing_ports }}"
-    volumes: "{{ podman_syncthing_volumes }}"
+    image: "{{ syncthing_image }}:{{ syncthing_image_version }}"
+    publish: "{{ syncthing_ports }}"
+    volumes: "{{ syncthing_volumes }}"
     restart_policy: unless-stopped
     state: started
     user: 'root'
@@ -28,36 +28,6 @@
   become_user: "{{ primary_user_username }}"
   notify: Enable syncthing_ansible podman service
 
-- name: Open syncthing webui firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_syncthing_firewalld_ports.webui }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  when: [not spe_firewalld_handling, grp_podman_networking.syncthing.lan_access]
-
-- name: Open syncthing common firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ item }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  loop:
-    - "{{ podman_syncthing_firewalld_ports.p2p_tcp }}"
-    - "{{ podman_syncthing_firewalld_ports.p2p_udp }}"
-    - "{{ podman_syncthing_firewalld_ports.discovery }}"
-
-- name: Close syncthing webui firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_syncthing_firewalld_ports.webui }}"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  when: [not spe_firewalld_handling, not grp_podman_networking.syncthing.lan_access]
-
-- name: Import firewalld tasks rules handling
+- name: Import firewalld tasks
   include_tasks: firewalld.yml
-  when: spe_firewalld_handling
+  when: podman_use_firewalld

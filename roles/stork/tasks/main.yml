@@ -1,0 +1,30 @@
+---
+- name: Add Cloudsmith Stork GPG Key
+  ansible.builtin.get_url:
+    url: https://dl.cloudsmith.io/public/isc/stork/{{ stork_cloudsmith_gpg_key }}
+    dest: /usr/share/keyrings/isc_stork-archive-keyring.key
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    timeout: 30
+
+- name: Add Cloudsmith Stork Debian Repository
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/usr/share/keyrings/isc_stork-archive-keyring.key] https://dl.cloudsmith.io/public/isc/stork/deb/debian {{ ansible_distribution_release }}  main # noqa 204
+    filename: stork
+    state: present
+  notify: ["Apt update", "Apt upgrade"]
+
+- name: Install kea stork
+  ansible.builtin.apt:
+    name: isc-stork-server
+    update_cache: yes
+    state: present
+  notify: ["Enable stork service", "Start stork-agent service"]
+
+- name: Install postgresgl database
+  ansible.builtin.apt:
+    name: postgresql postgresql-client
+    update_cache: yes
+    state: present
+  notify: ["Enable postgresql service", "Start postgresql service"]

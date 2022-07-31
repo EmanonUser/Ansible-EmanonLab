@@ -3,7 +3,7 @@ Description=Mount encrypted ZFS datasets
 Documentation=man:zfs(8)
 DefaultDependencies=no
 After=systemd-udev-settle.service
-After=zfs-import.target
+After=zfs-import-cache.service
 After=zfs-load-keys.service
 After=systemd-remount-fs.service
 Before=local-fs.target
@@ -12,6 +12,7 @@ ConditionPathIsDirectory=/sys/module/zfs
 [Service]
 Type=oneshot
 RemainAfterExit=no
+ExecStartPre=/bin/sleep 3s
 ExecStart=/sbin/zfs mount -a -v
 
 [Install]

@@ -6,25 +6,15 @@
     group: emanon
     mode: u=rwx,g=,o=
     state: directory
-  loop: "{{ podman_grafana_directories }}"
-  become_user: "{{ primary_user_username }}"
-
-- name: Place grafana dashboards
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: "{{ host_podman_volumes_path }}/grafana/dashboards"
-    owner: emanon
-    group: emanon
-    mode: u=rw,g=,o=
-  loop: "{{ podman_grafana_dashboards }}"
+  loop: "{{ grafana_directories }}"
   become_user: "{{ primary_user_username }}"
 
 - name: Run grafana podman container
   containers.podman.podman_container:
     name: grafana_ansible
-    image: "{{ podman_grafana_image }}:{{ podman_grafana_image_version }}"
-    volumes: "{{ podman_grafana_volumes }}"
-    publish: "{{ podman_grafana_ports }}"
+    image: "{{ grafana_image }}:{{ grafana_image_version }}"
+    volumes: "{{ grafana_volumes }}"
+    publish: "{{ grafana_ports }}"
     restart_policy: unless-stopped
     state: started
     user: "root"
@@ -32,91 +22,10 @@
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
-      GF_SECURITY_ADMIN_PASSWORD: "{{ podman_grafana_admin_password }}"
+      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_password }}"
   become_user: "{{ primary_user_username }}"
   notify: Enable grafana_ansible podman service
-  register: podman_grafana_res
 
-- name: Open grafana webui firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_grafana_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: enabled
-  when: grp_podman_networking.grafana.lan_access
-
-- name: Close grafana webui firewalld ports
-  ansible.posix.firewalld:
-    zone: "{{ firewalld_zone }}"
-    port: "{{ podman_grafana_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
-    state: disabled
-  when: not grp_podman_networking.grafana.lan_access
-
-- name: Pause, waiting for grafana # noqa 503
-  ansible.builtin.pause:
-    prompt: Pause the playbook, waiting for grafana to be fully up
-    seconds: 20
-  when: podman_grafana_res.changed
-
-- name: Create prometheus datasource
-  community.grafana.grafana_datasource:
-    name: prometheus
-    grafana_url: "{{ podman_grafana_url }}"
-    url_username: "admin"
-    url_password: "{{ podman_grafana_admin_password }}"
-    ds_type: prometheus
-    ds_url: "https://{{ grp_podman_networking.prometheus.fulldomain }}"
-    tls_skip_verify: yes
-    is_default: yes
-
-- name: Create grafana network folder
-  community.grafana.grafana_folder:
-    grafana_url: "{{ podman_grafana_url }}"
-    url_username: "admin"
-    url_password: "{{ podman_grafana_admin_password }}"
-    title: Network
-    state: present
-
-- name: Create grafana env folder
-  community.grafana.grafana_folder:
-    grafana_url: "{{ podman_grafana_url }}"
-    url_username: "admin"
-    url_password: "{{ podman_grafana_admin_password }}"
-    title: Env
-    state: present
-
-- name: Import grafana network dashboards
-  community.grafana.grafana_dashboard:
-    grafana_url: "{{ podman_grafana_url }}"
-    url_username: "admin"
-    url_password: "{{ podman_grafana_admin_password }}"
-    path: "{{ item }}"
-    folder: Network
-    overwrite: yes
-  loop: "{{ podman_grafana_dashboards_path.network }}"
-  become_user: "{{ primary_user_username }}"
-
-- name: Import grafana env dashboards
-  community.grafana.grafana_dashboard:
-    grafana_url: "{{ podman_grafana_url }}"
-    url_username: "admin"
-    url_password: "{{ podman_grafana_admin_password }}"
-    path: "{{ item }}"
-    folder: Env
-    overwrite: yes
-  loop: "{{ podman_grafana_dashboards_path.env }}"
-  become_user: "{{ primary_user_username }}"
-
-- name: Import grafana general dashboards
-  community.grafana.grafana_dashboard:
-    grafana_url: "{{ podman_grafana_url }}"
-    url_username: "admin"
-    url_password: "{{ podman_grafana_admin_password }}"
-    path: "{{ item }}"
-    folder: General
-    overwrite: yes
-  loop: "{{ podman_grafana_dashboards_path.general }}"
-  become_user: "{{ primary_user_username }}"
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld

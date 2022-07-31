@@ -1,0 +1,46 @@
+---
+- name: Open postgres firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ postgres_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when:
+    - postgres_config.direct_access
+    - not postgres_use_rich_firewalld_rules
+
+- name: Close postgres firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ postgres_firewalld_ports }}"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  when:
+    - not postgres_config.direct_access or
+      postgres_use_rich_firewalld_rules
+
+- name: Set firewalld rich rules for postgres webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop: "{{ postgres_firewalld_rich_rules }}"
+  when:
+    - postgres_config.direct_access
+    - postgres_use_rich_firewalld_rules
+
+- name: Remove firewalld rich rules for postgres webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: disabled
+  loop: "{{ postgres_firewalld_rich_rules }}"
+  when:
+    - host_postgres_firewalld_rich_rules is defined
+    - not postgres_use_rich_firewalld_rules

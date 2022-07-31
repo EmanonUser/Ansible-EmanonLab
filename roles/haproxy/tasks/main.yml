@@ -20,6 +20,7 @@
     owner: haproxy
     group: haproxy
     mode: u=rw,g=,o=
+    validate: haproxy -c -f %s
   notify: Reload haproxy service
 
 - name: Open firewalld service(s)

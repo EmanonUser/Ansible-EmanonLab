@@ -69,7 +69,7 @@
   notify: Daemon-reload gad systemd
 
 
-- name: Place restic services files
+- name: Place gad services files
   ansible.builtin.template:
     src: gad@.{{ item }}.j2
     dest: /etc/systemd/system/gad@.{{ item }}

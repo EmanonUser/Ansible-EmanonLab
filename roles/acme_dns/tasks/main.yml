@@ -83,6 +83,18 @@
     - acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
     - acme_dns_challenge_result['results'][item_index]['challenge_data']
   notify: Reload haproxy service
+  register: acme_dns_completion
+
+- name: Log completed challenge
+  ansible.builtin.lineinfile:
+    path: /var/log/acme_dns_challenge.log
+    line: acme dns challenge full completed at {{ ansible_date_time.iso8601 }}
+    state: present
+    create: yes
+    owner: root
+    group: root
+    mode: u=rw,g=rw,o=
+  when: acme_dns_completion['changed']
 
 - name: Call Gandi LiveDNS API to delete the TXT record
   community.general.gandi_livedns:

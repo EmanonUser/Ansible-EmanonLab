@@ -50,10 +50,17 @@
     - Daemon-reload nfsv4_client systemd
     - Enable nfsv4_mount service(s)
 
-- name: Start nfsv4_mount service(s)
+- name: Get current nfs4 mounts
+  ansible.builtin.command:
+    cmd: mount -l -t nfs4
+  register: current_mounts
+  changed_when: no
+
+- name: Start nfsv4_mount service(s) when needed
   ansible.builtin.systemd:
     name: nfsv4_mount@{{ item.mount }}.service
     state: started
+  when: "item.target_addr + ':' + item.target_path + ' on ' + item.target_mountpoint not in current_mounts.stdout"
   loop: "{{ nfs4_mounts }}"
   loop_control:
     label: "NFSv4 Mount name: {{ item.mount }}"

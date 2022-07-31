@@ -4,46 +4,44 @@ grp_device:
     router:
       ipv4_addr: 192.168.5.1
       ipv4_addr_cidr: 192.168.5.1/24
-      ipv6_addr: "{{ grp_ipv6_prefix }}:5::1"
-      ipv6_addr_cidr: "{{ grp_ipv6_prefix }}:5::1/64"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae05::1"
+      ipv6_addr_cidr: "{{ grp_ipv6_prefix }}:ae05::1/64"
       hostname: r
       wan_interface: enp1s0
       lan_interfaces: [enp2s0, enp3s0]
     brocade:
       ipv4_addr: 192.168.5.2
-      ipv6_addr: "{{ grp_ipv6_prefix }}:5::2"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae05::2"
       hostname: sw
     arch:
       ipv4_addr: 192.168.20.20
-      ipv6_addr: "{{ grp_ipv6_prefix }}:20::20"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae20::20"
       hw_addr: "00:d8:61:57:9c:fb"
       duid: "00:02:00:00:ab:11:57:c4:3c:6f:2e:8a:90:62"
       hostname: arch
     nas:
       ipv4_addr: 192.168.10.25
-      ipv6_addr: "{{ grp_ipv6_prefix }}:10::25"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::25"
       hw_addr: "ec:cc:32:4b:17:b0"
+      duid: "00:01:00:01:2a:2b:d3:e7:ec:cc:32:4b:17:b0"
       hostname: nas
       lan_interfaces: [eno1, eno2]
     ipmi:
       ipv4_addr: 192.168.10.26
-      ipv6_addr: "{{ grp_ipv6_prefix }}:10::26"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::26"
       hw_addr: "ac:1f:6b:77:c8:78"
+      duid: "00:01:00:01:2a:16:93:14:00:00:00:00:00:00"
       hostname: ipmi
     aclite:
       ipv4_addr: 192.168.10.40
-      ipv6_addr: "{{ grp_ipv6_prefix }}:10::40"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::40"
       hw_addr: "b4:fb:e4:90:49:50"
       hostname: ubnt
     pi:
       ipv4_addr: 192.168.10.30
-      ipv6_addr: "{{ grp_ipv6_prefix }}:10::30"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae10::30"
       hw_addr: dc:a6:32:25:7f:cc
-      hostname: pi
-    pi2:
-      ipv4_addr: 192.168.100.31
-      ipv6_addr: "{{ grp_ipv6_prefix }}:100::31"
-      hw_addr: 00:e0:4c:68:04:83
+      duid: "00:01:00:01:2a:55:fb:32:dc:a6:32:25:7f:cc"
       hostname: pi
     shp1:
       ipv4_addr: 192.168.50.50
@@ -75,54 +73,101 @@ grp_device:
       hostname: tmp117
     printer:
       ipv4_addr: 192.168.70.5
-      ipv6_addr: "{{ grp_ipv6_prefix }}:70::5"
+      ipv6_addr: "{{ grp_ipv6_prefix }}:ae70::5"
       hw_addr: "00:21:5a:e5:51:f9"
       hostname: printer
 
-grp_podman_networking:
-  adguard:
-    fulldomain: "adguard.{{ grp_local_domain }}"
-    webui_port: 4001
-    lan_access: no
+
+http_services:
+  - service: kuma
+    fulldomain: "kuma.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  transmission:
-    fulldomain: "transmission.{{ grp_local_domain }}"
-    webui_port: 4002
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50001
+
+  - service: jellyfin
+    fulldomain: "jellyfin.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  prometheus:
-    fulldomain: "prometheus.{{ grp_local_domain }}"
-    webui_port: 4003
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50002
+
+  - service: prometheus
+    fulldomain: "prometheus.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  grafana:
-    fulldomain: "grafana.{{ grp_local_domain }}"
-    webui_port: 4004
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50003
+
+  - service: grafana
+    fulldomain: "grafana.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  homeassistant:
-    fulldomain: "hass.{{ grp_local_domain }}"
-    webui_port: 4005
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50004
+
+  - service: syncthing
+    fulldomain: "syncthing.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 50005
+
+  - service: homeassistant
+    fulldomain: "hass.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: no
-  syncthing:
-    fulldomain: "syncthing.{{ grp_local_domain }}"
-    webui_port: 4006
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50006
+
+  - service: transmission
+    fulldomain: "transmission.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  flame:
-    fulldomain: "flame.{{ grp_local_domain }}"
-    webui_port: 4007
-    lan_access: no
+    backends:
+      - backend: localhost
+        port: 50007
+
+  - service: flame
+    fulldomain: "flame.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
     ssl_redirect: yes
-  loki:
-    fulldomain: "loki.{{ grp_local_domain }}"
-    webui_port: 4008
-    lan_access: yes
-  pyload:
-    fulldomain: "pyload.{{ grp_local_domain }}"
-    webui_port: 4009
-    lan_access: yes
+    backends:
+      - backend: localhost
+        port: 50008
+
+  - service: stork
+    fulldomain: "stork.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: no
+    ssl_redirect: yes
+    backends:
+      - backend: localhost
+        port: 8080
+
+  - service: postgres
+    fulldomain: "postgres.local.emanon"
+    reverse_proxy: "nas.local.emanon"
+    direct_access: yes
+    ssl_redirect: no
+    backends:
+      - backend: localhost
+        port: 5432
 
 grp_local_domain: local.emanon
 grp_domain_name: emanon.moe
@@ -141,4 +186,4 @@ grp_nfs_mount_dir: /mnt/vault
 grp_dns_server_upstream_ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
 grp_dns_server_upstream_port: "10053"
 
-grp_ipv6_prefix: 2001:470:c86d # /48
+grp_ipv6_prefix: 2a06:a004:300a # /48

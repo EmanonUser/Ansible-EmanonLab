@@ -2,7 +2,8 @@
 frr_version: "{{ host_frr_version | default('frr-8') }}"
 # https://deb.frrouting.org/
 
-frr_daemons:
+frr_daemons: "{{ host_frr_daemons | default(frr_default_daemons) }}"
+frr_default_daemons:
   - bgpd=no
   - ospfd=yes
   - ospf6d=no
