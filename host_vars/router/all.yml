@@ -16,6 +16,3 @@ host_gad_use_ipv6: yes
 
 ## is_alive ##
 host_is_alive_echo_request_target: emanon.moe
-
-## promtail ##
-host_promtail_loki_url: http://loki.local.emanon
