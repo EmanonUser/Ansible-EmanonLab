@@ -1,9 +1,10 @@
 ---
 host_podman_volumes_path: "/vault/emanonlab/containers"
 podman_use_firewalld: yes
-host_podman_jellyfin_volumes:
-  - "/vault/emanonlab/containers/jellyfin/cache:/cache:rw"
-  - "/vault/emanonlab/containers/jellyfin/config:/config:rw"
+host_jellyfin_volumes:
+  - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache:rw"
+  - "{{ host_podman_volumes_path }}/jellyfin/config:/config:rw"
+  - "{{ host_podman_volumes_path }}/transmission/completed:/now:rw"
   - "/vault/media/animes:/animes:ro"
   - "/vault/media/movies:/movies:ro"
   - "/vault/media/series:/series:ro"
