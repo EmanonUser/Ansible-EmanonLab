@@ -7,7 +7,7 @@ host_podman_jellyfin_volumes:
   - "/vault/media/animes:/animes:ro"
   - "/vault/media/movies:/movies:ro"
   - "/vault/media/series:/series:ro"
-host_podman_syncthing_volumes:
+host_syncthing_volumes:
   - "{{ host_podman_volumes_path }}/syncthing/config:/config:rw"
   - "/vault/emanonlab/secrets/keepassxc:/data:rw"
 
