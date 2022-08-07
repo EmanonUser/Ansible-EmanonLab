@@ -8,7 +8,7 @@ auto {{ interface.interface }}
 allow-hotplug {{ interface.interface }}
 
 {% endfor %}
-{% for interface in host_network_interfaces %}{% if interface.ipv4 == True %}
+{% for interface in host_network_interfaces %}{% if interface.ipv4 is defined %}{% if interface.ipv4 == True %}
 iface {{ interface.interface }} inet {{ interface.configuration.v4 }}
 	{% if interface.bonding.slaves is defined -%}
 	bond-slaves {% for slaves in interface.bonding.slaves %}{{ slaves }} {% endfor +%}
@@ -25,9 +25,9 @@ iface {{ interface.interface }} inet {{ interface.configuration.v4 }}
 	{% if interface.dns_servers.v4 is defined %}{% for dns_server in interface.dns_servers.v4 %}dns-nameservers {{ dns_server }}
 	{% endfor %}{% endif %}
 
-{% endif %}{% endfor %}
+{% endif %}{% endif %}{% endfor %}
 
-{% for interface in host_network_interfaces %}{% if interface.ipv6 == True %}
+{% for interface in host_network_interfaces %}{% if interface.ipv6 is defined %}{% if interface.ipv6 == True %}
 iface {{ interface.interface }} inet6 {{ interface.configuration.v6 }}
 	{% if interface.configuration.v6 == 'static' -%}
 	{% for address in interface.addresses.v6 %}address {{ address }}
@@ -37,4 +37,4 @@ iface {{ interface.interface }} inet6 {{ interface.configuration.v6 }}
 	{% if interface.dns_servers.v6 is defined %}{% for dns_server in interface.dns_servers.v6 %}dns-nameservers {{ dns_server }}
 	{% endfor %}{% endif %}
 
-{% endif %}{% endfor %}
+{% endif %}{% endif %}{% endfor %}
