@@ -9,6 +9,7 @@ host_network_interfaces:
         v4: ["127.0.0.1", "9.9.9.9", "1.1.1.1"]
 
     - interface: "bond0"
+      hwaddress: ea:71:73:be:13:e4
       ipv4: yes
       ipv6: yes
       configuration:
