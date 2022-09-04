@@ -1,7 +1,7 @@
 ---
-kea_version: "{{ host_kea_version | default('kea-2-1') }}"
+kea_version: "{{ host_kea_version | default('kea-2-3') }}"
 # https://cloudsmith.io/~isc/repos/
-cloudsmith_gpg_key: "{{ host_kea_cloudsmith_gpg_key | default('gpg.32D53EC4807EC10E.key') }}"
+cloudsmith_gpg_key: "{{ host_kea_cloudsmith_gpg_key | default('gpg.DA05D46B7BABA24A.key') }}"
 # For kea-1-9 https://cloudsmith.io/~isc/repos/kea-2-1/signing/
 
 kea_dns_ipv4_servers: ["{{ grp_dns_ipv4_server }}"]
