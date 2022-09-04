@@ -73,8 +73,5 @@
     - role: podman/podman_transmission
       tags: [ transmission, podman_all ]
 
-    - role: podman/podman_flame
-      tags: [ flame, podman_all ]
-
     - role: podman/podman_postgres
       tags: [ postgres, podman_all ]

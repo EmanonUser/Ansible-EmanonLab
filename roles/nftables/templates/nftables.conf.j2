@@ -51,8 +51,8 @@ table inet firewall {
 
 	chain wan_input_filter {
 		tcp dport ssh ct state new limit rate over 100/second counter drop
-		icmp type { echo-request, timestamp-request, destination-unreachable } limit rate over 10/second counter drop
-		icmp type { echo-request, timestamp-request, destination-unreachable } counter accept
+		icmp type { echo-request, echo-reply, timestamp-request, destination-unreachable } limit rate over 10/second counter drop
+		icmp type { echo-request, echo-reply, timestamp-request, destination-unreachable } counter accept
 		icmp type { time-exceeded, parameter-problem } limit rate over 10/second counter drop
 		icmp type { time-exceeded, parameter-problem } counter accept
 		icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } limit rate over 10/second counter drop
