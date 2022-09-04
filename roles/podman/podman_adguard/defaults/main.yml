@@ -1,6 +1,6 @@
 ---
 podman_adguard_image: "{{ host_podman_adguard_image | default('docker.io/adguard/adguardhome') }}"
-podman_adguard_image_version: "{{ host_podman_adguard_image_version | default('v0.107.6') }}"
+podman_adguard_image_version: "{{ host_podman_adguard_image_version | default('v0.107.11') }}"
 # https://hub.docker.com/r/adguard/adguardhome/tags
 
 podman_adguard_ports:

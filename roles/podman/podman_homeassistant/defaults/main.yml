@@ -1,6 +1,6 @@
 ---
 homeassistant_image: "{{ host_homeassistant_image | default('docker.io/homeassistant/home-assistant') }}"
-homeassistant_image_version: "{{ host_homeassistant_image_version | default('2022.5.5') }}"
+homeassistant_image_version: "{{ host_homeassistant_image_version | default('2022.9.0') }}"
 # https://github.com/home-assistant/core/pkgs/container/home-assistant/versions
 
 homeassistant_config: "{{ http_services | selectattr('service', 'equalto', 'homeassistant') | first }}"

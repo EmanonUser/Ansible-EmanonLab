@@ -1,6 +1,6 @@
 ---
 prometheus_image: "{{ host_prometheus_image | default('docker.io/prom/prometheus') }}"
-prometheus_image_version: "{{ host_prometheus_image_version | default('v2.35.0') }}"
+prometheus_image_version: "{{ host_prometheus_image_version | default('v2.38.0') }}"
 # https://hub.docker.com/r/prom/prometheus/tags
 
 prometheus_config: "{{ http_services | selectattr('service', 'equalto', 'prometheus') | first }}"

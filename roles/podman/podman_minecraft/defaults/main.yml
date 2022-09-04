@@ -1,6 +1,6 @@
 ---
 minecraft_image: "{{ host_minecraft_image | default('docker.io/itzg/minecraft-server') }}"
-minecraft_image_version: "{{ host_minecraft_image_version | default('2022.7.0') }}"
+minecraft_image_version: "{{ host_minecraft_image_version | default('2022.11.0') }}"
 # https://hub.docker.com/r/itzg/minecraft-server/tags
 
 minecraft_config: "{{ tcp_services | selectattr('service', 'equalto', 'minecraft') | first }}"

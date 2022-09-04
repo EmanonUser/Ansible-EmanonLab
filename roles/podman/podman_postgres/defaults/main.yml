@@ -1,6 +1,6 @@
 ---
 postgres_image: "{{ host_postgres_image | default('docker.io/postgres') }}"
-postgres_image_version: "{{ host_postgres_image_version | default('14.3-bullseye') }}"
+postgres_image_version: "{{ host_postgres_image_version | default('14.5-bullseye') }}"
 # https://hub.docker.com/r/postgres/postgres/tags
 
 postgres_config: "{{ http_services | selectattr('service', 'equalto', 'postgres') | first }}"

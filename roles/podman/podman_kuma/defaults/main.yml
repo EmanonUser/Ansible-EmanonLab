@@ -1,6 +1,6 @@
 ---
 kuma_image: "{{ host_kuma_image | default('docker.io/louislam/uptime-kuma') }}"
-kuma_image_version: "{{ host_kuma_image_version | default('1.15.1-alpine') }}"
+kuma_image_version: "{{ host_kuma_image_version | default('1.17.1-alpine') }}"
 # https://hub.docker.com/r/louislam/uptime-kuma/tags
 
 kuma_config: "{{ http_services | selectattr('service', 'equalto', 'kuma') | first }}"
