@@ -33,10 +33,22 @@ host_kea_dhcp4:
       - option_data: "routers"
         data: ["192.168.20.1"]
 
-  - subnet: 192.168.50.0/24
+  - subnet: 192.168.30.0/24
     pools:
-      - start: 192.168.50.100
-        end: 192.168.50.200
+      - start: 192.168.30.100
+        end: 192.168.30.200
+    reservations:
+      - ipv4_addr: "{{ grp_device.printer.ipv4_addr }}"
+        hw_addr: "{{ grp_device.printer.hw_addr }}"
+        hostname: "{{ grp_device.printer.hostname }}"
+    options_data:
+      - option_data: "routers"
+        data: ["192.168.30.1"]
+
+  - subnet: 192.168.40.0/24
+    pools:
+      - start: 192.168.40.100
+        end: 192.168.40.200
     reservations:
       - ipv4_addr: "{{ grp_device.shp1.ipv4_addr }}"
         hw_addr: "{{ grp_device.shp1.hw_addr }}"
@@ -61,30 +73,18 @@ host_kea_dhcp4:
         hostname: "{{ grp_device.tmp117.hostname }}"
     options_data:
       - option_data: "routers"
-        data: ["192.168.50.1"]
+        data: ["192.168.40.1"]
 
-  - subnet: 192.168.70.0/24
-    pools:
-      - start: 192.168.70.100
-        end: 192.168.70.200
-    reservations:
-      - ipv4_addr: "{{ grp_device.printer.ipv4_addr }}"
-        hw_addr: "{{ grp_device.printer.hw_addr }}"
-        hostname: "{{ grp_device.printer.hostname }}"
-    options_data:
-      - option_data: "routers"
-        data: ["192.168.70.1"]
-
-  - subnet: 192.168.100.0/24
+  - subnet: 192.168.50.0/24
     routers:
-      - 192.168.100.1
+      - 192.168.50.1
     pools:
-      - start: 192.168.100.100
-        end: 192.168.100.200
+      - start: 192.168.50.100
+        end: 192.168.50.200
     reservations: []
     options_data:
       - option_data: "routers"
-        data: ["192.168.100.1"]
+        data: ["192.168.50.1"]
 
 host_kea_dhcp6:
   - subnet: "{{ grp_ipv6_prefix }}:ae10::/64"
@@ -126,26 +126,26 @@ host_kea_dhcp6:
         duid: "{{ grp_device.arch.duid }}"
         hostname: "{{ grp_device.arch.hostname }}"
 
-  - subnet: "{{ grp_ipv6_prefix }}:ae50::/64"
+  - subnet: "{{ grp_ipv6_prefix }}:ae30::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:ae50::1:1"
-        end: "{{ grp_ipv6_prefix }}:ae50:ffff:ffff:ffff:ffff"
-    options_data: []
-    reservations: []
-
-  - subnet: "{{ grp_ipv6_prefix }}:ae70::/64"
-    pools:
-      - start: "{{ grp_ipv6_prefix }}:ae70::1:1"
-        end: "{{ grp_ipv6_prefix }}:ae70:ffff:ffff:ffff:ffff"
+      - start: "{{ grp_ipv6_prefix }}:ae30::1:1"
+        end: "{{ grp_ipv6_prefix }}:ae30:ffff:ffff:ffff:ffff"
     options_data: []
     reservations:
       - ipv6_addr: ["{{ grp_device.printer.ipv6_addr }}"]
         hw_addr: "{{ grp_device.printer.hw_addr }}"
         hostname: "{{ grp_device.printer.hostname }}"
 
-  - subnet: "{{ grp_ipv6_prefix }}:ae80::/64"
+  - subnet: "{{ grp_ipv6_prefix }}:ae40::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:ae80::1:1"
-        end: "{{ grp_ipv6_prefix }}:ae80:ffff:ffff:ffff:ffff"
+      - start: "{{ grp_ipv6_prefix }}:ae40::1:1"
+        end: "{{ grp_ipv6_prefix }}:ae40:ffff:ffff:ffff:ffff"
+    options_data: []
+    reservations: []
+
+  - subnet: "{{ grp_ipv6_prefix }}:ae50::/64"
+    pools:
+      - start: "{{ grp_ipv6_prefix }}:ae50::1:1"
+        end: "{{ grp_ipv6_prefix }}:ae50:ffff:ffff:ffff:ffff"
     options_data: []
     reservations: []
