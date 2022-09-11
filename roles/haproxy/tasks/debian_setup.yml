@@ -1,0 +1,16 @@
+---
+- name: Install HAproxy (Debian)
+  ansible.builtin.apt:
+    name: haproxy
+    state: present
+  notify: ["Enable haproxy service", "Start haproxy service"]
+
+- name: Configure HAproxy (Debian)
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: haproxy
+    group: haproxy
+    mode: u=rw,g=,o=
+    validate: haproxy -c -f %s
+  notify: Reload haproxy service

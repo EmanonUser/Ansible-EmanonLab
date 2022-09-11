@@ -1,0 +1,16 @@
+---
+- name: Install HAproxy (RedHat)
+  ansible.builtin.dnf:
+    name: haproxy
+    state: latest
+  notify: ["Enable haproxy service", "Start haproxy service"]
+
+- name: Configure HAproxy (RedHat)
+  ansible.builtin.template:
+    src: haproxy.fc.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: haproxy
+    group: haproxy
+    mode: u=rw,g=,o=
+    validate: haproxy -c -f %s
+  notify: Reload haproxy service

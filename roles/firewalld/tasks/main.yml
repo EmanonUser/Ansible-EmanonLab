@@ -1,9 +1,17 @@
 ---
-- name: Install firewalld
+- name: Install firewalld on Debian
   ansible.builtin.apt:
     name: ['firewalld', 'python3-firewall']
     state: present
   notify: ["Enable firewalld service","Start firewalld service"]
+  when: ansible_distribution == 'Debian'
+
+- name: Install firewalld on Fedora
+  ansible.builtin.dnf:
+    name: ['firewalld', 'python3-firewall']
+    state: latest
+  notify: ["Enable firewalld service","Start firewalld service"]
+  when: ansible_distribution == 'Fedora'
 
 - name: Make sure ssh firewalld service is authorized
   ansible.posix.firewalld:

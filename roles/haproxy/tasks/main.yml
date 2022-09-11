@@ -1,9 +1,11 @@
 ---
-- name: Install HAproxy
-  ansible.builtin.apt:
-    name: haproxy
-    state: present
-  notify: ["Enable haproxy service", "Start haproxy service"]
+- include_tasks: variables.yml
+
+- include_tasks: redhat_setup.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: debian_setup.yml
+  when: ansible_os_family == 'Debian'
 
 - name: Create HAproxy ssl dir
   ansible.builtin.file:
@@ -12,16 +14,6 @@
     owner: root
     group: root
     mode: u=rw,g=,o=
-
-- name: Configure HAproxy
-  ansible.builtin.template:
-    src: haproxy.cfg.j2
-    dest: /etc/haproxy/haproxy.cfg
-    owner: haproxy
-    group: haproxy
-    mode: u=rw,g=,o=
-    validate: haproxy -c -f %s
-  notify: Reload haproxy service
 
 - name: Open firewalld service(s)
   ansible.posix.firewalld:
