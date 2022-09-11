@@ -7,9 +7,9 @@ service integrated-vtysh-config
 ipv6 route ::/0 wg48
 ipv6 route {{ grp_ipv6_prefix }}:ae10::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
 ipv6 route {{ grp_ipv6_prefix }}:ae20::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ grp_ipv6_prefix }}:ae30::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ grp_ipv6_prefix }}:ae40::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
 ipv6 route {{ grp_ipv6_prefix }}:ae50::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:ae70::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:ae80::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
 ipv6 route {{ grp_ipv6_prefix }}:af05::/64 wg0
 ip route 172.16.0.0/24 wg0
 !
