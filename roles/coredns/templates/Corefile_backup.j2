@@ -21,7 +21,7 @@ ip6.arpa.:{{ coredns_port }} {
     file /opt/coredns/master.db
 }
 
-local.emanon:{{ coredns_port }} {
+{{ grp_local_domain }}.:{{ coredns_port }} {
     import snip
     prometheus [::]:{{ coredns_prometheus_port }}
     file /opt/coredns/master.db
@@ -32,7 +32,7 @@ local.emanon:{{ coredns_port }} {
     forward . 127.0.0.1:5301 [::1]:5301 127.0.0.1:5302 [::1]:5302 {
         policy random
         except example.org
-        except local.emanon
+        except {{ grp_local_domain }}
         except in-addr.arpa
         health_check 5s
         prefer_udp

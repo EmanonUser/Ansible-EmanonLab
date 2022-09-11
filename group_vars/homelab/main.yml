@@ -169,9 +169,13 @@ http_services:
       - backend: localhost
         port: 5432
 
-grp_local_domain: local.emanon
+grp_local_domain: emanon.moe
 grp_domain_name: emanon.moe
-grp_subdomain: iwakura
+grp_subdomain: "@"
+grp_acme_dns_domain_name:
+  - { fqdn: "{{ grp_domain_name }}", domain: ".{{ grp_domain_name }}" }             # Domain itself
+  - { fqdn: "*.{{ grp_domain_name }}", domain: ".{{ grp_domain_name }}" }           # Wilcard for all subdomains
+  #- { fqdn: "kuma.{{ host_acme_dns_domain }}", domain: ".{{ host_acme_dns_domain }}" } # Simple example for subdomain
 
 grp_dns_ipv4_server: "{{ grp_device.router.ipv4_addr }}"
 grp_ntp_ipv4_server: "{{ grp_device.router.ipv4_addr }}"

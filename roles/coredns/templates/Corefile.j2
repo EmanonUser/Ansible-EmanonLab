@@ -11,7 +11,7 @@
     }
 }
 
-local.emanon:{{ coredns_port }} {
+{{ grp_local_domain }}.:{{ coredns_port }} {
     import snip
     prometheus [::]:{{ coredns_prometheus_port }}
     file /opt/coredns/master.db
@@ -22,7 +22,7 @@ local.emanon:{{ coredns_port }} {
     prometheus [::]:{{ coredns_prometheus_port }}
     forward . {{ host_coredns_upstream_dns_server.ipv4_addr }}:{{ host_coredns_upstream_dns_server.port }} {
         except example.org
-        except local.emanon
+        except {{ grp_local_domain }}
         except in-addr.arpa
         health_check 5s
         prefer_udp
