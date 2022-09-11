@@ -7,7 +7,3 @@ host_iscsi_targets:
     initiator_addresses:
       - initiator_address: "{{ grp_device.arch.ipv6_addr }}"
       - initiator_address: "{{ grp_device.arch.ipv4_addr }}"
-
-  - iqn: iqn.2022-02.local.nas:c7d13139
-    backing_stores:
-      - backing_store: /dev/zvol/vault/emanonlab/pi_root_c7d13139
