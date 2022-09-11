@@ -1,0 +1,31 @@
+---
+- name: Add routing table, policy-based routing
+  ansible.builtin.lineinfile:
+    path: /etc/iproute2/rt_tables
+    regexp: "^{{ rt_table.num }} {{ rt_table.name }}"
+    line: "{{ rt_table.num }} {{ rt_table.name }}"
+
+- name: Add interface to firewalld dmz zone
+  ansible.posix.firewalld:
+    interface: "{{ dmz_interface }}"
+    zone: dmz
+    state: enabled
+    permanent: yes
+    immediate: yes
+
+- name: Disable ssh on dmz
+  ansible.posix.firewalld:
+    zone: dmz
+    service: ssh
+    state: disabled
+    permanent: yes
+    immediate: yes
+
+- name: Enable http & https on dmz
+  ansible.posix.firewalld:
+    zone: dmz
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  loop: ["http", https]

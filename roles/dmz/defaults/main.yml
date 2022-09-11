@@ -1,0 +1,6 @@
+---
+rt_table:
+  num: 50
+  name: dmz
+
+dmz_interface: bond0.50

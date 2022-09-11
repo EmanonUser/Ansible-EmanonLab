@@ -1,0 +1,75 @@
+global
+	log stdout local0 debug
+	chroot /var/lib/haproxy
+	stats timeout 30s
+	user haproxy
+	group haproxy
+	daemon
+
+	# Default SSL material locations
+	ca-base /etc/ssl/certs
+	crt-base /etc/ssl/private
+
+	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+        ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+        ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
+
+defaults
+	log		global
+	mode	http
+	option	httplog
+	timeout connect 10s
+	timeout client  30s
+	timeout server  30s
+	maxconn 2000
+
+frontend internal-frontend
+	bind :::80 interface {{ ansible_default_ipv4.interface }}
+	bind :::443 interface {{ ansible_default_ipv4.interface }} ssl crt /etc/haproxy/ssl/ alpn h2,http/1.1
+	http-response set-header X-Frame-Options SAMEORIGIN
+	http-response set-header X-XSS-Protection "1;mode=block"
+	http-response set-header Referrer-Policy "no-referrer,same-origin,strict-origin,strict-origin-when-cross-origin"
+	http-response set-header X-Content-Type-Options nosniff
+	http-response set-header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;"
+	http-request deny if HTTP_1.0
+{% for service in http_services %}{% if not service.direct_access and not service.public %}
+	use_backend {{ service.service }}-backend if { hdr(host) -i {{ service.fulldomain }} }
+{% endif %}{% endfor %}
+
+
+frontend external-frontend
+	bind :::80 interface {{ dmz_interface }}
+	bind :::443 interface {{ dmz_interface }} ssl crt /etc/haproxy/ssl/ alpn h2,http/1.1
+	http-response set-header X-Frame-Options SAMEORIGIN
+	http-response set-header X-XSS-Protection "1;mode=block"
+	http-response set-header Referrer-Policy "no-referrer,same-origin,strict-origin,strict-origin-when-cross-origin"
+	http-response set-header X-Content-Type-Options nosniff
+	http-response set-header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;"
+	http-request deny if HTTP_1.0
+{% for service in http_services %}{% if not service.direct_access and service.public %}
+	use_backend {{ service.service }}-backend if { hdr(host) -i {{ service.fulldomain }} }
+{% endif %}{% endfor %}
+	default_backend no-match
+
+backend no-match
+	tcp-request content reject
+
+{% for service in http_services %}{% if not service.direct_access %}
+backend {{ service.service }}-backend
+{% if service.ssl_redirect %}
+	http-request redirect scheme https unless { ssl_fc }
+{% endif %}
+{% for backend in service.backends %}
+	server srv {{ backend.backend }}:{{ backend.port }} check maxconn {{ haproxy_backend_maxconn }}
+
+{% endfor %}{% endif %}{% endfor %}
+
+{% if haproxy_stats %}
+frontend stats
+	bind :::8404 interface {{ ansible_lo.device }}
+	stats enable
+	stats uri /
+	stats refresh 10s
+	stats admin if LOCALHOST
+{% endif %}
