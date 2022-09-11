@@ -19,6 +19,7 @@ syncthing_default_volumes:
   - "{{ host_podman_volumes_path }}/syncthing/config:/config"
   - "{{ host_podman_volumes_path }}/syncthing/data:/data"
 syncthing_volumes: "{{ host_syncthing_volumes | default(syncthing_default_volumes) }}"
+syncthing_network: "{% if syncthing_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"

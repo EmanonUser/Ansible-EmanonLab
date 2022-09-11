@@ -14,6 +14,7 @@
     image: "{{ jellyfin_image }}:{{ jellyfin_image_version }}"
     publish: "{{ jellyfin_ports }}"
     volume: "{{ jellyfin_volumes }}"
+    network: "{{ jellyfin_network }}"
     restart_policy: unless-stopped
     state: started
     user: root

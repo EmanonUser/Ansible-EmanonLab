@@ -17,6 +17,7 @@ adguard_default_volumes:
   - "{{ host_podman_volumes_path }}/adguard/work:/opt/adguardhome/work"
   - "{{ host_podman_volumes_path }}/adguard/conf:/opt/adguardhome/conf"
 adguard_volumes: "{{ host_adguard_default_volumes | default(adguard_default_volumes) }}"
+adguard_network: "{% if adguard_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"

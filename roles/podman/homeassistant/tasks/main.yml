@@ -14,6 +14,7 @@
     image: "{{ homeassistant_image }}:{{ homeassistant_image_version }}"
     publish: "{{ homeassistant_ports }}"
     volume: "{{ homeassistant_volumes }}"
+    network: "{{ homeassistant_network }}"
     restart_policy: unless-stopped
     state: started
     user: root

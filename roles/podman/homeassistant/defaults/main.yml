@@ -11,6 +11,7 @@ homeassistant_ports:
 homeassistant_directories: "{{ host_podman_volumes_path }}/home_assistant"
 homeassistant_default_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
 homeassistant_volumes: "{{ host_homeassistant_volumes | default(homeassistant_default_volumes) }}"
+homeassistant_network: "{% if jellyfin_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"

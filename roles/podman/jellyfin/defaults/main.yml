@@ -17,6 +17,7 @@ jellyfin_default_volumes:
   - "{{ host_podman_volumes_path }}/jellyfin/config:/config:rw"
   - "{{ host_podman_volumes_path }}/jellyfin/media:/media:rw"
 jellyfin_volumes: "{{ host_jellyfin_volumes | default(jellyfin_default_volumes) }}"
+jellyfin_network: "{% if jellyfin_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"

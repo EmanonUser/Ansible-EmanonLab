@@ -15,6 +15,7 @@
     image: "{{ syncthing_image }}:{{ syncthing_image_version }}"
     publish: "{{ syncthing_ports }}"
     volumes: "{{ syncthing_volumes }}"
+    network: "{{ syncthing_network }}"
     restart_policy: unless-stopped
     state: started
     user: root

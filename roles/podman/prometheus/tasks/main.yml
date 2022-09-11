@@ -25,6 +25,7 @@
     image: "{{ prometheus_image }}:{{ prometheus_image_version }}"
     publish: "{{ prometheus_ports }}"
     volume: "{{ prometheus_volumes }}"
+    network: "{{ prometheus_network }}"
     restart_policy: unless-stopped
     state: started
     recreate: "{% if conf_change.changed %}yes{% else %}no{% endif %}"

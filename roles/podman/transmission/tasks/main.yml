@@ -15,6 +15,7 @@
     image: "{{ transmission_image }}:{{ transmission_image_version }}"
     publish: "{{ transmission_ports }}"
     volumes: "{{ transmission_volumes }}"
+    network: "{{ transmission_network }}"
     log_driver: k8s-file
     log_options: max_size=10m
     restart_policy: unless-stopped

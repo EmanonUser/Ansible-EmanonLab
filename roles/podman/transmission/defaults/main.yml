@@ -21,6 +21,7 @@ transmission_default_volumes:
   - "{{ host_podman_volumes_path }}/transmission/incompleted:/transmission/incompleted:rw"
   - "{{ host_podman_volumes_path }}/transmission/watch:/transmission/watch:rw"
 transmission_volumes: "{{ host_transmission_volumes | default(transmission_default_volumes) }}"
+transmission_network: "{% if transmission_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 
 transmission_env_home_path: "{{ host_transmission_env_home_path | default('/transmission/home') }}"

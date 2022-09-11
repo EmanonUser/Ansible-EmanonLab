@@ -15,6 +15,7 @@
     image: "{{ adguard_image }}:{{ adguard_image_version }}"
     publish: "{{ adguard_ports }}"
     volume: "{{ adguard_volumes }}"
+    network: "{{ adguard_network }}"
     restart_policy: unless-stopped
     state: started
     label: io.containers.autoupdate=image

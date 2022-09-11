@@ -15,6 +15,7 @@
     image: "{{ grafana_image }}:{{ grafana_image_version }}"
     volumes: "{{ grafana_volumes }}"
     publish: "{{ grafana_ports }}"
+    network: "{{ grafana_network }}"
     restart_policy: unless-stopped
     state: started
     user: root
