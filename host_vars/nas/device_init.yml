@@ -1,7 +1,5 @@
 ---
-host_debian_stable_packages:
-  - debian-keyring
-  - debian-archive-keyring
+host_redhat_packages:
   - ca-certificates
   - apt-transport-https
   - acl
@@ -11,14 +9,12 @@ host_debian_stable_packages:
   - zsh
   - neovim
   - unzip
-  - lsb-release
   - dnsutils
-  - ldnsutils
   - tmux
   - tcpdump
-  - ldnsutils
   - neofetch
   - htop
   - rsync
   - fio
   - iotop
+  - lm_sensors
