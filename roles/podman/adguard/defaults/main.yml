@@ -10,16 +10,19 @@ adguard_ports:
   - "{{ grp_dns_server_upstream_port }}:53/udp"
   - "{{ grp_dns_server_upstream_port }}:53/tcp"
 
+adguard_directories:
+  - "{{ host_podman_volumes_path }}/adguard/work"
+  - "{{ host_podman_volumes_path }}/adguard/conf"
+adguard_default_volumes:
+  - "{{ host_podman_volumes_path }}/adguard/work:/opt/adguardhome/work"
+  - "{{ host_podman_volumes_path }}/adguard/conf:/opt/adguardhome/conf"
+adguard_volumes: "{{ host_adguard_default_volumes | default(adguard_default_volumes) }}"
+
+# Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 adguard_firewalld_ports:
   webui: "{{ adguard_config.backends[0].port }}/tcp"
   dns_udp: "{{ grp_dns_server_upstream_port }}/udp"
   dns_tcp: "{{ grp_dns_server_upstream_port }}/tcp"
-
-adguard_directories:
-  - "{{ host_podman_volumes_path }}/adguard/work"
-  - "{{ host_podman_volumes_path }}/adguard/conf"
-
-adguard_volumes:
-  - "{{ host_podman_volumes_path }}/adguard/work:/opt/adguardhome/work"
-  - "{{ host_podman_volumes_path }}/adguard/conf:/opt/adguardhome/conf"
+adguard_use_rich_firewalld_rules: "{{ host_adguard_use_rich_firewalld_rules | default(false) }}"
+adguard_firewalld_rich_rules: "{{ host_adguard_firewalld_rich_rules }}"

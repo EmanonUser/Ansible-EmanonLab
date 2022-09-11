@@ -15,13 +15,12 @@ syncthing_directories:
   - "{{ host_podman_volumes_path }}/syncthing"
   - "{{ host_podman_volumes_path }}/syncthing/config"
   - "{{ host_podman_volumes_path }}/syncthing/data"
-
-syncthing_volumes_default:
+syncthing_default_volumes:
   - "{{ host_podman_volumes_path }}/syncthing/config:/config"
   - "{{ host_podman_volumes_path }}/syncthing/data:/data"
-syncthing_volumes: "{{ host_syncthing_volumes | default(syncthing_volumes_default) }}"
+syncthing_volumes: "{{ host_syncthing_volumes | default(syncthing_default_volumes) }}"
 
-# firewalld
+# Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 syncthing_firewalld_ports:
   webui: "{{ syncthing_config.backends[0].port }}/tcp"

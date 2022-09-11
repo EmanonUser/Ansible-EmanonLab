@@ -15,6 +15,7 @@ prometheus_directories:
 prometheus_volumes:
   - "{{ host_podman_volumes_path }}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
   - "{{ host_podman_volumes_path }}/prometheus:/etc/prometheus"
+prometheus_volumes: "{{ host_prometheus_volumes | default(prometheus_default_volumes) }}"
 
 prometheus_config_path: "{{ host_podman_volumes_path }}/prometheus/prometheus.yml"
 

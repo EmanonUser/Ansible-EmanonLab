@@ -9,7 +9,8 @@ homeassistant_ports:
   - "{% if homeassistant_config.direct_access %}[::]:{{ homeassistant_config.backends[0].port }}{% else %}[::1]:{{ homeassistant_config.backends[0].port }}{% endif %}:8123/tcp"
 
 homeassistant_directories: "{{ host_podman_volumes_path }}/home_assistant"
-homeassistant_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
+homeassistant_default_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
+homeassistant_volumes: "{{ host_homeassistant_volumes | default(homeassistant_default_volumes) }}"
 
 # firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"

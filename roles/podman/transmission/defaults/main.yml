@@ -15,7 +15,6 @@ transmission_directories:
   - "{{ host_podman_volumes_path }}/transmission/completed"
   - "{{ host_podman_volumes_path }}/transmission/incompleted"
   - "{{ host_podman_volumes_path }}/transmission/watch"
-
 transmission_default_volumes:
   - "{{ host_podman_volumes_path }}/transmission/home:/transmission/home:rw"
   - "{{ host_podman_volumes_path }}/transmission/completed:/transmission/completed:rw"
