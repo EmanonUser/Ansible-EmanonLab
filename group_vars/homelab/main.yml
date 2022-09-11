@@ -175,7 +175,7 @@ grp_nfs_server_target: "{{ grp_device.nas.hostname }}.{{ grp_local_domain }}"
 grp_nfs_remote_share: /mnt/vault/emanon
 grp_nfs_mount_dir: /mnt/vault
 
-grp_dns_server_upstream_ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
+grp_dns_server_upstream_ipv4_addr: "{{ grp_device.nas.ipv4_addr }}"
 grp_dns_server_upstream_port: "10053"
 
 grp_ipv6_prefix: 2a06:a004:300a # /48
