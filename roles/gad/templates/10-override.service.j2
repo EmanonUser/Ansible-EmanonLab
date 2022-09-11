@@ -1,2 +1,2 @@
 [Service]
-ExecStart=/usr/bin/env bash -c '{{ gad_path }}/gandi-automatic-dns-{{ gad_version }}/gad {{ item.gad_arg | default() }} -5 -v -a {{ grp_gandi_api_key }} -d {{ grp_domain_name }} -r {{ grp_subdomain }}'
+ExecStart=/usr/bin/env bash -c '{{ gad_path }}/gandi-automatic-dns-{{ gad_version }}/gad {{ item.gad_arg | default() }} -5 -v -a {{ grp_gandi_api_key }} -l {{ gad_ttl }} -d {{ grp_domain_name }} -r {{ grp_subdomain }}'

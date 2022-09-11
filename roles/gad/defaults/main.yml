@@ -4,4 +4,5 @@ gad_version: "{{ host_gad_version | default('1.4.3') }}"
 
 gad_path: "{{ host_gad_path | default('/opt')}}"
 gad_use_ipv6: "{{ host_gad_use_ipv6 | default(true) }}"
+gad_ttl: 1200
 gad_systemd_timer_interval: "{{ host_gad_systemd_timer_interval | default('15m') }}"
