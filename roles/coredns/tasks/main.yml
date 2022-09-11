@@ -26,6 +26,7 @@
     mode: u=rwx,g=,o=
     timeout: 30
   notify: ["Enable coredns service", "Restart coredns service"]
+  ignore_errors: yes
 
 - name: Unarchive CoreDNS binary
   ansible.builtin.unarchive:
