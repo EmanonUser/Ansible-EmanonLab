@@ -11,8 +11,5 @@ host_coredns_upstream_dns_server:
   ipv4_addr: "{{ grp_dns_server_upstream_ipv4_addr }}"
   port: "{{ grp_dns_server_upstream_port }}"
 
-## gad ##
-host_gad_use_ipv6: yes
-
 ## is_alive ##
 host_is_alive_echo_request_target: emanon.moe

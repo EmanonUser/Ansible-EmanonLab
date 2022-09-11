@@ -37,9 +37,6 @@
     - role: ntpd
       tags: [ ntpd, services ]
 
-    - role: gad
-      tags: [ gad, services ]
-
     - role: is_alive
       tags: [ is_alive, services ]
 
