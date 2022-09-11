@@ -1,30 +1,30 @@
 ---
-- name: Create grafana volume directories
+- name: Create adguard volume directory
   ansible.builtin.file:
     path: "{{ item }}"
     owner: emanon
     group: emanon
     mode: u=rwx,g=,o=
     state: directory
-  loop: "{{ grafana_directories }}"
+  loop: "{{ adguard_directories }}"
   become_user: "{{ primary_user_username }}"
 
-- name: Run grafana podman container
+- name: Run adguard podman container
   containers.podman.podman_container:
-    name: grafana_ansible
-    image: "{{ grafana_image }}:{{ grafana_image_version }}"
-    volumes: "{{ grafana_volumes }}"
-    publish: "{{ grafana_ports }}"
+    name: adguard_ansible
+    image: "{{ adguard_image }}:{{ adguard_image_version }}"
+    publish: "{{ adguard_ports }}"
+    volume: "{{ adguard_volumes }}"
     restart_policy: unless-stopped
     state: started
-    user: "root"
+    label: io.containers.autoupdate=image
+    user: root
+    security_opt: label=disable
     generate_systemd:
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/
-    env:
-      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_password }}"
   become_user: "{{ primary_user_username }}"
-  notify: Enable grafana_ansible podman service
+  notify: Enable adguard_ansible podman service
 
 - name: Import firewalld tasks
   include_tasks: firewalld.yml

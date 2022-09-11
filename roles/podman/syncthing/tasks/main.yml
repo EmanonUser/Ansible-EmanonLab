@@ -17,7 +17,8 @@
     volumes: "{{ syncthing_volumes }}"
     restart_policy: unless-stopped
     state: started
-    user: 'root'
+    user: root
+    security_opt: label=disable
     generate_systemd:
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/

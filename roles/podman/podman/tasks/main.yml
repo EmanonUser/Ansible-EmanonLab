@@ -1,33 +1,6 @@
 ---
-- name: Install podman
-  ansible.builtin.apt:
-    name: podman
-    state: present
-  notify: ["Enable podman service", "Start podman service"]
+- include_tasks: redhat-setup.yml
+  when: ansible_os_family == 'RedHat'
 
-- name: Add podman registers
-  ansible.builtin.lineinfile:
-    path: /etc/containers/registries.conf.d/docker.io.conf
-    line: "{{ podman_unqualified_registries }}"
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-    create: yes
-
-- name: loginctl lingering primary user
-  ansible.builtin.copy:
-    dest: "/var/lib/systemd/linger/{{ primary_user_username }}"
-    content: ""
-    owner: root
-    group: root
-    mode: u=rw,g=,o=
-
-- name: Check if podman-completion exist
-  ansible.builtin.stat:
-    path: "/usr/local/share/zsh/site-functions/_podman"
-  register: res
-
-- name: Generate podman-completion
-  ansible.builtin.command:
-    cmd: podman completion zsh -f "/usr/local/share/zsh/site-functions/_podman"
-  when: not res.stat.exists
+- include_tasks: debian-setup.yml
+  when: ansible_os_family == 'Debian'

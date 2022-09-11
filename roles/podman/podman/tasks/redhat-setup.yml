@@ -1,0 +1,6 @@
+---
+- name: Install podman (RedHat)
+  ansible.builtin.dnf:
+    name: podman
+    state: latest
+  notify: ["Enable podman service", "Start podman service"]

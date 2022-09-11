@@ -28,8 +28,9 @@
     restart_policy: unless-stopped
     state: started
     recreate: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
-    label: "io.containers.autoupdate=image"
-    user: "root" # Overwrite the nobody user in the Dockerfile
+    label: io.containers.autoupdate=image
+    user: root # Overwrite the nobody user in the Dockerfile
+    security_opt: label=disable
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/etc/prometheus/data"

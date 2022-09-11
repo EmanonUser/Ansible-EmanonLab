@@ -20,6 +20,9 @@
     restart_policy: unless-stopped
     state: started
     privileged: yes
+    user: root
+    label: io.containers.autoupdate=image
+    security_opt: label=disable
     generate_systemd:
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/

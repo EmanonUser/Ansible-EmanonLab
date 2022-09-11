@@ -19,7 +19,7 @@ syncthing_directories:
 syncthing_volumes_default:
   - "{{ host_podman_volumes_path }}/syncthing/config:/config"
   - "{{ host_podman_volumes_path }}/syncthing/data:/data"
-syncthing_volumes: "{{ host_podman_syncthing_volumes | default(syncthing_volumes_default) }}"
+syncthing_volumes: "{{ host_syncthing_volumes | default(syncthing_volumes_default) }}"
 
 # firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
