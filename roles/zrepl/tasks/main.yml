@@ -1,32 +1,9 @@
 ---
-- name: Add zrepl repo key
-  ansible.builtin.get_url:
-    url: "{{ zrepl_gpg_key }}"
-    dest: /usr/share/keyrings/zrepl-archive-keyring.asc
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-    timeout: 30
-  ignore_errors: yes
+- include_tasks: debian_setup.yml
+  when: ansible_os_family == 'Debian'
 
-- name: Add zrepl debian source repo
-  ansible.builtin.apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/zrepl-archive-keyring.asc arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} main # noqa 204
-    state: present
-    filename: zrepl
-  notify: ["Apt update", "Apt upgrade"]
-
-- name: Install zrepl package
-  ansible.builtin.apt:
-    name: zrepl
-    state: present
-    update_cache: yes
-  notify: ["Enable zrepl service", "Start zrepl service"]
-
-- name: Disable upgrade of zrepl ( breaking changes )
-  ansible.builtin.dpkg_selections:
-    name: zrepl
-    selection: hold
+- include_tasks: redhat_setup.yml
+  when: ansible_os_family == 'RedHat'
 
 - name: Configure zrepl
   ansible.builtin.template:

@@ -1,9 +1,11 @@
 ---
-- name: Install tgtd server
-  ansible.builtin.apt:
-    name: tgt
-    state: present
-  notify: ["Enable tgt service", "Start tgt service"]
+- include_tasks: variables.yml
+
+- include_tasks: debian_setup.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: redhat_setup.yml
+  when: ansible_os_family == 'RedHat'
 
 - name: Config iscsi targets
   ansible.builtin.template:

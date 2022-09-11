@@ -1,0 +1,16 @@
+---
+debian_stable_packages: "{{ host_debian_stable_packages | default(debian_stable_packages_defaults) }}"
+debian_stable_packages_defaults:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - acl
+  - gnupg2
+  - curl
+  - git
+  - zsh
+  - neovim
+  - unzip
+
+ssh_service_name: ssh.service

@@ -1,36 +1,11 @@
 ---
-- name: Remove debian stable repository
-  ansible.builtin.apt_repository:
-    repo: "{{ item }}"
-    state: absent
-  loop:
-    - deb http://deb.debian.org/debian/ {{ ansible_distribution_release  }} main
-    - deb-src http://deb.debian.org/debian/ {{ ansible_distribution_release  }} main
+- include_tasks: variables.yml
 
-- name: Add debian contrib stable repository for OpenZFS
-  ansible.builtin.apt_repository:
-    repo: deb http://deb.debian.org/debian/ {{ ansible_distribution_release  }} main contrib
-    filename: "{{ ansible_distribution_release  }}-contrib"
-    state: present
+- include_tasks: redhat_setup.yml
+  when: ansible_os_family == 'RedHat'
 
-- name: Install ZFS packages
-  ansible.builtin.apt:
-    name: [dpkg-dev, linux-headers-amd64, zfs-dkms, zfsutils-linux]
-    update_cache: yes
-    state: present
-
-- name: Configure ZFS dkms kernel module
-  ansible.builtin.template:
-    src: zfs.conf.j2
-    dest: /etc/modprobe.d/zfs.conf
-    owner: root
-    group: root
-    mode: u=rw,g=,o=
-
-- name: Load ZFS kernel module
-  community.general.modprobe:
-    name: zfs
-    state: present
+- include_tasks: debian_setup.yml
+  when: ansible_os_family == 'Debian'
 
 - name: Pause create zpool(s) manually, too sensitive to automate it without a proper module
   ansible.builtin.pause:
@@ -194,12 +169,3 @@
   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
-
-- name: Create symlink for ZFS binaries
-  ansible.builtin.file:
-    src: "/sbin/{{ item }}"
-    dest: "/usr/local/bin/{{ item }}"
-    owner: "{{ primary_user_username }}"
-    group: "{{ primary_user_username }}"
-    state: link
-  loop: ["zpool", "zfs", "arcstat", "arc_summary"]

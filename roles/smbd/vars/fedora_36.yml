@@ -1,0 +1,3 @@
+---
+smbd_service_name: smb.service
+nmbd_service_name: nmb.service

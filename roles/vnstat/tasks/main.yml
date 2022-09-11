@@ -1,6 +1,14 @@
 ---
-- name: Install vnstat
+- name: Install vnstat on Debian
   ansible.builtin.apt:
     name: vnstat
     state: present
   notify: ["Enable vnstat service", "Start vnstat service"]
+  when: ansible_distribution == 'Debian'
+
+- name: Install vnstat on Fedora
+  ansible.builtin.dnf:
+    name: vnstat
+    state: latest
+  notify: ["Enable vnstat service", "Start vnstat service"]
+  when: ansible_distribution == 'Fedora'

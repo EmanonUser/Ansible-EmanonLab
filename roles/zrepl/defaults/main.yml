@@ -1,3 +1,4 @@
 ---
 cpu_architecture: "{{ host_cpu_architecture | default('amd64') }}"
 zrepl_gpg_key: https://zrepl.cschwarz.com/apt/apt-key.asc
+zfs_pools: "{{ host_zfs_pools }}"

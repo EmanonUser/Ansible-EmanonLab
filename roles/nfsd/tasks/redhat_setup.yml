@@ -1,0 +1,23 @@
+---
+- name: Install nfsd server (RedHat)
+  ansible.builtin.dnf:
+    name: nfs-utils
+    state: latest
+
+- name: Configure NFSv4 server (RedHat)
+  ansible.builtin.template:
+    src: nfs.conf.j2
+    dest: /etc/nfs.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  notify:
+    - Enable nfs-server service
+    - Start nfs-server service
+
+- name: Mask rpcbind, we are using nfsv4 only (RedHat)
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    masked: yes
+    state: stopped
+  loop: ["rpcbind.service", "rpcbind.socket"]

@@ -1,13 +1,11 @@
 ---
-- name: Update base core packages for debian
-  ansible.builtin.apt:
-    update_cache: yes
-    upgrade: yes
+- include_tasks: variables.yml
 
-- name: Install base core packages for debian
-  ansible.builtin.apt:
-    name: "{{ debian_stable_packages }}"
-    state: present
+- include_tasks: redhat_setup.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: debian_setup.yml
+  when: ansible_os_family == 'Debian'
 
 - name: Set root password
   ansible.builtin.user:

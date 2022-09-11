@@ -1,0 +1,5 @@
+---
+- name: Install cryptography python3 module (RedHat)
+  ansible.builtin.dnf:
+    name: python3-cryptography
+    state: latest

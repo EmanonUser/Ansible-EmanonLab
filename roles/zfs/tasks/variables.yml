@@ -1,0 +1,3 @@
+- name: Include OS-specific variables (Fedora)
+  include_vars: "{{ ansible_distribution | lower }}_{{ ansible_distribution_version.split('.')[0] }}.yml"
+  when: ansible_distribution == 'Fedora'

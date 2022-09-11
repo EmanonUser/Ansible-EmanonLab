@@ -1,5 +1,6 @@
 ---
 acme_dns_directory: https://acme-v02.api.letsencrypt.org/directory
+# https://acme-staging-v02.api.letsencrypt.org/directory
 acme_dns_version: 2
 acme_dns_challenge_type: dns-01
 acme_dns_email: moemanon@pm.me

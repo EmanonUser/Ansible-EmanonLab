@@ -1,0 +1,10 @@
+---
+- name: Update core packages for debian
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: Install core packages for debian
+  ansible.builtin.apt:
+    name: "{{ debian_stable_packages }}"
+    state: present

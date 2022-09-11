@@ -1,0 +1,42 @@
+---
+- name: Remove stable repository (Debian)
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+    state: absent
+  loop:
+    - deb http://deb.debian.org/debian/ {{ ansible_distribution_release  }} main
+    - deb-src http://deb.debian.org/debian/ {{ ansible_distribution_release  }} main
+
+- name: Add contrib repository for OpenZFS (Debian)
+  ansible.builtin.apt_repository:
+    repo: deb http://deb.debian.org/debian/ {{ ansible_distribution_release  }} main contrib
+    filename: "{{ ansible_distribution_release  }}-contrib"
+    state: present
+
+- name: Install ZFS packages (Debian)
+  ansible.builtin.apt:
+    name: [dpkg-dev, linux-headers-amd64, zfs-dkms, zfsutils-linux]
+    update_cache: yes
+    state: present
+
+- name: Configure ZFS dkms kernel module (Debian)
+  ansible.builtin.template:
+    src: zfs.conf.j2
+    dest: /etc/modprobe.d/zfs.conf
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+
+- name: Load ZFS kernel module (Debian)
+  community.general.modprobe:
+    name: zfs
+    state: present
+
+- name: Create symlink for ZFS binaries (Debian)
+  ansible.builtin.file:
+    src: "/sbin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    state: link
+  loop: ["zpool", "zfs", "arcstat", "arc_summary"]

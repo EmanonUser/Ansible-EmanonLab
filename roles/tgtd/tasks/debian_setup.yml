@@ -1,0 +1,6 @@
+---
+- name: Install tgtd server (Debian)
+  ansible.builtin.apt:
+    name: tgt
+    state: present
+  notify: ["Enable tgt service", "Start tgt service"]

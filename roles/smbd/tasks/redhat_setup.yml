@@ -1,0 +1,6 @@
+---
+- name: Install samba server (RedHat)
+  ansible.builtin.dnf:
+    name: samba
+    state: latest
+  notify: [Enable smbd service, Start smbd service]

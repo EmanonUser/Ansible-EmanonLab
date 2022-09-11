@@ -1,0 +1,11 @@
+---
+
+- name: Update core packages for redhat
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+
+- name: Install core packages for redhat
+  ansible.builtin.dnf:
+    name: "{{ redhat_packages }}"
+    state: latest

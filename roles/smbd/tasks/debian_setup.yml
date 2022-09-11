@@ -1,0 +1,6 @@
+---
+- name: Install samba server (Debian)
+  ansible.builtin.apt:
+    name: samba
+    state: present
+  notify: [Enable smbd service, Start smbd service]
