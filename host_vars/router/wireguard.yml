@@ -34,17 +34,3 @@ wireguard_confs:
         allowed_ips:
           - 172.20.5.4/32
           - "{{ grp_ipv6_prefix }}:af05::4/128"
-
-  - wireguard: wg48
-    udp_port: 51821
-    server_addresses:
-      - "{{ grp_ipv6_prefix }}::2/128"
-    server_private_key: "{{ wg48.private_key }}"
-    peers:
-      - peer: route48
-        public_key: "W0pI832mL5u7JzJjiE68dyS95mIGBDqGgSxSZromEGY="
-        endpoint: par-fr.node.route48.org:51851
-        keepalive: 60
-        allowed_ips:
-          - ::/1
-          - 8000::/1
