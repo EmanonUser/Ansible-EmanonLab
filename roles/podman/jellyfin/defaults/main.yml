@@ -1,6 +1,6 @@
 ---
 jellyfin_image: "{{ host_jellyfin_image | default('docker.io/jellyfin/jellyfin') }}"
-jellyfin_image_version: "{{ host_jellyfin_image_version | default('10.8.4-1') }}"
+jellyfin_image_version: "{{ host_jellyfin_image_version | default('latest') }}"
 # https://hub.docker.com/r/jellyfin/jellyfin/tags
 
 jellyfin_config: "{{ http_services | selectattr('service', 'equalto', 'jellyfin') | first }}"

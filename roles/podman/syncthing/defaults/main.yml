@@ -1,6 +1,6 @@
 ---
 syncthing_image: "{{ host_syncthing_image | default('quay.io/linuxserver.io/syncthing') }}"
-syncthing_image_version: "{{ host_syncthing_image_version | default('1.20.4') }}"
+syncthing_image_version: "{{ host_syncthing_image_version | default('latest') }}"
 # https://quay.io/repository/linuxserver.io/syncthing?tag=latest&tab=tags
 
 syncthing_config: "{{ http_services | selectattr('service', 'equalto', 'syncthing') | first }}"

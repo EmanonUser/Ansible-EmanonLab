@@ -29,7 +29,9 @@
     restart_policy: unless-stopped
     state: started
     recreate: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
-    label: io.containers.autoupdate=image
+    label:
+      io.containers.autoupdate: registry
+      PODMAN_SYSTEMD_UNIT: podman-prometheus_ansible.service
     user: root # Overwrite the nobody user in the Dockerfile
     security_opt: label=disable
     command:

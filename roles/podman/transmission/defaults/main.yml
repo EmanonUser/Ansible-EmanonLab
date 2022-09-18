@@ -1,6 +1,6 @@
 ---
 transmission_image: "{{ host_transmission_image | default('docker.io/haugene/transmission-openvpn') }}"
-transmission_image_version: "{{ host_transmission_image_version | default('4.0') }}"
+transmission_image_version: "{{ host_transmission_image_version | default('latest') }}"
 # https://hub.docker.com/r/haugene/transmission-openvpn/tags
 
 

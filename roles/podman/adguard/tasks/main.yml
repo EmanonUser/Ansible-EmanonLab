@@ -18,7 +18,9 @@
     network: "{{ adguard_network }}"
     restart_policy: unless-stopped
     state: started
-    label: io.containers.autoupdate=image
+    label:
+      io.containers.autoupdate: registry
+      PODMAN_SYSTEMD_UNIT: podman-adguard_ansible.service
     user: root
     security_opt: label=disable
     generate_systemd:

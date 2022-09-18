@@ -1,6 +1,6 @@
 ---
 adguard_image: "{{ host_adguard_image | default('docker.io/adguard/adguardhome') }}"
-adguard_image_version: "{{ host_adguard_image_version | default('v0.107.11') }}"
+adguard_image_version: "{{ host_adguard_image_version | default('latest') }}"
 # https://hub.docker.com/r/adguard/adguardhome/tags
 
 adguard_config: "{{ http_services | selectattr('service', 'equalto', 'adguard') | first }}"

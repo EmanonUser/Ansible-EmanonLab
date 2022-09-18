@@ -22,7 +22,9 @@
     state: started
     privileged: yes
     user: root
-    label: io.containers.autoupdate=image
+    label:
+      io.containers.autoupdate: registry
+      PODMAN_SYSTEMD_UNIT: podman-transmission_ansible.service
     security_opt: label=disable
     generate_systemd:
       container_prefix: podman

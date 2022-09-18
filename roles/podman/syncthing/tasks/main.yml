@@ -19,6 +19,9 @@
     restart_policy: unless-stopped
     state: started
     user: root
+    label:
+      io.containers.autoupdate: registry
+      PODMAN_SYSTEMD_UNIT: podman-syncthing_ansible.service
     security_opt: label=disable
     generate_systemd:
       container_prefix: podman
