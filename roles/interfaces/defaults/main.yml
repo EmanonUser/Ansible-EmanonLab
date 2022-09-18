@@ -1,2 +1,0 @@
----
-lacp_interface_name: "{{ host_lacp_interface_name | default('bond0') }}"
