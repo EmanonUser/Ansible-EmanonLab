@@ -3,7 +3,11 @@
   ansible.builtin.apt:
     name: podman
     state: present
-  notify: ["Enable podman service", "Start podman service"]
+  notify:
+    - Enable podman service
+    - Start podman service
+    - Enable podman-auto-update timer
+    - Start podman-auto-update timer
 
 - name: Add podman registers (Debian)
   ansible.builtin.lineinfile:

@@ -3,4 +3,8 @@
   ansible.builtin.dnf:
     name: podman
     state: latest
-  notify: ["Enable podman service", "Start podman service"]
+  notify:
+    - Enable podman service
+    - Start podman service
+    - Enable podman-auto-update timer
+    - Start podman-auto-update timer
