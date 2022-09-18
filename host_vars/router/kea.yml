@@ -90,10 +90,10 @@ host_kea_dhcp4:
         data: ["192.168.50.1"]
 
 host_kea_dhcp6:
-  - subnet: "{{ grp_ipv6_prefix }}:ae10::/64"
+  - subnet: "{{ grp_ipv6_prefix }}:f401::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:ae10::1:1"
-        end: "{{ grp_ipv6_prefix }}:ae10:ffff:ffff:ffff:ffff"
+      - start: "{{ grp_ipv6_prefix }}:f401::1:1"
+        end: "{{ grp_ipv6_prefix }}:f401:ffff:ffff:ffff:ffff"
     options_data: []
     reservations:
       - ipv6_addr: ["{{ grp_device.nas.ipv6_addr }}"]
@@ -109,10 +109,10 @@ host_kea_dhcp6:
         hw_addr: "{{ grp_device.aclite.hw_addr }}"
         hostname: "{{ grp_device.aclite.hostname }}"
 
-  - subnet: "{{ grp_ipv6_prefix }}:ae20::/64"
+  - subnet: "{{ grp_ipv6_prefix }}:f402::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:ae20::1:1"
-        end: "{{ grp_ipv6_prefix }}:ae20:ffff:ffff:ffff:ffff"
+      - start: "{{ grp_ipv6_prefix }}:f402::1:1"
+        end: "{{ grp_ipv6_prefix }}:f402:ffff:ffff:ffff:ffff"
     pd_pools:
       - prefix: "{{ grp_ipv6_prefix }}:b000::"
         prefix_len: 52
@@ -124,34 +124,33 @@ host_kea_dhcp6:
         excluded_prefix_len: 72
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ grp_device.arch.ipv6_addr }}", "{{ grp_ipv6_prefix }}:ae20::beef"]
-        prefixes: ["{{ grp_ipv6_prefix }}:b030::/64", "{{ grp_ipv6_prefix }}:b060::/64"]
+      - ipv6_addr: ["{{ grp_device.arch.ipv6_addr }}"]
         duid: "{{ grp_device.arch.duid }}"
         hostname: "{{ grp_device.arch.hostname }}"
 
-  - subnet: "{{ grp_ipv6_prefix }}:ae30::/64"
+  - subnet: "{{ grp_ipv6_prefix }}:f403::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:ae30::1:1"
-        end: "{{ grp_ipv6_prefix }}:ae30:ffff:ffff:ffff:ffff"
+      - start: "{{ grp_ipv6_prefix }}:f403::1:1"
+        end: "{{ grp_ipv6_prefix }}:f403:ffff:ffff:ffff:ffff"
     options_data: []
     reservations:
       - ipv6_addr: ["{{ grp_device.printer.ipv6_addr }}"]
         hw_addr: "{{ grp_device.printer.hw_addr }}"
         hostname: "{{ grp_device.printer.hostname }}"
 
-  - subnet: "{{ grp_ipv6_prefix }}:ae40::/64"
+  - subnet: "{{ grp_ipv6_prefix }}:f404::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:ae40::1:1"
-        end: "{{ grp_ipv6_prefix }}:ae40:ffff:ffff:ffff:ffff"
+      - start: "{{ grp_ipv6_prefix }}:f404::1:1"
+        end: "{{ grp_ipv6_prefix }}:f404:ffff:ffff:ffff:ffff"
     options_data: []
     reservations: []
 
-  - subnet: "{{ grp_ipv6_prefix }}:ae50::/64"
+  - subnet: "{{ grp_ipv6_prefix }}:f405::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:ae50::1:1"
-        end: "{{ grp_ipv6_prefix }}:ae50:ffff:ffff:ffff:ffff"
+      - start: "{{ grp_ipv6_prefix }}:f405::1:1"
+        end: "{{ grp_ipv6_prefix }}:f405:ffff:ffff:ffff:ffff"
     options_data: []
     reservations:
       - ipv6_addr: ["{{ grp_device.ndmz.ipv6_addr }}"]
-        hw_addr: "{{ grp_device.ndmz.hw_addr }}"
+        duid: "{{ grp_device.ndmz.duid }}"
         hostname: "{{ grp_device.ndmz.hostname }}"
