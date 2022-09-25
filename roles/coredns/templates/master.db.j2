@@ -20,3 +20,7 @@ $TTL 2100
 {% for service in http_services %}
 {{ service.fulldomain }}.        IN CNAME   {{ service.reverse_proxy }}.
 {% endfor %}
+
+{% for service in tcp_services %}
+{{ service.fulldomain }}.        IN CNAME   {{ service.reverse_proxy }}.
+{% endfor %}

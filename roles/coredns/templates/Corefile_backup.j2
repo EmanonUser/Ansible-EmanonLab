@@ -23,8 +23,13 @@ ip6.arpa.:{{ coredns_port }} {
 
 {{ grp_local_domain }}.:{{ coredns_port }} {
     import snip
-    prometheus [::]:{{ coredns_prometheus_port }}
     file /opt/coredns/master.db
+    forward . 127.0.0.1:5301 [::1]:5301 127.0.0.1:5302 [::1]:5302 {
+        policy random
+        except example.org
+        except in-addr.arpa
+        health_check 5s
+    }
 }
 
 .:{{ coredns_port }} {
@@ -32,15 +37,12 @@ ip6.arpa.:{{ coredns_port }} {
     forward . 127.0.0.1:5301 [::1]:5301 127.0.0.1:5302 [::1]:5302 {
         policy random
         except example.org
-        except {{ grp_local_domain }}
         except in-addr.arpa
         health_check 5s
-        prefer_udp
     }
 }
 
 .:5301 {
-    prometheus [::]:{{ coredns_prometheus_port }}
     bind 127.0.0.1 ::1
     forward . tls://9.9.9.9 tls://9.9.9.11 tls://2620:fe::fe tls://2620:fe::9 {
         tls_servername dns.quad9.net
@@ -50,7 +52,6 @@ ip6.arpa.:{{ coredns_port }} {
 }
 
 .:5302 {
-    prometheus [::]:{{ coredns_prometheus_port }}
     bind 127.0.0.1 ::1
     forward . tls://1.1.1.1 tls://1.0.0.1 tls://2606:4700:4700::1111 tls://2606:4700:4700::1001 {
         tls_servername cloudflare-dns.com

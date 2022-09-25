@@ -22,7 +22,6 @@
     prometheus [::]:{{ coredns_prometheus_port }}
     forward . {{ host_coredns_upstream_dns_server.ipv4_addr }}:{{ host_coredns_upstream_dns_server.port }} {
         except example.org
-        except {{ grp_local_domain }}
         except in-addr.arpa
         health_check 5s
         prefer_udp
