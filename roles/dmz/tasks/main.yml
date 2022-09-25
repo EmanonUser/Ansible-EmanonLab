@@ -28,4 +28,12 @@
     state: enabled
     permanent: yes
     immediate: yes
-  loop: ["http", https]
+  loop: [http, https]
+
+- name: Enable http & https on dmz
+  ansible.posix.firewalld:
+    zone: dmz
+    service: dhcpv6-client
+    state: enabled
+    permanent: yes
+    immediate: yes
