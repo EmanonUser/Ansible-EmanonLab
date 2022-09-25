@@ -3,6 +3,8 @@ grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf
 grp_device:
     router:
       hostname: r
+      ipv4_addr: 192.168.5.1
+      ipv6_addr: "{{ grp_ipv6_prefix }}:f400::a"
       wan_interface:
         ifname: enp1s0
         ipv6_addr: "{{ grp_ipv6_prefix }}:f400:ffff::"
@@ -90,12 +92,11 @@ grp_device:
       hostname: printer
 
 http_services:
-
   - service: prometheus
     fulldomain: prometheus.emanon.moe
     reverse_proxy: nas.emanon.moe
     direct_access: no
-    ssl_redirect: no
+    ssl_redirect: yes
     public: no
     backends:
       - backend: localhost
@@ -115,7 +116,7 @@ http_services:
     fulldomain: adguard.emanon.moe
     reverse_proxy: nas.emanon.moe
     direct_access: no
-    ssl_redirect: no
+    ssl_redirect: yes
     public: no
     backends:
       - backend: localhost
@@ -125,7 +126,7 @@ http_services:
     fulldomain: syncthing.emanon.moe
     reverse_proxy: nas.emanon.moe
     direct_access: no
-    ssl_redirect: no
+    ssl_redirect: yes
     public: no
     backends:
       - backend: localhost
@@ -135,7 +136,7 @@ http_services:
     fulldomain: transmission.emanon.moe
     reverse_proxy: nas.emanon.moe
     direct_access: no
-    ssl_redirect: no
+    ssl_redirect: yes
     public: no
     backends:
       - backend: localhost
@@ -145,8 +146,8 @@ http_services:
     fulldomain: hass.emanon.moe
     reverse_proxy: ndmz.emanon.moe
     direct_access: no
-    ssl_redirect: no
-    public: yes
+    ssl_redirect: yes
+    public: no
     backends:
       - backend: localhost
         port: 7006
@@ -155,11 +156,31 @@ http_services:
     fulldomain: jellyfin.emanon.moe
     reverse_proxy: ndmz.emanon.moe
     direct_access: no
-    ssl_redirect: no
+    ssl_redirect: yes
     public: yes
     backends:
       - backend: localhost
         port: 7007
+
+  - service: ipmi
+    fulldomain: ipmi.emanon.moe
+    reverse_proxy: ipmi.emanon.moe
+    direct_access: no
+    ssl_redirect: yes
+    public: no
+    backends:
+      - backend: ipmi.emanon.moe
+        port: 80
+
+tcp_services:
+  - service: minecraft
+    fulldomain: minecraft.emanon.moe
+    reverse_proxy: ndmz.emanon.moe
+    direct_access: yes
+    public: yes
+    backends:
+      - backend: localhost
+        port: 25565
 
 grp_local_domain: emanon.moe
 grp_domain_name: emanon.moe
