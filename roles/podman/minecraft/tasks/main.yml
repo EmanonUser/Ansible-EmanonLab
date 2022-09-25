@@ -1,12 +1,27 @@
 ---
+# - name: Create minecraft volume directory
+#   ansible.builtin.file:
+#     path: "{{ item }}"
+#     owner: emanon
+#     group: emanon
+#     mode: u=rwx,g=,o=
+#     state: directory
+#   loop: "{{ minecraft_directories }}"
+#   become_user: "{{ primary_user_username }}"
+
 - name: Run minecraft podman container
   containers.podman.podman_container:
     name: minecraft_ansible
     image: "{{ minecraft_image }}:{{ minecraft_image_version }}"
     publish: "{{ minecraft_ports }}"
     volume: "{{ minecraft_volumes }}"
+    network: "{{ minecraft_network }}"
     state: started
     user: root
+    label:
+      io.containers.autoupdate: registry
+      PODMAN_SYSTEMD_UNIT: podman-minecraft_ansible.service
+    security_opt: label=disable
     generate_systemd:
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/
@@ -29,10 +44,12 @@
       SPAWN_MONSTERS: 'true'
       SPAWN_NPCS: 'true'
       GENERATE_STRUCTURES: 'true'
-      MEMORY: '1500M'
+      MEMORY: '4000M'
       #VIEW_DISTANCE: '64'
       MAX_TICK_TIME: '60000'
       MAX_BUILD_HEIGHT: '256'
+      UID: '0'
+      GID: '0'
   become_user: "{{ primary_user_username }}"
   notify: Enable minecraft_ansible podman service
 
