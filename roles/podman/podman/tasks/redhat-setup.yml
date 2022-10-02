@@ -8,3 +8,11 @@
     - Start podman service
     - Enable podman-auto-update timer
     - Start podman-auto-update timer
+
+- name: loginctl lingering primary user (RedHat)
+  ansible.builtin.copy:
+    dest: "/var/lib/systemd/linger/{{ primary_user_username }}"
+    content: ""
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
