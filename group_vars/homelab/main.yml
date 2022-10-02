@@ -2,7 +2,7 @@
 grp_primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch
 grp_device:
     router:
-      hostname: r
+      hostname: r1
       ipv4_addr: 192.168.5.1
       ipv6_addr: "{{ grp_ipv6_prefix }}:f400::a"
       wan_interface:
@@ -161,16 +161,6 @@ http_services:
     backends:
       - backend: localhost
         port: 7007
-
-  - service: ipmi
-    fulldomain: ipmi.emanon.moe
-    reverse_proxy: ipmi.emanon.moe
-    direct_access: no
-    ssl_redirect: yes
-    public: no
-    backends:
-      - backend: ipmi.emanon.moe
-        port: 80
 
 tcp_services:
   - service: minecraft
