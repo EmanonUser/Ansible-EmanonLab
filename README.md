@@ -13,3 +13,10 @@ TODO:
     - configure zed ( zfs )
     - conf journald
     - fix shadow copies, only work with zrepl_default_
+
+    - Fiber upgrade todo
+    - Expose services to WAN
+    - Config DMZ
+    - Readdressing IPv4/IPv6
+    - Let's Encrypt certificate
+    - Check acme_dns gandi TXT record with multiple domain
