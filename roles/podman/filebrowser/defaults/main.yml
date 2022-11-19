@@ -23,6 +23,7 @@ filebrowser_default_volumes:
   - "{{ host_podman_volumes_path }}/filebrowser/config/settings.json:/config/settings.json"
   - "{{ host_podman_volumes_path }}/filebrowser/database/database.db:/database/database.db"
   - "{{ host_podman_volumes_path }}/filebrowser/data:/srv"
+filebrowser_network: "{% if filebrowser_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
