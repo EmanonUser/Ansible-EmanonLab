@@ -144,7 +144,7 @@ http_services:
 
   - service: homeassistant
     fulldomain: hass.emanon.moe
-    reverse_proxy: ndmz.emanon.moe
+    reverse_proxy: nas.emanon.moe
     direct_access: no
     ssl_redirect: yes
     public: no
