@@ -43,6 +43,7 @@
       TRANSMISSION_WATCH_DIR: "{{ transmission_env_watch_path }}"
       TRANSMISSION_WEB_UI: "{{ transmission_env_web_ui }}"
       LOCAL_NETWORK: "{{ transmission_env_local_network }}"
+      CREATE_TUN_DEVICE: "yes"
   become_user: "{{ primary_user_username }}"
   notify: Enable transmission_ansible podman service
 
