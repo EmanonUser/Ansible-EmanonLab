@@ -6,7 +6,7 @@ User=ansible
 Group=ansible
 WorkingDirectory=/home/ansible/Ansible-EmanonLab/
 Environment="ANSIBLE_VAULT_PASSWORD_FILE=/home/ansible/.VAULT_PASS"
-ExecStart=/usr/bin/ansible-playbook --connection local --tags acme_dns /home/ansible/Ansible-EmanonLab/deploy_laptop.yml
+ExecStart=/usr/bin/ansible-playbook --connection local --tags acme_dns /home/ansible/Ansible-EmanonLab/deploy_nas.yml
 
 [Install]
 WantedBy=multi-user.target

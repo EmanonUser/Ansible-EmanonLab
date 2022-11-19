@@ -1,8 +1,14 @@
 ---
-- include_tasks: redhat_setup.yml
+- name: Install cryptography python3 module (RedHat)
+  ansible.builtin.dnf:
+    name: python3-cryptography
+    state: latest
   when: ansible_os_family == 'RedHat'
 
-- include_tasks: debian_setup.yml
+- name: Install cryptography python3 module (Debian)
+  ansible.builtin.apt:
+    name: python3-cryptography
+    state: present
   when: ansible_os_family == 'Debian'
 
 - name: Create let's encrypt dir(s)
