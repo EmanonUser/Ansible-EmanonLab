@@ -1,0 +1,49 @@
+---
+- name: Create takina user
+  ansible.builtin.user:
+    name: takina
+    create_home: no
+    shell: /usr/bin/bash
+    system: yes
+    comment: takina user created by Ansible
+    state: present
+
+- name: Create takina directory
+  ansible.builtin.file:
+    path: "{{ takina_dir }}"
+    owner: takina
+    group: takina
+    mode: u=rwx,g=,o=
+    state: directory
+
+- name: Download takina binary
+  ansible.builtin.get_url:
+    url: "https://github.com/EmanonUser/takina/releases/latest/download/takina-linux-{{ cpu_architecture }}"
+    dest: "{{ takina_dir }}/takina"
+    owner: takina
+    group: takina
+    mode: u=rwx,g=,o=
+    timeout: 30
+
+- name: Template takina config file
+  ansible.builtin.template:
+    src: takina.toml.j2
+    dest: "{{ takina_dir }}/takina.toml"
+    owner: takina
+    group: takina
+    mode: u=rw,g=,o=
+  notify:
+    - Enable takina timer
+    - Start takina timer
+
+- name: Template takina services file
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "/etc/systemd/system/{{ item }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  notify: Daemon-reload takina systemd
+  loop: 
+    - takina.service
+    - takina.timer

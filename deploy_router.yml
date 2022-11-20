@@ -25,6 +25,9 @@
     - role: kea
       tags: [ kea, services ]
 
+    - role: takina
+      tags: [ takina, service ]
+
     # - role: stork_agent
     #   tags: [ stork_agent, services ]
 

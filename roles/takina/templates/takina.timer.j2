@@ -1,0 +1,10 @@
+[Unit]
+Description=Takina: service timer
+
+[Timer]
+OnStartupSec=1m
+OnUnitActiveSec={{ systemd_interval }}
+Unit=takina.service
+
+[Install]
+WantedBy=timers.target

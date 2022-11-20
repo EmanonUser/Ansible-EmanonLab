@@ -1,0 +1,7 @@
+takina:
+  - domain: emanon.moe
+    api_key: "{{ grp_vault_gandi_api_key }}"
+    records:
+      - record: "@"
+        type: AAAA
+        ttl: 1200

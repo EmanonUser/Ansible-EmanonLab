@@ -1,0 +1,4 @@
+---
+cpu_architecture: "{{ host_cpu_architecture | default('amd64') }}"
+takina_dir: /usr/local/bin/takina
+systemd_interval: 3m

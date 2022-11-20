@@ -1,0 +1,11 @@
+[Unit]
+Description=Takina: Update Gandi DNS A/AAAA records
+
+[Service]
+User=takina
+Group=takina
+ExecStart=/usr/local/bin/takina/takina
+WorkingDirectory=/usr/local/bin/takina
+
+[Install]
+WantedBy=multi-user.target

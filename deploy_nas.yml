@@ -42,8 +42,8 @@
     - role: smbd
       tags: [ smbd, service ]
 
-    - role: gad
-      tags: [ gad, service ]
+    - role: takina
+      tags: [ takina, service ]
 
     - role: acme_dns
       tags: [ acme_dns, service ]
