@@ -18,7 +18,7 @@
 
 - name: Download takina binary
   ansible.builtin.get_url:
-    url: "https://github.com/EmanonUser/takina/releases/latest/download/takina-linux-{{ cpu_architecture }}"
+    url: "https://github.com/EmanonUser/takina/releases/latest/download/takina-{{ cpu_architecture }}"
     dest: "{{ takina_dir }}/takina"
     owner: takina
     group: takina
@@ -32,6 +32,7 @@
     owner: takina
     group: takina
     mode: u=rw,g=,o=
+    validate: "{{ takina_dir }}/takina -c -f %s"
   notify:
     - Enable takina timer
     - Start takina timer
