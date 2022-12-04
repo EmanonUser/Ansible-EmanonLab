@@ -8,6 +8,7 @@ host_jellyfin_volumes:
   - "/vault/media/animes:/animes:ro"
   - "/vault/media/movies:/movies:ro"
   - "/vault/media/series:/series:ro"
+  - "/vault/emanonlab/misc:/misc:ro"
 host_syncthing_volumes:
   - "{{ host_podman_volumes_path }}/syncthing/config:/config:rw"
   - "/vault/emanonlab/secrets/keepassxc:/data:rw"
@@ -20,3 +21,4 @@ host_transmission_volumes:
   - "/vault/media/animes:/media/animes:rw"
   - "/vault/media/series:/media/series:rw"
   - "/vault/media/movies:/media/movies:rw"
+  - "/vault/emanonlab/misc:/misc:ro"
