@@ -75,5 +75,8 @@
     - role: podman/jellyfin
       tags: [ jellyfin, ct ]
 
+    - role: podman/filebrowser
+      tags: [ filebrowser, ct ]
+
     # - role: podman/minecraft
     #   tags: [ minecraft, ct ]
