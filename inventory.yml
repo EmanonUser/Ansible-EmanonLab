@@ -6,7 +6,5 @@ homelab:
   hosts:
     router:
       ansible_host: r1.emanon.moe
-    pi:
-      ansible_host: pi.emanon.moe
     nas:
-      ansible_host: nas.emanon.moe
+      ansible_host: n1.emanon.moe
