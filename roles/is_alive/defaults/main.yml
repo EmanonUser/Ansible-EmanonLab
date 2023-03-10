@@ -1,3 +1,0 @@
----
-is_alive_echo_request_interval: "{{ host_is_alive_echo_request_interval | default('3m') }}"
-is_alive_echo_request_count: "{{ host_is_alive_echo_request_count | default('21') }}"

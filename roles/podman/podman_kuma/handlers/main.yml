@@ -1,7 +1,0 @@
----
-- name: Enable kuma_ansible podman service
-  ansible.builtin.systemd:
-    name: podman-kuma_ansible.service
-    enabled: yes
-    scope: user
-  become_user: "{{ primary_user_username }}"

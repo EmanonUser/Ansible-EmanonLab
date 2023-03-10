@@ -1,6 +1,0 @@
----
-- name: Install tgtd server (RedHat)
-  ansible.builtin.dnf:
-    name: scsi-target-utils
-    state: latest
-  notify: ["Enable tgt service", "Start tgt service"]
