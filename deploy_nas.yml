@@ -33,23 +33,8 @@
     - role: zrepl
       tags: [ zrepl, init ]
 
-    - role: nfsd
-      tags: [ nfsd, init ]
-
-    - role: tgtd
-      tags: [ tgtd, service ]
-
-    - role: smbd
-      tags: [ smbd, service ]
-
     - role: takina
       tags: [ takina, service ]
-
-    - role: acme_dns
-      tags: [ acme_dns, service ]
-
-    - role: haproxy
-      tags: [ haproxy, ct ]
 
     - role: podman/podman
       tags: [ podman, ct ]
