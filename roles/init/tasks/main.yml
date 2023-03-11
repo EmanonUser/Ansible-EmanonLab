@@ -17,7 +17,7 @@
 - name: Add primary user
   ansible.builtin.user:
     name: "{{ primary_user_username }}"
-    create_home: yes
+    create_home: true
     shell: /usr/bin/zsh
     comment: Primary user created by Ansible
     password: "{{ primary_user_password | password_hash('sha512', primary_user_password_salt) }}"
@@ -72,7 +72,7 @@
   ansible.builtin.lineinfile:
     line: umask 0077
     path: /etc/zsh/zprofile
-    create: yes
+    create: true
     owner: root
     group: root
     mode: u=rw,g=r,o=r
