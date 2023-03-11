@@ -2,17 +2,17 @@
 zfs_systemd_on_calendar_scrubing_timer: Sat 00:00:00
 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
 zfs_arc_max: 12884901888  # Bytes
-zfs_manual_zpools_creation: no
+zfs_manual_zpools_creation: false
 zfs_set_permissions_blacklist: []
 zfs_pools:
   - pool: vault
-    enable_trim: no
+    enable_trim: false
     base_path: /vault      # Carefull with the pool base mountpoint, must be changed too
     datasets:
       ## media datasets ##
       - dataset: media
         recordsize: 1M
-        zrepl_snapshot_policy: "no"
+        zrepl_snapshot_policy: false
       - dataset: media-animes
         recordsize: 1M
       - dataset: media-series
@@ -27,7 +27,7 @@ zfs_pools:
 
       ## emanonlab datasets ##
       - dataset: emanonlab
-        zrepl_snapshot_policy: "no"
+        zrepl_snapshot_policy: false
         compression: zstd
       - dataset: emanonlab-containers
         zrepl_snapshot_policy: zrepl_P2
@@ -49,12 +49,12 @@ zfs_pools:
 
       ## emanon datasets ##
       - dataset: emanon
-        atime: on
-        relatime: on
-        zrepl_snapshot_policy: "no"
+        atime: on # yamllint disable-line rule:truthy
+        relatime: on # yamllint disable-line rule:truthy
+        zrepl_snapshot_policy: false
       - dataset: emanon-documents
-        atime: on
-        relatime: on
+        atime: on # yamllint disable-line rule:truthy
+        relatime: on # yamllint disable-line rule:truthy
         zrepl_snapshot_policy: zrepl_P2
         compression: zstd
       - dataset: emanon-other_users

@@ -1,13 +1,13 @@
 ---
 network_interfaces:
     - interface: "bond0"
-      ipv4: yes
-      ipv6: yes
+      ipv4: true
+      ipv6: true
       configuration:
-        v4: dhcp
-        v6: dhcp
+          v4: dhcp
+          v6: dhcp
       bonding:
-        slaves: "{{ grp_device.nas.lan_interfaces }}"
-        mode: 4
-        millim: 100
+          slaves: "{{ grp_device.nas.lan_interfaces }}"
+          mode: 4
+          millim: 100
       hwaddress: ec:cc:32:4b:17:b0
