@@ -1,5 +1,5 @@
 ---
-redhat_packages: "{{ redhat_packages | default(redhat_packages_defaults) }}"
+redhat_packages: "{{ host_packages | default(redhat_packages_defaults) }}"
 redhat_packages_defaults:
   - ca-certificates
   - apt-transport-https
