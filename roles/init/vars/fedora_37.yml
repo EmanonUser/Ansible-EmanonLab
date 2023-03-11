@@ -1,5 +1,5 @@
 ---
-redhat_packages: "{{ host_redhat_packages | default(redhat_packages_defaults) }}"
+redhat_packages: "{{ redhat_packages | default(redhat_packages_defaults) }}"
 redhat_packages_defaults:
   - ca-certificates
   - apt-transport-https
@@ -10,5 +10,6 @@ redhat_packages_defaults:
   - zsh
   - neovim
   - unzip
+  - vnstat
 
 ssh_service_name: sshd.service
