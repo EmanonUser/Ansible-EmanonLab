@@ -8,3 +8,9 @@
   ansible.builtin.systemd:
     name: systemd-logind.service
     state: restarted
+
+- name: Enable ssd trim
+  ansible.builtin.systemd:
+    name: fstrim.timer 
+    state: started
+    enabled: true

@@ -8,3 +8,4 @@
   ansible.builtin.dnf:
     name: "{{ redhat_packages }}"
     state: latest
+  notify: Enable ssd trim

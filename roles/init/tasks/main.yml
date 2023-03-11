@@ -81,11 +81,10 @@
   ansible.builtin.user:
     user: root
     shell: /usr/bin/zsh
-  when: use_starship
 
 - name: Configure .zshrc for primary user and root
   ansible.builtin.copy:
-    src: "zshrc{% if use_starship %}_starship{% endif %}"
+    src: zshrc
     dest: "{{ item.path }}"
     owner: "{{ item.user }}"
     group: "{{ item.user }}"
@@ -93,7 +92,6 @@
   loop:
     - { path: "/home/{{ primary_user_username }}/.zshrc", user: "{{ primary_user_username }}" }
     - { path: "/root/.zshrc", user: "root" }
-  when: use_starship
 
 - name: Fetch zsh-autosuggestions plugin from github
   ansible.builtin.git:
@@ -144,13 +142,3 @@
     - { path: "/home/{{  primary_user_username }}/.config/nvim/init.vim", user: "{{ primary_user_username }}" }
     - { path: "/root/.config/nvim/init.vim", user: "root" }
 
-- name: Disable laptop lid suspend
-  ansible.builtin.lineinfile:
-    path: /etc/systemd/logind.conf
-    regexp: HandleLidSwitch=
-    line: HandleLidSwitch=ignore
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-  when: inventory_hostname == 'laptop'
-  notify: Restart systemd-logind service
