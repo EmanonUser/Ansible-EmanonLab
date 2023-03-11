@@ -1,5 +1,5 @@
 ---
-host_redhat_packages:
+redhat_packages:
   - ca-certificates
   - apt-transport-https
   - acl

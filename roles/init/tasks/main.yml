@@ -1,10 +1,10 @@
 ---
 - include_tasks: variables.yml
 
-- include_tasks: redhat_setup.yml
+- include_tasks: redhat.yml
   when: ansible_os_family == 'RedHat'
 
-- include_tasks: debian_setup.yml
+- include_tasks: debian.yml
   when: ansible_os_family == 'Debian'
 
 - name: Set root password

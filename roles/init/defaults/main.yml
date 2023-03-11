@@ -1,2 +1,0 @@
----
-use_starship: "{{ host_use_starship | default(true) }}"

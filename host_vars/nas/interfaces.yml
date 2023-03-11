@@ -1,5 +1,5 @@
 ---
-host_network_interfaces:
+network_interfaces:
     - interface: "bond0"
       ipv4: yes
       ipv6: yes
