@@ -1,0 +1,11 @@
+---
+- name: Provisioning of the primary server
+  hosts: n1
+  become: true
+  gather_facts: true
+  roles:
+    - role: init
+      tags: [ init ]
+
+    - role: starship
+      tags: [ starship ]
