@@ -9,3 +9,6 @@
 
     - role: starship
       tags: [ starship ]
+
+    - role: firewalld
+      tags: [ firewalld ]

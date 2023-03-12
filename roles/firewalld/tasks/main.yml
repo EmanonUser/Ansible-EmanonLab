@@ -3,14 +3,14 @@
   ansible.builtin.apt:
     name: ['firewalld', 'python3-firewall']
     state: present
-  notify: ["Enable firewalld service","Start firewalld service"]
+  notify: ["Enable firewalld service", "Start firewalld service"]
   when: ansible_distribution == 'Debian'
 
 - name: Install firewalld on Fedora
   ansible.builtin.dnf:
     name: ['firewalld', 'python3-firewall']
-    state: latest
-  notify: ["Enable firewalld service","Start firewalld service"]
+    state: present
+  notify: ["Enable firewalld service", "Start firewalld service"]
   when: ansible_distribution == 'Fedora'
 
 - name: Make sure ssh firewalld service is authorized
@@ -18,21 +18,21 @@
     zone: "{{ firewalld_zone }}"
     service: ssh
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
 
 - name: Authorized dhcpv6-client firewalld service
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     service: dhcpv6-client
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
 
 - name: Add primary interface to firewalld zone
   ansible.posix.firewalld:
     interface: "{{ firewalld_primary_interface }}"
     zone: "{{ firewalld_zone }}"
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
