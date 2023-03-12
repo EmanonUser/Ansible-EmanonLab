@@ -1,19 +1,19 @@
 ---
-- name: Reload haproxy service
+- name: Reload caddy service
   ansible.builtin.systemd:
-    name: haproxy.service
+    name: caddy.service
     state: reloaded
 
 - name: Daemon-reload acme_dns systemd
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: Enable ansible_acme_renew timer
   ansible.builtin.systemd:
-    name: "ansible_acme_renew.timer"
-    enabled: yes
+    name: ansible_acme_renew.timer
+    enabled: true
 
 - name: Start ansible_acme_renew timer
   ansible.builtin.systemd:
-    name: "ansible_acme_renew.timer"
+    name: ansible_acme_renew.timer
     state: started
