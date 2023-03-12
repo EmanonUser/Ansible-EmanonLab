@@ -3,38 +3,18 @@
   ansible.builtin.set_fact:
     libc: "{% if ansible_architecture == 'x86_64' %}gnu{% elif ansible_architecture == 'aarch64' %}musl{% endif %}"
 
-- name: Determine if starship archive(s) exist
-  ansible.builtin.stat:
-    path: /usr/local/bin/starship_v{{ starship_version }}.tar.gz
-  register: stat_result
-
-- name: Find starship archive(s)
-  ansible.builtin.find:
-    paths: /usr/local/bin/
-    patterns: starship_v*
-  register: files_to_delete
-
-- name: Delete old starship archive(s)
-  ansible.builtin.file:
-    path: "{{ item.path }}"
-    state: absent
-  loop: "{{ files_to_delete.files }}"
-  loop_control:
-    label: "{{ item.path }}"
-  when: [ not stat_result.stat.exists, files_to_delete.matched > 0 ]
-
-- name: Get starship.rs archives
+- name: Get starship.rs binary archive
   ansible.builtin.get_url:
-    url: https://github.com/starship/starship/releases/download/v{{ starship_version }}/starship-{{ ansible_architecture }}-unknown-linux-{{ libc }}.tar.gz
-    dest: /usr/local/bin/starship_v{{ starship_version }}.tar.gz
+    url: https://github.com/starship/starship/releases/latest/download/starship-{{ ansible_architecture }}-unknown-linux-{{ libc }}.tar.gz
+    dest: /usr/local/bin/starship.tar.gz
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
-    mode: u=rw,g=,o=
+    mode: u=rwx,g=,o=
     timeout: 30
 
 - name: Unarchive starship.rs
   ansible.builtin.unarchive:
-    src: /usr/local/bin/starship_v{{ starship_version }}.tar.gz
+    src: /usr/local/bin/starship.tar.gz
     dest: /usr/local/bin/
     remote_src: yes
     owner: "{{ primary_user_username }}"

@@ -1,3 +1,0 @@
----
-starship_version: "{{ host_starship_version | default('1.10.3') }}"
-# https://github.com/starship/starship/releases
