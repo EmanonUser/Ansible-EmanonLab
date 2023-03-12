@@ -7,13 +7,13 @@
 - name: Add OpenZFS repository (Redhat)
   ansible.builtin.dnf:
     name: "{{ open_zfs_repo }}"
-    disable_gpg_check: yes
+    disable_gpg_check: true
     state: present
 
 - name: Install kernel-headers and zfs (Redhat)
   ansible.builtin.dnf:
     name: "{{ item }}"
-    state: latest
+    state: present
   loop:
     - kernel-devel # This is on purpose, kernel-headers have to be installed first
     - zfs

@@ -1,11 +1,12 @@
 ---
-- include_tasks: variables.yml
+- name: Include zfs variables
+  ansible.builtin.include_tasks:
+    file: variables.yml
 
-- include_tasks: redhat_setup.yml
+- name: Include redhat tasks
+  ansible.builtin.include_tasks:
+    file: redhat.yml
   when: ansible_os_family == 'RedHat'
-
-- include_tasks: debian_setup.yml
-  when: ansible_os_family == 'Debian'
 
 - name: Pause create zpool(s) manually, too sensitive to automate it without a proper module
   ansible.builtin.pause:
@@ -82,7 +83,7 @@
 - name: Create ZFS dataset encryption key(s)
   ansible.builtin.shell:
     creates: "{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key"
-    cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key
+    cmd: set -o pipefail && openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key
   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
@@ -90,7 +91,7 @@
 - name: Create ZFS volume encryption key(s)
   ansible.builtin.shell:
     creates: "{{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key"
-    cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key
+    cmd: set -o pipefail && openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key
   loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
