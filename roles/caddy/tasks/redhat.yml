@@ -1,0 +1,10 @@
+---
+- name: Enable copr caddy for redhat
+    name: "@caddy/caddy"
+    state: present
+  notify: Enable caddy service
+
+- name: Install caddy
+  ansible.builtin.dnf:
+    name: caddy
+    state: present
