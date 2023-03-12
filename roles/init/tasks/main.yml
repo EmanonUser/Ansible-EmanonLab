@@ -1,11 +1,12 @@
 ---
-- include_tasks: variables.yml
+- name: Include init variables 
+  ansible.builtin.include_tasks:
+    file: variables.yml
 
-- include_tasks: redhat.yml
+- name: Include redhat tasks
+  ansible.builtin.include_tasks:
+    file: redhat.yml
   when: ansible_os_family == 'RedHat'
-
-- include_tasks: debian.yml
-  when: ansible_os_family == 'Debian'
 
 - name: Set root password
   ansible.builtin.user:
