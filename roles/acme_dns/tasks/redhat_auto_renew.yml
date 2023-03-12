@@ -1,0 +1,43 @@
+---
+- name: Install ansible (RedHat)
+  ansible.builtin.dnf:
+    name: ansible
+    state: latest
+
+- name: Pull latest source files from github (RedHat)
+  ansible.builtin.git:
+    repo: https://github.com/EmanonUser/Ansible-EmanonLab
+    dest: Ansible-EmanonLab
+    single_branch: yes
+    version: main
+    force: yes
+
+- name: Place ansible vault password file (RedHat)
+  ansible.builtin.lineinfile:
+    path: .VAULT_PASS
+    line: "{{ lookup('file', '~/.ansible/.VAULT_PASS') }}"
+    owner: ansible
+    group: ansible
+    mode: u=r,g=,o=
+    create: yes
+    state: present
+
+- name: Install required collections (RedHat)
+  community.general.ansible_galaxy_install:
+    type: collection
+    name: "{{ item }}"
+    dest: /home/ansible/.ansible/collections/ansible_collections/
+  loop: [community.general, community.crypto]
+
+- name: Place ansible_acme_renew systemd files (RedHat)
+  ansible.builtin.template:
+    src: "ansible_acme_renew.{{ item }}.j2"
+    dest: "/etc/systemd/system/ansible_acme_renew.{{ item }}"
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  loop: ["service", "timer"]
+  notify:
+    - Daemon-reload acme_dns systemd
+    - Enable ansible_acme_renew timer
+    - Start ansible_acme_renew timer

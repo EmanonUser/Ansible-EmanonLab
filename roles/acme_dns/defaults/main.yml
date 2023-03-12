@@ -1,0 +1,14 @@
+---
+acme_dns_directory: https://acme-v02.api.letsencrypt.org/directory
+# https://acme-staging-v02.api.letsencrypt.org/directory
+acme_dns_version: 2
+acme_dns_challenge_type: dns-01
+acme_dns_email: moemanon@pm.me
+acme_dns_letsencrypt_base_path: /etc/letsencrypt
+acme_dns_letsencrypt_dirs:
+  account: "{{ acme_dns_letsencrypt_base_path }}/account"
+  mykeys: "{{ acme_dns_letsencrypt_base_path }}/keys"
+  csrs: "{{ acme_dns_letsencrypt_base_path }}/csrs"
+  certs: "{{ acme_dns_letsencrypt_base_path }}/certs"
+acme_dns_setup_auto_renew: yes
+acme_dns_auto_renew_systemd_interval: 12h
