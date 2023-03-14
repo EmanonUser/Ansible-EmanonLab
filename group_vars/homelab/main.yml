@@ -1,5 +1,5 @@
 ---
 ipv6_prefix: 2a01:e0a:94f # /61
-primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKx0902V1k3eMf07VFSb39XZmyCy7h6f1rFabSTvP4E emanon@arch
+primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDDs6RBgrx45PnidTTYIl9yyq9EgUbwGexk8rHzxiG9U emanon@arch 
 domain_name: emanon.moe
 subdomain: "@"
