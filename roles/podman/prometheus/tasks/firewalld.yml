@@ -3,8 +3,8 @@
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     port: "{{ prometheus_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
     state: enabled
   when:
     - prometheus_config.direct_access
@@ -14,8 +14,8 @@
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     port: "{{ prometheus_firewalld_ports }}"
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
     state: disabled
   when:
     - not prometheus_config.direct_access or
@@ -25,8 +25,8 @@
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
     state: enabled
   loop: "{{ prometheus_firewalld_rich_rules }}"
   when:
@@ -37,8 +37,8 @@
   ansible.posix.firewalld:
     zone: "{{ firewalld_zone }}"
     rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
     state: disabled
   loop: "{{ prometheus_firewalld_rich_rules }}"
   when:
