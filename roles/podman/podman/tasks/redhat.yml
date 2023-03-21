@@ -1,0 +1,22 @@
+---
+- name: Install podman
+  ansible.builtin.dnf:
+    name: podman
+    state: present
+  notify:
+    - Enable podman service
+    - Start podman service
+    - Enable podman-auto-update timer
+    - Start podman-auto-update timer
+
+- name: Loginctl lingering primary user
+  ansible.builtin.command: "loginctl enable-linger {{ main_user }}"
+  args:
+    creates: "/var/lib/systemd/linger/{{ main_user }}"
+
+- name: Allow echo-request, echo-reply from containers
+  ansible.posix.sysctl:
+    name: net.ipv4.ping_group_range
+    value: 0 2000000
+    state: present
+    reload: true
