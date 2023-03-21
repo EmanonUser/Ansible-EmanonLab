@@ -15,3 +15,9 @@
 
     - role: zfs
       tags: [ zfs ]
+
+    - role: podman/podman
+      tags: [ podman ]
+
+    - role: podman/prometheus
+      tags: [ prometheus ]
