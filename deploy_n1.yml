@@ -21,3 +21,12 @@
 
     - role: podman/prometheus
       tags: [ prometheus ]
+
+    - role: podman/grafana
+      tags: [ grafana ]
+
+    - role: podman/jellyfin
+      tags: [ jellyfin ]
+
+    - role: podman/transmission
+      tags: [ transmission ]  
