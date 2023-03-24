@@ -5,9 +5,11 @@ transmission_image_version: "{{ host_transmission_image_version | default('lates
 
 
 transmission_config: "{{ http_services | selectattr('service', 'equalto', 'transmission') | first }}"
-transmission_ports:
-  - "{% if transmission_config.direct_access %}[::]:{{ transmission_config.backends[0].port }}{% else %}127.0.0.1:{{ transmission_config.backends[0].port }}{% endif %}:9091/tcp"
-  - "{% if transmission_config.direct_access %}[::]:{{ transmission_config.backends[0].port }}{% else %}[::1]:{{ transmission_config.backends[0].port }}{% endif %}:9091/tcp"
+transmission_ports: >-
+  - "{% if transmission_config.direct_access %}[::]:{{ transmission_config.backends[0].port }}
+    {% else %}127.0.0.1:{{ transmission_config.backends[0].port }}{% endif %}:9091/tcp"
+  - "{% if transmission_config.direct_access %}[::]:{{ transmission_config.backends[0].port }}
+    {% else %}[::1]:{{ transmission_config.backends[0].port }}{% endif %}:9091/tcp"
 
 transmission_directories:
   - "{{ host_podman_volumes_path }}/transmission"
@@ -25,7 +27,7 @@ transmission_network: "{% if transmission_config.public %}slirp4netns:outbound_a
 
 
 transmission_env_home_path: "{{ host_transmission_env_home_path | default('/transmission/home') }}"
-transmission_env_download_path: "{{ host_transmission_env_download_path | default('/transmission/completed')}}"
+transmission_env_download_path: "{{ host_transmission_env_download_path | default('/transmission/completed') }}"
 transmission_env_incomplete_path: "{{ host_transmission_env_incomplete_path | default('/transmission/incompleted') }}"
 transmission_env_watch_path: "{{ host_transmission_env_watch_path | default('/transmission/watch') }}"
 
