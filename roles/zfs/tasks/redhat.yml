@@ -18,7 +18,7 @@
     - kernel-devel # This is on purpose, kernel-headers have to be installed first
     - zfs
 
-- name: Configure ZFS dkms kernel module (Debian)
+- name: Configure ZFS dkms kernel module (RedHat)
   ansible.builtin.template:
     src: zfs.conf.j2
     dest: /etc/modprobe.d/zfs.conf
