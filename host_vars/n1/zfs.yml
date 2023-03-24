@@ -9,10 +9,9 @@ zfs_pools:
     enable_trim: false
     base_path: /vault      # Carefull with the pool base mountpoint, must be changed too
     datasets:
-      ## media datasets ##
+      ## Media datasets ##
       - dataset: media
         recordsize: 1M
-        zrepl_snapshot_policy: false
       - dataset: media-animes
         recordsize: 1M
       - dataset: media-series
@@ -27,22 +26,16 @@ zfs_pools:
 
       ## emanonlab datasets ##
       - dataset: emanonlab
-        zrepl_snapshot_policy: false
         compression: zstd
       - dataset: emanonlab-containers
-        zrepl_snapshot_policy: zrepl_P2
         compression: zstd-6
       - dataset: emanonlab-secrets
-        zrepl_snapshot_policy: zrepl_P2
         compression: zstd
       - dataset: emanonlab-secrets-keepassxc
-        zrepl_snapshot_policy: zrepl_P2
         compression: zstd
       - dataset: emanonlab-tmp
-        zrepl_snapshot_policy: zrepl_P3
         compression: zstd
       - dataset: emanonlab-dev
-        zrepl_snapshot_policy: zrepl_P2
         compression: zstd-12
       - dataset: emanonlab-misc
       ## emanonlab datasets ##
@@ -55,14 +48,11 @@ zfs_pools:
       - dataset: emanon-documents
         atime: on # yamllint disable-line rule:truthy
         relatime: on # yamllint disable-line rule:truthy
-        zrepl_snapshot_policy: zrepl_P2
         compression: zstd
       - dataset: emanon-other_users
-        zrepl_snapshot_policy: zrepl_P2
         compression: zstd
       ## emanon datasets ##
 
     volumes:
       - volume: zvol_01
-        zrepl_snapshot_policy: zrepl_P3
         volsize: 35G
