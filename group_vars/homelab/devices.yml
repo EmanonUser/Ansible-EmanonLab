@@ -1,10 +1,10 @@
 ---
 devices:
 
-    router:
-      hostname: r1
+    r1:
       ipv4_addr: 192.168.5.1
       ipv6_addr: "{{ grp_ipv6_prefix }}:f400::a"
+      hostname: r1
       wan_interface:
         ifname: enp1s0
         ipv6_addr: "{{ grp_ipv6_prefix }}:f400:ffff::"
@@ -17,7 +17,7 @@ devices:
         ipv6_addr: "{{ grp_ipv6_prefix }}:f400::a"
         ipv6_addr_cidr: "{{ grp_ipv6_prefix }}:f400::a/64"
 
-    brocade:
+    s1:
       ipv4_addr: 192.168.5.2
       ipv6_addr: "{{ grp_ipv6_prefix }}:f400::b"
       hostname: s1
@@ -29,19 +29,19 @@ devices:
       duid: 00:02:00:00:ab:11:57:c4:3c:6f:2e:8a:90:62
       hostname: arch
 
-    nas:
+    n1:
       ipv4_addr: 192.168.10.25
       ipv6_addr: "{{ grp_ipv6_prefix }}:f401::25"
       hw_addr: 6a:c5:63:4b:f2:fd
       duid: 00:02:00:00:ab:11:13:32:c9:57:5b:26:e6:d3
       hostname: n1
 
-    ndmz:
+    n1dmz:
       ipv4_addr: 192.168.50.25
       ipv6_addr: "{{ grp_ipv6_prefix }}:f405::25"
       hw_addr: 6a:c5:63:4b:f2:fe
       duid: 00:04:00:00:00:00:00:00:00:00:00:00:ac:1f:6b:77:cf:b8
-      hostname: ndmz
+      hostname: n1dmz
 
     ipmi:
       ipv4_addr: 192.168.10.26
@@ -50,7 +50,7 @@ devices:
       duid: 00:01:00:01:2a:16:93:14:00:00:00:00:00:00
       hostname: ipmi
 
-    aclite:
+    ubnt:
       ipv4_addr: 192.168.10.40
       ipv6_addr: "{{ grp_ipv6_prefix }}:f401::40"
       hw_addr: b4:fb:e4:90:49:50
