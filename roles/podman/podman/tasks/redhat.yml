@@ -10,9 +10,9 @@
     - Start podman-auto-update timer
 
 - name: Loginctl lingering primary user
-  ansible.builtin.command: "loginctl enable-linger {{ main_user }}"
+  ansible.builtin.command: "loginctl enable-linger {{ primary_user_username }}"
   args:
-    creates: "/var/lib/systemd/linger/{{ main_user }}"
+    creates: "/var/lib/systemd/linger/{{ primary_user_username }}"
 
 - name: Allow echo-request, echo-reply from containers
   ansible.posix.sysctl:
