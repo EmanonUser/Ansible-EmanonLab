@@ -29,5 +29,6 @@
   notify: Enable jellyfin_ansible podman service
 
 - name: Import firewalld tasks
-  include_tasks: firewalld.yml
+  ansible.builtin.include_tasks:
+    file: firewalld.yml
   when: podman_use_firewalld
