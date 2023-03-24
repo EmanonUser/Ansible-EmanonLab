@@ -16,7 +16,7 @@
   ansible.builtin.unarchive:
     src: /usr/local/bin/starship.tar.gz
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=rx,o=rx

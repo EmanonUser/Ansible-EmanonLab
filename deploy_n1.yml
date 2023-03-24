@@ -5,28 +5,31 @@
   gather_facts: true
   roles:
     - role: init
-      tags: [ init ]
+      tags: [init]
 
     - role: starship
-      tags: [ starship ]
+      tags: [starship]
 
     - role: firewalld
-      tags: [ firewalld ]
+      tags: [firewalld]
 
     - role: zfs
-      tags: [ zfs ]
+      tags: [zfs]
+
+    - role: zrepl
+      tags: [zrepl]
 
     - role: podman/podman
-      tags: [ podman ]
+      tags: [podman]
 
     - role: podman/prometheus
-      tags: [ prometheus ]
+      tags: [prometheus]
 
     - role: podman/grafana
-      tags: [ grafana ]
+      tags: [grafana]
 
     - role: podman/jellyfin
-      tags: [ jellyfin ]
+      tags: [jellyfin]
 
     - role: podman/transmission
-      tags: [ transmission ]  
+      tags: [transmission]

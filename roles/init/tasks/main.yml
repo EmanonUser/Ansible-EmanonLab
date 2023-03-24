@@ -1,5 +1,5 @@
 ---
-- name: Include init variables 
+- name: Include init variables
   ansible.builtin.include_tasks:
     file: variables.yml
 
@@ -94,7 +94,7 @@
     - { path: "/home/{{ primary_user_username }}/.zshrc", user: "{{ primary_user_username }}" }
     - { path: "/root/.zshrc", user: "root" }
 
-- name: Fetch zsh-autosuggestions plugin from github
+- name: Fetch zsh-autosuggestions plugin from github # noqa: latest
   ansible.builtin.git:
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
     dest: "{{ item }}"
@@ -103,7 +103,7 @@
     - "/home/{{ primary_user_username }}/.zsh/zsh-autosuggestions"
     - "/root/.zsh/zsh-autosuggestions"
 
-- name: Fetch zsh history-search-multi-word plugin from github
+- name: Fetch zsh history-search-multi-word plugin from github # noqa: latest
   ansible.builtin.git:
     repo: "https://github.com/zdharma-continum/history-search-multi-word"
     dest: "{{ item }}"
@@ -112,7 +112,7 @@
     - "/home/{{ primary_user_username }}/.zsh/history-search-multi-word"
     - "/root/.zsh/history-search-multi-word"
 
-- name: Fetch zsh-completions plugin from github
+- name: Fetch zsh-completions plugin from github # noqa: latest
   ansible.builtin.git:
     repo: "https://github.com/zsh-users/zsh-completions"
     dest: "{{ item }}"
@@ -142,4 +142,3 @@
   loop:
     - { path: "/home/{{  primary_user_username }}/.config/nvim/init.vim", user: "{{ primary_user_username }}" }
     - { path: "/root/.config/nvim/init.vim", user: "root" }
-
