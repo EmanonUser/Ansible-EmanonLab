@@ -1,8 +1,7 @@
 ---
-- include_tasks: debian_setup.yml
-  when: ansible_os_family == 'Debian'
-
-- include_tasks: redhat_setup.yml
+- name: Import RedHat tasks
+  ansible.builtin.include_tasks:
+    file: redhat.yml
   when: ansible_os_family == 'RedHat'
 
 - name: Configure zrepl

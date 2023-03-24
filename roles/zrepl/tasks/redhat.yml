@@ -5,18 +5,18 @@
     description: zrepl repository
     baseurl: https://zrepl.cschwarz.com/rpm/repo
     gpgkey: https://zrepl.cschwarz.com/rpm/rpm-key.asc
-    gpgcheck: yes
+    gpgcheck: true
 
 - name: Install zrepl package (RedHat)
   ansible.builtin.dnf:
     name: zrepl
-    state: latest
+    state: present
   notify: ["Enable zrepl service", "Start zrepl service"]
 
 - name: Install versionlock plugin (RedHat)
   ansible.builtin.dnf:
     name: dnf-command(versionlock)
-    state: latest
+    state: present
 
 - name: Disable upgrade of zrepl, breaking changes (RedHat)
   community.general.dnf_versionlock:
