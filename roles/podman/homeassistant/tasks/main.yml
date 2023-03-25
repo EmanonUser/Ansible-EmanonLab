@@ -26,10 +26,11 @@
       container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
-      DISABLE_JEMALLOC: yes
+      DISABLE_JEMALLOC: true
   become_user: "{{ primary_user_username }}"
   notify: Enable home_assistant_ansible podman service
 
 - name: Import firewalld tasks
-  include_tasks: firewalld.yml
+  ansible.builtin.include_tasks:
+    file: firewalld.yml
   when: podman_use_firewalld

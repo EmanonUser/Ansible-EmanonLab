@@ -33,3 +33,6 @@
 
     - role: podman/transmission
       tags: [transmission]
+
+    - role: podman/homeassistant
+      tags: [transmission]
