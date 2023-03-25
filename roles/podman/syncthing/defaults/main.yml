@@ -5,19 +5,21 @@ syncthing_image_version: "{{ host_syncthing_image_version | default('latest') }}
 
 syncthing_config: "{{ http_services | selectattr('service', 'equalto', 'syncthing') | first }}"
 syncthing_ports:
-  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}{% else %}127.0.0.1:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
-  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}{% else %}[::1]:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
+  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}
+    {% else %}127.0.0.1:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
+  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}
+    {% else %}[::1]:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
   - "22000:22000/tcp"
   - "22000:22000/udp"
   - "21027:21027/udp"
 
 syncthing_directories:
-  - "{{ host_podman_volumes_path }}/syncthing"
-  - "{{ host_podman_volumes_path }}/syncthing/config"
-  - "{{ host_podman_volumes_path }}/syncthing/data"
+  - "{{ podman_volumes_path }}/syncthing"
+  - "{{ podman_volumes_path }}/syncthing/config"
+  - "{{ podman_volumes_path }}/syncthing/data"
 syncthing_default_volumes:
-  - "{{ host_podman_volumes_path }}/syncthing/config:/config"
-  - "{{ host_podman_volumes_path }}/syncthing/data:/data"
+  - "{{ podman_volumes_path }}/syncthing/config:/config"
+  - "{{ podman_volumes_path }}/syncthing/data:/data"
 syncthing_volumes: "{{ host_syncthing_volumes | default(syncthing_default_volumes) }}"
 syncthing_network: "{% if syncthing_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
