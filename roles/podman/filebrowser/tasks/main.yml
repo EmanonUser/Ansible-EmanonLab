@@ -15,7 +15,7 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rw,g=,o=
-    force: no
+    force: false
 
 - name: Create filebrowser empty database
   ansible.builtin.copy:
@@ -24,7 +24,7 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rw,g=,o=
-    force: no
+    force: false
 
 - name: Run filebrowser podman container
   containers.podman.podman_container:
@@ -45,5 +45,6 @@
   notify: Enable filebrowser_ansible podman service
 
 - name: Import firewalld tasks
-  include_tasks: firewalld.yml
+  ansible.builtin.include_tasks:
+    file: firewalld.yml
   when: podman_use_firewalld
