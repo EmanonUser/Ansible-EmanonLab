@@ -1,24 +1,30 @@
 ---
-host_kea_dhcp4:
+
+dns_server_ipv4: 
+  - 192.168.5.1
+dns_server_ipv6:
+  - 
+
+kea_dhcp4:
   - subnet: 192.168.10.0/24
     pools:
       - start: 192.168.10.100
         end: 192.168.10.200
     reservations:
-      - ipv4_addr: "{{ grp_device.nas.ipv4_addr }}"
-        hw_addr: "{{ grp_device.nas.hw_addr }}"
-        hostname: "{{ grp_device.nas.hostname }}"
-      - ipv4_addr: "{{ grp_device.ipmi.ipv4_addr }}"
-        hw_addr: "{{ grp_device.ipmi.hw_addr }}"
-        hostname: "{{ grp_device.ipmi.hostname }}"
-      - ipv4_addr: "{{ grp_device.pi.ipv4_addr }}"
-        hw_addr: "{{ grp_device.pi.hw_addr }}"
-        hostname: "{{ grp_device.pi.hostname }}"
-      - ipv4_addr: "{{ grp_device.aclite.ipv4_addr }}"
-        hw_addr: "{{ grp_device.aclite.hw_addr }}"
-        hostname: "{{ grp_device.aclite.hostname }}"
+      - ipv4_addr: "{{ devices.n1.ipv4_addr }}"
+        hw_addr: "{{ devices.n1.hw_addr }}"
+        hostname: "{{ devices.n1.hostname }}"
+      - ipv4_addr: "{{ devices.ipmi.ipv4_addr }}"
+        hw_addr: "{{ devices.ipmi.hw_addr }}"
+        hostname: "{{ devices.ipmi.hostname }}"
+      - ipv4_addr: "{{ devices.pi.ipv4_addr }}"
+        hw_addr: "{{ devices.pi.hw_addr }}"
+        hostname: "{{ devices.pi.hostname }}"
+      - ipv4_addr: "{{ devices.aclite.ipv4_addr }}"
+        hw_addr: "{{ devices.aclite.hw_addr }}"
+        hostname: "{{ devices.aclite.hostname }}"
     options_data:
-      - option_data: "routers"
+      - option_data: "r1"
         data: ["192.168.10.1"]
 
   - subnet: 192.168.20.0/24
@@ -26,11 +32,11 @@ host_kea_dhcp4:
       - start: 192.168.20.100
         end: 192.168.20.200
     reservations:
-      - ipv4_addr: "{{ grp_device.arch.ipv4_addr }}"
-        hw_addr: "{{ grp_device.arch.hw_addr }}"
-        hostname: "{{ grp_device.arch.hostname }}"
+      - ipv4_addr: "{{ devices.arch.ipv4_addr }}"
+        hw_addr: "{{ devices.arch.hw_addr }}"
+        hostname: "{{ devices.arch.hostname }}"
     options_data:
-      - option_data: "routers"
+      - option_data: "r1"
         data: ["192.168.20.1"]
 
   - subnet: 192.168.30.0/24
@@ -38,11 +44,11 @@ host_kea_dhcp4:
       - start: 192.168.30.100
         end: 192.168.30.200
     reservations:
-      - ipv4_addr: "{{ grp_device.printer.ipv4_addr }}"
-        hw_addr: "{{ grp_device.printer.hw_addr }}"
-        hostname: "{{ grp_device.printer.hostname }}"
+      - ipv4_addr: "{{ devices.printer.ipv4_addr }}"
+        hw_addr: "{{ devices.printer.hw_addr }}"
+        hostname: "{{ devices.printer.hostname }}"
     options_data:
-      - option_data: "routers"
+      - option_data: "r1"
         data: ["192.168.30.1"]
 
   - subnet: 192.168.40.0/24
@@ -50,107 +56,107 @@ host_kea_dhcp4:
       - start: 192.168.40.100
         end: 192.168.40.200
     reservations:
-      - ipv4_addr: "{{ grp_device.shp1.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp1.hw_addr }}"
-        hostname: "{{ grp_device.shp1.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp2.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp2.hw_addr }}"
-        hostname: "{{ grp_device.shp2.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp3.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp3.hw_addr }}"
-        hostname: "{{ grp_device.shp3.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp4.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp4.hw_addr }}"
-        hostname: "{{ grp_device.shp4.hostname }}"
-      - ipv4_addr: "{{ grp_device.shp5.ipv4_addr }}"
-        hw_addr: "{{ grp_device.shp5.hw_addr }}"
-        hostname: "{{ grp_device.shp5.hostname }}"
-      - ipv4_addr: "{{ grp_device.hs110.ipv4_addr }}"
-        hw_addr: "{{ grp_device.hs110.hw_addr }}"
-        hostname: "{{ grp_device.hs110.hostname }}"
-      - ipv4_addr: "{{ grp_device.tmp117.ipv4_addr }}"
-        hw_addr: "{{ grp_device.tmp117.hw_addr }}"
-        hostname: "{{ grp_device.tmp117.hostname }}"
+      - ipv4_addr: "{{ devices.shp1.ipv4_addr }}"
+        hw_addr: "{{ devices.shp1.hw_addr }}"
+        hostname: "{{ devices.shp1.hostname }}"
+      - ipv4_addr: "{{ devices.shp2.ipv4_addr }}"
+        hw_addr: "{{ devices.shp2.hw_addr }}"
+        hostname: "{{ devices.shp2.hostname }}"
+      - ipv4_addr: "{{ devices.shp3.ipv4_addr }}"
+        hw_addr: "{{ devices.shp3.hw_addr }}"
+        hostname: "{{ devices.shp3.hostname }}"
+      - ipv4_addr: "{{ devices.shp4.ipv4_addr }}"
+        hw_addr: "{{ devices.shp4.hw_addr }}"
+        hostname: "{{ devices.shp4.hostname }}"
+      - ipv4_addr: "{{ devices.shp5.ipv4_addr }}"
+        hw_addr: "{{ devices.shp5.hw_addr }}"
+        hostname: "{{ devices.shp5.hostname }}"
+      - ipv4_addr: "{{ devices.hs110.ipv4_addr }}"
+        hw_addr: "{{ devices.hs110.hw_addr }}"
+        hostname: "{{ devices.hs110.hostname }}"
+      - ipv4_addr: "{{ devices.tmp117.ipv4_addr }}"
+        hw_addr: "{{ devices.tmp117.hw_addr }}"
+        hostname: "{{ devices.tmp117.hostname }}"
     options_data:
-      - option_data: "routers"
+      - option_data: "r1"
         data: ["192.168.40.1"]
 
   - subnet: 192.168.50.0/24
-    routers:
+    r1:
       - 192.168.50.1
     pools:
       - start: 192.168.50.100
         end: 192.168.50.200
     reservations:
-      - ipv4_addr: "{{ grp_device.ndmz.ipv4_addr }}"
-        hw_addr: "{{ grp_device.ndmz.hw_addr }}"
-        hostname: "{{ grp_device.ndmz.hostname }}"
+      - ipv4_addr: "{{ devices.ndmz.ipv4_addr }}"
+        hw_addr: "{{ devices.ndmz.hw_addr }}"
+        hostname: "{{ devices.ndmz.hostname }}"
     options_data:
-      - option_data: "routers"
+      - option_data: "r1"
         data: ["192.168.50.1"]
 
 host_kea_dhcp6:
-  - subnet: "{{ grp_ipv6_prefix }}:f401::/64"
+  - subnet: "{{ ipv6_prefix }}:f401::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:f401::1:1"
-        end: "{{ grp_ipv6_prefix }}:f401:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f401::1:1"
+        end: "{{ ipv6_prefix }}:f401:ffff:ffff:ffff:ffff"
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ grp_device.nas.ipv6_addr }}"]
-        duid: "{{ grp_device.nas.duid }}"
-        hostname: "{{ grp_device.nas.hostname }}"
-      - ipv6_addr: ["{{ grp_device.ipmi.ipv6_addr }}"]
-        duid: "{{ grp_device.ipmi.duid }}"
-        hostname: "{{ grp_device.ipmi.hostname }}"
-      - ipv6_addr: ["{{ grp_device.pi.ipv6_addr }}"]
-        duid: "{{ grp_device.pi.duid }}"
-        hostname: "{{ grp_device.pi.hostname }}"
-      - ipv6_addr: ["{{ grp_device.aclite.ipv6_addr }}"]
-        hw_addr: "{{ grp_device.aclite.hw_addr }}"
-        hostname: "{{ grp_device.aclite.hostname }}"
+      - ipv6_addr: ["{{ devices.n1.ipv6_addr }}"]
+        duid: "{{ devices.n1.duid }}"
+        hostname: "{{ devices.n1.hostname }}"
+      - ipv6_addr: ["{{ devices.ipmi.ipv6_addr }}"]
+        duid: "{{ devices.ipmi.duid }}"
+        hostname: "{{ devices.ipmi.hostname }}"
+      - ipv6_addr: ["{{ devices.pi.ipv6_addr }}"]
+        duid: "{{ devices.pi.duid }}"
+        hostname: "{{ devices.pi.hostname }}"
+      - ipv6_addr: ["{{ devices.aclite.ipv6_addr }}"]
+        hw_addr: "{{ devices.aclite.hw_addr }}"
+        hostname: "{{ devices.aclite.hostname }}"
 
-  - subnet: "{{ grp_ipv6_prefix }}:f402::/64"
+  - subnet: "{{ ipv6_prefix }}:f402::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:f402::1:1"
-        end: "{{ grp_ipv6_prefix }}:f402:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f402::1:1"
+        end: "{{ ipv6_prefix }}:f402:ffff:ffff:ffff:ffff"
     pd_pools:
-      - prefix: "{{ grp_ipv6_prefix }}:b000::"
+      - prefix: "{{ ipv6_prefix }}:b000::"
         prefix_len: 52
         delegated_len: 64
-      - prefix: "{{ grp_ipv6_prefix }}:c000::"
+      - prefix: "{{ ipv6_prefix }}:c000::"
         prefix_len: 52
         delegated_len: 64
-        excluded_prefix: "{{ grp_ipv6_prefix }}:c000:2::"
+        excluded_prefix: "{{ ipv6_prefix }}:c000:2::"
         excluded_prefix_len: 72
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ grp_device.arch.ipv6_addr }}"]
-        duid: "{{ grp_device.arch.duid }}"
-        hostname: "{{ grp_device.arch.hostname }}"
+      - ipv6_addr: ["{{ devices.arch.ipv6_addr }}"]
+        duid: "{{ devices.arch.duid }}"
+        hostname: "{{ devices.arch.hostname }}"
 
-  - subnet: "{{ grp_ipv6_prefix }}:f403::/64"
+  - subnet: "{{ ipv6_prefix }}:f403::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:f403::1:1"
-        end: "{{ grp_ipv6_prefix }}:f403:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f403::1:1"
+        end: "{{ ipv6_prefix }}:f403:ffff:ffff:ffff:ffff"
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ grp_device.printer.ipv6_addr }}"]
-        hw_addr: "{{ grp_device.printer.hw_addr }}"
-        hostname: "{{ grp_device.printer.hostname }}"
+      - ipv6_addr: ["{{ devices.printer.ipv6_addr }}"]
+        hw_addr: "{{ devices.printer.hw_addr }}"
+        hostname: "{{ devices.printer.hostname }}"
 
-  - subnet: "{{ grp_ipv6_prefix }}:f404::/64"
+  - subnet: "{{ ipv6_prefix }}:f404::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:f404::1:1"
-        end: "{{ grp_ipv6_prefix }}:f404:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f404::1:1"
+        end: "{{ ipv6_prefix }}:f404:ffff:ffff:ffff:ffff"
     options_data: []
     reservations: []
 
-  - subnet: "{{ grp_ipv6_prefix }}:f405::/64"
+  - subnet: "{{ ipv6_prefix }}:f405::/64"
     pools:
-      - start: "{{ grp_ipv6_prefix }}:f405::1:1"
-        end: "{{ grp_ipv6_prefix }}:f405:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f405::1:1"
+        end: "{{ ipv6_prefix }}:f405:ffff:ffff:ffff:ffff"
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ grp_device.ndmz.ipv6_addr }}"]
-        duid: "{{ grp_device.ndmz.duid }}"
-        hostname: "{{ grp_device.ndmz.hostname }}"
+      - ipv6_addr: ["{{ devices.ndmz.ipv6_addr }}"]
+        duid: "{{ devices.ndmz.duid }}"
+        hostname: "{{ devices.ndmz.hostname }}"

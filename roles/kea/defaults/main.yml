@@ -4,13 +4,5 @@ kea_version: "{{ host_kea_version | default('kea-2-3') }}"
 cloudsmith_gpg_key: "{{ host_kea_cloudsmith_gpg_key | default('gpg.DA05D46B7BABA24A.key') }}"
 # For kea-1-9 https://cloudsmith.io/~isc/repos/kea-2-1/signing/
 
-kea_dns_ipv4_servers: ["{{ grp_dns_ipv4_server }}"]
-kea_ntp_ipv4_servers: ["{{ grp_ntp_ipv4_server }}"]
-
-kea_dns_ipv6_servers: ["{{ grp_dns_ipv6_server }}"]
-kea_ntp_ipv6_servers: ["{{ grp_ntp_ipv6_server }}"]
-
-kea_domains_search: ["{{ grp_local_domain }}"]
-
 kea_ctrl_agent_address: "{{ host_kea_ctrl_agent_address | default('::') }}" # Bind to all interfaces in IPv4 + IPv6, losing localhost bindind no solution
 kea_ctrl_agent_port: "{{ host_kea_ctrl_agent_port | default('8000') }}"

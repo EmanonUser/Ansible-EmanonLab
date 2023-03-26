@@ -10,7 +10,9 @@
 
 - name: Add Cloudsmith isc-Kea Debian Repository
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/isc_kea-archive-keyring.key] https://dl.cloudsmith.io/public/isc/{{ kea_version }}/deb/debian {{ ansible_distribution_release }}  main # noqa 204
+    repo: >-
+      deb [signed-by=/usr/share/keyrings/isc_kea-archive-keyring.key]
+      https://dl.cloudsmith.io/public/isc/{{ kea_version }}/deb/debian {{ ansible_distribution_release }} main
     filename: isc-{{ kea_version }}
     state: present
   notify: ["Apt update", "Apt upgrade"]
@@ -36,8 +38,8 @@
   ansible.builtin.template:
     src: "kea-dhcp4.conf.j2"
     dest: /etc/kea/kea-dhcp4.conf
-    owner:  _kea
-    group:  _kea
+    owner: _kea
+    group: _kea
     mode: u=rw,g=r,o=r
     validate: /usr/sbin/kea-dhcp4 -t %s
   notify: Reload kea-dhcp4 service
@@ -46,8 +48,8 @@
   ansible.builtin.template:
     src: "kea-dhcp6.conf.j2"
     dest: /etc/kea/kea-dhcp6.conf
-    owner:  _kea
-    group:  _kea
+    owner: _kea
+    group: _kea
     mode: u=rw,g=r,o=r
     validate: /usr/sbin/kea-dhcp6 -t %s
   notify: Reload kea-dhcp6 service
@@ -56,8 +58,8 @@
   ansible.builtin.template:
     src: kea-ctrl-agent.conf.j2
     dest: /etc/kea/kea-ctrl-agent.conf
-    owner:  _kea
-    group:  _kea
+    owner: _kea
+    group: _kea
     mode: u=rw,g=r,o=r
     validate: /usr/sbin/kea-ctrl-agent -t %s
   notify: Reload kea-ctrl-agent service
