@@ -1,5 +1,6 @@
 ---
-host_debian_stable_packages:
+debian_stable_packages: "{{ host_debian_stable_packages | default(debian_stable_packages_defaults) }}"
+debian_stable_packages_defaults:
   - debian-keyring
   - debian-archive-keyring
   - ca-certificates
@@ -17,3 +18,5 @@ host_debian_stable_packages:
   - tcpdump
   - socat
   - mtr-tiny
+
+ssh_service_name: ssh.service

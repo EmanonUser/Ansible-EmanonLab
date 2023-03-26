@@ -8,6 +8,11 @@
     file: redhat.yml
   when: ansible_os_family == 'RedHat'
 
+- name: Include debian tasks
+  ansible.builtin.include_tasks:
+    file: debian.yml
+  when: ansible_os_family == 'Debian'
+
 - name: Set root password
   ansible.builtin.user:
     name: root
