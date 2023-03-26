@@ -39,5 +39,5 @@ frr_services_port: |
   fabricd       	2618/tcp                 # fabricd vty
   vrrpd         	2619/tcp                 # vrrpd vty
 
-frr_ospf_router_id: "{{ grp_device.router.ipv4_addr }}"
-brocade_static_ip: "{{ grp_device.brocade.ipv4_addr }}"
+frr_ospf_router_id: "{{ device.r1.ipv4_addr }}"
+brocade_static_ip: "{{ device.s1.ipv4_addr }}"
