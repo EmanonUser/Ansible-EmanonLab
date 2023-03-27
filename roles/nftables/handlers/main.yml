@@ -2,7 +2,7 @@
 - name: Enable nftables service
   ansible.builtin.systemd:
     name: nftables.service
-    enabled: yes
+    enabled: true
 
 - name: Start nftables service
   ansible.builtin.systemd:

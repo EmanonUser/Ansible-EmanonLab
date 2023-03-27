@@ -7,7 +7,7 @@
 - name: Include other roles vars                            # Usefull when we execute this role by itself, since it is heavily linked to
   ansible.builtin.include_vars:                             # other roles, could use defaul('') but we could endup in a case where we have split vars
     file: "roles/{{ item }}/defaults/main.yml"
-  loop: ["is_alive", "wireguard"]
+  loop: ["wireguard"]
   tags: nftables
 
 - name: Template nftables config file
