@@ -53,25 +53,25 @@
     "option-data": [
       {
         "name": "unicast",
-        "data": "{{ grp_device.router.lan_interface.ipv6_addr }}"
+        "data": "{{ devices.r1.lan_interface.ipv6_addr }}"
       },
       {
         "name": "dns-servers",
-        "data": "{% for dns_server in kea_dns_ipv6_servers %}{{ dns_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        "data": "{% for dns_server in dns_servers.ipv6 %}{{ dns_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
       },
       {
         "name": "domain-search",
-        "data": "{% for domain in kea_domains_search %}{{ domain }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        "data": "{% for domain in domains %}{{ domain }}{% if not loop.last %}, {% endif %}{% endfor %}"
       },
       {
         "name": "sntp-servers",
-        "data": "{% for ntp_server in kea_ntp_ipv6_servers %}{{ ntp_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        "data": "{% for ntp_server in ntp_servers.ipv6 %}{{ ntp_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
       }
     ],
     "host-reservation-identifiers": [
       "duid", "hw-address"
     ],
-    "subnet6": [{% for subnet in host_kea_dhcp6 %}
+    "subnet6": [{% for subnet in kea_dhcp6 %}
 
      {
         "subnet": "{{ subnet.subnet }}",

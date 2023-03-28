@@ -53,15 +53,15 @@
     "option-data": [
       {
         "name": "domain-name-servers",
-        "data": "{% for dns_server in dns_servers_ipv4 %}{{ dns_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        "data": "{% for dns_server in dns_servers.ipv4 %}{{ dns_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
       },
       {
         "name": "domain-search",
-        "data": "{% for domain in domains_search %}{{ domain }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        "data": "{% for domain in domains %}{{ domain }}{% if not loop.last %}, {% endif %}{% endfor %}"
       },
       {
         "name": "ntp-servers",
-        "data": "{% for ntp_server in ipv4_servers %}{{ ntp_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
+        "data": "{% for ntp_server in ntp_servers.ipv4 %}{{ ntp_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
       }
     ],
     "host-reservation-identifiers": [

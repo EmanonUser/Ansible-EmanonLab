@@ -1,9 +1,11 @@
 ---
+dns_servers:
+  ipv4: [192.168.5.1]
+  ipv6: ["{{ devices.r1.ipv6_addr }}"]
 
-dns_server_ipv4: 
-  - 192.168.5.1
-dns_server_ipv6:
-  - 
+ntp_servers:
+  ipv4: [192.168.5.1]
+  ipv6: ["{{ devices.r1.ipv6_addr }}"]
 
 kea_dhcp4:
   - subnet: 192.168.10.0/24
@@ -17,14 +19,11 @@ kea_dhcp4:
       - ipv4_addr: "{{ devices.ipmi.ipv4_addr }}"
         hw_addr: "{{ devices.ipmi.hw_addr }}"
         hostname: "{{ devices.ipmi.hostname }}"
-      - ipv4_addr: "{{ devices.pi.ipv4_addr }}"
-        hw_addr: "{{ devices.pi.hw_addr }}"
-        hostname: "{{ devices.pi.hostname }}"
-      - ipv4_addr: "{{ devices.aclite.ipv4_addr }}"
-        hw_addr: "{{ devices.aclite.hw_addr }}"
-        hostname: "{{ devices.aclite.hostname }}"
+      - ipv4_addr: "{{ devices.ubnt.ipv4_addr }}"
+        hw_addr: "{{ devices.ubnt.hw_addr }}"
+        hostname: "{{ devices.ubnt.hostname }}"
     options_data:
-      - option_data: "r1"
+      - option_data: "routers"
         data: ["192.168.10.1"]
 
   - subnet: 192.168.20.0/24
@@ -36,7 +35,7 @@ kea_dhcp4:
         hw_addr: "{{ devices.arch.hw_addr }}"
         hostname: "{{ devices.arch.hostname }}"
     options_data:
-      - option_data: "r1"
+      - option_data: "routers"
         data: ["192.168.20.1"]
 
   - subnet: 192.168.30.0/24
@@ -48,7 +47,7 @@ kea_dhcp4:
         hw_addr: "{{ devices.printer.hw_addr }}"
         hostname: "{{ devices.printer.hostname }}"
     options_data:
-      - option_data: "r1"
+      - option_data: "routers"
         data: ["192.168.30.1"]
 
   - subnet: 192.168.40.0/24
@@ -78,7 +77,7 @@ kea_dhcp4:
         hw_addr: "{{ devices.tmp117.hw_addr }}"
         hostname: "{{ devices.tmp117.hostname }}"
     options_data:
-      - option_data: "r1"
+      - option_data: "routers"
         data: ["192.168.40.1"]
 
   - subnet: 192.168.50.0/24
@@ -88,14 +87,14 @@ kea_dhcp4:
       - start: 192.168.50.100
         end: 192.168.50.200
     reservations:
-      - ipv4_addr: "{{ devices.ndmz.ipv4_addr }}"
-        hw_addr: "{{ devices.ndmz.hw_addr }}"
-        hostname: "{{ devices.ndmz.hostname }}"
+      - ipv4_addr: "{{ devices.n1dmz.ipv4_addr }}"
+        hw_addr: "{{ devices.n1dmz.hw_addr }}"
+        hostname: "{{ devices.n1dmz.hostname }}"
     options_data:
-      - option_data: "r1"
+      - option_data: "routers"
         data: ["192.168.50.1"]
 
-host_kea_dhcp6:
+kea_dhcp6:
   - subnet: "{{ ipv6_prefix }}:f401::/64"
     pools:
       - start: "{{ ipv6_prefix }}:f401::1:1"
@@ -108,12 +107,9 @@ host_kea_dhcp6:
       - ipv6_addr: ["{{ devices.ipmi.ipv6_addr }}"]
         duid: "{{ devices.ipmi.duid }}"
         hostname: "{{ devices.ipmi.hostname }}"
-      - ipv6_addr: ["{{ devices.pi.ipv6_addr }}"]
-        duid: "{{ devices.pi.duid }}"
-        hostname: "{{ devices.pi.hostname }}"
-      - ipv6_addr: ["{{ devices.aclite.ipv6_addr }}"]
-        hw_addr: "{{ devices.aclite.hw_addr }}"
-        hostname: "{{ devices.aclite.hostname }}"
+      - ipv6_addr: ["{{ devices.ubnt.ipv6_addr }}"]
+        hw_addr: "{{ devices.ubnt.hw_addr }}"
+        hostname: "{{ devices.ubnt.hostname }}"
 
   - subnet: "{{ ipv6_prefix }}:f402::/64"
     pools:
@@ -157,6 +153,6 @@ host_kea_dhcp6:
         end: "{{ ipv6_prefix }}:f405:ffff:ffff:ffff:ffff"
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ devices.ndmz.ipv6_addr }}"]
-        duid: "{{ devices.ndmz.duid }}"
-        hostname: "{{ devices.ndmz.hostname }}"
+      - ipv6_addr: ["{{ devices.n1dmz.ipv6_addr }}"]
+        duid: "{{ devices.n1dmz.duid }}"
+        hostname: "{{ devices.n1dmz.hostname }}"

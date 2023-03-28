@@ -22,7 +22,7 @@ devices:
       ipv6_addr: "{{ ipv6_prefix }}:f400::b"
       hostname: s1
 
-    archlinux:
+    arch:
       ipv4_addr: 192.168.20.20
       ipv6_addr: "{{ ipv6_prefix }}:f402::20"
       hw_addr: 00:d8:61:57:9c:fb

@@ -2,19 +2,19 @@
 
 flush ruleset
 
-define WAN = {{ grp_device.router.wan_interface.ifname }}
-define LAN = {{ grp_device.router.lan_interface.ifname }}
+define WAN = {{ devices.r1.wan_interface.ifname }}
+define LAN = {{ devices.r1.lan_interface.ifname }}
 define WG = {{ wireguard_confs | selectattr('wireguard', 'equalto', 'wg0') | map(attribute='wireguard') | first }}
 
 table inet routing {
 	chain prerouting {
 		type nat hook prerouting priority dstnat; policy accept
-		iifname $WAN tcp dport 80 dnat ip to {{ grp_device.ndmz.ipv4_addr }}:80
-		iifname $WAN tcp dport 443 dnat ip to {{ grp_device.ndmz.ipv4_addr }}:443
-		iifname $WAN tcp dport 25565 dnat ip to {{ grp_device.ndmz.ipv4_addr }}:25565
-		iifname $WAN tcp dport 22000 dnat ip to {{ grp_device.nas.ipv4_addr }}:22000
-		iifname $WAN udp dport 22000 dnat ip to {{ grp_device.nas.ipv4_addr }}:22000
-		iifname $WAN udp dport 21027 dnat ip to {{ grp_device.nas.ipv4_addr }}:21027
+		iifname $WAN tcp dport 80 dnat ip to {{ devices.n1dmz.ipv4_addr }}:80
+		iifname $WAN tcp dport 443 dnat ip to {{ devices.n1dmz.ipv4_addr }}:443
+		iifname $WAN tcp dport 25565 dnat ip to {{ devices.n1dmz.ipv4_addr }}:25565
+		iifname $WAN tcp dport 22000 dnat ip to {{ devices.n1.ipv4_addr }}:22000
+		iifname $WAN udp dport 22000 dnat ip to {{ devices.n1.ipv4_addr }}:22000
+		iifname $WAN udp dport 21027 dnat ip to {{ devices.n1.ipv4_addr }}:21027
 	}
 
 	chain postrouting {
@@ -46,8 +46,6 @@ table inet firewall {
 	}
 
 	chain wan_input_log {
-		icmp type echo-request icmp sequence {{ is_alive_echo_request_count }} log level notice prefix "isAlive Ping: " counter accept
-		icmpv6 type echo-request icmpv6 sequence {{ is_alive_echo_request_count }} log level notice prefix "isAlive Ping: " counter accept
 	}
 
 	chain wan_input_filter {
@@ -86,16 +84,16 @@ table inet firewall {
 
 	chain wan_forward {
 		oifname $LAN icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } counter accept
-		oifname $LAN ip6 daddr {{ grp_device.ndmz.ipv6_addr }} tcp dport 80 counter accept
-		oifname $LAN ip6 daddr {{ grp_device.ndmz.ipv6_addr }} tcp dport 443 counter accept
-		oifname $LAN ip6 daddr {{ grp_device.ndmz.ipv6_addr }} tcp dport 25565 counter accept
-		oifname $LAN ip daddr {{ grp_device.ndmz.ipv4_addr }} tcp dport 80 counter accept
-		oifname $LAN ip daddr {{ grp_device.ndmz.ipv4_addr }} tcp dport 443 counter accept
-		oifname $LAN ip daddr {{ grp_device.ndmz.ipv4_addr }} tcp dport 25565 counter accept
-		oifname $LAN ip6 daddr {{ grp_device.nas.ipv6_addr }} tcp dport 22 counter accept
-		oifname $LAN ip daddr {{ grp_device.nas.ipv4_addr }} tcp dport 22000 counter accept
-		oifname $LAN ip daddr {{ grp_device.nas.ipv4_addr }} udp dport 22000 counter accept
-		oifname $LAN ip daddr {{ grp_device.nas.ipv4_addr }} udp dport 21027 counter accept
+		oifname $LAN ip6 daddr {{ devices.n1dmz.ipv6_addr }} tcp dport 80 counter accept
+		oifname $LAN ip6 daddr {{ devices.n1dmz.ipv6_addr }} tcp dport 443 counter accept
+		oifname $LAN ip6 daddr {{ devices.n1dmz.ipv6_addr }} tcp dport 25565 counter accept
+		oifname $LAN ip daddr {{ devices.n1dmz.ipv4_addr }} tcp dport 80 counter accept
+		oifname $LAN ip daddr {{ devices.n1dmz.ipv4_addr }} tcp dport 443 counter accept
+		oifname $LAN ip daddr {{ devices.n1dmz.ipv4_addr }} tcp dport 25565 counter accept
+		oifname $LAN ip6 daddr {{ devices.n1.ipv6_addr }} tcp dport 22 counter accept
+		oifname $LAN ip daddr {{ devices.n1.ipv4_addr }} tcp dport 22000 counter accept
+		oifname $LAN ip daddr {{ devices.n1.ipv4_addr }} udp dport 22000 counter accept
+		oifname $LAN ip daddr {{ devices.n1.ipv4_addr }} udp dport 21027 counter accept
 		jump forward_filter
 	}
 
