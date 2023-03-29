@@ -2,7 +2,7 @@
 - name: Enable sshguard service
   ansible.builtin.systemd:
     name: sshguard.service
-    enabled: yes
+    enabled: true
 
 - name: Start sshguard service
   ansible.builtin.systemd:
