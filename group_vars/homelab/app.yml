@@ -2,74 +2,42 @@
 http_services:
 
   - service: prometheus
-    fulldomain: prometheus.emanon.moe
-    reverse_proxy: n1.emanon.moe
-    direct_access: false
-    ssl_redirect: true
+    fqdn: prometheus.emanon.moe
     public: false
-    backends:
-      - backend: localhost
-        port: 7001
+    backend: localhost
+    port: 7001
 
   - service: grafana
-    fulldomain: grafana.emanon.moe
+    fqdn: grafana.emanon.moe
     reverse_proxy: n1.emanon.moe
-    direct_access: false
-    ssl_redirect: true
     public: false
-    backends:
-      - backend: localhost
-        port: 7002
+    backend: localhost
+    port: 7002
 
   - service: syncthing
-    fulldomain: syncthing.emanon.moe
+    fqdn: syncthing.emanon.moe
     reverse_proxy: n1.emanon.moe
-    direct_access: false
-    ssl_redirect: true
     public: false
-    backends:
-      - backend: localhost
-        port: 7004
+    backend: localhost
+    port: 7004
 
   - service: transmission
-    fulldomain: transmission.emanon.moe
+    fqdn: transmission.emanon.moe
     reverse_proxy: n1.emanon.moe
-    direct_access: false
-    ssl_redirect: true
     public: false
-    backends:
-      - backend: localhost
-        port: 7005
+    backend: localhost
+    port: 7005
 
   - service: homeassistant
-    fulldomain: hass.emanon.moe
+    fqdn: hass.emanon.moe
     reverse_proxy: n1.emanon.moe
-    direct_access: false
-    ssl_redirect: true
     public: false
-    backends:
-      - backend: localhost
-        port: 7006
+    backend: localhost
+    port: 7006
 
   - service: jellyfin
-    fulldomain: jellyfin.emanon.moe
+    fqdn: jellyfin.emanon.moe
     reverse_proxy: ndmz.emanon.moe
-    direct_access: false
-    ssl_redirect: true
     public: true
-    backends:
-      - backend: localhost
-        port: 7007
-
-
-tcp_services:
-
-  - service: minecraft
-    fulldomain: minecraft.emanon.moe
-    reverse_proxy: ndmz.emanon.moe
-    direct_access: true
-    public: true
-    backends:
-      - backend: localhost
-        port: 25565
-
+    backend: localhost
+    port: 7007

@@ -1,4 +1,9 @@
 ---
+- name: Include redhat tasks
+  ansible.builtin.include_tasks:
+    file: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
 - name: Configure and validate caddyfile
   block:
     - name: Configure caddyfile
