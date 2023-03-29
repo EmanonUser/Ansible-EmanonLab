@@ -1,7 +1,0 @@
----
-- name: Enable minecraft_ansible podman service
-  ansible.builtin.systemd:
-    name: podman-minecraft_ansible.service
-    enabled: yes
-    scope: user
-  become_user: "{{ primary_user_username }}"
