@@ -39,3 +39,6 @@
 
     - role: podman/syncthing
       tags: [syncthing]
+
+    - role: caddy
+      tags: [caddy]
