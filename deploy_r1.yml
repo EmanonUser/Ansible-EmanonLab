@@ -11,8 +11,17 @@
     - role: interfaces
       tags: [interfaces]
 
+    - role: wireguard
+      tags: [wireguard]
+
     - role: frr
       tags: [frr]
 
     - role: kea
       tags: [kea]
+
+    - role: sshguard
+      tags: [sshguard]
+
+    - role: nftables
+      tags: [nftables]
