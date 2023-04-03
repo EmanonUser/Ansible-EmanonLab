@@ -50,7 +50,7 @@
 
 - name: Call Gandi LiveDNS API to register the TXT record
   community.general.gandi_livedns:
-    domain: "{{ domain_name }}"
+    domain: "{{ acme_domain }}"
     record: "{{ acme_dns_challenge_result.results[item_index]['challenge_data'][item.fqdn]['dns-01'].record | regex_replace(item.domain, '') }}"
     type: TXT
     values:
@@ -83,7 +83,7 @@
   when:
     - acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
     - acme_dns_challenge_result['results'][item_index]['challenge_data']
-  notify: Reload haproxy service
+  notify: Reload caddy service
   register: acme_dns_completion
 
 - name: Log completed challenge # noqa no-handler
@@ -99,7 +99,7 @@
 
 - name: Call Gandi LiveDNS API to delete the TXT record
   community.general.gandi_livedns:
-    domain: "{{ domain_name }}"
+    domain: "{{ acme_domain }}"
     record: "{{ acme_dns_challenge_result.results[item_index]['challenge_data'][item.fqdn]['dns-01'].record | regex_replace(item.domain, '') }}"
     type: TXT
     api_key: "{{ gandi_api_key }}"
@@ -111,25 +111,8 @@
     - acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
     - acme_dns_challenge_result['results'][item_index]['challenge_data']
 
-- name: Create symlink for haproxy's fullchain certs
-  ansible.builtin.file:
-    src: "{{ acme_dns_letsencrypt_base_path }}/certs/fullchain.{{ item.fqdn }}.crt"
-    dest: "/etc/haproxy/ssl/{{ item.fqdn }}.pem"
-    owner: root
-    group: root
-    state: link
-    mode: u=rw,g=,o=
-  loop: "{{ acme_dns_domain_name }}"
-
-- name: Create symlink for haproxy's privkey
-  ansible.builtin.file:
-    src: "{{ acme_dns_letsencrypt_base_path }}/keys/{{ item.fqdn }}.key"
-    dest: "/etc/haproxy/ssl/{{ item.fqdn }}.pem.key"
-    owner: root
-    group: root
-    state: link
-    mode: u=rw,g=,o=
-  loop: "{{ acme_dns_domain_name }}"
+- name: Import caddy simlink playbook
+  ansible.builtin.include_tasks: caddy_pems.yml
 
 - name: Import rehat_auto_renew playbook
   ansible.builtin.include_tasks: redhat_auto_renew.yml

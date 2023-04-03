@@ -12,15 +12,15 @@
     version: main
     force: true
 
-- name: Place ansible vault password file (RedHat)
-  ansible.builtin.lineinfile:
-    path: .VAULT_PASS
-    line: "{{ lookup('file', '~/.ansible/.VAULT_PASS') }}"
-    owner: ansible
-    group: ansible
-    mode: u=r,g=,o=
-    create: true
-    state: present
+# - name: Place ansible vault password file (RedHat)
+#   ansible.builtin.lineinfile:
+#     path: .VAULT_PASS
+#     line: "{{ lookup('file', '~/.ansible/.VAULT_PASS') }}"
+#     owner: ansible
+#     group: ansible
+#     mode: u=r,g=,o=
+#     create: true
+#     state: present
 
 - name: Install required collections (RedHat)
   community.general.ansible_galaxy_install:
