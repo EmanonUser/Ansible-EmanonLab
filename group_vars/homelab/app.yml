@@ -41,3 +41,10 @@ http_services:
     public: true
     backend: localhost
     port: 7007
+
+  - service: homelab-shp
+    fqdn: shp1.emanon.moe
+    public: false
+    backend: localhost
+    port: 80
+
