@@ -19,6 +19,9 @@
     - role: zrepl
       tags: [zrepl]
 
+    - role: acme_dns
+      tags: [acme]
+
     - role: podman/podman
       tags: [podman]
 
