@@ -5,11 +5,11 @@ grafana_image_version: "{{ host_grafana_image_version | default('latest') }}"
 
 grafana_config: "{{ http_services | selectattr('service', 'equalto', 'grafana') | first }}"
 grafana_ports:
-  - "{% if grafana_config.direct_access %}[::]:{{ grafana_config.backends[0].port }}
-    {% else %}127.0.0.1:{{ grafana_config.backends[0].port }}{% endif %}:3000/tcp"
+  - "{% if grafana_config.direct_access %}[::]:{{ grafana_config.port }}
+    {% else %}127.0.0.1:{{ grafana_config.port }}{% endif %}:3000/tcp"
 
-  - "{% if grafana_config.direct_access %}[::]:{{ grafana_config.backends[0].port }}
-    {% else %}[::1]:{{ grafana_config.backends[0].port }}{% endif %}:3000/tcp"
+  - "{% if grafana_config.direct_access %}[::]:{{ grafana_config.port }}
+    {% else %}[::1]:{{ grafana_config.port }}{% endif %}:3000/tcp"
 
 grafana_directories:
   - "{{ podman_volumes_path }}/grafana/storage"
@@ -20,6 +20,6 @@ grafana_network: "{% if grafana_config.public %}slirp4netns:outbound_addr={{ dmz
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-grafana_firewalld_ports: "{{ grafana_config.backends[0].port }}/tcp"
+grafana_firewalld_ports: "{{ grafana_config.port }}/tcp"
 grafana_use_rich_firewalld_rules: "{{ host_grafana_use_rich_firewalld_rules | default(false) }}"
 grafana_firewalld_rich_rules: "{{ host_grafana_firewalld_rich_rules }}"

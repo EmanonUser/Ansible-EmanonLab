@@ -5,10 +5,10 @@ syncthing_image_version: "{{ host_syncthing_image_version | default('latest') }}
 
 syncthing_config: "{{ http_services | selectattr('service', 'equalto', 'syncthing') | first }}"
 syncthing_ports:
-  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}
-    {% else %}127.0.0.1:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
-  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.backends[0].port }}
-    {% else %}[::1]:{{ syncthing_config.backends[0].port }}{% endif %}:8384/tcp"
+  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.port }}
+    {% else %}127.0.0.1:{{ syncthing_config.port }}{% endif %}:8384/tcp"
+  - "{% if syncthing_config.direct_access %}[::]:{{ syncthing_config.port }}
+    {% else %}[::1]:{{ syncthing_config.port }}{% endif %}:8384/tcp"
   - "22000:22000/tcp"
   - "22000:22000/udp"
   - "21027:21027/udp"
@@ -26,7 +26,7 @@ syncthing_network: "{% if syncthing_config.public %}slirp4netns:outbound_addr={{
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 syncthing_firewalld_ports:
-  webui: "{{ syncthing_config.backends[0].port }}/tcp"
+  webui: "{{ syncthing_config.port }}/tcp"
   p2p_tcp: "22000/tcp"
   p2p_udp: "22000/udp"
   discovery: "21027/udp"

@@ -3,6 +3,8 @@ http_services:
 
   - service: prometheus
     fqdn: prometheus.emanon.moe
+    reverse_proxy: n1.emanon.moe
+    direct_access: false
     public: false
     backend: localhost
     port: 7001
@@ -10,6 +12,7 @@ http_services:
   - service: grafana
     fqdn: grafana.emanon.moe
     reverse_proxy: n1.emanon.moe
+    direct_access: false
     public: false
     backend: localhost
     port: 7002
@@ -17,6 +20,7 @@ http_services:
   - service: syncthing
     fqdn: syncthing.emanon.moe
     reverse_proxy: n1.emanon.moe
+    direct_access: false
     public: false
     backend: localhost
     port: 7004
@@ -24,6 +28,7 @@ http_services:
   - service: transmission
     fqdn: transmission.emanon.moe
     reverse_proxy: n1.emanon.moe
+    direct_access: false
     public: false
     backend: localhost
     port: 7005
@@ -31,6 +36,7 @@ http_services:
   - service: homeassistant
     fqdn: hass.emanon.moe
     reverse_proxy: n1.emanon.moe
+    direct_access: false
     public: false
     backend: localhost
     port: 7006
@@ -38,12 +44,14 @@ http_services:
   - service: jellyfin
     fqdn: jellyfin.emanon.moe
     reverse_proxy: ndmz.emanon.moe
+    direct_access: false
     public: true
     backend: localhost
     port: 7007
 
   - service: homelab-shp
     fqdn: shp1.emanon.moe
+    reverse_proxy: ndmz.emanon.moe
     public: false
     backend: localhost
     port: 80
