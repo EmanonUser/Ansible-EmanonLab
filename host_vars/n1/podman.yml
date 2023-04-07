@@ -9,6 +9,7 @@ jellyfin_volumes:
   - /vault/media/animes:/animes:ro
   - /vault/media/movies:/movies:ro
   - /vault/media/series:/series:ro
+  - /vault/media/jellyfin/Shows:/Shows:rw
   - /vault/emanonlab/misc:/misc:ro
 
 syncthing_volumes:

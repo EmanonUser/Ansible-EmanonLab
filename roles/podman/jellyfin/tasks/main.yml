@@ -32,3 +32,7 @@
   ansible.builtin.include_tasks:
     file: firewalld.yml
   when: podman_use_firewalld
+
+- name: Import simlinks tasks
+  ansible.builtin.include_tasks:
+    file: simlinks.yml

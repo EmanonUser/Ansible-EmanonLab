@@ -5,11 +5,11 @@ jellyfin_image_version: "{{ host_jellyfin_image_version | default('latest') }}"
 
 jellyfin_config: "{{ http_services | selectattr('service', 'equalto', 'jellyfin') | first }}"
 jellyfin_ports:
-  - "{% if jellyfin_config.direct_access %}[::]{{ jellyfin_config.backends[0].port }}
-    {% else %}127.0.0.1:{{ jellyfin_config.backends[0].port }}{% endif %}:8096/tcp"
+  - "{% if jellyfin_config.direct_access %}[::]{{ jellyfin_config.port }}
+    {% else %}127.0.0.1:{{ jellyfin_config.port }}{% endif %}:8096/tcp"
 
-  - "{% if jellyfin_config.direct_access %}[::]:{{ jellyfin_config.backends[0].port }}
-    {% else %}[::1]:{{ jellyfin_config.backends[0].port }}{% endif %}:8096/tcp"
+  - "{% if jellyfin_config.direct_access %}[::]:{{ jellyfin_config.port }}
+    {% else %}[::1]:{{ jellyfin_config.port }}{% endif %}:8096/tcp"
 
 jellyfin_directories:
   - "{{ podman_volumes_path }}/jellyfin/cache"
@@ -24,6 +24,17 @@ jellyfin_network: "{% if jellyfin_config.public %}slirp4netns:outbound_addr={{ d
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-jellyfin_firewalld_ports: "{{ jellyfin_config.backends[0].port }}/tcp"
+jellyfin_firewalld_ports: "{{ jellyfin_config.port }}/tcp"
 jellyfin_use_rich_firewalld_rules: "{{ host_jellyfin_use_rich_firewalld_rules | default(false) }}"
 jellyfin_firewalld_rich_rules: "{{ host_jellyfin_firewalld_rich_rules }}"
+simlinks_shows:
+  - path: Altered Carbon (2018)
+    src: /series/Altered Carbon (2018)/Altered.Carbon.S01.MULTi.1080p.WEBRip.5.1.x265-R3MiX
+    dest: /vault/media/jellyfin/Shows/Altered Carbon (2018)/Season 1
+  - path: Altered Carbon (2018)
+    src: /series/Altered Carbon (2018)/Altered.Carbon.S02.MULTi.1080p.WEBRip.5.1.x265-R3MiX
+    dest: /vault/media/jellyfin/Shows/Altered Carbon (2018)/Season 2
+
+
+
+simlinks: "{{ simlinks_shows }}"
