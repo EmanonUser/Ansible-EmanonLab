@@ -33,7 +33,7 @@ devices:
   n1:
     ipv4_addr: 192.168.10.25
     ipv6_addr: '{{ ipv6_prefix }}:f401::25'
-    hw_addr: '6a:c5:63:4b:f2:fd'
+    hw_addr: 'e4:1d:2d:4f:df:90'
     duid: '00:02:00:00:ab:11:13:32:c9:57:5b:26:e6:d3'
     hostname: n1
 
