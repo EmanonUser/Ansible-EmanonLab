@@ -27,14 +27,11 @@ firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 jellyfin_firewalld_ports: "{{ jellyfin_config.port }}/tcp"
 jellyfin_use_rich_firewalld_rules: "{{ host_jellyfin_use_rich_firewalld_rules | default(false) }}"
 jellyfin_firewalld_rich_rules: "{{ host_jellyfin_firewalld_rich_rules }}"
-simlinks_shows:
-  - path: Altered Carbon (2018)
-    src: /series/Altered Carbon (2018)/Altered.Carbon.S01.MULTi.1080p.WEBRip.5.1.x265-R3MiX
-    dest: /vault/media/jellyfin/Shows/Altered Carbon (2018)/Season 1
-  - path: Altered Carbon (2018)
-    src: /series/Altered Carbon (2018)/Altered.Carbon.S02.MULTi.1080p.WEBRip.5.1.x265-R3MiX
-    dest: /vault/media/jellyfin/Shows/Altered Carbon (2018)/Season 2
 
-
+simlinks_dir:
+  - /vault/media/jellyfin/Animes
+  - /vault/media/jellyfin/Shows
+  - /vault/media/jellyfin/Movies
+  - /vault/media/jellyfin/Miscellaneous
 
 simlinks: "{{ simlinks_shows }}"

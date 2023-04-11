@@ -1,4 +1,8 @@
 ---
+- name: Import simlinks tasks
+  ansible.builtin.include_tasks:
+    file: simlinks.yml
+
 - name: Create jellyfin volumes dir
   ansible.builtin.file:
     path: "{{ item }}"
@@ -32,7 +36,3 @@
   ansible.builtin.include_tasks:
     file: firewalld.yml
   when: podman_use_firewalld
-
-- name: Import simlinks tasks
-  ansible.builtin.include_tasks:
-    file: simlinks.yml

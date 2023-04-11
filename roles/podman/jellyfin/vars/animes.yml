@@ -1,0 +1,8 @@
+---
+simlinks_animes:
+
+  - path: /vault/media/jellyfin/Animes/
+    seasons:
+      - src: /data/animes/
+        dest: /vault/media/jellyfin/Animes/
+
