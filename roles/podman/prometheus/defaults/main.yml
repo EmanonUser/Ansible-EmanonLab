@@ -4,7 +4,7 @@ prometheus_image_version: "{{ host_prometheus_image_version | default('latest') 
 # https://hub.docker.com/r/prom/prometheus/tags
 
 prometheus_config: "{{ http_services | selectattr('service', 'equalto', 'prometheus') | first }}"
-prometheus_ports: >-
+prometheus_ports:
   - "{% if prometheus_config.direct_access %}[::]:{{ prometheus_config.port }}
     {% else %}127.0.0.1:{{ prometheus_config.port }}{% endif %}:9090/tcp"
   - "{% if prometheus_config.direct_access %}[::]:{{ prometheus_config.port }}

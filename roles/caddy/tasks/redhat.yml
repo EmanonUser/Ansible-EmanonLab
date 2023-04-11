@@ -2,7 +2,7 @@
 - name: Enable copr caddy for redhat
   community.general.copr:
     name: "@caddy/caddy"
-    state: enabled 
+    state: enabled
   notify: Enable caddy service
 
 - name: Install caddy

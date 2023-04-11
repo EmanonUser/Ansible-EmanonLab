@@ -14,7 +14,7 @@
         group: caddy
         mode: u=rw,g=rw,o=
       notify: Reload caddy service
-    
+
     - name: Validate caddyfile
       ansible.builtin.command:
         cmd: caddy validate --config /etc/caddy/Caddyfile

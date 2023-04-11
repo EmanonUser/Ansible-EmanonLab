@@ -28,21 +28,22 @@
 
 - name: Run filebrowser podman container
   containers.podman.podman_container:
-    name: filebrowser_ansible
+    name: filebrowser
     image: "{{ filebrowser_image }}:{{ filebrowser_image_version }}"
     publish: "{{ filebrowser_ports }}"
     volumes: "{{ filebrowser_volumes }}"
+    timezone: Europe/Paris
     restart_policy: unless-stopped
     state: started
     user: root
     generate_systemd:
-      container_prefix: podman
+      new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       PUID: "0"
       PGID: "0"
   become_user: "{{ primary_user_username }}"
-  notify: Enable filebrowser_ansible podman service
+  notify: Enable filebrowser service
 
 - name: Import firewalld tasks
   ansible.builtin.include_tasks:

@@ -8,7 +8,7 @@ wireguard_confs:
       - "{{ ipv6_prefix }}:f406::1/64"
     server_public_key: "Bdh/0sldvQAiX8tr3IEr95g0cemojFmMDrdrrgTnfg8=" # Not used but kept here
     server_private_key: "{{ wg0.private_key }}"
-    disable_routing: yes
+    disable_routing: true
     peers:
       - peer: arch
         public_key: "SX6OgjapX+UUaPYqrKaS1DYYJkN4dPf5r59woJVzgUs="

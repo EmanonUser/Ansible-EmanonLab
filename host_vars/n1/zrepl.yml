@@ -32,7 +32,7 @@ zrepl_policies:
         zrepl_snapshot_policy: zrepl_P2
 
       - dataset: emanonlab-misc
-        zrepl_snapshot_policy: false 
+        zrepl_snapshot_policy: false
       ## emanonlab datasets ##
 
       ## emanon datasets ##

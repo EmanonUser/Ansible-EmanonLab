@@ -14,25 +14,29 @@
 
 - name: Run jellyfin podman container
   containers.podman.podman_container:
-    name: jellyfin_ansible
+    name: jellyfin
     image: "{{ jellyfin_image }}:{{ jellyfin_image_version }}"
     publish: "{{ jellyfin_ports }}"
     volume: "{{ jellyfin_volumes }}"
     network: "{{ jellyfin_network }}"
-    restart_policy: unless-stopped
+    timezone: Europe/Paris
     state: started
     user: root
     label:
       io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: podman-jellyfin_ansible.service
+      PODMAN_SYSTEMD_UNIT: container-jellyfin.service
     security_opt: label=disable
     generate_systemd:
-      container_prefix: podman
+      new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
-  notify: Enable jellyfin_ansible podman service
+  notify: Enable jellyfin service
 
 - name: Import firewalld tasks
   ansible.builtin.include_tasks:
     file: firewalld.yml
   when: podman_use_firewalld
+
+- name: Import simlinks tasks
+  ansible.builtin.include_tasks:
+    file: simlinks.yml
