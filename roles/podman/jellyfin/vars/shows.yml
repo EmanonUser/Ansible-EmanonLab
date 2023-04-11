@@ -11,22 +11,34 @@ simlinks_shows:
 
   - path: /vault/media/jellyfin/Shows/Better Call Saul (2015)
     seasons:
-      - src: /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/Better.Call.Saul.S01.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
+      - src: >-
+          /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/
+          Better.Call.Saul.S01.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
         dest: /vault/media/jellyfin/Shows/Better Call Saul (2015)/Season 1
 
-      - src: /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/Better.Call.Saul.S02.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
+      - src: >-
+          /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/
+          Better.Call.Saul.S02.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
         dest: /vault/media/jellyfin/Shows/Better Call Saul (2015)/Season 2
 
-      - src: /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/Better.Call.Saul.S03.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
+      - src: >-
+          /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/
+          Better.Call.Saul.S03.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
         dest: /vault/media/jellyfin/Shows/Better Call Saul (2015)/Season 3
 
-      - src: /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/Better.Call.Saul.S04.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
+      - src: >-
+          /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/
+          Better.Call.Saul.S04.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
         dest: /vault/media/jellyfin/Shows/Better Call Saul (2015)/Season 4
 
-      - src: /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/Better.Call.Saul.S05.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
+      - src: >-
+          /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/
+          Better.Call.Saul.S05.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
         dest: /vault/media/jellyfin/Shows/Better Call Saul (2015)/Season 5
 
-      - src: /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/Better.Call.Saul.S06.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
+      - src: >-
+          /data/series/Better_Call_Saul/Better.Call.Saul.INTEGRALE.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS/
+          Better.Call.Saul.S06.MULTI.1080p.NF.WEBRip.EAC3.x264-SUPERNOCTIS
         dest: /vault/media/jellyfin/Shows/Better Call Saul (2015)/Season 6
 
   - path: /vault/media/jellyfin/Shows/Breaking Bad (2008)
@@ -36,7 +48,7 @@ simlinks_shows:
 
       - src: /data/series/Breaking_Bad/Breaking Bad - Integrale - Multi HEVC-2Mbps AC3-384kbps/Breaking Bad - S02 - Multi HEVC-2Mbps AC3-384kbps
         dest: /vault/media/jellyfin/Shows/Breaking Bad (2008)/Season 2
-      
+
       - src: /data/series/Breaking_Bad/Breaking Bad - Integrale - Multi HEVC-2Mbps AC3-384kbps/Breaking Bad - S03 - Multi HEVC-2Mbps AC3-384kbps
         dest: /vault/media/jellyfin/Shows/Breaking Bad (2008)/Season 3
 
@@ -46,13 +58,12 @@ simlinks_shows:
       - src: /data/series/Breaking_Bad/Breaking Bad - Integrale - Multi HEVC-2Mbps AC3-384kbps/Breaking Bad - S05 - Multi HEVC-2Mbps AC3-384kbps
         dest: /vault/media/jellyfin/Shows/Breaking Bad (2008)/Season 5
 
-
   - path: /vault/media/jellyfin/Shows/Chernobyl (2019)
     seasons:
       - src: /data/series/Chernobyl/Chernobyl.S01.MULTi.1080p.10bit.WEBRip.x265-NSP
         dest: /vault/media/jellyfin/Shows/Chernobyl (2019)/Season 1
 
-  - path: /vault/media/jellyfin/Shows/Mr. Robot (2015) 
+  - path: /vault/media/jellyfin/Shows/Mr. Robot (2015)
     seasons:
       - src: /data/series/Mr.Robot/Mr.Robot.iNTEGRALE.MULTi.1080p.WEB-DL.AC3.x265-STEGNER/Mr.Robot.S01.MULTi.1080p.WEB-DL.AC3.x265-STEGNER
         dest: /vault/media/jellyfin/Shows/Mr. Robot (2015)/Season 1
@@ -99,7 +110,7 @@ simlinks_shows:
 
   - path: /vault/media/jellyfin/Shows/Stranger Things (2016)
     seasons:
-      - src: /data/series/Stranger_Things/Stranger Things S01 MULTi [1080p] BluRay x264-PopHD 
+      - src: /data/series/Stranger_Things/Stranger Things S01 MULTi [1080p] BluRay x264-PopHD
         dest: /vault/media/jellyfin/Shows/Stranger Things (2016)/Season 1
 
       - src: /data/series/Stranger_Things/Stranger Things S02 MULTi [1080p] BluRay x264-PopHD

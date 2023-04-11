@@ -5,4 +5,3 @@ simlinks_animes:
     seasons:
       - src: /data/animes/
         dest: /vault/media/jellyfin/Animes/
-
