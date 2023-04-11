@@ -11,23 +11,23 @@
 
 - name: Run transmission podman container
   containers.podman.podman_container:
-    name: transmission_ansible
+    name: transmission
     image: "{{ transmission_image }}:{{ transmission_image_version }}"
     publish: "{{ transmission_ports }}"
     volumes: "{{ transmission_volumes }}"
     network: "{{ transmission_network }}"
+    timezone: Europe/Paris
     log_driver: k8s-file
     log_options: max_size=10m
-    restart_policy: unless-stopped
     state: started
     privileged: true
     user: root
     label:
       io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: podman-transmission_ansible.service
+      PODMAN_SYSTEMD_UNIT: container-transmission.service
     security_opt: label=disable
     generate_systemd:
-      container_prefix: podman
+      new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       TRANSMISSION_RPC_USERNAME: "{{ transmission_env_rpc_username }}"
@@ -45,7 +45,7 @@
       LOCAL_NETWORK: "{{ transmission_env_local_network }}"
       CREATE_TUN_DEVICE: "yes"
   become_user: "{{ primary_user_username }}"
-  notify: Enable transmission_ansible podman service
+  notify: Enable transmission service
 
 - name: Import firewalld tasks rules handling
   ansible.builtin.include_tasks:

@@ -1,8 +1,8 @@
 - name: Create medias directories
   ansible.builtin.file:
-    path: "{{ item.path}}"
+    path: "{{ item.path }}"
     state: directory
-    owner: "{{ primary_user_username }}" 
+    owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
   loop: "{{ simlinks }}"

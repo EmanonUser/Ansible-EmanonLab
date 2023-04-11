@@ -34,7 +34,3 @@ simlinks_shows:
   - path: Altered Carbon (2018)
     src: /series/Altered Carbon (2018)/Altered.Carbon.S02.MULTi.1080p.WEBRip.5.1.x265-R3MiX
     dest: /vault/media/jellyfin/Shows/Altered Carbon (2018)/Season 2
-
-
-
-simlinks: "{{ simlinks_shows }}"
