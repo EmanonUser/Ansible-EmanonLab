@@ -1,5 +1,5 @@
 ---
-zfs_systemd_on_calendar_scrubing_timer: Sat 00:00:00
+zfs_systemd_on_calendar_scrubing_timer: monthly
 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
 zfs_arc_max: 12884901888  # Bytes
 zfs_manual_zpools_creation: false

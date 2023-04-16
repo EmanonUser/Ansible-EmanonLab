@@ -66,7 +66,7 @@
 
 - name: Create dir for ZFS dataset encryption key(s)
   ansible.builtin.file:
-    path: "{{ zfs_datasets_keylocation }}"
+    path: "{{ datasets_keylocation }}"
     state: directory
     owner: root
     group: root
@@ -74,7 +74,7 @@
 
 - name: Create dir for ZFS volumes encryption key(s)
   ansible.builtin.file:
-    path: "{{ zfs_volumes_keylocation }}"
+    path: "{{ volumes_keylocation }}"
     state: directory
     owner: root
     group: root
@@ -82,23 +82,23 @@
 
 - name: Create ZFS dataset encryption key(s)
   ansible.builtin.shell:
-    creates: "{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key"
-    cmd: set -o pipefail && openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key
+    creates: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
+    cmd: set -o pipefail && openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ datasets_keylocation }}/{{ item.1.dataset }}.key
   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
 
 - name: Create ZFS volume encryption key(s)
   ansible.builtin.shell:
-    creates: "{{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key"
-    cmd: set -o pipefail && openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key
+    creates: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
+    cmd: set -o pipefail && openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ volumes_keylocation }}/{{ item.1.volume }}.key
   loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
 
 - name: Set permissions and imutability for dataset encryption key(s)
   ansible.builtin.file:
-    path: "{{ zfs_datasets_keylocation }}/{{ item.1.dataset }}.key"
+    path: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
     owner: root
     group: root
     mode: u=r,g=,o=
@@ -110,7 +110,7 @@
 
 - name: Set permissions and imutability for volume encryption key(s)
   ansible.builtin.file:
-    path: "{{ zfs_volumes_keylocation }}/{{ item.1.volume }}.key"
+    path: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
     owner: root
     group: root
     mode: u=r,g=,o=
@@ -128,7 +128,7 @@
       compression: "{{ item.1.compression | default('lz4') }}"
       encryption: "{{ item.1.encryption | default('aes-256-gcm') }}"
       keyformat: "{{ item.1.keyformat | default('hex') }}"
-      keylocation: "{{ item.1.keylocation | default('file://' + zfs_datasets_keylocation + '/' + item.1.dataset + '.key' ) }}"
+      keylocation: "{{ item.1.keylocation | default('file://' + datasets_keylocation + '/' + item.1.dataset + '.key' ) }}"
       snapdir: "{{ item.1.snapdir | default('hidden') }}"
       atime: "{{ item.1.atime | default('off') }}"
       relatime: "{{ item.1.relatime | default('off') }}"
@@ -150,7 +150,7 @@
       compression: "{{ item.1.compression | default('lz4') }}"
       encryption: "{{ item.1.encryption | default('aes-256-gcm') }}"
       keyformat: "{{ item.1.keyformat | default('hex') }}"
-      keylocation: "{{ item.1.keylocation | default('file://' + zfs_volumes_keylocation + '/' + item.1.volume + '.key' ) }}"
+      keylocation: "{{ item.1.keylocation | default('file://' + volumes_keylocation + '/' + item.1.volume + '.key' ) }}"
       volsize: "{{ item.1.volsize }}"
       volmode: "{{ item.1.volmode | default('full') }}"
       snapdev: "{{ item.1.snapdev | default('hidden') }}"
@@ -166,7 +166,7 @@
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
     mode: u=rwx,g=,o=
-  when: item.1.dataset not in zfs_set_permissions_blacklist
+  when: item.1.dataset not in set_permissions_blacklist
   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
