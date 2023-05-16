@@ -4,3 +4,4 @@ primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDDs6RBgrx45PnidTTY
 domains: [emanon.moe]
 acme_domain: emanon.moe
 subdomain: "@"
+coredns_use_backup_config: true
