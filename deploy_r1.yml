@@ -20,6 +20,9 @@
     - role: kea
       tags: [kea]
 
+    - role: coredns
+      tags: [coredns]
+
     - role: sshguard
       tags: [sshguard]
 
