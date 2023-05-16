@@ -2,42 +2,42 @@
 http_services:
 
   - service: prometheus
-    fqdn: prometheus.emanon.moe
+    fqdn: prometheus.int.emanon.moe
     reverse_proxy: n1.emanon.moe
     direct_access: false
-    public: false
+    internal: true
     backend: localhost
     port: 7001
 
   - service: grafana
-    fqdn: grafana.emanon.moe
+    fqdn: grafana.int.emanon.moe
     reverse_proxy: n1.emanon.moe
     direct_access: false
-    public: false
+    internal: true
     backend: localhost
     port: 7002
 
   - service: syncthing
-    fqdn: syncthing.emanon.moe
+    fqdn: syncthing.int.emanon.moe
     reverse_proxy: n1.emanon.moe
     direct_access: false
-    public: false
+    internal: true
     backend: localhost
     port: 7004
 
   - service: transmission
-    fqdn: transmission.emanon.moe
+    fqdn: transmission.int.emanon.moe
     reverse_proxy: n1.emanon.moe
     direct_access: false
-    public: false
+    internal: true
     backend: localhost
     port: 7005
 
   - service: homeassistant
-    fqdn: hass.emanon.moe
+    fqdn: hass.n1.emanon.moe
     reverse_proxy: n1.emanon.moe
     direct_access: false
-    public: false
+    internal: true
     backend: localhost
     port: 7006
 
@@ -45,13 +45,41 @@ http_services:
     fqdn: jellyfin.emanon.moe
     reverse_proxy: ndmz.emanon.moe
     direct_access: false
-    public: true
+    internal: false
     backend: localhost
     port: 7007
 
-  - service: homelab-shp
-    fqdn: shp1.emanon.moe
-    reverse_proxy: ndmz.emanon.moe
-    public: false
+  - service: sp01
+    fqdn: sp01.int.emanon.moe
+    reverse_proxy: n1.emanon.moe
+    internal: true
+    backend: sp01.emanon.moe
+    port: 80
+
+  - service: sp02
+    fqdn: sp02.int.emanon.moe
+    reverse_proxy: n1.emanon.moe
+    internal: true
+    backend: sp02.emanon.moe
+    port: 80
+
+  - service: sp03
+    fqdn: sp03.int.emanon.moe
+    reverse_proxy: n1.emanon.moe
+    internal: true
+    backend: sp03.emanon.moe
+    port: 80
+
+  - service: sp04
+    fqdn: sp04.int.emanon.moe
+    reverse_proxy: n1.emanon.moe
+    internal: true
+    backend: sp04.emanon.moe
+    port: 80
+
+  - service: sp05
+    fqdn: sp05.int.emanon.moe
+    reverse_proxy: n1.emanon.moe
+    internal: true
     backend: localhost
     port: 80
