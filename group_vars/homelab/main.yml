@@ -1,10 +1,10 @@
 ---
 ipv6_prefix: 2a01:e0a:94f # /61
 primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDDs6RBgrx45PnidTTYIl9yyq9EgUbwGexk8rHzxiG9U emanon@arch
-domains: [emanon.moe]
 acme_domain: emanon.moe
 domain: emanon.moe
 internal_domain: int.emanon.moe
 local_domain: home.arpa
+domains_search: ["{{ internal_domain }}", "{{ local_domain }}"]
 subdomain: "@"
 coredns_use_backup_config: true
