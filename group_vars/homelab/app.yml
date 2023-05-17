@@ -3,7 +3,7 @@ http_services:
 
   - service: prometheus
     fqdn: prometheus.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
     backend: localhost
@@ -11,7 +11,7 @@ http_services:
 
   - service: grafana
     fqdn: grafana.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
     backend: localhost
@@ -19,7 +19,7 @@ http_services:
 
   - service: syncthing
     fqdn: syncthing.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
     backend: localhost
@@ -27,7 +27,7 @@ http_services:
 
   - service: transmission
     fqdn: transmission.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
     backend: localhost
@@ -35,7 +35,7 @@ http_services:
 
   - service: homeassistant
     fqdn: hass.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
     backend: localhost
@@ -43,7 +43,7 @@ http_services:
 
   - service: jellyfin
     fqdn: jellyfin.emanon.moe
-    reverse_proxy: ndmz.emanon.moe
+    reverse_proxy: ndmz.home.arpa
     direct_access: false
     internal: false
     backend: localhost
@@ -51,35 +51,35 @@ http_services:
 
   - service: sp01
     fqdn: sp01.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     internal: true
-    backend: sp01.emanon.moe
+    backend: sp01.home.arpa
     port: 80
 
   - service: sp02
     fqdn: sp02.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     internal: true
-    backend: sp02.emanon.moe
+    backend: sp02.home.arpa
     port: 80
 
   - service: sp03
     fqdn: sp03.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     internal: true
-    backend: sp03.emanon.moe
+    backend: sp03.home.arpa
     port: 80
 
   - service: sp04
     fqdn: sp04.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     internal: true
-    backend: sp04.emanon.moe
+    backend: sp04.home.arpa
     port: 80
 
   - service: sp05
     fqdn: sp05.int.emanon.moe
-    reverse_proxy: n1.emanon.moe
+    reverse_proxy: n1.home.arpa
     internal: true
-    backend: localhost
+    backend: sp05.home.arpa
     port: 80
