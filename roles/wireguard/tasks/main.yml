@@ -16,6 +16,7 @@
     owner: root
     group: root
     mode: u=rw,g=,o=
+  register: wireguard_res
   loop: "{{ wireguard_confs }}"
   loop_control:
     label: /etc/wireguard/{{ item.wireguard }}.conf
