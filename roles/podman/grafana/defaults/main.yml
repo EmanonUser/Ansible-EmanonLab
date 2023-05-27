@@ -16,7 +16,7 @@ grafana_directories:
   - "{{ podman_volumes_path }}/grafana/dashboards"
 grafana_default_volumes: "{{ podman_volumes_path }}/grafana/storage:/var/lib/grafana"
 grafana_volumes: "{{ host_grafana_volumes | default(grafana_default_volumes) }}"
-grafana_network: "{% if grafana_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
+grafana_network: "{% if not grafana_config.internal %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"

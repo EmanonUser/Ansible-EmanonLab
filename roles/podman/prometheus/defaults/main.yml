@@ -17,7 +17,7 @@ prometheus_default_volumes:
   - "{{ podman_volumes_path }}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
   - "{{ podman_volumes_path }}/prometheus:/etc/prometheus"
 prometheus_volumes: "{{ host_prometheus_volumes | default(prometheus_default_volumes) }}"
-prometheus_network: "{% if prometheus_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
+prometheus_network: "{% if not prometheus_config.internal %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 prometheus_config_path: "{{ podman_volumes_path }}/prometheus/prometheus.yml"
 
