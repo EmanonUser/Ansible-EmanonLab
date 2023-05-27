@@ -5,12 +5,12 @@ log syslog informational
 service integrated-vtysh-config
 !
 ipv6 route ::/0 fe80::8c97:eaff:fe32:a871 enp1s0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:f401::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:f402::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:f403::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:f404::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:f405::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
-ipv6 route {{ grp_ipv6_prefix }}:f406::/64 wg0
+ipv6 route {{ ipv6_prefix }}:f401::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ ipv6_prefix }}:f402::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ ipv6_prefix }}:f403::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ ipv6_prefix }}:f404::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ ipv6_prefix }}:f405::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
+ipv6 route {{ ipv6_prefix }}:f406::/64 wg0
 ip route 172.16.0.0/24 wg0
 !
 interface lo

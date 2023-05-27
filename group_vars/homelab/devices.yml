@@ -1,0 +1,104 @@
+devices:
+
+  r1:
+    ipv4_addr: 192.168.5.1
+    ipv6_addr: '{{ ipv6_prefix }}:f400::a'
+    hostname: r1
+    wan_interface:
+      ifname: enp1s0
+      ipv6_addr: '{{ ipv6_prefix }}:f400:ffff::'
+      ipv6_addr_cidr: '{{ ipv6_prefix }}:f400:ffff::/128'
+    lan_interface:
+      ifname: bond0
+      lan_salves:
+        - enp2s0
+        - enp3s0
+      ipv4_addr: 192.168.5.1
+      ipv4_addr_cidr: 192.168.5.1/24
+      ipv6_addr: '{{ ipv6_prefix }}:f400::a'
+      ipv6_addr_cidr: '{{ ipv6_prefix }}:f400::a/64'
+
+  s1:
+    ipv4_addr: 192.168.5.2
+    ipv6_addr: '{{ ipv6_prefix }}:f400::b'
+    hostname: s1
+
+  archlinux:
+    ipv4_addr: 192.168.20.20
+    ipv6_addr: '{{ ipv6_prefix }}:f402::20'
+    hw_addr: 00:d8:61:57:9c:fb
+    duid: '00:02:00:00:ab:11:60:98:9c:f2:d5:37:3b:99'
+    hostname: arch
+
+  n1:
+    ipv4_addr: 192.168.10.25
+    ipv6_addr: '{{ ipv6_prefix }}:f401::25'
+    hw_addr: e4:1d:2d:4f:df:90
+    duid: 00:02:00:00:ab:11:13:32:c9:57:5b:26:e6:d3
+    hostname: n1
+
+  n1dmz:
+    ipv4_addr: 192.168.50.25
+    ipv6_addr: '{{ ipv6_prefix }}:f405::25'
+    hw_addr: 6a:c5:63:4b:f2:fe
+    duid: 00:04:00:00:00:00:00:00:00:00:00:00:ac:1f:6b:77:cf:b8
+    hostname: n1dmz
+
+  ipmi:
+    ipv4_addr: 192.168.10.26
+    ipv6_addr: '{{ ipv6_prefix }}:f401::26'
+    hw_addr: ac:1f:6b:77:c8:78
+    duid: 00:01:00:01:2a:16:93:14:00:00:00:00:00:00
+    hostname: ipmi
+
+  ubnt:
+    ipv4_addr: 192.168.10.40
+    ipv6_addr: '{{ ipv6_prefix }}:f401::40'
+    hw_addr: b4:fb:e4:90:49:50
+    hostname: ubnt
+
+  shp1:
+    ipv4_addr: 192.168.40.50
+    ipv6_addr: 2a01:e0a:94f:f404:a6cf:12ff:fed7:916d
+    hw_addr: a4:cf:12:d7:91:6d
+    hostname: sp01
+
+  shp2:
+    ipv4_addr: 192.168.40.51
+    ipv6_addr: 2a01:e0a:94f:f404:a6cf:12ff:fed7:8f48
+    hw_addr: a4:cf:12:d7:8f:48
+    hostname: sp02
+
+  shp3:
+    ipv4_addr: 192.168.40.52
+    ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe89:1b35
+    hw_addr: e8:db:84:89:1b:35
+    hostname: sp03
+
+  shp4:
+    ipv4_addr: 192.168.40.53
+    ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe89:2461
+    hw_addr: e8:db:84:89:24:61
+    hostname: sp04
+
+  shp5:
+    ipv4_addr: 192.168.40.54
+    ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe88:3afa
+    hw_addr: e8:db:84:88:3a:fa
+    hostname: sp05
+
+  hs110:
+    ipv4_addr: 192.168.40.55
+    hw_addr: 50:c7:bf:0a:f3:44
+    hostname: hs110
+
+  tmp117:
+    ipv4_addr: 192.168.40.60
+    hw_addr: c8:2b:96:09:17:b0
+    hostname: ts01
+
+  printer:
+    ipv4_addr: 192.168.30.5
+    ipv6_addr: '{{ ipv6_prefix }}:f403::5'
+    hw_addr: 00:21:5a:e5:51:f9
+    hostname: printer

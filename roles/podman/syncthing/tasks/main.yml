@@ -11,28 +11,29 @@
 
 - name: Run syncthing podman container
   containers.podman.podman_container:
-    name: syncthing_ansible
+    name: syncthing
     image: "{{ syncthing_image }}:{{ syncthing_image_version }}"
     publish: "{{ syncthing_ports }}"
     volumes: "{{ syncthing_volumes }}"
     network: "{{ syncthing_network }}"
-    restart_policy: unless-stopped
+    timezone: Europe/Paris
     state: started
     user: root
     label:
       io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: podman-syncthing_ansible.service
+      PODMAN_SYSTEMD_UNIT: container-syncthing.service
     security_opt: label=disable
     generate_systemd:
-      container_prefix: podman
+      new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       PUID: "0"
       PGID: "0"
-      TZ: Europe/London
+      TZ: Europe/Paris
   become_user: "{{ primary_user_username }}"
-  notify: Enable syncthing_ansible podman service
+  notify: Enable syncthing service
 
 - name: Import firewalld tasks
-  include_tasks: firewalld.yml
+  ansible.builtin.include_tasks:
+    file: firewalld.yml
   when: podman_use_firewalld

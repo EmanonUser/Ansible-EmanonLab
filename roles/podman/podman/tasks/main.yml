@@ -1,6 +1,5 @@
 ---
-- include_tasks: redhat-setup.yml
+- name: Include RedHat tasks
+  ansible.builtin.include_tasks:
+    file: redhat.yml
   when: ansible_os_family == 'RedHat'
-
-- include_tasks: debian-setup.yml
-  when: ansible_os_family == 'Debian'

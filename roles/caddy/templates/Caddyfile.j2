@@ -1,0 +1,12 @@
+{% for service in http_services %}
+{{ service.fqdn }} {
+      reverse_proxy {{ service.backend }}:{{ service.port }}
+{% if not service.internal %}
+      bind 2a01:e0a:94f:f405::25 192.168.50.25 [::1] 127.0.0.1
+{% else %}
+      bind 2a01:e0a:94f:f401::25 192.168.10.25 [::1] 127.0.0.1
+      tls /etc/caddy/{{ service.fqdn }}.pem /etc/caddy/{{ service.fqdn }}.key
+{% endif -%}
+}
+
+{% endfor -%}

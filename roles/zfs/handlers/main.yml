@@ -1,12 +1,12 @@
 ---
 - name: Daemon-reload zfs systemd
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: Enable zpool(s)-scrub timer(s)
   ansible.builtin.systemd:
     name: "zpool-scrub@{{ item.pool }}.timer"
-    enabled: yes
+    enabled: true
   loop: "{{ zfs_pools }}"
   loop_control:
     label: "ZFS pool Name: {{ item.pool }}"
@@ -30,7 +30,7 @@
 - name: Enable zpool(s)-trim timer(s)
   ansible.builtin.systemd:
     name: "zpool-trim@{{ item.pool }}.timer"
-    enabled: yes
+    enabled: true
   when: item.enable_trim
   loop: "{{ zfs_pools }}"
   loop_control:
@@ -57,9 +57,9 @@
 - name: Enable zfs-load-keys service
   ansible.builtin.systemd:
     name: "zfs-load-keys.service"
-    enabled: yes
+    enabled: true
 
 - name: Enable zfs-mount-encrypted-datasets service
   ansible.builtin.systemd:
     name: "zfs-mount-encrypted-datasets.service"
-    enabled: yes
+    enabled: true

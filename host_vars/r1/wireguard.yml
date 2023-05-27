@@ -1,0 +1,35 @@
+---
+wireguard_confs:
+
+  - wireguard: wg0
+    udp_port: 51820
+    server_addresses:
+      - 172.20.5.1/24
+      - "{{ ipv6_prefix }}:f406::1/64"
+    server_public_key: "Bdh/0sldvQAiX8tr3IEr95g0cemojFmMDrdrrgTnfg8=" # Not used but kept here
+    server_private_key: "{{ wg0.private_key }}"
+    disable_routing: true
+    peers:
+      - peer: arch
+        public_key: "SX6OgjapX+UUaPYqrKaS1DYYJkN4dPf5r59woJVzgUs="
+        preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'arch') | map(attribute='preshared_key') | first }}"
+        keepalive: 60
+        allowed_ips:
+          - "172.20.5.2/32"
+          - "{{ ipv6_prefix }}:f406::2/128"
+
+      - peer: one
+        public_key: "+1g4W6PQiL8FhV5dsZ2ZsA8alM+79T2WRxE1bSHrzmk="
+        preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'one') | map(attribute='preshared_key') | first }}"
+        keepalive: 60
+        allowed_ips:
+          - 172.20.5.3/32
+          - "{{ ipv6_prefix }}:f406::3/128"
+
+      - peer: windows
+        public_key: "QauWBp+kMfQ2UK3EyB3tcRH3XMKS8cirrX2PtuseLTY="
+        preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'windows') | map(attribute='preshared_key') | first }}"
+        keepalive: 60
+        allowed_ips:
+          - 172.20.5.4/32
+          - "{{ ipv6_prefix }}:f406::4/128"

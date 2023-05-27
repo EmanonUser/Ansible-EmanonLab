@@ -1,0 +1,30 @@
+---
+- name: Provisioning of the main Debian router
+  hosts: r1
+  become: true
+  gather_facts: true
+  roles:
+
+    - role: init
+      tags: [init]
+
+    - role: interfaces
+      tags: [interfaces]
+
+    - role: wireguard
+      tags: [wireguard]
+
+    - role: frr
+      tags: [frr]
+
+    - role: kea
+      tags: [kea]
+
+    - role: coredns
+      tags: [coredns]
+
+    - role: sshguard
+      tags: [sshguard]
+
+    - role: nftables
+      tags: [nftables]

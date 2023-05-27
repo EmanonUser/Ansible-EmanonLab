@@ -1,26 +1,22 @@
 local.emanon.        IN  SOA r.local.emanon. moemanon.pm.me. 12 7200 3600 1209600 3600
 
-{% for _, device in grp_device.items() %}
-{% if device.ipv4_addr is defined %}{{ device.hostname }}.{{ grp_local_domain }}.        IN A {{ device.ipv4_addr }}
+{% for _, device in devices.items() %}
+{% if device.ipv4_addr is defined %}{{ device.hostname }}.{{ local_domain }}.        IN A {{ device.ipv4_addr }}
 {% endif %}{% endfor %}
 
-{% for _, device in grp_device.items() %}
-{% if device.ipv6_addr is defined %}{{ device.hostname }}.{{ grp_local_domain }}.        IN AAAA {{ device.ipv6_addr }}
+{% for _, device in devices.items() %}
+{% if device.ipv6_addr is defined %}{{ device.hostname }}.{{ local_domain }}.        IN AAAA {{ device.ipv6_addr }}
 {% endif %}{% endfor %}
 
 $TTL 2100
-{% for _, device in grp_device.items() %}
-{% if device.ipv4_addr is defined %}{{ device.ipv4_addr | ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ grp_local_domain }}.
+{% for _, device in devices.items() %}
+{% if device.ipv4_addr is defined %}{{ device.ipv4_addr | ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ local_domain }}.
 {% endif %}{% endfor %}
 
-{% for _, device in grp_device.items() %}
-{% if device.ipv6_addr is defined %}{{ device.ipv6_addr | ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ grp_local_domain }}.
+{% for _, device in devices.items() %}
+{% if device.ipv6_addr is defined %}{{ device.ipv6_addr | ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ local_domain }}.
 {% endif %}{% endfor %}
 
 {% for service in http_services %}
-{{ service.fulldomain }}.        IN CNAME   {{ service.reverse_proxy }}.
-{% endfor %}
-
-{% for service in tcp_services %}
-{{ service.fulldomain }}.        IN CNAME   {{ service.reverse_proxy }}.
+{{ service.fqdn }}.        	IN CNAME   {{ service.reverse_proxy }}.
 {% endfor %}

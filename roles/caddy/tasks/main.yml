@@ -1,0 +1,23 @@
+---
+- name: Include redhat tasks
+  ansible.builtin.include_tasks:
+    file: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Configure and validate caddyfile
+  block:
+    - name: Configure caddyfile
+      ansible.builtin.template:
+        src: Caddyfile.j2
+        dest: /etc/caddy/Caddyfile
+        owner: caddy
+        group: caddy
+        mode: u=rw,g=rw,o=
+      notify: Reload caddy service
+
+    - name: Validate caddyfile
+      ansible.builtin.command:
+        cmd: caddy validate --config /etc/caddy/Caddyfile
+      register: validate
+      changed_when: true
+      failed_when: validate.rc != 0

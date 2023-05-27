@@ -1,3 +1,0 @@
----
-nfs4_directories: "{{ host_nfs4_directories }}"
-nfs4_mounts: "{{ host_nfs4_mounts }}"

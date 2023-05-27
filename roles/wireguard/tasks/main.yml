@@ -19,5 +19,4 @@
   loop: "{{ wireguard_confs }}"
   loop_control:
     label: /etc/wireguard/{{ item.wireguard }}.conf
-  register: wireguard_res
   notify: [Enable wireguard service, Start wireguard service, Reload wireguard service]

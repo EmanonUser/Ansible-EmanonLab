@@ -5,16 +5,18 @@ homeassistant_image_version: "{{ host_homeassistant_image_version | default('lat
 
 homeassistant_config: "{{ http_services | selectattr('service', 'equalto', 'homeassistant') | first }}"
 homeassistant_ports:
-  - "{% if homeassistant_config.direct_access %}[::]:{{ homeassistant_config.backends[0].port }}{% else %}127.0.0.1:{{ homeassistant_config.backends[0].port }}{% endif %}:8123/tcp"
-  - "{% if homeassistant_config.direct_access %}[::]:{{ homeassistant_config.backends[0].port }}{% else %}[::1]:{{ homeassistant_config.backends[0].port }}{% endif %}:8123/tcp"
+  - "{% if homeassistant_config.direct_access %}[::]:{{ homeassistant_config.port }}
+    {% else %}127.0.0.1:{{ homeassistant_config.port }}{% endif %}:8123/tcp"
+  - "{% if homeassistant_config.direct_access %}[::]:{{ homeassistant_config.port }}
+    {% else %}[::1]:{{ homeassistant_config.port }}{% endif %}:8123/tcp"
 
-homeassistant_directories: "{{ host_podman_volumes_path }}/home_assistant"
-homeassistant_default_volumes: "{{ host_podman_volumes_path }}/home_assistant:/config"
+homeassistant_directories: "{{ podman_volumes_path }}/home_assistant"
+homeassistant_default_volumes: "{{ podman_volumes_path }}/home_assistant:/config"
 homeassistant_volumes: "{{ host_homeassistant_volumes | default(homeassistant_default_volumes) }}"
 homeassistant_network: "{% if jellyfin_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-homeassistant_firewalld_ports: "{{ homeassistant_config.backends[0].port }}/tcp"
+homeassistant_firewalld_ports: "{{ homeassistant_config.port }}/tcp"
 homeassistant_use_rich_firewalld_rules: "{{ host_homeassistant_use_rich_firewalld_rules | default(false) }}"
 homeassistant_firewalld_rich_rules: "{{ host_homeassistant_firewalld_rich_rules }}"

@@ -10,26 +10,27 @@
 
 - name: Run home assistant podman container
   containers.podman.podman_container:
-    name: home_assistant_ansible
+    name: home_assistant
     image: "{{ homeassistant_image }}:{{ homeassistant_image_version }}"
     publish: "{{ homeassistant_ports }}"
     volume: "{{ homeassistant_volumes }}"
     network: "{{ homeassistant_network }}"
-    restart_policy: unless-stopped
+    timezone: Europe/Paris
     state: started
     user: root
     label:
       io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: podman-home_assistant_ansible.service
+      PODMAN_SYSTEMD_UNIT: container-home_assistant.service
     security_opt: label=disable
     generate_systemd:
-      container_prefix: podman
+      new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
-      DISABLE_JEMALLOC: yes
+      DISABLE_JEMALLOC: true
   become_user: "{{ primary_user_username }}"
-  notify: Enable home_assistant_ansible podman service
+  notify: Enable home_assistant service
 
 - name: Import firewalld tasks
-  include_tasks: firewalld.yml
+  ansible.builtin.include_tasks:
+    file: firewalld.yml
   when: podman_use_firewalld

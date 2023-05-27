@@ -2,25 +2,25 @@
 - name: Install ansible (RedHat)
   ansible.builtin.dnf:
     name: ansible
-    state: latest
+    state: present
 
 - name: Pull latest source files from github (RedHat)
   ansible.builtin.git:
     repo: https://github.com/EmanonUser/Ansible-EmanonLab
     dest: Ansible-EmanonLab
-    single_branch: yes
+    single_branch: true
     version: main
-    force: yes
+    force: true
 
-- name: Place ansible vault password file (RedHat)
-  ansible.builtin.lineinfile:
-    path: .VAULT_PASS
-    line: "{{ lookup('file', '~/.ansible/.VAULT_PASS') }}"
-    owner: ansible
-    group: ansible
-    mode: u=r,g=,o=
-    create: yes
-    state: present
+# - name: Place ansible vault password file (RedHat)
+#   ansible.builtin.lineinfile:
+#     path: .VAULT_PASS
+#     line: "{{ lookup('file', '~/.ansible/.VAULT_PASS') }}"
+#     owner: ansible
+#     group: ansible
+#     mode: u=r,g=,o=
+#     create: true
+#     state: present
 
 - name: Install required collections (RedHat)
   community.general.ansible_galaxy_install:

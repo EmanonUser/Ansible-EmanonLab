@@ -1,4 +1,0 @@
-{% for export in host_nfs_exports %}
-{{ export.path }} {% for client in export.authorized_clients %} {{ client.client }}{{ client.options | default('(rw,sync,secure,sec=sys,no_subtree_check,no_root_squash)') }}{% endfor %}
-
-{% endfor %}

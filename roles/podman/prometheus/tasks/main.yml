@@ -21,17 +21,17 @@
 
 - name: Run prometheus podman container
   containers.podman.podman_container:
-    name: prometheus_ansible
+    name: prometheus
     image: "{{ prometheus_image }}:{{ prometheus_image_version }}"
     publish: "{{ prometheus_ports }}"
     volume: "{{ prometheus_volumes }}"
     network: "{{ prometheus_network }}"
-    restart_policy: unless-stopped
+    timezone: Europe/Paris
     state: started
     recreate: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
     label:
       io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: podman-prometheus_ansible.service
+      PODMAN_SYSTEMD_UNIT: container-prometheus.service
     user: root # Overwrite the nobody user in the Dockerfile
     security_opt: label=disable
     command:
@@ -41,11 +41,12 @@
       - "--web.console.libraries=/usr/share/prometheus/console_libraries"
       - "--web.console.templates=/usr/share/prometheus/consoles"
     generate_systemd:
-      container_prefix: podman
+      new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
-  notify: Enable prometheus_ansible podman service
+  notify: Enable prometheus service
 
 - name: Import firewalld tasks
-  include_tasks: firewalld.yml
+  ansible.builtin.include_tasks:
+    file: firewalld.yml
   when: podman_use_firewalld

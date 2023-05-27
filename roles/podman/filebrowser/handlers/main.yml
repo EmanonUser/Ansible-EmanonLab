@@ -1,7 +1,7 @@
 ---
-- name: Enable filebrowser_ansible podman service
+- name: Enable filebrowser service
   ansible.builtin.systemd:
-    name: podman-filebrowser_ansible.service
-    enabled: yes
+    name: container-filebrowser.service
+    enabled: true
     scope: user
   become_user: "{{ primary_user_username }}"

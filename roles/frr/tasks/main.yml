@@ -10,7 +10,9 @@
 
 - name: Add FRRouting Debian Repository
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/frr-archive-keyring.asc] https://deb.frrouting.org/frr {{ ansible_distribution_release }} {{ frr_version }} # noqa 204
+    repo: >-
+      deb [signed-by=/usr/share/keyrings/frr-archive-keyring.asc]
+      https://deb.frrouting.org/frr {{ ansible_distribution_release }} {{ frr_version }}
     filename: frr
     state: present
   notify: ["Apt update", "Apt upgrade"]
@@ -20,7 +22,7 @@
     name:
       - frr
       - frr-pythontools
-    update_cache: yes
+    update_cache: true
     state: present
   notify: ["Enable frrouting service", "Start frrouting service"]
 
@@ -31,7 +33,7 @@
     owner: frr
     group: frr
     mode: u=rw,g=r,o=
-    force: yes
+    force: true
   notify: Reload frrouting service
 
 - name: Configure FRRouting Deamons
@@ -41,7 +43,7 @@
     owner: frr
     group: frr
     mode: u=rw,g=r,o=
-    force: yes
+    force: true
   notify: Reload frrouting service
 
 - name: Configure FRRouting Vtysh
@@ -51,7 +53,7 @@
     owner: frr
     group: frr
     mode: u=rw,g=r,o=
-    force: yes
+    force: true
   notify: Reload frrouting service
 
 - name: Configure Debian service list
@@ -65,22 +67,22 @@
     state: present
 
 - name: Enable IP forwarding
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: present
-    reload: yes
+    reload: true
   loop:
     - { name: "net.ipv4.ip_forward", value: "1" }
     - { name: "net.ipv6.conf.default.forwarding", value: "1" }
     - { name: "net.ipv6.conf.all.forwarding", value: "1" }
 
 - name: Disable reverse path filtering
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: present
-    reload: yes
+    reload: true
   loop:
     - { name: "net.ipv4.conf.default.rp_filter", value: "0" }
     - { name: "net.ipv4.conf.all.rp_filter", value: "0" }

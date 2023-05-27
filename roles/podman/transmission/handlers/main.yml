@@ -1,7 +1,7 @@
 ---
-- name: Enable transmission_ansible podman service
+- name: Enable transmission service
   ansible.builtin.systemd:
-    name: podman-transmission_ansible.service
-    enabled: yes
+    name: container-transmission.service
+    enabled: true
     scope: user
   become_user: "{{ primary_user_username }}"

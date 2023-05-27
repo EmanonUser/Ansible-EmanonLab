@@ -1,0 +1,52 @@
+zrepl_policies:
+  - pool: vault
+    datasets:
+      ## Media datasets ##
+      - dataset: media
+        zrepl_snapshot_policy: false
+
+      - dataset: media-animes
+      - dataset: media-series
+      - dataset: media-movies
+      - dataset: media-tmp
+      - dataset: media-games
+      ## Media dataset ##
+
+      ## emanonlab datasets ##
+      - dataset: emanonlab
+        zrepl_snapshot_policy: false
+
+      - dataset: emanonlab-containers
+        zrepl_snapshot_policy: zrepl_P2
+
+      - dataset: emanonlab-secrets
+        zrepl_snapshot_policy: zrepl_P2
+
+      - dataset: emanonlab-secrets-keepassxc
+        zrepl_snapshot_policy: zrepl_P2
+
+      - dataset: emanonlab-tmp
+        zrepl_snapshot_policy: zrepl_P3
+
+      - dataset: emanonlab-dev
+        zrepl_snapshot_policy: zrepl_P2
+
+      - dataset: emanonlab-misc
+        zrepl_snapshot_policy: false
+      ## emanonlab datasets ##
+
+      ## emanon datasets ##
+      - dataset: emanon
+        zrepl_snapshot_policy: false
+
+      - dataset: emanon-documents
+        zrepl_snapshot_policy: zrepl_P2
+
+      - dataset: emanon-other_users
+        zrepl_snapshot_policy: zrepl_P2
+      ## emanon datasets ##
+
+    volumes:
+      - volume: zvol_01
+        zrepl_snapshot_policy: false
+        volsize: 35G

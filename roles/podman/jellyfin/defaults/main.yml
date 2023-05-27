@@ -5,22 +5,33 @@ jellyfin_image_version: "{{ host_jellyfin_image_version | default('latest') }}"
 
 jellyfin_config: "{{ http_services | selectattr('service', 'equalto', 'jellyfin') | first }}"
 jellyfin_ports:
-  - "{% if jellyfin_config.direct_access %}[::]{{ jellyfin_config.backends[0].port }}{% else %}127.0.0.1:{{ jellyfin_config.backends[0].port }}{% endif %}:8096/tcp"
-  - "{% if jellyfin_config.direct_access %}[::]:{{ jellyfin_config.backends[0].port }}{% else %}[::1]:{{ jellyfin_config.backends[0].port }}{% endif %}:8096/tcp"
+  - "{% if jellyfin_config.direct_access %}[::]{{ jellyfin_config.port }}
+    {% else %}127.0.0.1:{{ jellyfin_config.port }}{% endif %}:8096/tcp"
+
+  - "{% if jellyfin_config.direct_access %}[::]:{{ jellyfin_config.port }}
+    {% else %}[::1]:{{ jellyfin_config.port }}{% endif %}:8096/tcp"
 
 jellyfin_directories:
-  - "{{ host_podman_volumes_path }}/jellyfin/cache"
-  - "{{ host_podman_volumes_path }}/jellyfin/config"
-  - "{{ host_podman_volumes_path }}/jellyfin/media"
+  - "{{ podman_volumes_path }}/jellyfin/cache"
+  - "{{ podman_volumes_path }}/jellyfin/config"
+  - "{{ podman_volumes_path }}/jellyfin/media"
 jellyfin_default_volumes:
-  - "{{ host_podman_volumes_path }}/jellyfin/cache:/cache:rw"
-  - "{{ host_podman_volumes_path }}/jellyfin/config:/config:rw"
-  - "{{ host_podman_volumes_path }}/jellyfin/media:/media:rw"
+  - "{{ podman_volumes_path }}/jellyfin/cache:/cache:rw"
+  - "{{ podman_volumes_path }}/jellyfin/config:/config:rw"
+  - "{{ podman_volumes_path }}/jellyfin/media:/media:rw"
 jellyfin_volumes: "{{ host_jellyfin_volumes | default(jellyfin_default_volumes) }}"
 jellyfin_network: "{% if jellyfin_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-jellyfin_firewalld_ports: "{{ jellyfin_config.backends[0].port }}/tcp"
+jellyfin_firewalld_ports: "{{ jellyfin_config.port }}/tcp"
 jellyfin_use_rich_firewalld_rules: "{{ host_jellyfin_use_rich_firewalld_rules | default(false) }}"
 jellyfin_firewalld_rich_rules: "{{ host_jellyfin_firewalld_rich_rules }}"
+
+simlinks_dir:
+  - /vault/media/jellyfin/Animes
+  - /vault/media/jellyfin/Shows
+  - /vault/media/jellyfin/Movies
+  - /vault/media/jellyfin/Miscellaneous
+
+simlinks: "{{ simlinks_shows }}"

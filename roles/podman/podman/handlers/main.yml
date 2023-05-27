@@ -2,7 +2,7 @@
 - name: Enable podman service
   ansible.builtin.systemd:
     name: podman.service
-    enabled: yes
+    enabled: true
 
 - name: Start podman service
   ansible.builtin.systemd:
@@ -12,7 +12,7 @@
 - name: Enable podman-auto-update timer
   ansible.builtin.systemd:
     name: podman-auto-update.timer
-    enabled: yes
+    enabled: true
 
 - name: Start podman-auto-update timer
   ansible.builtin.systemd:

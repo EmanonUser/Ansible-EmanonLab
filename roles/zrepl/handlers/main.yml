@@ -2,7 +2,7 @@
 - name: Enable zrepl service
   ansible.builtin.systemd:
     name: zrepl.service
-    enabled: yes
+    enabled: true
 
 - name: Start zrepl service
   ansible.builtin.systemd:
@@ -16,8 +16,8 @@
 
 - name: Apt update
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Apt upgrade
   ansible.builtin.apt:
-    upgrade: yes
+    upgrade: true

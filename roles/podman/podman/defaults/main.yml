@@ -1,2 +1,2 @@
 ---
-podman_unqualified_registries:  'unqualified-search-registries = ["docker.io", "quay.io"]'
+podman_unqualified_registries: 'unqualified-search-registries = ["docker.io", "quay.io"]'

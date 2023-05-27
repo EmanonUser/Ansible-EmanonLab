@@ -1,7 +1,7 @@
 ---
-- name: Enable syncthing_ansible podman service
+- name: Enable syncthing service
   ansible.builtin.systemd:
-    name: podman-syncthing_ansible.service
-    enabled: yes
+    name: container-syncthing.service
+    enabled: true
     scope: user
   become_user: "{{ primary_user_username }}"

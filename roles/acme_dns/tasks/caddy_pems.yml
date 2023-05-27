@@ -1,0 +1,20 @@
+---
+- name: Create symlink for caddy's fullchain certs
+  ansible.builtin.copy:
+    src: "{{ acme_dns_letsencrypt_base_path }}/certs/fullchain.{{ item.fqdn }}.crt"
+    dest: "/etc/caddy/{{ item.fqdn }}.pem"
+    owner: caddy
+    group: caddy
+    mode: u=rw,g=,o=
+    remote_src: true
+  loop: "{{ acme_dns_domain_name }}"
+
+- name: Create symlink for caddy's privkey
+  ansible.builtin.copy:
+    src: "{{ acme_dns_letsencrypt_base_path }}/keys/{{ item.fqdn }}.key"
+    dest: "/etc/caddy/{{ item.fqdn }}.key"
+    owner: caddy
+    group: caddy
+    mode: u=rw,g=,o=
+    remote_src: true
+  loop: "{{ acme_dns_domain_name }}"

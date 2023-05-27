@@ -2,11 +2,9 @@
 homelab:
   vars:
     ansible_user: ansible
-    ansible_ssh_private_key_file: /home/emanon/.ssh/AnsibleMaster_key_ed25519
+    ansible_ssh_private_key_file: ~/.ssh/AnsibleMaster_key_ed25519
   hosts:
-    router:
+    r1:
       ansible_host: r1.emanon.moe
-    pi:
-      ansible_host: pi.emanon.moe
-    nas:
-      ansible_host: nas.emanon.moe
+    n1:
+      ansible_host: n1.emanon.moe

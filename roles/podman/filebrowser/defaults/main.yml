@@ -5,28 +5,30 @@ filebrowser_image_version: "{{ host_filebrowser_image_version | default('v2-s6')
 
 filebrowser_config: "{{ http_services | selectattr('service', 'equalto', 'filebrowser') | first }}"
 filebrowser_ports:
-  - "{% if filebrowser_config.direct_access %}[::]{{ filebrowser_config.backends[0].port }}{% else %}127.0.0.1:{{ filebrowser_config.backends[0].port }}{% endif %}:2500/tcp"
-  - "{% if filebrowser_config.direct_access %}[::]:{{ filebrowser_config.backends[0].port }}{% else %}[::1]:{{ filebrowser_config.backends[0].port }}{% endif %}:2500/tcp"
+  - "{% if filebrowser_config.direct_access %}[::]{{ filebrowser_config.port }}
+    {% else %}127.0.0.1:{{ filebrowser_config.port }}{% endif %}:2500/tcp"
+  - "{% if filebrowser_config.direct_access %}[::]:{{ filebrowser_config.port }}
+    {% else %}[::1]:{{ filebrowser_config.port }}{% endif %}:2500/tcp"
 
 filebrowser_directories:
-  - "{{ host_podman_volumes_path }}/filebrowser"
-  - "{{ host_podman_volumes_path }}/filebrowser/data"
-  - "{{ host_podman_volumes_path }}/filebrowser/config"
-  - "{{ host_podman_volumes_path }}/filebrowser/database"
+  - "{{ podman_volumes_path }}/filebrowser"
+  - "{{ podman_volumes_path }}/filebrowser/data"
+  - "{{ podman_volumes_path }}/filebrowser/config"
+  - "{{ podman_volumes_path }}/filebrowser/database"
 
 filebrowser_files:
-  config: "{{ host_podman_volumes_path }}/filebrowser/config/settings.json"
-  database: "{{ host_podman_volumes_path }}/filebrowser/database/database.db"
+  config: "{{ podman_volumes_path }}/filebrowser/config/settings.json"
+  database: "{{ podman_volumes_path }}/filebrowser/database/database.db"
 
 filebrowser_volumes: "{{ host_filebrowser_volumes | default(filebrowser_default_volumes) }}"
 filebrowser_default_volumes:
-  - "{{ host_podman_volumes_path }}/filebrowser/config/settings.json:/config/settings.json"
-  - "{{ host_podman_volumes_path }}/filebrowser/database/database.db:/database/database.db"
-  - "{{ host_podman_volumes_path }}/filebrowser/data:/srv"
+  - "{{ podman_volumes_path }}/filebrowser/config/settings.json:/config/settings.json"
+  - "{{ podman_volumes_path }}/filebrowser/database/database.db:/database/database.db"
+  - "{{ podman_volumes_path }}/filebrowser/data:/srv"
 filebrowser_network: "{% if filebrowser_config.public %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-filebrowser_firewalld_ports: "{{ filebrowser_config.backends[0].port }}/tcp"
+filebrowser_firewalld_ports: "{{ filebrowser_config.port }}/tcp"
 filebrowser_use_rich_firewalld_rules: "{{ host_filebrowser_use_rich_firewalld_rules | default(false) }}"
 filebrowser_firewalld_rich_rules: "{{ host_filebrowser_firewalld_rich_rules }}"

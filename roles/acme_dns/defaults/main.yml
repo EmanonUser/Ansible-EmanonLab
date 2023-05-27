@@ -10,5 +10,5 @@ acme_dns_letsencrypt_dirs:
   mykeys: "{{ acme_dns_letsencrypt_base_path }}/keys"
   csrs: "{{ acme_dns_letsencrypt_base_path }}/csrs"
   certs: "{{ acme_dns_letsencrypt_base_path }}/certs"
-acme_dns_setup_auto_renew: yes
+acme_dns_setup_auto_renew: true
 acme_dns_auto_renew_systemd_interval: 12h

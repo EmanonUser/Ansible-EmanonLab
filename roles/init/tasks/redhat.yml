@@ -1,0 +1,6 @@
+---
+- name: Install core packages for redhat
+  ansible.builtin.dnf:
+    name: "{{ redhat_packages }}"
+    state: present
+  notify: Enable ssd trim

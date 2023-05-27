@@ -1,2 +1,0 @@
----
-stork_cloudsmith_gpg_key: "{{ host_stork_agent_cloudsmith_gpg_key | default('gpg.77F64EC28053D1FB.key') }}"

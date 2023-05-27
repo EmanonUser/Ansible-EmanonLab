@@ -1,7 +1,0 @@
----
-- name: Enable postgres_ansible podman service
-  ansible.builtin.systemd:
-    name: podman-postgres_ansible.service
-    enabled: yes
-    scope: user
-  become_user: "{{ primary_user_username }}"

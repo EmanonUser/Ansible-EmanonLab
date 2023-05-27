@@ -1,7 +1,7 @@
 ---
-- name: Enable jellyfin_ansible podman service
+- name: Enable jellyfin service
   ansible.builtin.systemd:
-    name: podman-jellyfin_ansible.service
-    enabled: yes
+    name: container-jellyfin.service
+    enabled: true
     scope: user
   become_user: "{{ primary_user_username }}"

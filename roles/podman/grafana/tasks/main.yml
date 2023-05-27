@@ -11,26 +11,27 @@
 
 - name: Run grafana podman container
   containers.podman.podman_container:
-    name: grafana_ansible
+    name: grafana
     image: "{{ grafana_image }}:{{ grafana_image_version }}"
     volumes: "{{ grafana_volumes }}"
     publish: "{{ grafana_ports }}"
     network: "{{ grafana_network }}"
-    restart_policy: unless-stopped
+    timezone: Europe/Paris
     state: started
     user: root
     label:
       io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: podman-grafana_ansible.service
+      PODMAN_SYSTEMD_UNIT: container-grafana.service
     security_opt: label=disable
     generate_systemd:
-      container_prefix: podman
+      new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env:
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_password }}"
   become_user: "{{ primary_user_username }}"
-  notify: Enable grafana_ansible podman service
+  notify: Enable grafana service
 
 - name: Import firewalld tasks
-  include_tasks: firewalld.yml
+  ansible.builtin.include_tasks:
+    file: firewalld.yml
   when: podman_use_firewalld

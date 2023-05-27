@@ -2,7 +2,7 @@
 - name: Disable wireguard service
   ansible.builtin.systemd:
     name: wg-quick@{{ item }}.service
-    enabled: no
+    enabled: false
   loop: "{{ wireguard_res.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='wireguard') | list }}"
   loop_control:
     label: Disable wg-quick@{{ item }}.service
@@ -10,7 +10,7 @@
 - name: Enable wireguard service
   ansible.builtin.systemd:
     name: wg-quick@{{ item }}.service
-    enabled: yes
+    enabled: true
   loop: "{{ wireguard_res.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='wireguard') | list }}"
   loop_control:
     label: Enable wg-quick@{{ item }}.service

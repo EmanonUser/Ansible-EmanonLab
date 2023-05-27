@@ -21,15 +21,14 @@ ip6.arpa.:{{ coredns_port }} {
     file /opt/coredns/master.db
 }
 
-{{ grp_local_domain }}.:{{ coredns_port }} {
+{{ local_domain }}.:{{ coredns_port }} {
     import snip
     file /opt/coredns/master.db
-    forward . 127.0.0.1:5301 [::1]:5301 127.0.0.1:5302 [::1]:5302 {
-        policy random
-        except example.org
-        except in-addr.arpa
-        health_check 5s
-    }
+}
+
+{{ internal_domain }}.:{{ coredns_port }} {
+    import snip
+    file /opt/coredns/master.db
 }
 
 .:{{ coredns_port }} {

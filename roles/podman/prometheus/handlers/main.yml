@@ -1,7 +1,7 @@
 ---
-- name: Enable prometheus_ansible podman service
+- name: Enable prometheus service
   ansible.builtin.systemd:
-    name: podman-prometheus_ansible.service
-    enabled: yes
+    name: container-prometheus.service
+    enabled: true
     scope: user
   become_user: "{{ primary_user_username }}"
