@@ -79,6 +79,7 @@ table inet firewall {
 		icmpv6 type { nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } counter accept
 		icmpv6 type { mld-listener-query, mld-listener-report, mld-listener-reduction } counter accept
 		ip protocol ospf ct state new counter accept
+		ip6 protocol ospf ct state new counter accept
 		ct state invalid counter drop
 	}
 
