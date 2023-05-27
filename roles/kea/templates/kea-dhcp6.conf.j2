@@ -53,7 +53,7 @@
     "option-data": [
       {
         "name": "unicast",
-        "data": "{{ devices.r1.lan_interface.ipv6_addr }}"
+        "data": "{{ devices.r1.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"
       },
       {
         "name": "dns-servers",

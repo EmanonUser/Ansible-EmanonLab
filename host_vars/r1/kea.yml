@@ -1,11 +1,11 @@
 ---
 dns_servers:
-  ipv4: [192.168.5.1]
-  ipv6: ["{{ devices.r1.ipv6_addr }}"]
+  ipv4: ["{{ devices.r1.lan_interface.ipv4_addr | ansible.utils.ipaddr('address') }}"]
+  ipv6: ["{{ devices.r1.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"]
 
 ntp_servers:
-  ipv4: [192.168.5.1]
-  ipv6: ["{{ devices.r1.ipv6_addr }}"]
+  ipv4: ["{{ devices.r1.lan_interface.ipv4_addr | ansible.utils.ipaddr('address') }}"]
+  ipv6: ["{{ devices.r1.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"]
 
 kea_dhcp4:
   - subnet: 192.168.10.0/24
@@ -97,8 +97,8 @@ kea_dhcp4:
 kea_dhcp6:
   - subnet: "{{ ipv6_prefix }}:f401::/64"
     pools:
-      - start: "{{ ipv6_prefix }}:f401::1:1"
-        end: "{{ ipv6_prefix }}:f401:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f401:fffc::"
+        end: "{{ ipv6_prefix }}:f401:fffc:ffff:ffff:ffff"
     options_data: []
     reservations:
       - ipv6_addr: ["{{ devices.n1.ipv6_addr }}"]
@@ -113,8 +113,8 @@ kea_dhcp6:
 
   - subnet: "{{ ipv6_prefix }}:f402::/64"
     pools:
-      - start: "{{ ipv6_prefix }}:f402::1:1"
-        end: "{{ ipv6_prefix }}:f402:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f402:fffc::"
+        end: "{{ ipv6_prefix }}:f402:fffc:ffff:ffff:ffff"
     pd_pools:
       - prefix: "{{ ipv6_prefix }}:b000::"
         prefix_len: 52
@@ -132,8 +132,8 @@ kea_dhcp6:
 
   - subnet: "{{ ipv6_prefix }}:f403::/64"
     pools:
-      - start: "{{ ipv6_prefix }}:f403::1:1"
-        end: "{{ ipv6_prefix }}:f403:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f403:fffc::"
+        end: "{{ ipv6_prefix }}:f403:fffc:ffff:ffff:ffff"
     options_data: []
     reservations:
       - ipv6_addr: ["{{ devices.printer.ipv6_addr }}"]
@@ -142,15 +142,15 @@ kea_dhcp6:
 
   - subnet: "{{ ipv6_prefix }}:f404::/64"
     pools:
-      - start: "{{ ipv6_prefix }}:f404::1:1"
-        end: "{{ ipv6_prefix }}:f404:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f404:fffc::"
+        end: "{{ ipv6_prefix }}:f404:fffc:ffff:ffff:ffff"
     options_data: []
     reservations: []
 
   - subnet: "{{ ipv6_prefix }}:f405::/64"
     pools:
-      - start: "{{ ipv6_prefix }}:f405::1:1"
-        end: "{{ ipv6_prefix }}:f405:ffff:ffff:ffff:ffff"
+      - start: "{{ ipv6_prefix }}:f405:fffc::"
+        end: "{{ ipv6_prefix }}:f405:fffc:ffff:ffff:ffff"
     options_data: []
     reservations:
       - ipv6_addr: ["{{ devices.n1dmz.ipv6_addr }}"]
