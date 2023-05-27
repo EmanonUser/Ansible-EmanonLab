@@ -26,8 +26,8 @@ devices:
   archlinux:
     ipv4_addr: 192.168.20.20
     ipv6_addr: '{{ ipv6_prefix }}:f402::20'
-    hw_addr: e4:1d:2d:4f:e0:50
-    duid: 00:02:00:00:ab:11:a7:6a:1a:5a:e6:69:90:03
+    hw_addr: 00:d8:61:57:9c:fb
+    duid: '00:02:00:00:ab:11:60:98:9c:f2:d5:37:3b:99'
     hostname: arch
 
   n1:
