@@ -26,22 +26,22 @@
       tags: [podman]
 
     - role: podman/prometheus
-      tags: [prometheus]
+      tags: [prometheus, containers]
 
     - role: podman/grafana
-      tags: [grafana]
+      tags: [grafana, containers]
 
     - role: podman/jellyfin
-      tags: [jellyfin]
+      tags: [jellyfin, containers]
 
     - role: podman/transmission
-      tags: [transmission]
+      tags: [transmission, containers]
 
     - role: podman/homeassistant
-      tags: [homeassistant]
+      tags: [homeassistant, containers]
 
     - role: podman/syncthing
-      tags: [syncthing]
+      tags: [syncthing, containers]
 
     - role: caddy
-      tags: [caddy]
+      tags: [caddy, containers]
