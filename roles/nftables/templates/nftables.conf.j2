@@ -9,12 +9,12 @@ define WG = {{ wireguard_confs | selectattr('wireguard', 'equalto', 'wg0') | map
 table inet routing {
 	chain prerouting {
 		type nat hook prerouting priority dstnat; policy accept
-		iifname $WAN tcp dport 80 dnat ip to {{ devices.n1dmz.ipv4_addr }}:80
-		iifname $WAN tcp dport 443 dnat ip to {{ devices.n1dmz.ipv4_addr }}:443
-		iifname $WAN tcp dport 25565 dnat ip to {{ devices.n1dmz.ipv4_addr }}:25565
-		iifname $WAN tcp dport 22000 dnat ip to {{ devices.n1.ipv4_addr }}:22000
-		iifname $WAN udp dport 22000 dnat ip to {{ devices.n1.ipv4_addr }}:22000
-		iifname $WAN udp dport 21027 dnat ip to {{ devices.n1.ipv4_addr }}:21027
+		iifname $WAN tcp dport 80 dnat ip to {{ devices.n1dmz.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:80
+		iifname $WAN tcp dport 443 dnat ip to {{ devices.n1dmz.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:443
+		iifname $WAN tcp dport 25565 dnat ip to {{ devices.n1dmz.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:25565
+		iifname $WAN tcp dport 22000 dnat ip to {{ devices.n1.ipv4_addr | ansible.utils.ipaddr('address') |ansible.utils.ipaddr('address') }}:22000
+		iifname $WAN udp dport 22000 dnat ip to {{ devices.n1.ipv4_addr | ansible.utils.ipaddr('address') |ansible.utils.ipaddr('address') }}:22000
+		iifname $WAN udp dport 21027 dnat ip to {{ devices.n1.ipv4_addr | ansible.utils.ipaddr('address') |ansible.utils.ipaddr('address')}}:21027
 	}
 
 	chain postrouting {
@@ -85,16 +85,16 @@ table inet firewall {
 
 	chain wan_forward {
 		oifname $LAN icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } counter accept
-		oifname $LAN ip6 daddr {{ devices.n1dmz.ipv6_addr }} tcp dport 80 counter accept
-		oifname $LAN ip6 daddr {{ devices.n1dmz.ipv6_addr }} tcp dport 443 counter accept
-		oifname $LAN ip6 daddr {{ devices.n1dmz.ipv6_addr }} tcp dport 25565 counter accept
-		oifname $LAN ip daddr {{ devices.n1dmz.ipv4_addr }} tcp dport 80 counter accept
-		oifname $LAN ip daddr {{ devices.n1dmz.ipv4_addr }} tcp dport 443 counter accept
-		oifname $LAN ip daddr {{ devices.n1dmz.ipv4_addr }} tcp dport 25565 counter accept
-		oifname $LAN ip6 daddr {{ devices.n1.ipv6_addr }} tcp dport 22 counter accept
-		oifname $LAN ip daddr {{ devices.n1.ipv4_addr }} tcp dport 22000 counter accept
-		oifname $LAN ip daddr {{ devices.n1.ipv4_addr }} udp dport 22000 counter accept
-		oifname $LAN ip daddr {{ devices.n1.ipv4_addr }} udp dport 21027 counter accept
+		oifname $LAN ip6 daddr {{ devices.n1dmz.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 80 counter accept
+		oifname $LAN ip6 daddr {{ devices.n1dmz.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 443 counter accept
+		oifname $LAN ip6 daddr {{ devices.n1dmz.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 25565 counter accept
+		oifname $LAN ip daddr {{ devices.n1dmz.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 80 counter accept
+		oifname $LAN ip daddr {{ devices.n1dmz.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 443 counter accept
+		oifname $LAN ip daddr {{ devices.n1dmz.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 25565 counter accept
+		oifname $LAN ip6 daddr {{ devices.n1.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 22 counter accept
+		oifname $LAN ip daddr {{ devices.n1.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 22000 counter accept
+		oifname $LAN ip daddr {{ devices.n1.ipv4_addr | ansible.utils.ipaddr('address') }} udp dport 22000 counter accept
+		oifname $LAN ip daddr {{ devices.n1.ipv4_addr | ansible.utils.ipaddr('address') }} udp dport 21027 counter accept
 		jump forward_filter
 	}
 
