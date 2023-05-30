@@ -6,7 +6,7 @@ frr_daemons: "{{ host_frr_daemons | default(frr_default_daemons) }}"
 frr_default_daemons:
   - bgpd=no
   - ospfd=yes
-  - ospf6d=no
+  - ospf6d=yes
   - ripd=no
   - ripngd=no
   - isisd=no
@@ -20,6 +20,7 @@ frr_default_daemons:
   - bfdd=no
   - fabricd=no
   - vrrpd=no
+
 frr_services_port: |
   zebrasrv      	2600/tcp                 # zebra service
   zebra         	2601/tcp                 # zebra vty
@@ -38,6 +39,3 @@ frr_services_port: |
   bfdd          	2617/tcp                 # bfdd vty
   fabricd       	2618/tcp                 # fabricd vty
   vrrpd         	2619/tcp                 # vrrpd vty
-
-frr_ospf_router_id: "{{ device.r1.ipv4_addr }}"
-brocade_static_ip: "{{ device.s1.ipv4_addr }}"

@@ -53,7 +53,7 @@
     "option-data": [
       {
         "name": "unicast",
-        "data": "{{ devices.r1.lan_interface.ipv6_addr }}"
+        "data": "{{ devices.r1.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"
       },
       {
         "name": "dns-servers",
@@ -111,7 +111,7 @@
             {% endif -%}
             {% if reservation.duid is defined and reservation.hw_addr is not defined %}"duid": "{{ reservation.duid }}",
             {% endif -%}
-            "ip-addresses": [{% for ipv6_addr in reservation.ipv6_addr %}"{{ ipv6_addr }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+            "ip-addresses": [{% for ipv6_addr in reservation.ipv6_addr %}"{{ ipv6_addr | ansible.utils.ipaddr('address') }}"{% if not loop.last %}, {% endif %}{% endfor %}],
             {% if reservation.prefixes is defined %}"prefixes": [{% for prefixes in reservation.prefixes %}"{{ prefixes }}"{% if not loop.last %}, {% endif %}{% endfor %}],
             {% endif -%}
             "hostname": "{{ reservation.hostname }}"

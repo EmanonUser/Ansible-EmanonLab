@@ -90,7 +90,7 @@
 
           {
             "hw-address": "{{ reservation.hw_addr }}",
-            "ip-address": "{{ reservation.ipv4_addr }}",
+            "ip-address": "{{ reservation.ipv4_addr | ansible.utils.ipaddr('address') }}",
             "hostname": "{{ reservation.hostname }}"
           }{%if not loop.last %},{% endif %}{% endfor %}
 

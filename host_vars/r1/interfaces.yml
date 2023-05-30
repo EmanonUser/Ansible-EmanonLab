@@ -10,7 +10,7 @@ host_network_interfaces:
           v4: ["127.0.0.1", "9.9.9.9", "1.1.1.1"]
           v6: ["::1", "2620:fe::fe", "2606:4700:4700::1111"]
       addresses:
-          v6: ["{{ devices.r1.wan_interface.ipv6_addr_cidr }}"]
+          v6: ["{{ devices.r1.wan_interface.ipv6_addr }}"]
 
     - interface: "{{ devices.r1.lan_interface.ifname }}"
       hwaddress: ea:71:73:be:13:e4
@@ -20,9 +20,9 @@ host_network_interfaces:
           v4: static
           v6: static
       bonding:
-          slaves: "{{ devices.r1.lan_interface.lan_salves }}"
+          slaves: "{{ devices.r1.lan_interface.lan_slaves }}"
           mode: 4
           millim: 100
       addresses:
-          v4: ["{{ devices.r1.lan_interface.ipv4_addr_cidr }}"]
-          v6: ["{{ devices.r1.lan_interface.ipv6_addr_cidr }}"]
+          v4: ["{{ devices.r1.lan_interface.ipv4_addr }}"]
+          v6: ["{{ devices.r1.lan_interface.ipv6_addr }}"]
