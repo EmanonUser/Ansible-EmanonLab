@@ -1,9 +1,9 @@
-frr version 8.2.2
 frr defaults traditional
 hostname {{ ansible_hostname }}
 log syslog informational
 service integrated-vtysh-config
 !
+ip route 172.16.0.0/24 wg0
 ipv6 route ::/0 fe80::8c97:eaff:fe32:a871 enp1s0 onlink
 ipv6 route {{ ipv6_prefix }}:f401::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
 ipv6 route {{ ipv6_prefix }}:f402::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
@@ -11,21 +11,27 @@ ipv6 route {{ ipv6_prefix }}:f403::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
 ipv6 route {{ ipv6_prefix }}:f404::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
 ipv6 route {{ ipv6_prefix }}:f405::/64 fe80::768e:f8ff:feb9:20a0 bond0 onlink
 ipv6 route {{ ipv6_prefix }}:f406::/64 wg0
-ip route 172.16.0.0/24 wg0
 !
 interface lo
  ip address 172.24.0.1/32
 exit
 !
 interface bond0
- ip ospf area 0 192.168.5.1
+ ip ospf area 0
  ip ospf authentication message-digest
  ip ospf message-digest-key 1 md5 {{ frr_ospf_key }}
+ ipv6 ospf6 area 0
+ ipv6 ospf6 authentication key-id 1 hash-algo hmac-sha-256 key {{ frr_ospf_key }}
  no ip ospf passive
+ no ipv6 ospf6 passive
 exit
 !
 router ospf
  ospf router-id 172.24.0.1
  passive-interface default
+exit
+!
+router ospf6
+ ospf6 router-id 172.24.0.1
 exit
 !
