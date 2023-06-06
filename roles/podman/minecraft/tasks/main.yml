@@ -1,0 +1,58 @@
+---
+- name: Create minecraft volume directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=w,o=
+    state: directory
+  loop: "{{ minecraft_directories }}"
+
+- name: Run minecraft podman container
+  containers.podman.podman_container:
+    name: minecraft
+    image: "{{ minecraft_image }}:{{ minecraft_image_version }}"
+    publish: "{{ minecraft_ports }}"
+    volume: "{{ minecraft_volumes }}"
+    network: "{{ minecraft_network }}"
+    timezone: Europe/Paris
+    state: started
+    user: root
+    label:
+      io.containers.autoupdate: registry
+      PODMAN_SYSTEMD_UNIT: container-minecraft.service
+    security_opt: label=disable
+    generate_systemd:
+      new: true
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
+    env:
+      EULA: 'TRUE'
+      TYPE: 'FABRIC'
+      VERSION: '1.19.2'
+      MODPACK: "https://mediafilez.forgecdn.net/files/4560/165/Better+MC+%5bFABRIC%5d+1.19.2+v18.5.zip"
+      FORCE_REDOWNLOAD: 'true'
+      OVERRIDE_SERVER_PROPERTIES: 'TRUE'
+      MOTD: "Kino der Toten"
+      DIFFICULTY: normal
+      MODE: survival
+      WHITELIST: EmanonUser,electroatn,Papy_Castor,Maeyo_
+      OPS: EmanonUser,Papy_Castor
+      ENFORCE_WHITELIST: 'TRUE'
+      MAX_PLAYERS: '10'
+      ENABLE_COMMAND_BLOCK: 'true'
+      SPAWN_ANIMALS: 'true'
+      SPAWN_MONSTERS: 'true'
+      SPAWN_NPCS: 'true'
+      GENERATE_STRUCTURES: 'true'
+      MEMORY: '4000M'
+      #VIEW_DISTANCE: '64'
+      MAX_TICK_TIME: '60000'
+      MAX_BUILD_HEIGHT: '256'
+      UID: '1000'
+      GID: '1000'
+  become_user: "{{ primary_user_username }}"
+  notify: Enable minecraft service
+
+- name: Import firewalld tasks
+  include_tasks: firewalld.yml
+  when: podman_use_firewalld

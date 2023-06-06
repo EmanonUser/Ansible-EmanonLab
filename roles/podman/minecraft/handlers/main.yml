@@ -1,0 +1,7 @@
+---
+- name: Enable minecraft service
+  ansible.builtin.systemd:
+    name: container-minecraft.service
+    enabled: true
+    scope: user
+  become_user: "{{ primary_user_username }}"

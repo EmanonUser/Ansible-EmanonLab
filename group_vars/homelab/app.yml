@@ -83,3 +83,10 @@ http_services:
     internal: true
     backend: sp05.home.arpa
     port: 80
+
+tcp_services:
+  - service: minecraft
+    fqdn: minecraft.emanon.moe
+    direct_access: true
+    internal: false
+    port: 25565

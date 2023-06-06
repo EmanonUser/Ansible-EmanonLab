@@ -1,0 +1,21 @@
+---
+minecraft_image: "{{ host_minecraft_image | default('docker.io/itzg/minecraft-server') }}"
+minecraft_image_version: "{{ host_minecraft_image_version | default('latest') }}"
+# https://hub.docker.com/r/itzg/minecraft-server/tags
+
+minecraft_config: "{{ tcp_services | selectattr('service', 'equalto', 'minecraft') | first }}"
+minecraft_ports:
+  - "{% if minecraft_config.direct_access %}[::]:{{ minecraft_config.port }}{% else %}127.0.0.1:{{ minecraft_config.port }}{% endif %}:25565/tcp"
+  - "{% if minecraft_config.direct_access %}[::]:{{ minecraft_config.port }}{% else %}[::1]:{{ minecraft_config.port }}{% endif %}:25565/tcp"
+
+minecraft_directories:
+  - "{{ podman_volumes_path }}/minecraft"
+minecraft_default_volumes: "{{ podman_volumes_path }}/minecraft:/data"
+minecraft_volumes: "{{ host_minecraft_volumes | default(minecraft_default_volumes) }}"
+minecraft_network: "{% if not minecraft_config.internal %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
+
+# Firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+minecraft_firewalld_ports: "{{ minecraft_config.port }}/tcp"
+minecraft_use_rich_firewalld_rules: "{{ host_minecraft_use_rich_firewalld_rules | default(false) }}"
+minecraft_firewalld_rich_rules: "{{ host_minecraft_firewalld_rich_rules }}"
