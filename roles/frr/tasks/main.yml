@@ -33,7 +33,7 @@
     owner: frr
     group: frr
     mode: u=rw,g=r,o=
-    force: true
+    validate: /usr/bin/vtysh -C %s
   notify: Reload frrouting service
 
 - name: Configure FRRouting Deamons
@@ -43,7 +43,7 @@
     owner: frr
     group: frr
     mode: u=rw,g=r,o=
-    force: true
+    validate: /usr/bin/vtysh -C %s
   notify: Reload frrouting service
 
 - name: Configure FRRouting Vtysh
@@ -53,7 +53,7 @@
     owner: frr
     group: frr
     mode: u=rw,g=r,o=
-    force: true
+    validate: /usr/bin/vtysh -C %s
   notify: Reload frrouting service
 
 - name: Configure Debian service list
