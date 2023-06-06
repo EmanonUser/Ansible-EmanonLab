@@ -43,5 +43,8 @@
     - role: podman/syncthing
       tags: [syncthing, containers]
 
+    - role: podman/minecraft
+      tags: [minecraft, containers]
+
     - role: caddy
       tags: [caddy, containers]
