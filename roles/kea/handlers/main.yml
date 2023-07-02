@@ -1,47 +1,47 @@
 ---
 - name: Enable kea-dhcp4 service
   ansible.builtin.systemd:
-    name: isc-kea-dhcp4-server.service
+    name: kea-dhcp4-server.service
     enabled: true
 
 - name: Start kea-dhcp4 service
   ansible.builtin.systemd:
-    name: isc-kea-dhcp4-server.service
+    name: kea-dhcp4-server.service
     state: started
 
 - name: Reload kea-dhcp4 service
   ansible.builtin.systemd:
-    name: isc-kea-dhcp4-server.service
+    name: kea-dhcp4-server.service
     state: reloaded
 
 - name: Enable kea-dhcp6 service
   ansible.builtin.systemd:
-    name: isc-kea-dhcp6-server.service
+    name: kea-dhcp6-server.service
     enabled: true
 
 - name: Start kea-dhcp6 service
   ansible.builtin.systemd:
-    name: isc-kea-dhcp6-server.service
+    name: kea-dhcp6-server.service
     state: started
 
 - name: Reload kea-dhcp6 service
   ansible.builtin.systemd:
-    name: isc-kea-dhcp6-server.service
+    name: kea-dhcp6-server.service
     state: reloaded
 
 - name: Enable kea-ctrl-agent service
   ansible.builtin.systemd:
-    name: isc-kea-ctrl-agent.service
+    name: kea-ctrl-agent.service
     enabled: true
 
 - name: Start kea-ctrl-agent service
   ansible.builtin.systemd:
-    name: isc-kea-ctrl-agent.service
+    name: kea-ctrl-agent.service
     state: started
 
 - name: Reload kea-ctrl-agent service
   ansible.builtin.systemd:
-    name: isc-kea-ctrl-agent.service
+    name: kea-ctrl-agent.service
     state: reloaded
 
 - name: Apt update
