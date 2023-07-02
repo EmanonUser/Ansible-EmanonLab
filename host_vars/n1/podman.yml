@@ -26,4 +26,4 @@ transmission_volumes:
   - /vault/media/animes:/media/animes:rw
   - /vault/media/series:/media/series:rw
   - /vault/media/movies:/media/movies:rw
-  - /vault/emanonlab/misc:/misc:ro
+  - /vault/emanonlab/misc:/misc:rw
