@@ -1,0 +1,22 @@
+---
+debian_stable_packages: "{{ host_debian_stable_packages | default(debian_stable_packages_defaults) }}"
+debian_stable_packages_defaults:
+  - debian-keyring
+  - debian-archive-keyring
+  - ca-certificates
+  - apt-transport-https
+  - acl
+  - gnupg2
+  - curl
+  - git
+  - zsh
+  - neovim
+  - unzip
+  - dnsutils
+  - ldnsutils
+  - conntrack
+  - tcpdump
+  - socat
+  - mtr-tiny
+
+ssh_service_name: ssh.service
