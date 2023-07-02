@@ -72,7 +72,7 @@ table inet firewall {
 
 	chain lan_input {
 		tcp dport { ssh, 6763 } ct state new counter accept
-		udp dport { domain, bootps, ntp, dhcpv6-server, wireguard } ct state new counter accept
+		udp dport { domain, bootps, ntp, dhcpv6-server, 51820 } ct state new counter accept
 		icmp type { echo-request, timestamp-request, destination-unreachable } ct state new counter accept
 		icmp type { time-exceeded, parameter-problem } counter accept
 		icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } counter accept
