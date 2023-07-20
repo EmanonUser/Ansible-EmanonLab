@@ -2,8 +2,8 @@
 - name: Create minecraft volume directory
   ansible.builtin.file:
     path: "{{ item }}"
-    owner: "{{ primary_user_username }}"
-    group: "{{ primary_user_username }}"
+    owner: "100999"
+    group: "100999"
     mode: u=rwx,g=w,o=
     state: directory
   loop: "{{ minecraft_directories }}"
@@ -28,15 +28,15 @@
     env:
       EULA: 'TRUE'
       TYPE: 'FABRIC'
-      VERSION: '1.19.2'
-      MODPACK: "https://mediafilez.forgecdn.net/files/4560/165/Better+MC+%5bFABRIC%5d+1.19.2+v18.5.zip"
-      FORCE_REDOWNLOAD: 'true'
+      VERSION: '1.20.1'
+      FORCE_REDOWNLOAD: 'TRUE'
       OVERRIDE_SERVER_PROPERTIES: 'TRUE'
       MOTD: "Kino der Toten"
+      MODS: 'https://mediafilez.forgecdn.net/files/4622/908/fabric-api-0.85.0%2B1.20.1.jar,https://mediafilez.forgecdn.net/files/4614/109/Terralith_1.20.1_v2.4.1.jar,https://mediafilez.forgecdn.net/files/4630/983/Structory_1.20.1_v1.3.2.jar,https://mediafilez.forgecdn.net/files/4623/432/FallingTree-1.20.1-4.2.0.jar,https://mediafilez.forgecdn.net/files/4573/208/appleskin-fabric-mc1.20-2.5.0.jar,https://mediafilez.forgecdn.net/files/4584/319/soundphysics-fabric-1.20.1-1.1.1.jar,https://mediafilez.forgecdn.net/files/4571/997/visuality-0.7.0%2B1.20.jar,https://mediafilez.forgecdn.net/files/4580/976/continuity-3.0.0-beta.2%2B1.20.jar,https://mediafilez.forgecdn.net/files/4605/670/AmbientSounds_FABRIC_v5.2.20_mc1.20.1.jar,https://mediafilez.forgecdn.net/files/4605/226/doubledoors-1.20.1-5.0.jar,https://mediafilez.forgecdn.net/files/4601/906/collective-1.20.1-6.62.jar'
       DIFFICULTY: normal
       MODE: survival
       WHITELIST: EmanonUser,electroatn,Papy_Castor,Maeyo_
-      OPS: EmanonUser,Papy_Castor
+      OPS: EmanonUser,electroatn,Papy_Castor,Maeyo_
       ENFORCE_WHITELIST: 'TRUE'
       MAX_PLAYERS: '10'
       ENABLE_COMMAND_BLOCK: 'true'
@@ -44,7 +44,7 @@
       SPAWN_MONSTERS: 'true'
       SPAWN_NPCS: 'true'
       GENERATE_STRUCTURES: 'true'
-      MEMORY: '4000M'
+      MEMORY: '6000M'
       #VIEW_DISTANCE: '64'
       MAX_TICK_TIME: '60000'
       MAX_BUILD_HEIGHT: '256'

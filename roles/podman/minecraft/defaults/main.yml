@@ -10,7 +10,9 @@ minecraft_ports:
 
 minecraft_directories:
   - "{{ podman_volumes_path }}/minecraft"
-minecraft_default_volumes: "{{ podman_volumes_path }}/minecraft:/data"
+  - "{{ podman_volumes_path }}/minecraft/data"
+minecraft_default_volumes:
+  - "{{ podman_volumes_path }}/minecraft/data:/data"
 minecraft_volumes: "{{ host_minecraft_volumes | default(minecraft_default_volumes) }}"
 minecraft_network: "{% if not minecraft_config.internal %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
