@@ -50,6 +50,7 @@ mods_list:
   - https://mediafilez.forgecdn.net/files/4619/515/Variety_Aquatic-fabric-1.20-1.0.4.8.jar
   - https://mediafilez.forgecdn.net/files/4576/371/midnightlib-fabric-1.4.1.jar
   - https://mediafilez.forgecdn.net/files/4585/788/VarietyAPI-Fabric-1.0.jar
+  - https://mediafilez.forgecdn.net/files/4644/452/jei-1.20.1-fabric-15.2.0.23.jar
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
