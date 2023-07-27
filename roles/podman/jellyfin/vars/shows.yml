@@ -154,3 +154,38 @@ simlinks_shows:
 
       - src: /data/series/Vikings/Vikings.S05.MULTI.VFF.1080p.10bit.BluRay.AC3-5.1.x265
         dest: /vault/media/jellyfin/Shows/Vikings (2013)/Season 5
+
+  - path: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]
+    seasons:
+      - src: /data/series/The_Walking_Dead/The Walking Dead S01 (2010) MULTi VFF 1080p 10bit HDLight BluRay x265 HE-AAC 5.1 - QTZ
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 1
+  
+      - src: /data/series/The_Walking_Dead/The Walking Dead S02 (2011) MULTi VFF 1080p 10bit HDLight BluRay x265 HE-AAC 5.1 - QTZ
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 2
+
+      - src: /data/series/The_Walking_Dead/The Walking Dead S03 (2012) MULTi VFF 1080p 10bit HDLight BluRay x265 HE-AAC 5.1 - QTZ
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 3
+
+      - src: /data/series/The_Walking_Dead/The Walking Dead S04 (2013) MULTi VFF 1080p 10bit HDLight BluRay x265 HE-AAC 5.1 - QTZ
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 4
+
+      - src: /data/series/The_Walking_Dead/The Walking Dead S05 (2014) MULTi VFF 1080p 10bit HDLight BluRay x265 HE-AAC 7.1-QTZ
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 5
+
+      - src: /data/series/The_Walking_Dead/The Walking Dead S06 (2015) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 6 
+
+      - src: /data/series/The_Walking_Dead/The Walking Dead S07 (2016) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 7
+
+      - src: /data/series/The_Walking_Dead/The Walking Dead - S08 - Multi HEVC-2Mbps AC3-384kbps
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 8
+
+      - src: /data/series/The_Walking_Dead/The Walking Dead - S09 - Multi HEVC-2Mbps AC3-384kbps
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 9
+
+      - src: /data/series/The_Walking_Dead/The.Walking.Dead.S10.MULTi.1080p.AMZN.WEB-DL.DDP5.1.H264-FRATERNiTY
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 10
+
+      - src: /data/series/The_Walking_Dead/The.Walking.Dead.S11.MULTi.1080p.WEBRip.DDP5.1.x265
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (TV Series 2010-2022) [imbdid-tt1520211]/Season 11
