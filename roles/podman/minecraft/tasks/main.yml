@@ -31,6 +31,7 @@
       VERSION: '1.20.1'
       FORCE_REDOWNLOAD: 'TRUE'
       OVERRIDE_SERVER_PROPERTIES: 'TRUE'
+      TZ: Europe/Paris
       MOTD: "Kino der Toten"
       MODS: "{{ mods_list | join(',') }}"
       DIFFICULTY: normal
