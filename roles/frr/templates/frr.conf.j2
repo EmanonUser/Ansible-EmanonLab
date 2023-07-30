@@ -22,7 +22,6 @@ interface bond0
  ip ospf authentication message-digest
  ip ospf message-digest-key 1 md5 {{ frr_ospf_key }}
  ipv6 ospf6 area 0
- ipv6 ospf6 authentication key-id 1 hash-algo hmac-sha-256 key {{ frr_ospf_key }}
  no ip ospf passive
  no ipv6 ospf6 passive
 exit
