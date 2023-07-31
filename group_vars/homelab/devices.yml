@@ -37,8 +37,8 @@ devices:
   n1dmz:
     ipv4_addr: 192.168.50.25/24
     ipv6_addr: "{{ ipv6_prefix }}:f405::25/64"
-    hw_addr: 6a:c5:63:4b:f2:fe
-    duid: 00:04:00:00:00:00:00:00:00:00:00:00:ac:1f:6b:77:cf:b8
+    hw_addr: 6a:c5:63:4b:f2:fd
+    duid: 00:02:00:00:ab:11:13:32:c9:57:5b:26:e6:d3
     hostname: n1dmz
 
   ipmi:
