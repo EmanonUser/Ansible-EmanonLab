@@ -2,7 +2,6 @@
 homelab:
   vars:
     ansible_user: ansible
-    ansible_ssh_private_key_file: ~/.ssh/AnsibleMaster_key_ed25519
   hosts:
     r1:
       ansible_host: r1.home.arpa
