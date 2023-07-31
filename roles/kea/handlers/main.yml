@@ -9,11 +9,6 @@
     name: kea-dhcp4-server.service
     state: started
 
-- name: Reload kea-dhcp4 service
-  ansible.builtin.systemd:
-    name: kea-dhcp4-server.service
-    state: reloaded
-
 - name: Enable kea-dhcp6 service
   ansible.builtin.systemd:
     name: kea-dhcp6-server.service
@@ -23,11 +18,6 @@
   ansible.builtin.systemd:
     name: kea-dhcp6-server.service
     state: started
-
-- name: Reload kea-dhcp6 service
-  ansible.builtin.systemd:
-    name: kea-dhcp6-server.service
-    state: reloaded
 
 - name: Enable kea-ctrl-agent service
   ansible.builtin.systemd:
