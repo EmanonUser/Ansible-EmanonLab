@@ -1,2 +1,2 @@
 ---
-dmz_interface: enp5s0v50
+dmz_interface: bond0
