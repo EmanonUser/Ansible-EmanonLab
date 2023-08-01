@@ -49,7 +49,7 @@
     group: _kea
     mode: u=rw,g=r,o=r
     # validate: /usr/sbin/kea-dhcp6 -t %s
-  notify: Reload kea-dhcp6 service
+  notify: Restart kea-dhcp6 service
 
 - name: Template kea-ctrl-agent configuration
   ansible.builtin.template:
@@ -59,4 +59,4 @@
     group: _kea
     mode: u=rw,g=r,o=r
     # validate: /usr/sbin/kea-ctrl-agent -t %s
-  notify: Reload kea-ctrl-agent service
+  notify: Restart kea-ctrl-agent service
