@@ -2,7 +2,7 @@ devices:
 
   r1:
     ipv4_addr: 192.168.5.1/24 # for coredns templating
-    ipv6_addr: "{{ ipv6_prefix }}:fffa::/64" # for coredns templating
+    ipv6_addr: "{{ ipv6_prefix }}:f400:fffa::/64" # for coredns templating
     hostname: r1
     wan_interface:
       ifname: enp1s0

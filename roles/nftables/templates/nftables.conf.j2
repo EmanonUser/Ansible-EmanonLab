@@ -15,7 +15,7 @@ table inet routing {
 		iifname $WAN tcp dport 22000 dnat ip to {{ devices.n1.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:22000
 		iifname $WAN udp dport 22000 dnat ip to {{ devices.n1.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:22000
 		iifname $WAN udp dport 21027 dnat ip to {{ devices.n1.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address')}}:21027
-		iifname $LAN ip daddr minecraft.emanon.moe tcp dport 25565 meta nftrace set 1 dnat to {{ devices.n1dmz.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:25565
+		iifname $LAN ip daddr 82.66.193.124 tcp dport 25565 meta nftrace set 1 dnat to {{ devices.n1dmz.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:25565
 	}
 
 	chain postrouting {
