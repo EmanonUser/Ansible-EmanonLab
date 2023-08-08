@@ -1,7 +1,18 @@
 ---
-- name: Enable minecraft service
+- name: Reload minecraft systemd daemon
   ansible.builtin.systemd:
-    name: container-minecraft.service
+    daemon_reload: true
+
+- name: Enable minecraft pod
+  ansible.builtin.systemd:
+    name: pod-mc.service
     enabled: true
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Start minecraft pod
+  ansible.builtin.systemd:
+    name: pod-mc.service
+    state: started
     scope: user
   become_user: "{{ primary_user_username }}"

@@ -4,55 +4,75 @@
     path: "{{ item }}"
     owner: "100999"
     group: "100999"
-    mode: u=rwx,g=w,o=
+    mode: u=rwx,g=rwx,o=r
     state: directory
   loop: "{{ minecraft_directories }}"
 
-- name: Run minecraft podman container
-  containers.podman.podman_container:
-    name: minecraft
-    image: "{{ minecraft_image }}:{{ minecraft_image_version }}"
-    publish: "{{ minecraft_ports }}"
-    volume: "{{ minecraft_volumes }}"
+- name: Include containers variables
+  ansible.builtin.include_vars:
+    file: mods.yml
+
+- name: Include environnement variables
+  ansible.builtin.include_vars:
+    file: minecraft.yml
+
+- name: Create minecraft pod
+  containers.podman.podman_pod:
+    name: mc
     network: "{{ minecraft_network }}"
-    timezone: Europe/Paris
+    publish: "{{ minecraft_ports }}"
     state: started
+    label:
+      io.containers.autoupdate: registry
+      PODMAN_SYSTEMD_UNIT: pod-mc.service
+    generate_systemd:
+      new: true
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
+  become_user: "{{ primary_user_username }}"
+  notify:
+    - Reload minecraft systemd daemon
+    - Enable minecraft pod
+    - Start minecraft pod
+
+- name: Run minecraft container
+  containers.podman.podman_container:
+    name: mc-server
+    pod: mc
+    image: "{{ minecraft_server_image }}:{{ minecraft_server_image_version }}"
+    volume: "{{ minecraft_server_volumes }}"
+    timezone: Europe/Paris
+    state: present
     user: root
     label:
       io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: container-minecraft.service
+      PODMAN_SYSTEMD_UNIT: container-mc-server.service
     security_opt: label=disable
     generate_systemd:
       new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
-    env:
-      EULA: 'TRUE'
-      TYPE: 'FABRIC'
-      VERSION: '1.20.1'
-      FORCE_REDOWNLOAD: 'TRUE'
-      OVERRIDE_SERVER_PROPERTIES: 'TRUE'
-      TZ: Europe/Paris
-      MOTD: "Kino der Toten"
-      MODS: "{{ mods_list | join(',') }}"
-      DIFFICULTY: normal
-      MODE: survival
-      WHITELIST: EmanonUser,electroatn,Papy_Castor,Maeyo_
-      OPS: EmanonUser,electroatn,Papy_Castor,Maeyo_
-      ENFORCE_WHITELIST: 'TRUE'
-      MAX_PLAYERS: '10'
-      ENABLE_COMMAND_BLOCK: 'true'
-      SPAWN_ANIMALS: 'true'
-      SPAWN_MONSTERS: 'true'
-      SPAWN_NPCS: 'true'
-      GENERATE_STRUCTURES: 'true'
-      MEMORY: '6000M'
-      #VIEW_DISTANCE: '64'
-      MAX_TICK_TIME: '60000'
-      MAX_BUILD_HEIGHT: '256'
-      UID: '1000'
-      GID: '1000'
+    env: "{{ minecraft_env }}"
   become_user: "{{ primary_user_username }}"
-  notify: Enable minecraft service
+  notify: Reload minecraft systemd daemon
+
+- name: Run minecraft backup container
+  containers.podman.podman_container:
+    name: mc-backups
+    pod: mc
+    image: "{{ minecraft_backup_image }}:{{ minecraft_backup_image_version }}"
+    volume: "{{ minecraft_backup_volumes }}"
+    timezone: Europe/Paris
+    state: present
+    user: root
+    label:
+      io.containers.autoupdate: registry
+      PODMAN_SYSTEMD_UNIT: container-mc-backups.service
+    security_opt: label=disable
+    generate_systemd:
+      new: true
+      path: /home/{{ primary_user_username }}/.config/systemd/user/
+        #env: "{{ minecraft_backup_env }}"
+  become_user: "{{ primary_user_username }}"
+  notify: Reload minecraft systemd daemon
 
 - name: Import firewalld tasks
   include_tasks: firewalld.yml

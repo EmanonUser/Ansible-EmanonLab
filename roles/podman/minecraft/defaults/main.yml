@@ -1,62 +1,33 @@
 ---
-minecraft_image: "{{ host_minecraft_image | default('docker.io/itzg/minecraft-server') }}"
-minecraft_image_version: "{{ host_minecraft_image_version | default('latest') }}"
+minecraft_server_image: "{{ host_minecraft_image | default('docker.io/itzg/minecraft-server') }}"
+minecraft_server_image_version: "{{ host_minecraft_image_version | default('latest') }}"
 # https://hub.docker.com/r/itzg/minecraft-server/tags
 
 minecraft_config: "{{ tcp_services | selectattr('service', 'equalto', 'minecraft') | first }}"
 minecraft_ports:
   - "{% if minecraft_config.direct_access %}[::]:{{ minecraft_config.port }}{% else %}127.0.0.1:{{ minecraft_config.port }}{% endif %}:25565/tcp"
   - "{% if minecraft_config.direct_access %}[::]:{{ minecraft_config.port }}{% else %}[::1]:{{ minecraft_config.port }}{% endif %}:25565/tcp"
+  - "127.0.0.1:25575:25575/tcp"
+  - "[::1]:25575:25575/tcp"
 
 minecraft_directories:
   - "{{ podman_volumes_path }}/minecraft"
   - "{{ podman_volumes_path }}/minecraft/data"
-minecraft_default_volumes:
-  - "{{ podman_volumes_path }}/minecraft/data:/data"
-minecraft_volumes: "{{ host_minecraft_volumes | default(minecraft_default_volumes) }}"
+  - "{{ podman_volumes_path }}/minecraft/backups"
+minecraft_server_default_volumes:
+  - "{{ podman_volumes_path }}/minecraft/data:/data:rw"
+  - "{{ podman_volumes_path }}/minecraft/backups:/backups:ro"
+minecraft_server_volumes: "{{ host_minecraft_backup_volumes | default(minecraft_server_default_volumes) }}"
 minecraft_network: "{% if not minecraft_config.internal %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
-
-mods_list: 
-  - https://mediafilez.forgecdn.net/files/4651/247/fabric-api-0.86.0%2B1.20.1.jar
-  - https://mediafilez.forgecdn.net/files/4614/109/Terralith_1.20.1_v2.4.1.jar
-  - https://mediafilez.forgecdn.net/files/4630/983/Structory_1.20.1_v1.3.2.jar
-  - https://mediafilez.forgecdn.net/files/4623/432/FallingTree-1.20.1-4.2.0.jar
-  - https://mediafilez.forgecdn.net/files/4573/208/appleskin-fabric-mc1.20-2.5.0.jar
-  - https://mediafilez.forgecdn.net/files/4584/319/soundphysics-fabric-1.20.1-1.1.1.jar
-  - https://mediafilez.forgecdn.net/files/4571/997/visuality-0.7.0%2B1.20.jar
-  - https://mediafilez.forgecdn.net/files/4580/976/continuity-3.0.0-beta.2%2B1.20.jar
-  - https://mediafilez.forgecdn.net/files/4605/670/AmbientSounds_FABRIC_v5.2.20_mc1.20.1.jar
-  - https://mediafilez.forgecdn.net/files/4605/226/doubledoors-1.20.1-5.0.jar
-  - https://mediafilez.forgecdn.net/files/4601/906/collective-1.20.1-6.62.jar
-  - https://mediafilez.forgecdn.net/files/4640/640/farmers-delight-fabric-mc1.20.1-1.4.1.jar
-  - https://mediafilez.forgecdn.net/files/4655/341/cultural-delights-fabric-0.14.10%2B1.20.1.jar
-  - https://mediafilez.forgecdn.net/files/4659/117/expandeddelight-0.3.0.1.jar
-  - https://mediafilez.forgecdn.net/files/4597/439/balm-fabric-1.20-7.0.4.jar
-  - https://mediafilez.forgecdn.net/files/4655/304/brewinandchewin-fabric-2.1.1%2B1.20.1.jar
-  - https://mediafilez.forgecdn.net/files/4583/491/stackrefill-1.20.1-4.0.jar
-  - https://mediafilez.forgecdn.net/files/4635/312/waystones-fabric-1.20-14.0.1.jar
-  - https://mediafilez.forgecdn.net/files/4597/704/InventorySorter-1.9.0-1.20.jar
-  - https://mediafilez.forgecdn.net/files/4583/532/realisticbees-1.20.1-3.4.jar
-  - https://mediafilez.forgecdn.net/files/4654/101/supplementaries-1.20-2.5.21-fabric.jar
-  - https://mediafilez.forgecdn.net/files/4656/566/moonlight-1.20-2.7.2-fabric.jar
-  - https://mediafilez.forgecdn.net/files/4608/550/creeperoverhaul-3.0.1-fabric.jar
-  - https://mediafilez.forgecdn.net/files/4647/92/TerraBlender-fabric-1.20.1-3.0.0.169.jar
-  - https://mediafilez.forgecdn.net/files/4575/726/entity_texture_features_fabric_1.20-4.4.4.jar
-  - https://mediafilez.forgecdn.net/files/4641/296/biomemakeover-FABRIC-1.20.1-1.10.2.jar
-  - https://mediafilez.forgecdn.net/files/4663/9/architectury-9.1.12-fabric.jar
-  - https://mediafilez.forgecdn.net/files/4620/588/ctov-3.3.2.jar
-  - https://mediafilez.forgecdn.net/files/4627/672/geckolib-fabric-1.20.1-4.2.1.jar
-  - https://mediafilez.forgecdn.net/files/4576/456/resourcefulconfig-fabric-1.20-2.0.0.jar
-  - https://mediafilez.forgecdn.net/files/4619/515/Variety_Aquatic-fabric-1.20-1.0.4.8.jar
-  - https://mediafilez.forgecdn.net/files/4576/371/midnightlib-fabric-1.4.1.jar
-  - https://mediafilez.forgecdn.net/files/4585/788/VarietyAPI-Fabric-1.0.jar
-  - https://mediafilez.forgecdn.net/files/4644/452/jei-1.20.1-fabric-15.2.0.23.jar
-  - https://mediafilez.forgecdn.net/files/4586/970/geophilic-v2.0.0-mc1.20u1.20.1.jar
-  - https://mediafilez.forgecdn.net/files/4658/322/Xaeros_Minimap_23.6.0_Fabric_1.20.jar
-  - https://mediafilez.forgecdn.net/files/4658/351/XaerosWorldMap_1.31.0_Forge_1.20.jar
 
 # Firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 minecraft_firewalld_ports: "{{ minecraft_config.port }}/tcp"
 minecraft_use_rich_firewalld_rules: "{{ host_minecraft_use_rich_firewalld_rules | default(false) }}"
 minecraft_firewalld_rich_rules: "{{ host_minecraft_firewalld_rich_rules }}"
+minecraft_backup_image: "{{ host_minecraft_backup_image | default('docker.io/itzg/mc-backup') }}"
+minecraft_backup_image_version: "{{ host_minecraft_backup_image_version | default('latest') }}"
+minecraft_backup_volumes: "{{ host_minecraft_backup_volumes | default(minecraft_backup_default_volumes) }}"
+minecraft_backup_default_volumes:
+  - "{{ podman_volumes_path }}/minecraft/data:/data:ro"
+  - "{{ podman_volumes_path }}/minecraft/backups:/backups:rw"

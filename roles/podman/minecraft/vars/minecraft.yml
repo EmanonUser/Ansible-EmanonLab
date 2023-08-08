@@ -1,0 +1,25 @@
+minecraft_env:
+  EULA: 'TRUE'
+  TYPE: 'FABRIC'
+  VERSION: '1.20.1'
+  FORCE_REDOWNLOAD: 'TRUE'
+  OVERRIDE_SERVER_PROPERTIES: 'TRUE'
+  TZ: Europe/Paris
+  MOTD: "Kino der Toten"
+  MODS: "{{ mods | join(',') }}"
+  DIFFICULTY: normal
+  MODE: survival
+  WHITELIST: EmanonUser,electroatn,Papy_Castor,Maeyo_
+  OPS: EmanonUser,electroatn,Papy_Castor,Maeyo_
+  ENFORCE_WHITELIST: 'TRUE'
+  MAX_PLAYERS: '10'
+  ENABLE_COMMAND_BLOCK: 'true'
+  SPAWN_ANIMALS: 'true'
+  SPAWN_MONSTERS: 'true'
+  SPAWN_NPCS: 'true'
+  GENERATE_STRUCTURES: 'true'
+  MEMORY: '6000M'
+  MAX_TICK_TIME: '60000'
+  MAX_BUILD_HEIGHT: '256'
+  UID: '1000'
+  GID: '1000'
