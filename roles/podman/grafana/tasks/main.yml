@@ -17,7 +17,7 @@
     publish: "{{ grafana_ports }}"
     network: "{{ grafana_network }}"
     timezone: Europe/Paris
-    state: started
+    state: present 
     user: root
     label:
       io.containers.autoupdate: registry
@@ -29,7 +29,11 @@
     env:
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_password }}"
   become_user: "{{ primary_user_username }}"
-  notify: Enable grafana service
+  notify:
+    - Reload systemd daemon
+    - Enable grafana service
+    - Stop grafana service
+    - Start grafana service
 
 - name: Import firewalld tasks
   ansible.builtin.include_tasks:

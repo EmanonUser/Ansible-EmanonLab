@@ -1,7 +1,27 @@
 ---
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+  become_user: "{{ primary_user_username }}"
+  
 - name: Enable jellyfin service
   ansible.builtin.systemd:
     name: container-jellyfin.service
     enabled: true
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Stop jellyfin service
+  ansible.builtin.systemd:
+    name: container-jellyfin.service
+    state: stopped
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Start jellyfin service
+  ansible.builtin.systemd:
+    name: container-jellyfin.service
+    state: started
     scope: user
   become_user: "{{ primary_user_username }}"

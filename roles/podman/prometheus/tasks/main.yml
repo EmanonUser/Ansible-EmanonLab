@@ -27,7 +27,7 @@
     volume: "{{ prometheus_volumes }}"
     network: "{{ prometheus_network }}"
     timezone: Europe/Paris
-    state: started
+    state: present
     recreate: "{% if conf_change.changed %}yes{% else %}no{% endif %}"
     label:
       io.containers.autoupdate: registry
@@ -44,7 +44,11 @@
       new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
-  notify: Enable prometheus service
+  notify:
+    - Reload systemd daemon
+    - Enable prometheus service
+    - Stop prometheus service
+    - Start prometheus service
 
 - name: Import firewalld tasks
   ansible.builtin.include_tasks:

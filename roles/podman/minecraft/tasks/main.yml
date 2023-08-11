@@ -21,7 +21,7 @@
     name: mc
     network: "{{ minecraft_network }}"
     publish: "{{ minecraft_ports }}"
-    state: started
+    state: created
     label:
       io.containers.autoupdate: registry
       PODMAN_SYSTEMD_UNIT: pod-mc.service
@@ -30,9 +30,10 @@
       path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
   notify:
-    - Reload minecraft systemd daemon
-    - Enable minecraft pod
-    - Start minecraft pod
+    - Reload systemd daemon
+    - Enable minecraft pod service
+    - Stop minecraft pod service
+    - Start minecraft pod service
 
 - name: Run minecraft container
   containers.podman.podman_container:
@@ -52,7 +53,7 @@
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env: "{{ minecraft_env }}"
   become_user: "{{ primary_user_username }}"
-  notify: Reload minecraft systemd daemon
+  notify: Reload systemd daemon
 
 - name: Run minecraft backup container
   containers.podman.podman_container:
@@ -72,7 +73,7 @@
       path: /home/{{ primary_user_username }}/.config/systemd/user/
         #env: "{{ minecraft_backup_env }}"
   become_user: "{{ primary_user_username }}"
-  notify: Reload minecraft systemd daemon
+  notify: Reload systemd daemon
 
 - name: Import firewalld tasks
   include_tasks: firewalld.yml

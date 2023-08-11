@@ -1,6 +1,6 @@
 ---
 filebrowser_image: "{{ host_filebrowser_image | default('docker.io/filebrowser/filebrowser') }}"
-filebrowser_image_version: "{{ host_filebrowser_image_version | default('v2-s6') }}"
+filebrowser_image_version: "{{ host_filebrowser_image_version | default('v2.24.2-s6') }}"
 # https://hub.docker.com/r/filebrowser/filebrowser/tags
 
 filebrowser_config: "{{ http_services | selectattr('service', 'equalto', 'filebrowser') | first }}"
@@ -22,9 +22,9 @@ filebrowser_files:
 
 filebrowser_volumes: "{{ host_filebrowser_volumes | default(filebrowser_default_volumes) }}"
 filebrowser_default_volumes:
-  - "{{ podman_volumes_path }}/filebrowser/config/settings.json:/config/settings.json"
-  - "{{ podman_volumes_path }}/filebrowser/database/database.db:/database/database.db"
-  - "{{ podman_volumes_path }}/filebrowser/data:/srv"
+  - "{{ podman_volumes_path }}/filebrowser/config/settings.json:/config/settings.json:rw"
+  - "{{ podman_volumes_path }}/filebrowser/database/database.db:/database/database.db:rw"
+  - "{{ podman_volumes_path }}/filebrowser/data:/srv:rw"
 filebrowser_network: "{% if not filebrowser_config.internal %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
 # Firewalld

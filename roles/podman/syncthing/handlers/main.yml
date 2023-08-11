@@ -1,7 +1,27 @@
 ---
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+  become_user: "{{ primary_user_username }}"
+  
 - name: Enable syncthing service
   ansible.builtin.systemd:
     name: container-syncthing.service
     enabled: true
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Stop syncthing service
+  ansible.builtin.systemd:
+    name: container-syncthing.service
+    state: stopped
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Start syncthing service
+  ansible.builtin.systemd:
+    name: container-syncthing.service
+    state: started
     scope: user
   become_user: "{{ primary_user_username }}"

@@ -17,7 +17,7 @@
     volumes: "{{ syncthing_volumes }}"
     network: "{{ syncthing_network }}"
     timezone: Europe/Paris
-    state: started
+    state: present
     user: root
     label:
       io.containers.autoupdate: registry
@@ -31,7 +31,11 @@
       PGID: "0"
       TZ: Europe/Paris
   become_user: "{{ primary_user_username }}"
-  notify: Enable syncthing service
+  notify:
+    - Reload systemd daemon 
+    - Enable syncthing service
+    - Stop syncthing service
+    - Start syncthing service
 
 - name: Import firewalld tasks
   ansible.builtin.include_tasks:

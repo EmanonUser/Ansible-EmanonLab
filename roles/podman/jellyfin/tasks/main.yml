@@ -8,7 +8,7 @@
     mode: u=rwx,g=,o=
   loop: "{{ jellyfin_directories }}"
 
-- name: Run jellyfin podman container
+- name: Create jellyfin podman container
   containers.podman.podman_container:
     name: jellyfin
     image: "{{ jellyfin_image }}:{{ jellyfin_image_version }}"
@@ -16,7 +16,7 @@
     volume: "{{ jellyfin_volumes }}"
     network: "{{ jellyfin_network }}"
     timezone: Europe/Paris
-    state: started
+    state: present 
     user: root
     label:
       io.containers.autoupdate: registry
@@ -26,7 +26,11 @@
       new: true
       path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
-  notify: Enable jellyfin service
+  notify:
+    - Reload systemd daemon
+    - Enable jellyfin service
+    - Stop jellyfin service
+    - Start jellyfin service
 
 - name: Import firewalld tasks
   ansible.builtin.include_tasks:

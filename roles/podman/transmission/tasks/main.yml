@@ -19,7 +19,7 @@
     timezone: Europe/Paris
     log_driver: k8s-file
     log_options: max_size=10m
-    state: started
+    state: present 
     privileged: true
     user: root
     label:
@@ -45,7 +45,11 @@
       LOCAL_NETWORK: "{{ transmission_env_local_network }}"
       CREATE_TUN_DEVICE: "yes"
   become_user: "{{ primary_user_username }}"
-  notify: Enable transmission service
+  notify:
+    - Reload systemd daemon
+    - Enable transmission service
+    - Stop transmission service
+    - Start transmission service
 
 - name: Import firewalld tasks rules handling
   ansible.builtin.include_tasks:

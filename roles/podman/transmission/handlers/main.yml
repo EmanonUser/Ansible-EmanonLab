@@ -1,7 +1,27 @@
 ---
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+  become_user: "{{ primary_user_username }}"
+  
 - name: Enable transmission service
   ansible.builtin.systemd:
     name: container-transmission.service
     enabled: true
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Stop transmission service
+  ansible.builtin.systemd:
+    name: container-transmission.service
+    state: stopped
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Start transmission service
+  ansible.builtin.systemd:
+    name: container-transmission.service
+    state: started
     scope: user
   become_user: "{{ primary_user_username }}"
