@@ -49,6 +49,14 @@ http_services:
     backend: localhost
     port: 7007
 
+  - service: filebrowser
+    fqdn: filebrowser.emanon.moe
+    reverse_proxy: ndmz.home.arpa
+    direct_access: false
+    internal: false
+    backend: localhost
+    port: 7008
+
   - service: sp01
     fqdn: sp01.int.emanon.moe
     reverse_proxy: n1.home.arpa
