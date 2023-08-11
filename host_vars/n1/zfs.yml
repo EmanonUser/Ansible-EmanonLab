@@ -29,6 +29,8 @@ zfs_pools:
         compression: zstd
       - dataset: emanonlab-containers
         compression: zstd-6
+      - dataset: emanonlab-containers-minecraft
+        compression: zstd-6
       - dataset: emanonlab-secrets
         compression: zstd
       - dataset: emanonlab-secrets-keepassxc

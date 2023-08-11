@@ -19,6 +19,9 @@ zrepl_policies:
       - dataset: emanonlab-containers
         zrepl_snapshot_policy: zrepl_P2
 
+      - dataset: emanonlab-containers-minecraft
+        zrepl_snapshot_policy: zrepl_P3
+
       - dataset: emanonlab-secrets
         zrepl_snapshot_policy: zrepl_P2
 
