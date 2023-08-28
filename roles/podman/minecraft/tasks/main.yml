@@ -30,7 +30,7 @@
       path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
   notify:
-    - Reload systemd daemon
+    - Reload minecraft systemd daemon
     - Enable minecraft pod service
     - Stop minecraft pod service
     - Start minecraft pod service
@@ -53,7 +53,7 @@
       path: /home/{{ primary_user_username }}/.config/systemd/user/
     env: "{{ minecraft_env }}"
   become_user: "{{ primary_user_username }}"
-  notify: Reload systemd daemon
+  notify: Reload minecraft systemd daemon
 
 - name: Run minecraft backup container
   containers.podman.podman_container:
@@ -73,7 +73,7 @@
       path: /home/{{ primary_user_username }}/.config/systemd/user/
         #env: "{{ minecraft_backup_env }}"
   become_user: "{{ primary_user_username }}"
-  notify: Reload systemd daemon
+  notify: Reload minecraft systemd daemon
 
 - name: Import firewalld tasks
   include_tasks: firewalld.yml

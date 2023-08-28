@@ -1,5 +1,5 @@
 ---
-- name: Reload systemd daemon
+- name: Reload minecraft systemd daemon
   ansible.builtin.systemd:
     daemon_reload: true
     scope: user
