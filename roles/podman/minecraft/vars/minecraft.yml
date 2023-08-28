@@ -7,6 +7,8 @@ minecraft_env:
   TZ: Europe/Paris
   MOTD: "Kino der Toten"
   MODS: "{{ mods | join(',') }}"
+  CF_API_KEY: "{{ cf_api_key }}"
+  CURSEFORGE_FILES: "{{ cf_mods | join(',') }}"
   DIFFICULTY: normal
   MODE: survival
   WHITELIST: EmanonUser,electroatn,Papy_Castor,Maeyo_
