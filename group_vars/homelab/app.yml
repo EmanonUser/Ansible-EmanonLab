@@ -2,7 +2,7 @@
 http_services:
 
   - service: prometheus
-    fqdn: prometheus.int.emanon.moe
+    fqdn: prometheus.int.emanon.dev
     reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
@@ -10,7 +10,7 @@ http_services:
     port: 7001
 
   - service: grafana
-    fqdn: grafana.int.emanon.moe
+    fqdn: grafana.int.emanon.dev
     reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
@@ -18,7 +18,7 @@ http_services:
     port: 7002
 
   - service: syncthing
-    fqdn: syncthing.int.emanon.moe
+    fqdn: syncthing.int.emanon.dev
     reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
@@ -26,7 +26,7 @@ http_services:
     port: 7004
 
   - service: transmission
-    fqdn: transmission.int.emanon.moe
+    fqdn: transmission.int.emanon.dev
     reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
@@ -34,7 +34,7 @@ http_services:
     port: 7005
 
   - service: homeassistant
-    fqdn: hass.int.emanon.moe
+    fqdn: hass.int.emanon.dev
     reverse_proxy: n1.home.arpa
     direct_access: false
     internal: true
@@ -42,7 +42,7 @@ http_services:
     port: 7006
 
   - service: jellyfin
-    fqdn: jellyfin.emanon.moe
+    fqdn: jellyfin.emanon.dev
     reverse_proxy: ndmz.home.arpa
     direct_access: false
     internal: false
@@ -50,7 +50,7 @@ http_services:
     port: 7007
 
   - service: filebrowser
-    fqdn: filebrowser.emanon.moe
+    fqdn: filebrowser.emanon.dev
     reverse_proxy: ndmz.home.arpa
     direct_access: false
     internal: false
@@ -58,35 +58,35 @@ http_services:
     port: 7008
 
   - service: sp01
-    fqdn: sp01.int.emanon.moe
+    fqdn: sp01.int.emanon.dev
     reverse_proxy: n1.home.arpa
     internal: true
     backend: sp01.home.arpa
     port: 80
 
   - service: sp02
-    fqdn: sp02.int.emanon.moe
+    fqdn: sp02.int.emanon.dev
     reverse_proxy: n1.home.arpa
     internal: true
     backend: sp02.home.arpa
     port: 80
 
   - service: sp03
-    fqdn: sp03.int.emanon.moe
+    fqdn: sp03.int.emanon.dev
     reverse_proxy: n1.home.arpa
     internal: true
     backend: sp03.home.arpa
     port: 80
 
   - service: sp04
-    fqdn: sp04.int.emanon.moe
+    fqdn: sp04.int.emanon.dev
     reverse_proxy: n1.home.arpa
     internal: true
     backend: sp04.home.arpa
     port: 80
 
   - service: sp05
-    fqdn: sp05.int.emanon.moe
+    fqdn: sp05.int.emanon.dev
     reverse_proxy: n1.home.arpa
     internal: true
     backend: sp05.home.arpa
@@ -94,7 +94,7 @@ http_services:
 
 tcp_services:
   - service: minecraft
-    fqdn: minecraft.emanon.moe
+    fqdn: minecraft.emanon.dev
     direct_access: true
     internal: false
     port: 25565

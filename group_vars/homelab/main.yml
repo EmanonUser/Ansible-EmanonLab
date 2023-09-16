@@ -1,9 +1,9 @@
 ---
 ipv6_prefix: 2a01:e0a:94f # /61
 primary_user_ssh_pubkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQ1y2PbO8hD5itS5mL8mZ5FDd7V1VXRF/JURrc79H35 emanon@arch
-acme_domain: emanon.moe
-domain: emanon.moe
-internal_domain: int.emanon.moe
+acme_domain: emanon.dev
+domain: emanon.dev
+internal_domain: int.emanon.dev
 local_domain: home.arpa
 domains_search: ["{{ internal_domain }}", "{{ local_domain }}"]
 subdomain: "@"

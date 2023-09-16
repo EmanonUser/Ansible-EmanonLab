@@ -34,7 +34,7 @@
     common_name: "{{ item.fqdn }}"
   loop: "{{ acme_dns_domain_name }}"
 
-- name: "Start Let's Encrypt dns-01 challenge(s)"
+- name: Start Let's Encrypt dns-01 challenge(s)
   community.crypto.acme_certificate:
     acme_directory: "{{ acme_dns_directory }}"
     acme_version: "{{ acme_dns_version }}"
@@ -48,15 +48,14 @@
   register: "acme_dns_challenge_result"
   loop: "{{ acme_dns_domain_name }}"
 
-- name: Call Gandi LiveDNS API to register the TXT record
-  community.general.gandi_livedns:
-    domain: "{{ acme_domain }}"
+- name: Call Cloudflare DNS API to register the TXT record
+  community.general.cloudflare_dns:
+    zone: "{{ acme_domain }}"
     record: "{{ acme_dns_challenge_result.results[item_index]['challenge_data'][item.fqdn]['dns-01'].record | regex_replace(item.domain, '') }}"
     type: TXT
-    values:
-      - "{{ acme_dns_challenge_result.results[item_index]['challenge_data'][item.fqdn]['dns-01'].resource_value }}"
-    ttl: 300
-    api_key: "{{ gandi_api_key }}"
+    value: "{{ acme_dns_challenge_result.results[item_index]['challenge_data'][item.fqdn]['dns-01'].resource_value }}"
+    ttl: 120
+    api_token: "{{ cloudflare_api_key }}"
     state: present
   loop: "{{ acme_dns_domain_name }}"
   loop_control:
@@ -65,7 +64,7 @@
     - acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
     - acme_dns_challenge_result['results'][item_index]['challenge_data']
 
-- name: "Complete Let's Encrypt dns-01 challenge(s)"
+- name: Complete Let's Encrypt dns-01 challenge(s)
   community.crypto.acme_certificate:
     acme_directory: "{{ acme_dns_directory }}"
     acme_version: "{{ acme_dns_version }}"
@@ -97,12 +96,12 @@
     mode: u=rw,g=rw,o=
   when: acme_dns_completion['changed']
 
-- name: Call Gandi LiveDNS API to delete the TXT record
-  community.general.gandi_livedns:
-    domain: "{{ acme_domain }}"
+- name: Call Cloudflare DNS API to delete the TXT record
+  community.general.cloudflare_dns:
+    zone: "{{ acme_domain }}"
     record: "{{ acme_dns_challenge_result.results[item_index]['challenge_data'][item.fqdn]['dns-01'].record | regex_replace(item.domain, '') }}"
     type: TXT
-    api_key: "{{ gandi_api_key }}"
+    api_token: "{{ cloudflare_api_key }}"
     state: absent
   loop: "{{ acme_dns_domain_name }}"
   loop_control:
