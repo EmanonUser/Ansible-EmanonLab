@@ -34,4 +34,4 @@ simlinks_dir:
   - /vault/media/jellyfin/Movies
   - /vault/media/jellyfin/Miscellaneous
 
-simlinks: "{{ simlinks_shows }}"
+simlinks: "{{ simlinks_animes }}"

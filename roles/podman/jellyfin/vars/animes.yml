@@ -1,7 +1,10 @@
 ---
 simlinks_animes:
 
-  - path: /vault/media/jellyfin/Animes/
+  - path: /vault/media/jellyfin/Animes/Fairy Tail (2009)
     seasons:
-      - src: /data/animes/
-        dest: /vault/media/jellyfin/Animes/
+      - src: /data/animes/Fairy_Tail/Fairy Tail/Fairy.Tail.S01.MULTI.1080p.BDlight.x265-SAHKELPLAISIR
+        dest: /vault/media/jellyfin/Animes/Fairy Tail (2009)/Season 1
+
+      - src: /data/animes/Fairy_Tail/Fairy Tail/Fairy.Tail.S02.MULTI.1080p.BDlight.x265-SAHKELPLAISIR
+        dest: /vault/media/jellyfin/Animes/Fairy Tail (2009)/Season 2
