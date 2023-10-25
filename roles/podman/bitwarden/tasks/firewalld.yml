@@ -1,0 +1,46 @@
+---
+- name: Open bitwarden firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ bitwarden_firewalld_ports }}"
+    permanent: true
+    immediate: true
+    state: enabled
+  when:
+    - bitwarden_config.direct_access
+    - not bitwarden_use_rich_firewalld_rules
+
+- name: Close bitwarden firewalld ports
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    port: "{{ bitwarden_firewalld_ports }}"
+    permanent: true
+    immediate: true
+    state: disabled
+  when:
+    - not bitwarden_config.direct_access or
+      bitwarden_use_rich_firewalld_rules
+
+- name: Set firewalld rich rules for bitwarden webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: true
+    immediate: true
+    state: enabled
+  loop: "{{ bitwarden_firewalld_rich_rules }}"
+  when:
+    - bitwarden_config.direct_access
+    - bitwarden_use_rich_firewalld_rules
+
+- name: Remove firewalld rich rules for bitwarden webui
+  ansible.posix.firewalld:
+    zone: "{{ firewalld_zone }}"
+    rich_rule: "rule family={{ item.family }} source address={{ item.source }} port port={{ item.port }} protocol={{ item.proto }} accept"
+    permanent: true
+    immediate: true
+    state: disabled
+  loop: "{{ bitwarden_firewalld_rich_rules }}"
+  when:
+    - host_bitwarden_firewalld_rich_rules is defined
+    - not bitwarden_use_rich_firewalld_rules

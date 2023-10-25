@@ -1,0 +1,30 @@
+---
+bitwarden_image: "{{ host_bitwarden_image | default('docker.io/vaultwarden/server') }}"
+bitwarden_image_version: "{{ host_bitwarden_image_version | default('latest') }}"
+
+bitwarden_config: "{{ http_services | selectattr('service', 'equalto', 'bitwarden') | first }}"
+bitwarden_ports:
+  - "{% if bitwarden_config.direct_access %}[::]:{{ bitwarden_config.port }}
+    {% else %}127.0.0.1:{{ bitwarden_config.port }}{% endif %}:8080/tcp"
+
+  - "{% if bitwarden_config.direct_access %}[::]:{{ bitwarden_config.port }}
+    {% else %}[::1]:{{ bitwarden_config.port }}{% endif %}:8080/tcp"
+
+bitwarden_directories:
+  - "{{ podman_volumes_path }}/bitwarden/data"
+bitwarden_default_volumes: "{{ podman_volumes_path }}/bitwarden/data:/data:rw"
+bitwarden_volumes: "{{ host_bitwarden_volumes | default(bitwarden_default_volumes) }}"
+bitwarden_network: "{% if not bitwarden_config.internal %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
+
+bitwarden_env:
+  WEBSOCKET_ENABLED: "true"
+  DOMAIN: https://bitwarden.int.emanon.dev
+  ADMIN_TOKEN: "{{ bitwarden_admin_token }}"
+  ORG_CREATION_USERS: moemanon@pm.me
+  ROCKET_PORT: "8080"
+
+# Firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+bitwarden_firewalld_ports: "{{ bitwarden_config.port }}/tcp"
+bitwarden_use_rich_firewalld_rules: "{{ host_bitwarden_use_rich_firewalld_rules | default(false) }}"
+bitwarden_firewalld_rich_rules: "{{ host_bitwarden_firewalld_rich_rules }}"

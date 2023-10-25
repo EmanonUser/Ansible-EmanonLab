@@ -52,5 +52,8 @@
     - role: podman/adguard
       tags: [adguard, containers]
 
+    - role: podman/bitwarden
+      tags: [bitwarden, containers]
+
     - role: caddy
       tags: [caddy, containers]

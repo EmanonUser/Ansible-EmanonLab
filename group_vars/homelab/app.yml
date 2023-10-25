@@ -65,6 +65,14 @@ http_services:
     backend: localhost
     port: 7009
 
+  - service: bitwarden
+    fqdn: bitwarden.int.emanon.dev
+    reverse_proxy: n1.home.arpa
+    direct_access: false
+    internal: true
+    backend: localhost
+    port: 7010
+
   - service: sp01
     fqdn: sp01.int.emanon.dev
     reverse_proxy: n1.home.arpa
