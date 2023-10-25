@@ -57,6 +57,14 @@ http_services:
     backend: localhost
     port: 7008
 
+  - service: adguard
+    fqdn: adguard.int.emanon.dev
+    reverse_proxy: n1.home.arpa
+    direct_access: false
+    internal: true
+    backend: localhost
+    port: 7009
+
   - service: sp01
     fqdn: sp01.int.emanon.dev
     reverse_proxy: n1.home.arpa

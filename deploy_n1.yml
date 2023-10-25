@@ -49,5 +49,8 @@
     - role: podman/filebrowser
       tags: [filebrowser, containers]
 
+    - role: podman/adguard
+      tags: [adguard, containers]
+
     - role: caddy
       tags: [caddy, containers]

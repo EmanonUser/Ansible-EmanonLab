@@ -1,5 +1,5 @@
 ---
-- name: Create adguard volume directory
+- name: Create adguard volumes directories
   ansible.builtin.file:
     path: "{{ item }}"
     owner: emanon
@@ -11,23 +11,25 @@
 
 - name: Run adguard podman container
   containers.podman.podman_container:
-    name: adguard_ansible
+    name: adguard
     image: "{{ adguard_image }}:{{ adguard_image_version }}"
     publish: "{{ adguard_ports }}"
     volume: "{{ adguard_volumes }}"
     network: "{{ adguard_network }}"
-    restart_policy: unless-stopped
     state: started
     label:
       io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: podman-adguard_ansible.service
+      PODMAN_SYSTEMD_UNIT: container-adguard.service
     user: root
     security_opt: label=disable
     generate_systemd:
-      container_prefix: podman
       path: /home/{{ primary_user_username }}/.config/systemd/user/
   become_user: "{{ primary_user_username }}"
-  notify: Enable adguard_ansible podman service
+  notify:
+    - Reload adguard systemd daemon
+    - Enable adguard service
+    - Stop adguard service
+    - Start adguard service
 
 - name: Import firewalld tasks
   include_tasks: firewalld.yml

@@ -1,7 +1,27 @@
 ---
-- name: Enable adguard_ansible podman service
+- name: Reload adguard systemd daemon
   ansible.builtin.systemd:
-    name: podman-adguard_ansible.service
-    enabled: yes
+    daemon_reload: true
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Enable adguard service
+  ansible.builtin.systemd:
+    name: container-adguard.service
+    enabled: true
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Stop adguard service
+  ansible.builtin.systemd:
+    name: container-adguard.service
+    state: stopped
+    scope: user
+  become_user: "{{ primary_user_username }}"
+
+- name: Start adguard service
+  ansible.builtin.systemd:
+    name: container-adguard.service
+    state: started
     scope: user
   become_user: "{{ primary_user_username }}"
