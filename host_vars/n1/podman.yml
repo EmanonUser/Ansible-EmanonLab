@@ -14,10 +14,6 @@ jellyfin_volumes:
   - /vault/media/jellyfin/Animes:/Animes:rw
   - /vault/media/jellyfin/Movies:/Movies:rw
 
-syncthing_volumes:
-  - "{{ podman_volumes_path }}/syncthing/config:/config:rw"
-  - /vault/emanonlab/secrets/keepassxc:/data:rw
-
 transmission_volumes:
   - "{{ podman_volumes_path }}/transmission/home:/transmission/home:rw"
   - "{{ podman_volumes_path }}/transmission/completed:/transmission/completed:rw"

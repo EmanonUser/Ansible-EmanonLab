@@ -40,9 +40,6 @@
     - role: podman/homeassistant
       tags: [homeassistant, containers]
 
-    - role: podman/syncthing
-      tags: [syncthing, containers]
-
     - role: podman/minecraft
       tags: [minecraft, containers]
 

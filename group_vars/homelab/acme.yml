@@ -5,7 +5,6 @@ acme_dns_domain_name:
   - { fqdn: "jellyfin.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "prometheus.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "grafana.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
-  - { fqdn: "syncthing.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "transmission.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "adguard.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "bitwarden.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
