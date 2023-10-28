@@ -13,13 +13,16 @@
 
 {{ acme_domain }}.:{{ coredns_port }} {
     import snip
-    prometheus [::]:{{ coredns_prometheus_port }}
+    file /opt/coredns/master.db
+}
+
+home.arpa.:53 {
+    import snip
     file /opt/coredns/master.db
 }
 
 .:{{ coredns_port }} {
     import snip
-    prometheus [::]:{{ coredns_prometheus_port }}
     forward . {{ coredns_upstream_dns_server.ipv4_addr }}:{{ coredns_upstream_dns_server.port }} {
         except example.org
         except in-addr.arpa

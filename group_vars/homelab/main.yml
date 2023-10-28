@@ -7,4 +7,3 @@ internal_domain: int.emanon.dev
 local_domain: home.arpa
 domains_search: ["{{ internal_domain }}", "{{ local_domain }}"]
 subdomain: "@"
-coredns_use_backup_config: true

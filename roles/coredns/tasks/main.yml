@@ -2,7 +2,7 @@
 - name: Create CoreDNS user
   ansible.builtin.user:
     name: coredns
-    create_home: no
+    create_home: false
     shell: /usr/bin/bash
     system: yes
     comment: CoreDNS user created by Ansible
@@ -26,13 +26,13 @@
     mode: u=rwx,g=,o=
     timeout: 30
   notify: ["Enable coredns service", "Restart coredns service"]
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Unarchive CoreDNS binary
   ansible.builtin.unarchive:
     src: "{{ coredns_path }}/coredns_{{ coredns_version }}.tgz"
     dest: "{{ coredns_path }}"
-    remote_src: yes
+    remote_src: true
     owner: coredns
     group: coredns
     mode: u=rx,g=,o=
