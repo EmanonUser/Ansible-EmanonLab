@@ -43,7 +43,7 @@ http_services:
 
   - service: jellyfin
     fqdn: jellyfin.emanon.dev
-    reverse_proxy: ndmz.home.arpa
+    reverse_proxy: n1dmz.home.arpa
     direct_access: false
     internal: false
     backend: localhost
@@ -51,7 +51,7 @@ http_services:
 
   - service: filebrowser
     fqdn: filebrowser.emanon.dev
-    reverse_proxy: ndmz.home.arpa
+    reverse_proxy: n1dmz.home.arpa
     direct_access: false
     internal: false
     backend: localhost
