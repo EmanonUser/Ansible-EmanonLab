@@ -1,8 +1,0 @@
-{
-    "port": 2500,
-    "baseURL": "",
-    "address": "",
-    "log": "stdout",
-    "database": "/database/database.db",
-    "root": "/srv"
-  }

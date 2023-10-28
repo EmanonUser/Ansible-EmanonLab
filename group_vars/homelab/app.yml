@@ -41,14 +41,6 @@ http_services:
     backend: localhost
     port: 7007
 
-  - service: filebrowser
-    fqdn: filebrowser.emanon.dev
-    reverse_proxy: n1dmz.home.arpa
-    direct_access: false
-    internal: false
-    backend: localhost
-    port: 7008
-
   - service: adguard
     fqdn: adguard.int.emanon.dev
     reverse_proxy: n1.home.arpa

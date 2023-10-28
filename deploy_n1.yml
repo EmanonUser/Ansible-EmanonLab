@@ -43,9 +43,6 @@
     - role: podman/minecraft
       tags: [minecraft, containers]
 
-    - role: podman/filebrowser
-      tags: [filebrowser, containers]
-
     - role: podman/adguard
       tags: [adguard, containers]
 
