@@ -35,6 +35,21 @@ transmission_env_watch_path: "{{ host_transmission_env_watch_path | default('/tr
 transmission_env_web_ui: "{{ host_transmission_env_web_ui | default('flood-for-transmission') }}"
 transmission_env_local_network: "{{ host_transmission_env_local_network | default('192.168.0.0/16') }}"
 
+transmission_env:
+      TRANSMISSION_RPC_USERNAME: "{{ transmission_env_rpc_username }}"
+      TRANSMISSION_RPC_PASSWORD: "{{ transmission_env_rpc_password }}"
+      TRANSMISSION_RPC_AUTHENTICATION_REQUIRED: "{{ transmission_env_rpc_auth_required }}"
+      OPENVPN_PROVIDER: "{{ transmission_env_openvpn_provider }}"
+      OPENVPN_CONFIG: "{{ transmission_env_openvpn_config }}"
+      OPENVPN_USERNAME: "{{ transmission_env_openvpn_username }}"
+      OPENVPN_PASSWORD: "{{ transmission_env_openvpn_password }}"
+      TRANSMISSION_HOME: "{{ transmission_env_home_path }}"
+      TRANSMISSION_DOWNLOAD_DIR: "{{ transmission_env_download_path }}"
+      TRANSMISSION_INCOMPLETE_DIR: "{{ transmission_env_incomplete_path }}"
+      TRANSMISSION_WATCH_DIR: "{{ transmission_env_watch_path }}"
+      TRANSMISSION_WEB_UI: "{{ transmission_env_web_ui }}"
+      LOCAL_NETWORK: "{{ transmission_env_local_network }}"
+
 # firewalld
 firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
 transmission_firewalld_ports: "{{ transmission_config.port }}/tcp"

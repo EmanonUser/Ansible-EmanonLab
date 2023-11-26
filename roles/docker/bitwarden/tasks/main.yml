@@ -1,0 +1,23 @@
+---
+- name: Create bitwarden volume directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ bitwarden_directories }}"
+  become_user: "{{ primary_user_username }}"
+
+- name: Run bitwarden container
+  community.docker.docker_container:
+    name: bitwarden
+    image: "{{ bitwarden_image }}:{{ bitwarden_image_version }}"
+    volumes: "{{ bitwarden_volumes }}"
+    published_ports: "{{ bitwarden_ports }}"
+    env: "{{ bitwarden_env }}"
+    restart_policy: unless-stopped
+    restart_retries: 5
+    state: present
+  become_user: "{{ primary_user_username }}"
+  become: true

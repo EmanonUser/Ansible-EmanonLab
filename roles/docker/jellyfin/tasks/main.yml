@@ -1,0 +1,24 @@
+---
+- name: Create jellyfin volumes dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+  loop: "{{ jellyfin_directories }}"
+
+- name: Create jellyfin podman container
+  community.docker.docker_container:
+    name: jellyfin
+    image: "{{ jellyfin_image }}:{{ jellyfin_image_version }}"
+    published_ports: "{{ jellyfin_ports }}"
+    volumes: "{{ jellyfin_volumes }}"
+    restart_policy: unless-stopped
+    state: started
+  become_user: "{{ primary_user_username }}"
+  become: true
+
+- name: Import simlinks tasks
+  ansible.builtin.include_tasks:
+    file: simlinks.yml

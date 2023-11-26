@@ -22,31 +22,28 @@
     - role: acme_dns
       tags: [acme]
 
-    - role: podman/podman
-      tags: [podman]
-
-    - role: podman/prometheus
+    - role: docker/prometheus
       tags: [prometheus, containers]
 
-    - role: podman/grafana
+    - role: docker/grafana
       tags: [grafana, containers]
 
-    - role: podman/jellyfin
+    - role: docker/jellyfin
       tags: [jellyfin, containers]
 
-    - role: podman/transmission
+    - role: docker/transmission
       tags: [transmission, containers]
 
-    - role: podman/homeassistant
+    - role: docker/homeassistant
       tags: [homeassistant, containers]
 
-    - role: podman/minecraft
+    - role: docker/minecraft
       tags: [minecraft, containers]
 
-    - role: podman/adguard
+    - role: docker/adguard
       tags: [adguard, containers]
 
-    - role: podman/bitwarden
+    - role: docker/bitwarden
       tags: [bitwarden, containers]
 
     - role: caddy
