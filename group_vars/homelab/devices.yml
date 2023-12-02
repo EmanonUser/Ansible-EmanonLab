@@ -31,14 +31,14 @@ devices:
     ipv4_addr: 192.168.10.25/24
     ipv6_addr: "{{ ipv6_prefix }}:f401::25/64"
     hw_addr: e4:1d:2d:4f:df:90
-    duid: 00:02:00:00:ab:11:13:32:c9:57:5b:26:e6:d3
+    duid: 00:04:3b:9c:b7:ee:40:ca:23:25:18:c1:a7:cb:6e:b3:dd:97
     hostname: n1
 
   n1dmz:
     ipv4_addr: 192.168.50.25/24
     ipv6_addr: "{{ ipv6_prefix }}:f405::25/64"
-    hw_addr: 6a:c5:63:4b:f2:fd
-    duid: 00:02:00:00:ab:11:13:32:c9:57:5b:26:e6:d3
+    hw_addr: ac:1f:6b:77:cf:b8
+    duid: 00:04:3b:9c:b7:ee:40:ca:23:25:18:c1:a7:cb:6e:b3:dd:97
     hostname: n1dmz
 
   ipmi:
