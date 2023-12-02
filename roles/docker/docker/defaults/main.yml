@@ -1,0 +1,3 @@
+---
+daemon_config:
+  log-driver: "journald"

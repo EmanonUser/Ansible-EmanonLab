@@ -22,6 +22,9 @@
     - role: acme_dns
       tags: [acme]
 
+    - role: docker/docker
+      tags: [docker, containers]
+
     - role: docker/prometheus
       tags: [prometheus, containers]
 

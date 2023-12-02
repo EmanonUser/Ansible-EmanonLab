@@ -1,0 +1,15 @@
+---
+- name: Enable docker service
+  ansible.builtin.systemd:
+    name: docker.service
+    enabled: true
+
+- name: Restart docker service
+  ansible.builtin.systemd:
+    name: docker.service
+    state: started
+
+- name: Start docker service
+  ansible.builtin.systemd:
+    name: docker.service
+    state: started
