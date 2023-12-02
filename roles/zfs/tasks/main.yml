@@ -96,29 +96,29 @@
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
 
-- name: Set permissions and imutability for dataset encryption key(s)
-  ansible.builtin.file:
-    path: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
-    owner: root
-    group: root
-    mode: u=r,g=,o=
-    attributes: ie
-    state: file
-  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
-  loop_control:
-    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
-
-- name: Set permissions and imutability for volume encryption key(s)
-  ansible.builtin.file:
-    path: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
-    owner: root
-    group: root
-    mode: u=r,g=,o=
-    attributes: ie
-    state: file
-  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
-  loop_control:
-    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
+#- name: Set permissions and imutability for dataset encryption key(s)
+#  ansible.builtin.file:
+#    path: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
+#    owner: root
+#    group: root
+#    mode: u=r,g=,o=
+#    attributes: ie
+#    state: file
+#  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
+#  loop_control:
+#    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+#
+#- name: Set permissions and imutability for volume encryption key(s)
+#  ansible.builtin.file:
+#    path: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
+#    owner: root
+#    group: root
+#    mode: u=r,g=,o=
+#    attributes: ie
+#    state: file
+#  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
+#  loop_control:
+#    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
 
 - name: Create ZFS dataset(s)
   community.general.zfs:
