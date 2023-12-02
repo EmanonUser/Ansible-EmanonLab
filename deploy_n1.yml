@@ -37,8 +37,8 @@
     - role: docker/transmission
       tags: [transmission, containers]
 
-    - role: docker/homeassistant
-      tags: [homeassistant, containers]
+    - role: docker/hass
+      tags: [hass, containers]
 
     - role: docker/minecraft
       tags: [minecraft, containers]
