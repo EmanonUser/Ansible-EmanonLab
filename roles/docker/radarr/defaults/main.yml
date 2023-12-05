@@ -1,0 +1,24 @@
+---
+radarr_image: "{{ host_radarr_image | default('lscr.io/linuxserver/radarr') }}"
+radarr_image_version: "{{ host_radarr_image_version | default('latest') }}"
+
+radarr_config: "{{ http_services | selectattr('service', 'equalto', 'radarr') | first }}"
+radarr_ports:
+  - "{% if radarr_config.direct_access %}[::]:{{ radarr_config.port }}
+    {% else %}127.0.0.1:{{ radarr_config.port }}{% endif %}:7878/tcp"
+
+  - "{% if radarr_config.direct_access %}[::]:{{ radarr_config.port }}
+    {% else %}[::1]:{{ radarr_config.port }}{% endif %}:7878/tcp"
+
+radarr_directories:
+  - "{{ podman_volumes_path }}/radarr/config"
+radarr_default_volumes: "{{ podman_volumes_path }}/radarr/config:/config:rw"
+radarr_volumes: "{{ host_radarr_volumes | default(radarr_default_volumes) }}"
+radarr_env:
+  TZ: "Europe/Paris"
+
+# Firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+radarr_firewalld_ports: "{{ radarr_config.port }}/tcp"
+radarr_use_rich_firewalld_rules: "{{ host_radarr_use_rich_firewalld_rules | default(false) }}"
+radarr_firewalld_rich_rules: "{{ host_radarr_firewalld_rich_rules }}"

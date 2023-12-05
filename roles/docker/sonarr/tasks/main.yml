@@ -1,0 +1,22 @@
+---
+- name: Create sonarr volume directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ sonarr_directories }}"
+  become_user: "{{ primary_user_username }}"
+
+- name: Run sonarr container
+  community.docker.docker_container:
+    name: sonarr
+    image: "{{ sonarr_image }}:{{ sonarr_image_version }}"
+    volumes: "{{ sonarr_volumes }}"
+    published_ports: "{{ sonarr_ports }}"
+    env: "{{ sonarr_env }}"
+    restart_policy: unless-stopped
+    state: started
+  become_user: "{{ primary_user_username }}"
+  become: true

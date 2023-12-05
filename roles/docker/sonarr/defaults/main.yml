@@ -1,0 +1,24 @@
+---
+sonarr_image: "{{ host_sonarr_image | default('lscr.io/linuxserver/sonarr') }}"
+sonarr_image_version: "{{ host_sonarr_image_version | default('latest') }}"
+
+sonarr_config: "{{ http_services | selectattr('service', 'equalto', 'sonarr') | first }}"
+sonarr_ports:
+  - "{% if sonarr_config.direct_access %}[::]:{{ sonarr_config.port }}
+    {% else %}127.0.0.1:{{ sonarr_config.port }}{% endif %}:8989/tcp"
+
+  - "{% if sonarr_config.direct_access %}[::]:{{ sonarr_config.port }}
+    {% else %}[::1]:{{ sonarr_config.port }}{% endif %}:8989/tcp"
+
+sonarr_directories:
+  - "{{ podman_volumes_path }}/sonarr/config"
+sonarr_default_volumes: "{{ podman_volumes_path }}/sonarr/config:/config:rw"
+sonarr_volumes: "{{ host_sonarr_volumes | default(sonarr_default_volumes) }}"
+sonarr_env:
+  TZ: "Europe/Paris"
+
+# Firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+sonarr_firewalld_ports: "{{ sonarr_config.port }}/tcp"
+sonarr_use_rich_firewalld_rules: "{{ host_sonarr_use_rich_firewalld_rules | default(false) }}"
+sonarr_firewalld_rich_rules: "{{ host_sonarr_firewalld_rich_rules }}"

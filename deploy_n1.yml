@@ -37,6 +37,18 @@
     - role: docker/transmission
       tags: [transmission, containers]
 
+    - role: docker/prowlarr
+      tags: [prowlarr, containers]
+
+    - role: docker/sonarr
+      tags: [sonarr, containers]
+
+    - role: docker/radarr
+      tags: [radarr, containers]
+
+    - role: docker/overseerr
+      tags: [overseerr, containers]
+
     - role: docker/hass
       tags: [hass, containers]
 

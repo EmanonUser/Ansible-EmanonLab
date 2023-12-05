@@ -1,0 +1,22 @@
+---
+- name: Create radarr volume directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ radarr_directories }}"
+  become_user: "{{ primary_user_username }}"
+
+- name: Run radarr container
+  community.docker.docker_container:
+    name: radarr
+    image: "{{ radarr_image }}:{{ radarr_image_version }}"
+    volumes: "{{ radarr_volumes }}"
+    published_ports: "{{ radarr_ports }}"
+    env: "{{ radarr_env }}"
+    restart_policy: unless-stopped
+    state: started
+  become_user: "{{ primary_user_username }}"
+  become: true

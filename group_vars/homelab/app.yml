@@ -57,14 +57,6 @@ http_services:
     backend: localhost
     port: 7007
 
-  - service: overserr
-    fqdn: overserr.emanon.dev
-    reverse_proxy: n1dmz.home.arpa
-    direct_access: false
-    internal: false
-    backend: localhost
-    port: 7008
-
   - service: adguard
     fqdn: adguard.int.emanon.dev
     reverse_proxy: n1.home.arpa
@@ -80,6 +72,14 @@ http_services:
     internal: true
     backend: localhost
     port: 7010
+
+  - service: sonarr
+    fqdn: sonarr.int.emanon.dev
+    reverse_proxy: n1.home.arpa
+    direct_access: false
+    internal: true
+    backend: localhost
+    port: 7011
 
   - service: sp01
     fqdn: sp01.int.emanon.dev
