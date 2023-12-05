@@ -17,6 +17,6 @@
     published_ports: "{{ bitwarden_ports }}"
     env: "{{ bitwarden_env }}"
     restart_policy: unless-stopped
-    state: present
+    state: started
   become_user: "{{ primary_user_username }}"
   become: true
