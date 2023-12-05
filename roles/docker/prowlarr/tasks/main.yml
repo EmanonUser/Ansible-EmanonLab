@@ -1,0 +1,22 @@
+---
+- name: Create prowlarr volume directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ prowlarr_directories }}"
+  become_user: "{{ primary_user_username }}"
+
+- name: Run prowlarr container
+  community.docker.docker_container:
+    name: prowlarr
+    image: "{{ prowlarr_image }}:{{ prowlarr_image_version }}"
+    volumes: "{{ prowlarr_volumes }}"
+    published_ports: "{{ prowlarr_ports }}"
+    env: "{{ prowlarr_env }}"
+    restart_policy: unless-stopped
+    state: started
+  become_user: "{{ primary_user_username }}"
+  become: true

@@ -1,0 +1,24 @@
+---
+prowlarr_image: "{{ host_prowlarr_image | default('lscr.io/linuxserver/prowlarr') }}"
+prowlarr_image_version: "{{ host_prowlarr_image_version | default('latest') }}"
+
+prowlarr_config: "{{ http_services | selectattr('service', 'equalto', 'prowlarr') | first }}"
+prowlarr_ports:
+  - "{% if prowlarr_config.direct_access %}[::]:{{ prowlarr_config.port }}
+    {% else %}127.0.0.1:{{ prowlarr_config.port }}{% endif %}:9696/tcp"
+
+  - "{% if prowlarr_config.direct_access %}[::]:{{ prowlarr_config.port }}
+    {% else %}[::1]:{{ prowlarr_config.port }}{% endif %}:9696/tcp"
+
+prowlarr_directories:
+  - "{{ podman_volumes_path }}/prowlarr/config"
+prowlarr_default_volumes: "{{ podman_volumes_path }}/prowlarr/config:/config:rw"
+prowlarr_volumes: "{{ host_prowlarr_volumes | default(prowlarr_default_volumes) }}"
+prowlarr_env:
+  TZ: "Europe/Paris"
+
+# Firewalld
+firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
+prowlarr_firewalld_ports: "{{ prowlarr_config.port }}/tcp"
+prowlarr_use_rich_firewalld_rules: "{{ host_prowlarr_use_rich_firewalld_rules | default(false) }}"
+prowlarr_firewalld_rich_rules: "{{ host_prowlarr_firewalld_rich_rules }}"

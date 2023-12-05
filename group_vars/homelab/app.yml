@@ -17,6 +17,14 @@ http_services:
     backend: localhost
     port: 7002
 
+  - service: prowlarr
+    fqdn: prowlarr.int.emanon.dev
+    reverse_proxy: n1.home.arpa
+    direct_access: false
+    internal: true
+    backend: localhost
+    port: 7003
+
   - service: transmission
     fqdn: transmission.int.emanon.dev
     reverse_proxy: n1.home.arpa

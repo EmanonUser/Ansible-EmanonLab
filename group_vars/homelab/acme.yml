@@ -6,6 +6,7 @@ acme_dns_domain_name:
   - { fqdn: "prometheus.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "grafana.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "transmission.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
+  - { fqdn: "prowlarr.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "adguard.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "bitwarden.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "hass.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
