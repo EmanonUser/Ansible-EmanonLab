@@ -7,6 +7,7 @@ acme_dns_domain_name:
   - { fqdn: "grafana.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "transmission.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "prowlarr.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
+  - { fqdn: "radarr.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "adguard.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "bitwarden.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "hass.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
