@@ -13,7 +13,7 @@
         owner: caddy
         group: caddy
         mode: u=rw,g=rw,o=
-      notify: Reload caddy service
+      notify: Restart caddy service
 
     - name: Validate caddyfile
       ansible.builtin.command:
