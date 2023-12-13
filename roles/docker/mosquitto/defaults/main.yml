@@ -1,0 +1,20 @@
+---
+mosquitto_image: "{{ host_mosquitto_image | default('docker.io/eclipse-mosquitto') }}"
+mosquitto_image_version: "{{ host_mosquitto_image_version | default('latest') }}"
+
+mosquitto_config: "{{ http_services | selectattr('service', 'equalto', 'mosquitto') | first }}"
+mosquitto_ports:
+  - "0.0.0.0:1883:1883/tcp"
+  - "[::]:1883:1883/tcp"
+
+mosquitto_directories:
+  - "{{ podman_volumes_path }}/mosquitto/"
+  - "{{ podman_volumes_path }}/mosquitto/config"
+  - "{{ podman_volumes_path }}/mosquitto/data"
+  - "{{ podman_volumes_path }}/mosquitto/log"
+
+mosquitto_default_volumes:
+  - "{{ podman_volumes_path }}/mosquitto/config:/mosquitto/config:rw"
+  - "{{ podman_volumes_path }}/mosquitto/data:/mosquitto/data:rw"
+  - "{{ podman_volumes_path }}/mosquitto/log:/mosquitto/log:rw"
+mosquitto_volumes: "{{ host_mosquitto_volumes | default(mosquitto_default_volumes) }}"

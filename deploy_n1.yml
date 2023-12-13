@@ -46,8 +46,8 @@
     - role: docker/radarr
       tags: [radarr, containers]
 
-    - role: docker/overseerr
-      tags: [overseerr, containers]
+    - role: docker/mosquitto
+      tags: [mqtt, containers]
 
     - role: docker/hass
       tags: [hass, containers]

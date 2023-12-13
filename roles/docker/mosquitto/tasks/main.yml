@@ -1,0 +1,22 @@
+---
+- name: Create mosquitto volume directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: emanon
+    group: emanon
+    mode: u=rwx,g=,o=
+    state: directory
+  loop: "{{ mosquitto_directories }}"
+  become_user: "{{ primary_user_username }}"
+
+- name: Run mosquitto container
+  community.docker.docker_container:
+    name: mosquitto
+    image: "{{ mosquitto_image }}:{{ mosquitto_image_version }}"
+    volumes: "{{ mosquitto_volumes }}"
+    published_ports: "{{ mosquitto_ports }}"
+    user: "1000"
+    restart_policy: unless-stopped
+    state: started
+  become_user: "{{ primary_user_username }}"
+  become: true
