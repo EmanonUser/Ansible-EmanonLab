@@ -15,6 +15,7 @@
     published_ports: "{{ homeassistant_ports }}"
     volumes: "{{ homeassistant_volumes }}"
     state: started
+    devices: ["/dev/ttyACM0:/dev/ttyACM0"]
     env:
       DISABLE_JEMALLOC: "true"
   become_user: "{{ primary_user_username }}"
