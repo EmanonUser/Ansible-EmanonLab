@@ -11,7 +11,6 @@ acme_dns_domain_name:
   - { fqdn: "radarr.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "adguard.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "bitwarden.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
-  - { fqdn: "hass.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "sp01.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "sp02.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "sp03.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }

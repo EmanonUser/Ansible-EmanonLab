@@ -42,10 +42,10 @@ http_services:
     port: 7005
 
   - service: homeassistant
-    fqdn: hass.int.emanon.dev
+    fqdn: hass.emanon.dev
     reverse_proxy: n1.home.arpa
     direct_access: false
-    internal: true
+    internal: false
     backend: localhost
     port: 7006
 
