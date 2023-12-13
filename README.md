@@ -5,4 +5,4 @@ TODO:
     - configure zed ( zfs )
     - conf journald
     - fix shadow copies, only work with zrepl_default_
-    - v2 for r1
+    - configure timesyncd
