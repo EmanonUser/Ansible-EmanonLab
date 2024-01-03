@@ -16,6 +16,7 @@
     published_ports: "{{ transmission_ports }}"
     volumes: "{{ transmission_volumes }}"
     env: "{{ transmission_env }}"
+    user: root
     capabilities: [NET_ADMIN]
     restart_policy: unless-stopped
     state: started
