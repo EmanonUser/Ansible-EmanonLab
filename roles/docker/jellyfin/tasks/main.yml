@@ -8,7 +8,7 @@
     mode: u=rwx,g=,o=
   loop: "{{ jellyfin_directories }}"
 
-- name: Create jellyfin podman container
+- name: Create jellyfin container
   community.docker.docker_container:
     name: jellyfin
     image: "{{ jellyfin_image }}:{{ jellyfin_image_version }}"
@@ -18,7 +18,3 @@
     state: started
   become_user: "{{ primary_user_username }}"
   become: true
-
-- name: Import simlinks tasks
-  ansible.builtin.include_tasks:
-    file: simlinks.yml
