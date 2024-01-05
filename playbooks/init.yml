@@ -1,0 +1,41 @@
+---
+- name: Prepare an fedora system for ansible
+  hosts: n1
+  become: true
+  gather_facts: true
+  vars:
+    ansible_user: root
+  tasks:
+    - name: Upgrade packages
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+
+    - name: Install ansible requirements
+      ansible.builtin.dnf:
+        name: [sudo, acl]
+        state: present
+
+    - name: Create ansible user and add to sudo group
+      ansible.builtin.user:
+        name: ansible
+        create_home: true
+        shell: /usr/bin/bash
+        comment: Created by Ansible
+        system: true
+        state: present
+
+    - name: Create ssh dir for ansible user
+      ansible.builtin.file:
+        path: /home/ansible/.ssh/
+        owner: ansible
+        group: ansible
+        mode: u=rwx,g=,o=
+        state: directory
+
+    - name: Add ssh keys to ansible user
+      ansible.posix.authorized_key:
+        user: ansible
+        key: "{{ item }}"
+        state: present
+      loop: "{{ primary_user_ssh_pubkey }}"
