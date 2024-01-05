@@ -31,9 +31,9 @@ kea_dhcp4:
       - start: 192.168.20.100
         end: 192.168.20.200
     reservations:
-      - ipv4_addr: "{{ devices.archlinux.ipv4_addr }}"
-        hw_addr: "{{ devices.archlinux.hw_addr }}"
-        hostname: "{{ devices.archlinux.hostname }}"
+      - ipv4_addr: "{{ devices.desktop.ipv4_addr }}"
+        hw_addr: "{{ devices.desktop.hw_addr }}"
+        hostname: "{{ devices.desktop.hostname }}"
     options_data:
       - option_data: "routers"
         data: ["192.168.20.1"]
@@ -126,9 +126,9 @@ kea_dhcp6:
         excluded_prefix_len: 72
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ devices.archlinux.ipv6_addr }}"]
-        duid: "{{ devices.archlinux.duid }}"
-        hostname: "{{ devices.archlinux.hostname }}"
+      - ipv6_addr: ["{{ devices.desktop.ipv6_addr }}"]
+        duid: "{{ devices.desktop.duid }}"
+        hostname: "{{ devices.desktop.hostname }}"
 
   - subnet: "{{ ipv6_prefix }}:f403::/64"
     pools:

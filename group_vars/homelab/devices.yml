@@ -20,12 +20,12 @@ devices:
     ipv6_addr: "{{ ipv6_prefix }}:f400:fffb::/64"
     hostname: s1
 
-  archlinux:
+  desktop:
     ipv4_addr: 192.168.20.20/24
     ipv6_addr: "{{ ipv6_prefix }}:f402::20/64"
     hw_addr: e4:1d:2d:4f:e0:50
-    duid: "00:02:00:00:ab:11:7a:90:05:c1:a2:34:ed:4d"
-    hostname: arch
+    duid: "00:04:b6:ac:2b:01:08:11:15:11:05:7f:94:a4:b4:6d:2b:7b"
+    hostname: nixos
 
   n1:
     ipv4_addr: 192.168.10.25/24
