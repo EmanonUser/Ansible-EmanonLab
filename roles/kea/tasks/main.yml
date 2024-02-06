@@ -57,4 +57,3 @@
     group: _kea
     mode: u=rw,g=r,o=r
     # validate: /usr/sbin/kea-ctrl-agent -t %s
-  notify: Restart kea-ctrl-agent service
