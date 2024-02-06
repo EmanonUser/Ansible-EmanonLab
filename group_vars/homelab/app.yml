@@ -43,7 +43,7 @@ http_services:
 
   - service: homeassistant
     fqdn: hass.emanon.dev
-    reverse_proxy: n1.home.arpa
+    reverse_proxy: n1dmz.home.arpa
     direct_access: false
     internal: false
     backend: localhost
