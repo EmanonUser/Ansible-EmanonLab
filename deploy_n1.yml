@@ -25,26 +25,11 @@
     - role: docker/docker
       tags: [docker, containers]
 
-    - role: docker/prometheus
-      tags: [prometheus, containers]
-
-    - role: docker/grafana
-      tags: [grafana, containers]
-
     - role: docker/jellyfin
       tags: [jellyfin, containers]
 
     - role: docker/transmission
       tags: [transmission, containers]
-
-    - role: docker/prowlarr
-      tags: [prowlarr, containers]
-
-    - role: docker/sonarr
-      tags: [sonarr, containers]
-
-    - role: docker/radarr
-      tags: [radarr, containers]
 
     - role: docker/mosquitto
       tags: [mqtt, containers]
@@ -54,9 +39,6 @@
 
     - role: docker/minecraft
       tags: [minecraft, containers]
-
-    - role: docker/adguard
-      tags: [adguard, containers]
 
     - role: docker/bitwarden
       tags: [bitwarden, containers]
