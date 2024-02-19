@@ -1,7 +1,7 @@
 ---
 zfs_systemd_on_calendar_scrubing_timer: monthly
 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
-zfs_arc_max: 12884901888  # Bytes
+zfs_arc_max: 6442000000  # Bytes
 zfs_manual_zpools_creation: false
 zfs_set_permissions_blacklist: []
 zfs_pools:
@@ -33,8 +33,6 @@ zfs_pools:
         compression: zstd-6
       - dataset: emanonlab-secrets
         compression: zstd
-      - dataset: emanonlab-secrets-keepassxc
-        compression: zstd
       - dataset: emanonlab-tmp
         compression: zstd
       - dataset: emanonlab-dev
@@ -54,7 +52,3 @@ zfs_pools:
       - dataset: emanon-other_users
         compression: zstd
       ## emanon datasets ##
-
-    volumes:
-      - volume: zvol_01
-        volsize: 35G
