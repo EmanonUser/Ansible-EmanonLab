@@ -5,10 +5,7 @@ minecraft_server_image_version: "{{ host_minecraft_image_version | default('late
 
 minecraft_config: "{{ tcp_services | selectattr('service', 'equalto', 'minecraft') | first }}"
 minecraft_ports:
-  - "{% if minecraft_config.direct_access %}[::]:{{ minecraft_config.port }}{% else %}127.0.0.1:{{ minecraft_config.port }}{% endif %}:25565/tcp"
-  - "{% if minecraft_config.direct_access %}[::]:{{ minecraft_config.port }}{% else %}[::1]:{{ minecraft_config.port }}{% endif %}:25565/tcp"
-  - "127.0.0.1:25575:25575/tcp"
-  - "[::1]:25575:25575/tcp"
+  - "[::]:25565:25565/tcp"
 
 minecraft_directories:
   - "{{ podman_volumes_path }}/minecraft"

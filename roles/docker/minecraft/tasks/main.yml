@@ -2,8 +2,8 @@
 - name: Create minecraft volume directory
   ansible.builtin.file:
     path: "{{ item }}"
-    owner: "100999"
-    group: "100999"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
     mode: u=rwx,g=rwx,o=r
     state: directory
   loop: "{{ minecraft_directories }}"
@@ -16,64 +16,24 @@
   ansible.builtin.include_vars:
     file: minecraft.yml
 
-- name: Create minecraft pod
-  containers.podman.podman_pod:
-    name: mc
-    network: "{{ minecraft_network }}"
-    publish: "{{ minecraft_ports }}"
-    state: created
-    label:
-      io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: pod-mc.service
-    generate_systemd:
-      new: true
-      path: /home/{{ primary_user_username }}/.config/systemd/user/
-  become_user: "{{ primary_user_username }}"
-  notify:
-    - Reload minecraft systemd daemon
-    - Enable minecraft pod service
-    - Stop minecraft pod service
-    - Start minecraft pod service
-
 - name: Run minecraft container
-  containers.podman.podman_container:
+  community.docker.docker_container:
     name: mc-server
-    pod: mc
     image: "{{ minecraft_server_image }}:{{ minecraft_server_image_version }}"
-    volume: "{{ minecraft_server_volumes }}"
-    timezone: Europe/Paris
-    state: present
-    user: root
-    label:
-      io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: container-mc-server.service
-    security_opt: label=disable
-    generate_systemd:
-      new: true
-      path: /home/{{ primary_user_username }}/.config/systemd/user/
+    published_ports: "{{ minecraft_ports }}"
+    volumes: "{{ minecraft_server_volumes }}"
+    state: started
     env: "{{ minecraft_env }}"
   become_user: "{{ primary_user_username }}"
-  notify: Reload minecraft systemd daemon
+  become: true
 
 - name: Run minecraft backup container
   containers.podman.podman_container:
     name: mc-backups
-    pod: mc
     image: "{{ minecraft_backup_image }}:{{ minecraft_backup_image_version }}"
-    volume: "{{ minecraft_backup_volumes }}"
-    timezone: Europe/Paris
-    state: present
-    user: root
-    label:
-      io.containers.autoupdate: registry
-      PODMAN_SYSTEMD_UNIT: container-mc-backups.service
-    security_opt: label=disable
-    generate_systemd:
-      new: true
-      path: /home/{{ primary_user_username }}/.config/systemd/user/
-        #env: "{{ minecraft_backup_env }}"
+    state: started
   become_user: "{{ primary_user_username }}"
-  notify: Reload minecraft systemd daemon
+  become: true
 
 - name: Import firewalld tasks
   include_tasks: firewalld.yml
