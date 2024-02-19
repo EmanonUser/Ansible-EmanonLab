@@ -28,13 +28,9 @@
   become: true
 
 - name: Run minecraft backup container
-  containers.podman.podman_container:
+  community.docker.docker_container:
     name: mc-backups
     image: "{{ minecraft_backup_image }}:{{ minecraft_backup_image_version }}"
     state: started
   become_user: "{{ primary_user_username }}"
   become: true
-
-- name: Import firewalld tasks
-  include_tasks: firewalld.yml
-  when: podman_use_firewalld
