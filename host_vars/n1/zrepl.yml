@@ -25,9 +25,6 @@ zrepl_policies:
       - dataset: emanonlab-secrets
         zrepl_snapshot_policy: zrepl_P2
 
-      - dataset: emanonlab-secrets-keepassxc
-        zrepl_snapshot_policy: zrepl_P2
-
       - dataset: emanonlab-tmp
         zrepl_snapshot_policy: zrepl_P3
 
@@ -48,8 +45,3 @@ zrepl_policies:
       - dataset: emanon-other_users
         zrepl_snapshot_policy: zrepl_P2
       ## emanon datasets ##
-
-    volumes:
-      - volume: zvol_01
-        zrepl_snapshot_policy: false
-        volsize: 35G
