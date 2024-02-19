@@ -17,11 +17,6 @@ minecraft_server_default_volumes:
 minecraft_server_volumes: "{{ host_minecraft_backup_volumes | default(minecraft_server_default_volumes) }}"
 minecraft_network: "{% if not minecraft_config.internal %}slirp4netns:outbound_addr={{ dmz_interface }}{% else %}slirp4netns{% endif %}"
 
-# Firewalld
-firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-minecraft_firewalld_ports: "{{ minecraft_config.port }}/tcp"
-minecraft_use_rich_firewalld_rules: "{{ host_minecraft_use_rich_firewalld_rules | default(false) }}"
-minecraft_firewalld_rich_rules: "{{ host_minecraft_firewalld_rich_rules }}"
 minecraft_backup_image: "{{ host_minecraft_backup_image | default('docker.io/itzg/mc-backup') }}"
 minecraft_backup_image_version: "{{ host_minecraft_backup_image_version | default('latest') }}"
 minecraft_backup_volumes: "{{ host_minecraft_backup_volumes | default(minecraft_backup_default_volumes) }}"

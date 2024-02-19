@@ -13,9 +13,3 @@ homeassistant_ports:
 homeassistant_directories: "{{ podman_volumes_path }}/home_assistant"
 homeassistant_default_volumes: "{{ podman_volumes_path }}/home_assistant:/config"
 homeassistant_volumes: "{{ host_homeassistant_volumes | default(homeassistant_default_volumes) }}"
-
-# firewalld
-firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-homeassistant_firewalld_ports: "{{ homeassistant_config.port }}/tcp"
-homeassistant_use_rich_firewalld_rules: "{{ host_homeassistant_use_rich_firewalld_rules | default(false) }}"
-homeassistant_firewalld_rich_rules: "{{ host_homeassistant_firewalld_rich_rules }}"

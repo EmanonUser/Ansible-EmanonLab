@@ -49,9 +49,3 @@ transmission_env:
       TRANSMISSION_WATCH_DIR: "{{ transmission_env_watch_path }}"
       TRANSMISSION_WEB_UI: "{{ transmission_env_web_ui }}"
       LOCAL_NETWORK: "{{ transmission_env_local_network }}"
-
-# firewalld
-firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-transmission_firewalld_ports: "{{ transmission_config.port }}/tcp"
-transmission_use_rich_firewalld_rules: "{{ host_transmission_use_rich_firewalld_rules | default(false) }}"
-transmission_firewalld_rich_rules: "{{ host_transmission_firewalld_rich_rules }}"

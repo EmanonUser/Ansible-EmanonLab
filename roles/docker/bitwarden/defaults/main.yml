@@ -22,9 +22,3 @@ bitwarden_env:
   ADMIN_TOKEN: "{{ bitwarden_admin_token }}"
   ORG_CREATION_USERS: moemanon@pm.me
   ROCKET_PORT: "8080"
-
-# Firewalld
-firewalld_zone: "{{ host_firewalld_zone | default('home') }}"
-bitwarden_firewalld_ports: "{{ bitwarden_config.port }}/tcp"
-bitwarden_use_rich_firewalld_rules: "{{ host_bitwarden_use_rich_firewalld_rules | default(false) }}"
-bitwarden_firewalld_rich_rules: "{{ host_bitwarden_firewalld_rich_rules }}"
