@@ -1,38 +1,6 @@
 ---
 http_services:
 
-  - service: prometheus
-    fqdn: prometheus.int.emanon.dev
-    reverse_proxy: n1.home.arpa
-    direct_access: false
-    internal: true
-    backend: localhost
-    port: 7001
-
-  - service: grafana
-    fqdn: grafana.int.emanon.dev
-    reverse_proxy: n1.home.arpa
-    direct_access: false
-    internal: true
-    backend: localhost
-    port: 7002
-
-  - service: prowlarr
-    fqdn: prowlarr.int.emanon.dev
-    reverse_proxy: n1.home.arpa
-    direct_access: false
-    internal: true
-    backend: localhost
-    port: 7003
-
-  - service: radarr
-    fqdn: radarr.int.emanon.dev
-    reverse_proxy: n1.home.arpa
-    direct_access: false
-    internal: true
-    backend: localhost
-    port: 7004
-
   - service: transmission
     fqdn: transmission.int.emanon.dev
     reverse_proxy: n1.home.arpa
@@ -57,14 +25,6 @@ http_services:
     backend: localhost
     port: 7007
 
-  - service: adguard
-    fqdn: adguard.int.emanon.dev
-    reverse_proxy: n1.home.arpa
-    direct_access: false
-    internal: true
-    backend: localhost
-    port: 7009
-
   - service: bitwarden
     fqdn: bitwarden.int.emanon.dev
     reverse_proxy: n1.home.arpa
@@ -72,14 +32,6 @@ http_services:
     internal: true
     backend: localhost
     port: 7010
-
-  - service: sonarr
-    fqdn: sonarr.int.emanon.dev
-    reverse_proxy: n1.home.arpa
-    direct_access: false
-    internal: true
-    backend: localhost
-    port: 7011
 
   - service: sp01
     fqdn: sp01.int.emanon.dev
