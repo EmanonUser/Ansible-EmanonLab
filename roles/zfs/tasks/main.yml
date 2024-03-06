@@ -8,6 +8,11 @@
     file: redhat.yml
   when: ansible_os_family == 'RedHat'
 
+- name: Include debian tasks
+  ansible.builtin.include_tasks:
+    file: debian.yml
+  when: ansible_os_family == 'Debian'
+
 - name: Pause create zpool(s) manually, too sensitive to automate it without a proper module
   ansible.builtin.pause:
     prompt: zpool create ZPOOL_NAME mirror/raidz/raidz1 -o ashift=12
@@ -96,29 +101,29 @@
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
 
-#- name: Set permissions and imutability for dataset encryption key(s)
-#  ansible.builtin.file:
-#    path: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
-#    owner: root
-#    group: root
-#    mode: u=r,g=,o=
-#    attributes: ie
-#    state: file
-#  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
-#  loop_control:
-#    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
-#
-#- name: Set permissions and imutability for volume encryption key(s)
-#  ansible.builtin.file:
-#    path: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
-#    owner: root
-#    group: root
-#    mode: u=r,g=,o=
-#    attributes: ie
-#    state: file
-#  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
-#  loop_control:
-#    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
+- name: Set permissions and imutability for dataset encryption key(s)
+  ansible.builtin.file:
+    path: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
+    owner: root
+    group: root
+    mode: u=r,g=,o=
+    attributes: ie
+    state: file
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+
+- name: Set permissions and imutability for volume encryption key(s)
+  ansible.builtin.file:
+    path: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
+    owner: root
+    group: root
+    mode: u=r,g=,o=
+    attributes: ie
+    state: file
+  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
 
 - name: Create ZFS dataset(s)
   community.general.zfs:
