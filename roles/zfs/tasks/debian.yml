@@ -1,0 +1,32 @@
+---
+- name: Add debian backport repository for OpenZFS
+  ansible.builtin.apt_repository:
+    repo: deb deb http://deb.debian.org/debian/ {{ ansible_distribution_release  }}-backports main contrib
+    filename: "{{ ansible_distribution_release  }}-backports"
+    state: present
+
+- name: Install ZFS dependencies
+  ansible.builtin.apt:
+    name: [dpkg-dev, linux-headers-generic, linux-image-generic]
+    update_cache: yes
+    state: present
+
+- name: Install ZFS
+  ansible.builtin.apt:
+    name: [zfs-dkms, zfsutils-linux]
+    default_release: "{{ ansible_distribution_release }}-backports"
+    update_cache: yes
+    state: present
+
+- name: Configure ZFS dkms kernel module
+  ansible.builtin.template:
+    src: zfs.conf.j2
+    dest: /etc/modprobe.d/zfs.conf
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+
+- name: Load ZFS kernel module
+  community.general.modprobe:
+    name: zfs
+    state: present
