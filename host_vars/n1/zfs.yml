@@ -31,6 +31,8 @@ zfs_pools:
         compression: zstd-6
       - dataset: emanonlab-containers-minecraft
         compression: zstd-6
+      - dataset: emanonlab-containers-valheim
+        compression: zstd-6
       - dataset: emanonlab-secrets
         compression: zstd
       - dataset: emanonlab-tmp
