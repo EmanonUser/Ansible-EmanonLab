@@ -19,6 +19,9 @@
     - role: acme_dns
       tags: [acme]
 
+    - role: restic
+      tags: [restic]
+
     - role: docker/docker
       tags: [docker, containers]
 

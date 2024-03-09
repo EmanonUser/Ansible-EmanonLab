@@ -1,0 +1,56 @@
+---
+restic_repositories:
+  - { name: pool, repo: "{{ pool_s3_repo }}" }
+  - { name: vaultwardendb, repo: "{{ vaultwardendb_s3_repo }}" }
+
+resticprofile_config:
+  version: "1"
+  root:
+    initialize: true
+    password-file: password.txt
+    backup:
+      schedule:
+        - '*-*-* 23:30:00'
+      schedule-permission: user
+    env:
+      AWS_ACCESS_KEY_ID: "{{ aws_access_key_id }}"
+      AWS_SECRET_ACCESS_KEY: "{{ aws_secret_access_key }}"
+
+  groups:
+    default:
+      - pool
+      - vaultwardendb
+
+  pool:
+    inherit: root
+    repository: "{{ pool_s3_repo }}"
+    backup:
+      verbose: true
+      tag:
+        - vaultwarden
+        - files
+      source:
+        - /vault/emanon/
+        - /vault/emanonlab/articles
+        - /vault/emanonlab/dev
+        - /vault/emanonlab/drawio
+        - /vault/emanonlab/emp
+        - /vault/emanonlab/secrets
+        - /vault/emanonlab/containers/minecraft
+        - /vault/emanonlab/containers/valheim
+        - /vault/emanonlab/containers/bitwarden
+        - /vault/emanonlab/containers/home_assistant
+        - /vault/emanonlab/containers/mosquitto
+        - /vault/emanonlab/containers/jellyfin
+
+  vaultwardendb:
+    inherit: root
+    repository: "{{ vaultwardendb_s3_repo }}"
+    backup:
+      verbose: true
+      tag:
+        - vaultwarden
+      stdin: true
+      stdin-filename: bitwarden.sqlite3
+      stdin-command:
+        - /usr/bin/sqlite3 /vault/emanonlab/containers/bitwarden/data/db.sqlite3 .dump
