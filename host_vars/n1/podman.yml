@@ -19,6 +19,9 @@ transmission_volumes:
   - "{{ podman_volumes_path }}/transmission/completed:/transmission/completed:rw"
   - "{{ podman_volumes_path }}/transmission/incompleted:/transmission/incompleted:rw"
   - "{{ podman_volumes_path }}/transmission/watch:/transmission/watch:rw"
+  - /vault/media/jellyfin/Shows:/Shows:rw
+  - /vault/media/jellyfin/Animes:/Animes:rw
+  - /vault/media/jellyfin/Movies:/Movies:rw
   - /vault/media/animes:/media/animes:rw
   - /vault/media/series:/media/series:rw
   - /vault/media/movies:/media/movies:rw
