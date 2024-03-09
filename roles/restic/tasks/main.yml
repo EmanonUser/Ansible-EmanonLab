@@ -1,0 +1,73 @@
+---
+- name: Install restic
+  ansible.builtin.dnf:
+    name: restic
+    state: present
+
+- name: Install databases clients
+  ansible.builtin.dnf:
+    name:
+      - sqlite3
+
+- name: Download resticprofile
+  ansible.builtin.get_url:
+    url: "https://github.com/creativeprojects/resticprofile/releases/download/v0.26.0/resticprofile_0.26.0_linux_amd64.tar.gz"
+    dest: "/tmp/resticprofile.tar.gz"
+    mode: "0640"
+
+- name: Extract resticprofile.tgz
+  ansible.builtin.unarchive:
+    src: "/tmp/resticprofile.tar.gz"
+    dest: "/tmp/"
+    remote_src: true
+
+- name: Install resticprofile
+  ansible.builtin.command:
+    cmd: "install /tmp/resticprofile /usr/local/bin/"
+    creates: /usr/local/bin/resticprofile
+
+- name: Ensures resticprofile configuration directory exists
+  ansible.builtin.file:
+    path: /home/{{ primary_user_username }}/.config/resticprofile
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    state: directory
+    mode: u=rwx,g=rx,o=
+
+- name: Place resticprofile config.json file
+  ansible.builtin.copy:
+    content: "{{ resticprofile_config | to_json }}"
+    dest: /home/{{ primary_user_username }}/.config/resticprofile/profiles.json
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rw,g=rw,o=
+
+- name: Place restic repos password key
+  ansible.builtin.copy:
+    content: "{{ restic_repos_key }}"
+    dest: /home/{{ primary_user_username }}/.config/resticprofile/password.txt
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rw,g=rw,o=
+
+- name: Create restic env directories
+  ansible.builtin.file:
+    path: /home/{{ primary_user_username }}/.config/resticprofile/{{ item.name }}
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    state: directory
+    mode: u=rwx,g=rx,o=
+  loop: "{{ restic_repositories }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Place restic environnements file
+  ansible.builtin.template:
+    src: env.j2
+    dest: /home/{{ primary_user_username }}/.config/resticprofile/{{ item.name }}/env
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rw,g=rw,o=
+  loop: "{{ restic_repositories }}"
+  loop_control:
+    label: "{{ item.name }}"
