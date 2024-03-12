@@ -1,6 +1,6 @@
 ---
 - name: Provisioning of the primary server
-  hosts: n1
+  hosts: frieren
   become: true
   gather_facts: true
   roles:
@@ -9,9 +9,6 @@
 
     - role: interfaces
       tags: [interfaces]
-
-    - role: starship
-      tags: [starship]
 
     - role: zfs
       tags: [zfs]
