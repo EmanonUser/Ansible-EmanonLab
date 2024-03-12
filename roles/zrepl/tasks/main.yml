@@ -4,6 +4,11 @@
     file: redhat.yml
   when: ansible_os_family == 'RedHat'
 
+- name: Import debian tasks
+  ansible.builtin.include_tasks:
+    file: debian.yml
+  when: ansible_os_family == 'Debian'
+
 - name: Configure zrepl
   ansible.builtin.template:
     src: zrepl_{{ inventory_hostname }}.yml.j2

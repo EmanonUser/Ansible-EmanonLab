@@ -3,7 +3,6 @@
   ansible.builtin.dnf:
     name: python3-cryptography
     state: present
-  when: ansible_os_family == 'RedHat'
 
 - name: Create let's encrypt dir(s)
   ansible.builtin.file:
