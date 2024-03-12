@@ -7,6 +7,9 @@
     - role: init
       tags: [init]
 
+    - role: interfaces
+      tags: [interfaces]
+
     - role: starship
       tags: [starship]
 
@@ -42,6 +45,9 @@
 
     - role: docker/bitwarden
       tags: [bitwarden, containers]
+
+    - role: docker/valheim
+      tags: [valheim, containers]
 
     - role: caddy
       tags: [caddy, containers]
