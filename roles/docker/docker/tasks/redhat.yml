@@ -9,13 +9,3 @@
   ansible.builtin.dnf:
     name: [docker-ce, docker-ce-cli, containerd.io, docker-buildx-plugin, docker-compose-plugin]
   notify: [Enable docker service, Start docker service]
-
-- name: Configure docker daemon
-  ansible.builtin.copy:
-    content: "{{ daemon_config | to_json }}"
-    dest: /etc/docker/daemon.json
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-    validate: /usr/bin/dockerd --validate --config-file %s
-  notify: Restart docker service

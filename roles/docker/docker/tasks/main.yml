@@ -3,3 +3,24 @@
   ansible.builtin.include_tasks:
     file: redhat.yml
   when: ansible_os_family == 'RedHat'
+
+- name: Include debian tasks
+  ansible.builtin.include_tasks:
+    file: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Add primary user to docker group
+  ansible.builtin.user:
+    name: "{{ primary_user_username }}"
+    groups: docker
+    append: yes
+
+- name: Configure docker daemon
+  ansible.builtin.copy:
+    content: "{{ daemon_config | to_json }}"
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    validate: /usr/bin/dockerd --validate --config-file %s
+  notify: Restart docker service
