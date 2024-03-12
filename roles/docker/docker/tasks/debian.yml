@@ -1,0 +1,35 @@
+---
+- name: Install keyring requirements
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+      - curl
+    state: present
+
+- name: Remove conflicting packages
+  ansible.builtin.apt:
+    name: [docker.io, docker-doc, docker-compose, podman-docker, containerd, runc]
+    state: absent
+
+- name: Get docker repository key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /usr/share/keyrings/docker.asc
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+    timeout: 30
+
+- name: Add docker repository
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/usr/share/keyrings/docker.asc arch={{ cpu_architecture }}] https://download.docker.com/linux/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} stable # noqa 204
+    state: present
+    filename: docker
+
+- name: Install docker
+  ansible.builtin.apt:
+    name: [docker-ce, docker-ce-cli, containerd.io, docker-buildx-plugin, docker-compose-plugin]
+  notify: [Enable docker service, Start docker service]
