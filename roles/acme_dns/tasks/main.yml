@@ -1,6 +1,6 @@
 ---
 - name: Install cryptography python3 module (RedHat)
-  ansible.builtin.dnf:
+  ansible.builtin.apt:
     name: python3-cryptography
     state: present
 
