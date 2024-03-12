@@ -7,12 +7,12 @@
     ansible_user: root
   tasks:
     - name: Upgrade packages
-      ansible.builtin.dnf:
-        name: "*"
-        state: latest
+      ansible.builtin.apt:
+        upgrade: true
+        update_cache: true
 
     - name: Install ansible requirements
-      ansible.builtin.dnf:
+      ansible.builtin.apt:
         name: [sudo, acl]
         state: present
 
