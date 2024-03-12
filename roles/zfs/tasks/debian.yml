@@ -1,7 +1,7 @@
 ---
 - name: Add debian backport repository for OpenZFS
   ansible.builtin.apt_repository:
-    repo: deb deb http://deb.debian.org/debian/ {{ ansible_distribution_release  }}-backports main contrib
+    repo: deb http://deb.debian.org/debian/ {{ ansible_distribution_release  }}-backports main contrib
     filename: "{{ ansible_distribution_release  }}-backports"
     state: present
 
