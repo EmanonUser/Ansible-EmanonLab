@@ -1,11 +1,11 @@
 ---
 - name: Install restic
-  ansible.builtin.dnf:
+  ansible.builtin.apt:
     name: restic
     state: present
 
 - name: Install databases clients
-  ansible.builtin.dnf:
+  ansible.builtin.apt:
     name:
       - sqlite3
 
