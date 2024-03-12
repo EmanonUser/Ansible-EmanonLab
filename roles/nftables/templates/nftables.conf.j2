@@ -9,15 +9,15 @@ define WG = {{ wireguard_confs | selectattr('wireguard', 'equalto', 'wg0') | map
 table inet routing {
 	chain prerouting {
 		type nat hook prerouting priority dstnat; policy accept
-		iifname $WAN tcp dport 80 dnat ip to {{ devices.frieden.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:80
-		iifname $WAN tcp dport 443 dnat ip to {{ devices.frieden.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:443
-		iifname $WAN tcp dport 25565 dnat ip to {{ devices.frieden.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:25565
-		iifname $LAN ip daddr 82.66.193.124 tcp dport 25565 meta nftrace set 1 dnat to {{ devices.frieden.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:25565
+		iifname $WAN tcp dport 80 dnat ip to {{ devices.frieren.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:80
+		iifname $WAN tcp dport 443 dnat ip to {{ devices.frieren.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:443
+		iifname $WAN tcp dport 25565 dnat ip to {{ devices.frieren.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:25565
+		iifname $LAN ip daddr 82.66.193.124 tcp dport 25565 meta nftrace set 1 dnat to {{ devices.frieren.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }}:25565
 	}
 
 	chain postrouting {
 		type nat hook postrouting priority srcnat; policy accept
-		ip saddr 192.168.0.0/16 ip daddr {{ devices.frieden.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }} tcp dport 25565 meta nftrace set 1 counter snat 192.168.5.1
+		ip saddr 192.168.0.0/16 ip daddr {{ devices.frieren.ipv4_addr | ansible.utils.ipaddr('address') | ansible.utils.ipaddr('address') }} tcp dport 25565 meta nftrace set 1 counter snat 192.168.5.1
 		ip version 4 oifname $WAN masquerade # WAN IPv4 NAT
 	}
 }
@@ -84,19 +84,19 @@ table inet firewall {
 
 	chain wan_forward {
 		oifname $LAN icmpv6 type { echo-request, destination-unreachable, packet-too-big, time-exceeded } counter accept
-		oifname $LAN ip6 daddr {{ devices.frieden.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 80 counter accept
-		oifname $LAN ip6 daddr {{ devices.frieden.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 443 counter accept
-		oifname $LAN ip6 daddr {{ devices.frieden.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 25565 counter accept
-		oifname $LAN ip daddr {{ devices.frieden.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 80 counter accept
-		oifname $LAN ip daddr {{ devices.frieden.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 443 counter accept
-		oifname $LAN ip daddr {{ devices.frieden.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 25565 counter accept
+		oifname $LAN ip6 daddr {{ devices.frieren.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 80 counter accept
+		oifname $LAN ip6 daddr {{ devices.frieren.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 443 counter accept
+		oifname $LAN ip6 daddr {{ devices.frieren.ipv6_addr | ansible.utils.ipaddr('address') }} tcp dport 25565 counter accept
+		oifname $LAN ip daddr {{ devices.frieren.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 80 counter accept
+		oifname $LAN ip daddr {{ devices.frieren.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 443 counter accept
+		oifname $LAN ip daddr {{ devices.frieren.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 25565 counter accept
 		jump forward_filter
 	}
 
 	chain lan_forward {
 		oifname $WAN ct state new counter accept # WAN traffic forwading
 		oifname $WG ct state new counter accept # WAN IPv6 wireguard traffic forwading
-		ip daddr {{ devices.frieden.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 25565 ct state new counter accept
+		ip daddr {{ devices.frieren.ipv4_addr | ansible.utils.ipaddr('address') }} tcp dport 25565 ct state new counter accept
 		jump forward_filter
 	}
 

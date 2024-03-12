@@ -3,7 +3,7 @@ http_services:
 
   - service: transmission
     fqdn: transmission.int.emanon.dev
-    reverse_proxy: frieden.home.arpa
+    reverse_proxy: frieren.home.arpa
     direct_access: false
     internal: true
     backend: localhost
@@ -11,7 +11,7 @@ http_services:
 
   - service: homeassistant
     fqdn: hass.emanon.dev
-    reverse_proxy: frieden.home.arpa
+    reverse_proxy: frieren.home.arpa
     direct_access: false
     internal: false
     backend: localhost
@@ -19,7 +19,7 @@ http_services:
 
   - service: jellyfin
     fqdn: jellyfin.emanon.dev
-    reverse_proxy: frieden.home.arpa
+    reverse_proxy: frieren.home.arpa
     direct_access: false
     internal: false
     backend: localhost
@@ -27,7 +27,7 @@ http_services:
 
   - service: bitwarden
     fqdn: bitwarden.int.emanon.dev
-    reverse_proxy: frieden.home.arpa
+    reverse_proxy: frieren.home.arpa
     direct_access: false
     internal: true
     backend: localhost
@@ -35,35 +35,35 @@ http_services:
 
   - service: sp01
     fqdn: sp01.int.emanon.dev
-    reverse_proxy: frieden.home.arpa
+    reverse_proxy: frieren.home.arpa
     internal: true
     backend: sp01.home.arpa
     port: 80
 
   - service: sp02
     fqdn: sp02.int.emanon.dev
-    reverse_proxy: frieden.home.arpa
+    reverse_proxy: frieren.home.arpa
     internal: true
     backend: sp02.home.arpa
     port: 80
 
   - service: sp03
     fqdn: sp03.int.emanon.dev
-    reverse_proxy: frieden.home.arpa
+    reverse_proxy: frieren.home.arpa
     internal: true
     backend: sp03.home.arpa
     port: 80
 
   - service: sp04
     fqdn: sp04.int.emanon.dev
-    reverse_proxy: frieden.home.arpa
+    reverse_proxy: frieren.home.arpa
     internal: true
     backend: sp04.home.arpa
     port: 80
 
   - service: sp05
     fqdn: sp05.int.emanon.dev
-    reverse_proxy: frieden.home.arpa
+    reverse_proxy: frieren.home.arpa
     internal: true
     backend: sp05.home.arpa
     port: 80

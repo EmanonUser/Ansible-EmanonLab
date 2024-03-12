@@ -1,6 +1,6 @@
 ---
 host_network_interfaces:
-    - interface: "{{ devices.frieden.name }}"
+    - interface: "{{ devices.frieren.name }}"
       ipv4: true
       ipv6: true
       configuration:
