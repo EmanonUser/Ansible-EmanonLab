@@ -1,0 +1,25 @@
+---
+- name: Create valheim volume directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=rwx,o=r
+    state: directory
+  loop: "{{ valheim_directories }}"
+
+- name: Include environnement variables
+  ansible.builtin.include_vars:
+    file: valheim.yml
+
+- name: Run valheim container
+  community.docker.docker_container:
+    name: valheim
+    image: "{{ valheim_server_image }}:{{ valheim_server_image_version }}"
+    published_ports: "{{ valheim_ports }}"
+    volumes: "{{ valheim_server_volumes }}"
+    state: started
+    restart_policy: unless-stopped
+    env: "{{ valheim_env }}"
+  become_user: "{{ primary_user_username }}"
+  become: true

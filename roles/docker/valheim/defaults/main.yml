@@ -1,0 +1,24 @@
+---
+valheim_server_image: mbround18/valheim
+valheim_server_image_version: latest
+
+valheim_ports:
+  - "[::]:2456:2456/udp"
+  - "0.0.0.0:2456:2456/udp"
+  - "[::]:2457:2457/udp"
+  - "0.0.0.0:2457:2457/udp"
+  - "[::]:2458:2458/udp"
+  - "0.0.0.0:2458:2458/udp"
+
+valheim_directories:
+  - "{{ podman_volumes_path }}/valheim"
+  - "{{ podman_volumes_path }}/valheim/config"
+  - "{{ podman_volumes_path }}/valheim/server"
+  - "{{ podman_volumes_path }}/valheim/backups"
+
+valheim_server_default_volumes:
+  - "{{ podman_volumes_path }}/valheim/config:/home/steam/.config/unity3d/IronGate/Valheim:rw"
+  - "{{ podman_volumes_path }}/valheim/server:/home/steam/valheim:rw"
+  - "{{ podman_volumes_path }}/valheim/backups:/home/steam/backups:rw"
+
+valheim_server_volumes: "{{ host_valheim_backup_volumes | default(valheim_server_default_volumes) }}"
