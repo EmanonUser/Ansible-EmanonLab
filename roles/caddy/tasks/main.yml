@@ -22,7 +22,6 @@
         owner: caddy
         group: caddy
         mode: u=rw,g=rw,o=
-      notify: Restart caddy service
 
     - name: Validate caddyfile
       ansible.builtin.command:
@@ -30,3 +29,4 @@
       register: validate
       changed_when: true
       failed_when: validate.rc != 0
+  notify: Restart caddy service
