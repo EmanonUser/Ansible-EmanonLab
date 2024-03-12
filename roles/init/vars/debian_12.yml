@@ -18,5 +18,6 @@ debian_stable_packages_defaults:
   - tcpdump
   - socat
   - mtr-tiny
+  - rsync
 
 ssh_service_name: ssh.service
