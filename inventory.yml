@@ -6,4 +6,4 @@ homelab:
     r1:
       ansible_host: r1.home.arpa
     n1:
-      ansible_host: n1.home.arpa
+      ansible_host: friden.home.arpa
