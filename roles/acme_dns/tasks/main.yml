@@ -109,9 +109,6 @@
     - acme_dns_challenge_result['results'][item_index]['challenge_data'] is defined
     - acme_dns_challenge_result['results'][item_index]['challenge_data']
 
-- name: Import caddy simlink playbook
-  ansible.builtin.include_tasks: caddy_pems.yml
-
 - name: Import rehat_auto_renew playbook
   ansible.builtin.include_tasks: redhat_auto_renew.yml
   when:

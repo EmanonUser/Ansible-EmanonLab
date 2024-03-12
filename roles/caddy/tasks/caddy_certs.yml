@@ -1,4 +1,5 @@
 ---
+# If I remember correctly caddy doesnt support symlinks
 - name: Create symlink for caddy's fullchain certs
   ansible.builtin.copy:
     src: "{{ acme_dns_letsencrypt_base_path }}/certs/fullchain.{{ item.fqdn }}.crt"

@@ -9,6 +9,10 @@
     file: debian.yml
   when: ansible_os_family == 'Debian'
 
+- name: Include certs imports
+  ansible.builtin.include_tasks:
+    file: caddy_certs.yml
+
 - name: Configure and validate caddyfile
   block:
     - name: Configure caddyfile
