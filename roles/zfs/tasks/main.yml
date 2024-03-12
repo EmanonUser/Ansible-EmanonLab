@@ -88,7 +88,7 @@
 - name: Create ZFS dataset encryption key(s)
   ansible.builtin.shell:
     creates: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
-    cmd: set -o pipefail && openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ datasets_keylocation }}/{{ item.1.dataset }}.key
+    cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ datasets_keylocation }}/{{ item.1.dataset }}.key
   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
   loop_control:
     label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
@@ -96,7 +96,7 @@
 - name: Create ZFS volume encryption key(s)
   ansible.builtin.shell:
     creates: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
-    cmd: set -o pipefail && openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ volumes_keylocation }}/{{ item.1.volume }}.key
+    cmd: openssl rand -hex 32 | tr '[:lower:]' '[:upper:]' > {{ volumes_keylocation }}/{{ item.1.volume }}.key
   loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
