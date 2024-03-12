@@ -13,9 +13,9 @@ kea_dhcp4:
       - start: 192.168.10.100
         end: 192.168.10.200
     reservations:
-      - ipv4_addr: "{{ devices.n1.ipv4_addr }}"
-        hw_addr: "{{ devices.n1.hw_addr }}"
-        hostname: "{{ devices.n1.hostname }}"
+      - ipv4_addr: "{{ devices.frieden.ipv4_addr }}"
+        hw_addr: "{{ devices.frieden.hw_addr }}"
+        hostname: "{{ devices.frieden.hostname }}"
       - ipv4_addr: "{{ devices.ipmi.ipv4_addr }}"
         hw_addr: "{{ devices.ipmi.hw_addr }}"
         hostname: "{{ devices.ipmi.hostname }}"
@@ -86,10 +86,7 @@ kea_dhcp4:
     pools:
       - start: 192.168.50.100
         end: 192.168.50.200
-    reservations:
-      - ipv4_addr: "{{ devices.n1dmz.ipv4_addr }}"
-        hw_addr: "{{ devices.n1dmz.hw_addr }}"
-        hostname: "{{ devices.n1dmz.hostname }}"
+    reservations: []
     options_data:
       - option_data: "routers"
         data: ["192.168.50.1"]
@@ -101,9 +98,9 @@ kea_dhcp6:
         end: "{{ ipv6_prefix }}:f401:fffc:ffff:ffff:ffff"
     options_data: []
     reservations:
-      - ipv6_addr: ["{{ devices.n1.ipv6_addr }}"]
-        duid: "{{ devices.n1.duid }}"
-        hostname: "{{ devices.n1.hostname }}"
+      - ipv6_addr: ["{{ devices.frieden.ipv6_addr }}"]
+        duid: "{{ devices.frieden.duid }}"
+        hostname: "{{ devices.frieden.hostname }}"
       - ipv6_addr: ["{{ devices.ipmi.ipv6_addr }}"]
         duid: "{{ devices.ipmi.duid }}"
         hostname: "{{ devices.ipmi.hostname }}"
@@ -152,7 +149,4 @@ kea_dhcp6:
       - start: "{{ ipv6_prefix }}:f405:fffc::"
         end: "{{ ipv6_prefix }}:f405:fffc:ffff:ffff:ffff"
     options_data: []
-    reservations:
-      - ipv6_addr: ["{{ devices.n1dmz.ipv6_addr }}"]
-        duid: "{{ devices.n1dmz.duid }}"
-        hostname: "{{ devices.n1dmz.hostname }}"
+    reservations: []
