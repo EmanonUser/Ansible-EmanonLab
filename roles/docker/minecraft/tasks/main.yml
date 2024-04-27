@@ -23,7 +23,6 @@
     published_ports: "{{ minecraft_ports }}"
     volumes: "{{ minecraft_server_volumes }}"
     state: started
-    restart_policy: unless-stopped
     env: "{{ minecraft_env }}"
   become_user: "{{ primary_user_username }}"
   become: true
