@@ -1,5 +1,6 @@
 mods:
   - https://mediafilez.forgecdn.net/files/4630/983/Structory_1.20.1_v1.3.2.jar
+  - https://mediafilez.forgecdn.net/files/4754/417/inmisaddon-1.0.4.jar
 
 cf_mods:
   - https://www.curseforge.com/minecraft/mc-mods/fabric-api
@@ -67,4 +68,4 @@ cf_mods:
   - https://www.curseforge.com/minecraft/mc-mods/farmers-delight-refabricated
   - https://www.curseforge.com/minecraft/mc-mods/azurelib
   - https://www.curseforge.com/minecraft/mc-mods/patchouli-fabric
-  - https://www.curseforge.com/minecraft/mc-mods/backpacked-fabric
+  - https://www.curseforge.com/minecraft/mc-mods/inmis
