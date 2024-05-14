@@ -1,0 +1,10 @@
+---
+- name: Run watchtower container
+  community.docker.docker_container:
+    name: watchtower
+    image: docker.io/containrrr/watchtower:latest
+    volumes: "{{ watchtower_volumes }}"
+    pull: true
+    state: started
+  become: true
+  become_user: "{{ primary_user_username }}"

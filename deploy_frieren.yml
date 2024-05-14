@@ -46,5 +46,8 @@
     - role: docker/valheim
       tags: [valheim, containers]
 
+    - role: docker/watchtower
+      tags: [watchtower, containers]
+
     - role: caddy
       tags: [caddy, containers]
