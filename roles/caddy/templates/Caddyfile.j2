@@ -2,6 +2,8 @@
 {{ service.fqdn }} {
       reverse_proxy {{ service.backend }}:{{ service.port }}
 {% if service.internal %}
+      @denied not remote_ip 2a01:e0a:94f:f400::/61 192.168.0.0/16 172.20.5.0/24
+      abort @denied
       tls /etc/caddy/{{ service.fqdn }}.pem /etc/caddy/{{ service.fqdn }}.key
 {% endif -%}
 }
