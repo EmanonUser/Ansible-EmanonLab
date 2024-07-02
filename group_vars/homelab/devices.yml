@@ -42,11 +42,17 @@ devices:
     duid: 00:01:00:01:2a:16:93:14:00:00:00:00:00:00
     hostname: ipmi
 
-  ubnt:
+  ubnt01:
     ipv4_addr: 192.168.10.40/24
-    ipv6_addr: "{{ ipv6_prefix }}:f401::40/64"
+    ipv6_slaac_addr: "{{ ipv6_prefix }}:f401:b6fb:e4ff:fe90:4950/64"
     hw_addr: b4:fb:e4:90:49:50
-    hostname: ubnt
+    hostname: ubnt01
+
+  ubnt02:
+    ipv4_addr: 192.168.10.41/24
+    ipv6_slaac_addr: "{{ ipv6_prefix }}:f401:e263:daff:fe09:6c1c/64"
+    hw_addr: e0:63:da:09:6c:1c
+    hostname: ubnt02
 
   shp1:
     ipv4_addr: 192.168.40.50/24

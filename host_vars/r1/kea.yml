@@ -19,9 +19,12 @@ kea_dhcp4:
       - ipv4_addr: "{{ devices.ipmi.ipv4_addr }}"
         hw_addr: "{{ devices.ipmi.hw_addr }}"
         hostname: "{{ devices.ipmi.hostname }}"
-      - ipv4_addr: "{{ devices.ubnt.ipv4_addr }}"
-        hw_addr: "{{ devices.ubnt.hw_addr }}"
-        hostname: "{{ devices.ubnt.hostname }}"
+      - ipv4_addr: "{{ devices.ubnt01.ipv4_addr }}"
+        hw_addr: "{{ devices.ubnt01.hw_addr }}"
+        hostname: "{{ devices.ubnt01.hostname }}"
+      - ipv4_addr: "{{ devices.ubnt02.ipv4_addr }}"
+        hw_addr: "{{ devices.ubnt02.hw_addr }}"
+        hostname: "{{ devices.ubnt02.hostname }}"
     options_data:
       - option_data: "routers"
         data: ["192.168.10.1"]
@@ -104,9 +107,12 @@ kea_dhcp6:
       - ipv6_addr: ["{{ devices.ipmi.ipv6_addr }}"]
         duid: "{{ devices.ipmi.duid }}"
         hostname: "{{ devices.ipmi.hostname }}"
-      - ipv6_addr: ["{{ devices.ubnt.ipv6_addr }}"]
-        hw_addr: "{{ devices.ubnt.hw_addr }}"
-        hostname: "{{ devices.ubnt.hostname }}"
+      - ipv6_addr: ["{{ devices.ubnt01.ipv6_slaac_addr }}"]
+        hw_addr: "{{ devices.ubnt01.hw_addr }}"
+        hostname: "{{ devices.ubnt01.hostname }}"
+      - ipv6_addr: ["{{ devices.ubnt02.ipv6_slaac_addr }}"]
+        hw_addr: "{{ devices.ubnt02.hw_addr }}"
+        hostname: "{{ devices.ubnt02.hostname }}"
 
   - subnet: "{{ ipv6_prefix }}:f402::/64"
     pools:

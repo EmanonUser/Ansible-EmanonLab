@@ -8,6 +8,10 @@ local.emanon.        IN  SOA r.local.emanon. moemanon.pm.me. 12 7200 3600 120960
 {% if device.ipv6_addr is defined %}{{ device.hostname }}.{{ local_domain }}.        IN AAAA {{ device.ipv6_addr | ansible.utils.ipaddr('address') }}
 {% endif %}{% endfor %}
 
+{% for _, device in devices.items() %}
+{% if device.ipv6_slaac_addr is defined %}{{ device.hostname }}.{{ local_domain }}.        IN AAAA {{ device.ipv6_slaac_addr | ansible.utils.ipaddr('address') }}
+{% endif %}{% endfor %}
+
 $TTL 2100
 {% for _, device in devices.items() %}
 {% if device.ipv4_addr is defined %}{{ device.ipv4_addr | ansible.utils.ipaddr('revdns') }}          IN PTR {{ device.hostname }}.{{ local_domain }}.
