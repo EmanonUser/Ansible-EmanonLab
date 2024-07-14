@@ -1,5 +1,8 @@
 {% for service in http_services %}
 {{ service.fqdn }} {
+	    log {
+		    output file /var/log/caddy/caddy-{{ service.service }}.log
+      }
       reverse_proxy {{ service.backend }}:{{ service.port }}
 {% if service.internal %}
       @denied not remote_ip 2a01:e0a:94f:f400::/61 192.168.0.0/16 172.20.5.0/24

@@ -25,6 +25,14 @@ http_services:
     backend: localhost
     port: 7007
 
+  - service: emanon-dev
+    fqdn: emanon.dev
+    reverse_proxy: frieren.home.arpa
+    direct_access: false
+    internal: false
+    backend: localhost
+    port: 7008
+
   - service: bitwarden
     fqdn: bitwarden.int.emanon.dev
     reverse_proxy: frieren.home.arpa
