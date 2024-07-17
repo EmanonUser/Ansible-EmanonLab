@@ -54,35 +54,35 @@ devices:
     hw_addr: e0:63:da:09:6c:1c
     hostname: ubnt02
 
-  shp1:
+  shp0:
     ipv4_addr: 192.168.40.50/24
     ipv6_addr: 2a01:e0a:94f:f404:a6cf:12ff:fed7:916d/64
     hw_addr: a4:cf:12:d7:91:6d
-    hostname: sp01
+    hostname: shp01
 
-  shp2:
+  shp02:
     ipv4_addr: 192.168.40.51/24
     ipv6_addr: 2a01:e0a:94f:f404:a6cf:12ff:fed7:8f48/64
     hw_addr: a4:cf:12:d7:8f:48
-    hostname: sp02
+    hostname: shp02
 
-  shp3:
+  shp03:
     ipv4_addr: 192.168.40.52/24
     ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe89:1b35/64
     hw_addr: e8:db:84:89:1b:35
-    hostname: sp03
+    hostname: shp03
 
-  shp4:
+  shp04:
     ipv4_addr: 192.168.40.53/24
     ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe89:2461/64
     hw_addr: e8:db:84:89:24:61
-    hostname: sp04
+    hostname: shp04
 
-  shp5:
+  shp05:
     ipv4_addr: 192.168.40.54/24
     ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe88:3afa/64
     hw_addr: e8:db:84:88:3a:fa
-    hostname: sp05
+    hostname: shp05
 
   hs110:
     ipv4_addr: 192.168.40.55/24

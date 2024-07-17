@@ -41,39 +41,39 @@ http_services:
     backend: localhost
     port: 7010
 
-  - service: sp01
-    fqdn: sp01.int.emanon.dev
+  - service: shp01
+    fqdn: shp01.int.emanon.dev
     reverse_proxy: frieren.home.arpa
     internal: true
-    backend: sp01.home.arpa
+    backend: shp01.home.arpa
     port: 80
 
-  - service: sp02
-    fqdn: sp02.int.emanon.dev
+  - service: shp02
+    fqdn: shp02.int.emanon.dev
     reverse_proxy: frieren.home.arpa
     internal: true
-    backend: sp02.home.arpa
+    backend: shp02.home.arpa
     port: 80
 
-  - service: sp03
-    fqdn: sp03.int.emanon.dev
+  - service: shp03
+    fqdn: shp03.int.emanon.dev
     reverse_proxy: frieren.home.arpa
     internal: true
-    backend: sp03.home.arpa
+    backend: shp03.home.arpa
     port: 80
 
-  - service: sp04
-    fqdn: sp04.int.emanon.dev
+  - service: shp04
+    fqdn: shp04.int.emanon.dev
     reverse_proxy: frieren.home.arpa
     internal: true
-    backend: sp04.home.arpa
+    backend: shp04.home.arpa
     port: 80
 
-  - service: sp05
-    fqdn: sp05.int.emanon.dev
+  - service: shp05
+    fqdn: shp05.int.emanon.dev
     reverse_proxy: frieren.home.arpa
     internal: true
-    backend: sp05.home.arpa
+    backend: shp05.home.arpa
     port: 80
 
 tcp_services:

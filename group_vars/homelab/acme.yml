@@ -5,9 +5,9 @@ acme_dns_domain_name:
   - { fqdn: "transmission.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "bitwarden.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "ipmi.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
-  - { fqdn: "sp01.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
-  - { fqdn: "sp02.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
-  - { fqdn: "sp03.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
-  - { fqdn: "sp04.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
-  - { fqdn: "sp05.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
+  - { fqdn: "shp01.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
+  - { fqdn: "shp02.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
+  - { fqdn: "shp03.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
+  - { fqdn: "shp04.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
+  - { fqdn: "shp05.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
   - { fqdn: "tp01.int.{{ acme_domain }}", domain: ".{{ acme_domain }}" }
