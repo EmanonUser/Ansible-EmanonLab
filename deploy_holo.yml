@@ -6,5 +6,11 @@
   gather_facts: true
   roles:
 
+    - role: sshd
+      tags: [sshd]
+
     - role: kea
       tags: [kea]
+
+    - role: wireguard
+      tags: [wireguard]
