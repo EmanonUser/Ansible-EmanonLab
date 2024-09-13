@@ -1,0 +1,78 @@
+---
+
+- name: enable SSH PubkeyAuthentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#PubkeyAuthentication|^PubkeyAuthentication"
+    line: PubkeyAuthentication yes
+    owner: root
+    group: wheel
+    mode: u=rw,g=r,o=r
+    state: present
+    validate: /usr/sbin/sshd -tf %s
+  notify: restart ssh service
+
+- name: disable SSH PasswordAuthentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    owner: root
+    group: wheel
+    mode: u=rw,g=r,o=r
+    state: present
+    validate: /usr/sbin/sshd -tf %s
+  loop:
+    - { regexp: "^#PasswordAuthentication|^PasswordAuthentication", line: "PasswordAuthentication no" }
+    - { regexp: "^#KbdInteractiveAuthentication|^KbdInteractiveAuthentication", line: "KbdInteractiveAuthentication no" }
+  loop_control:
+    label: "{{ item.line }}"
+
+  notify: restart ssh service
+
+- name: place ssh hosts keyfiles
+  ansible.builtin.copy:
+    content: "{{ item.content }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: wheel
+    mode: "{{ item.mode }}"
+  loop:
+    - { content: "{{ ssh_host_ed25519_key }}", dest: /etc/ssh/ssh_host_ed25519_key, mode: u=rw,o=,g= }
+    - { content: "{{ ssh_host_ed25519_key_pub }}", dest: "/etc/ssh/ssh_host_ed25519_key.pub", mode: u=rw,o=r,g=r }
+    - { content: "{{ ssh_host_ed25519_key_cert_pub }}", dest: "/etc/ssh/ssh_host_ed25519_key-cert.pub", mode: u=rw,o=r,g=r }
+  loop_control:
+    label: "{{ item.dest }}"
+
+- name: add host certificate to ssh config
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#HostCertificate|^HostCertificate"
+    line: HostCertificate /etc/ssh/ssh_host_ed25519_key-cert.pub
+    owner: root
+    group: wheel
+    mode: u=rw,g=r,o=r
+    state: present
+    validate: /usr/sbin/sshd -tf %s
+  notify: restart ssh service
+
+- name: write certificate authority key
+  ansible.builtin.copy:
+    content: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN0Gtix6jUyuMaKCPEHjNkKqZyNPJmLv9jY199zrdDtT User Certificate Authority for *.emanon.dev, *.emanon.int.dev, *.home.arpa
+    dest: /etc/ssh/user_certificate_authority.pub
+    owner: root
+    group: wheel
+    mode: u=rw,g=r,o=r
+
+- name: add user certificate to ssh config
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#TrustedUserCAKeys|^TrustedUserCAKeys"
+    line: TrustedUserCAKeys /etc/ssh/user_certificate_authority.pub
+    owner: root
+    group: wheel
+    mode: u=rw,g=r,o=r
+    state: present
+    validate: /usr/sbin/sshd -tf %s
+  notify: restart ssh service
+

@@ -1,0 +1,10 @@
+---
+- name: Import debian tasks
+  ansible.builtin.include_tasks:
+    file: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Import freebsd tasks
+  ansible.builtin.include_tasks:
+    file: freebsd.yml
+  when: ansible_os_family == 'FreeBSD'
