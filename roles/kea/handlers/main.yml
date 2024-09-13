@@ -41,3 +41,8 @@
 - name: Apt upgrade
   ansible.builtin.apt:
     upgrade: true
+
+- name: restart kea
+  ansible.builtin.service:
+    name: kea
+    state: restarted
