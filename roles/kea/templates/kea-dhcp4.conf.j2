@@ -3,7 +3,7 @@
     "interfaces-config": {
       "dhcp-socket-type": "raw",
       "interfaces": [
-        "vtnet1"
+        "{% for interface in kea_interfaces %}{{ interface }}{% if not loop.last %}, {% endif %}{% endfor %}"
       ]
     },
     "multi-threading": {

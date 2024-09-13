@@ -2,7 +2,7 @@
   "Dhcp6": {
     "interfaces-config": {
       "interfaces": [
-        "bond0"
+        "{% for interface in kea_interfaces %}{{ interface }}{% if not loop.last %}, {% endif %}{% endfor %}"
       ]
     },
     "multi-threading": {
@@ -16,10 +16,10 @@
     },
     "hooks-libraries": [
       {
-        "library": "/usr/lib/x86_64-linux-gnu/kea/hooks/libdhcp_stat_cmds.so"
+        "library": "{{ libraries_base_path }}/libdhcp_stat_cmds.so"
       },
       {
-        "library": "/usr/lib/x86_64-linux-gnu/kea/hooks/libdhcp_lease_cmds.so"
+        "library": "{{ libraries_base_path }}/libdhcp_lease_cmds.so"
       }
     ],
     "lease-database": {
@@ -51,10 +51,6 @@
     "preferred-lifetime": 3000,
     "option-data": [
       {
-        "name": "unicast",
-        "data": "{{ devices.r1.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"
-      },
-      {
         "name": "dns-servers",
         "data": "{% for dns_server in dns_servers.ipv6 %}{{ dns_server }}{% if not loop.last %}, {% endif %}{% endfor %}"
       },
@@ -74,6 +70,7 @@
 
      {
         "subnet": "{{ subnet.subnet }}",
+        "id": {{ subnet.id }},
         "pools" : [{% for pool in subnet.pools +%}
           {
             "pool": "{{ pool.start }}-{{ pool.end }}"

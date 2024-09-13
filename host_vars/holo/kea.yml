@@ -1,14 +1,16 @@
 ---
 dns_servers:
-  ipv4: ["{{ devices.r1.lan_interface.ipv4_addr | ansible.utils.ipaddr('address') }}"]
-  ipv6: ["{{ devices.r1.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"]
+  ipv4: ["{{ devices.holo.lan_interface.ipv4_addr | ansible.utils.ipaddr('address') }}"]
+  ipv6: ["{{ devices.holo.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"]
 
 ntp_servers:
-  ipv4: ["{{ devices.r1.lan_interface.ipv4_addr | ansible.utils.ipaddr('address') }}"]
-  ipv6: ["{{ devices.r1.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"]
+  ipv4: ["{{ devices.holo.lan_interface.ipv4_addr | ansible.utils.ipaddr('address') }}"]
+  ipv6: ["{{ devices.holo.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"]
 
 
 libraries_base_path: /usr/local/lib/kea/hooks
+kea_interfaces: ["{{ devices.holo.lan_interface.ifname }}"]
+kea_socket_type: "raw"
 
 kea_dhcp4:
   - subnet: 192.168.5.0/24
@@ -69,6 +71,7 @@ kea_dhcp4:
 
 kea_dhcp6:
   - subnet: "{{ ipv6_prefix }}:f401::/64"
+    id: 1
     pools:
       - start: "{{ ipv6_prefix }}:f401:fffc::"
         end: "{{ ipv6_prefix }}:f401:fffc:ffff:ffff:ffff"
@@ -77,12 +80,11 @@ kea_dhcp6:
       - ipv6_addr: ["{{ devices.frieren.ipv6_addr }}"]
         duid: "{{ devices.frieren.duid }}"
         hostname: "{{ devices.frieren.hostname }}"
+
       - ipv6_addr: ["{{ devices.ipmi.ipv6_addr }}"]
         duid: "{{ devices.ipmi.duid }}"
         hostname: "{{ devices.ipmi.hostname }}"
-      - ipv6_addr: ["{{ devices.ubnt01.ipv6_slaac_addr }}"]
-        hw_addr: "{{ devices.ubnt01.hw_addr }}"
-        hostname: "{{ devices.ubnt01.hostname }}"
-      - ipv6_addr: ["{{ devices.ubnt02.ipv6_slaac_addr }}"]
-        hw_addr: "{{ devices.ubnt02.hw_addr }}"
-        hostname: "{{ devices.ubnt02.hostname }}"
+
+      - ipv6_addr: ["{{ devices.desktop.ipv6_addr }}"]
+        hw_addr: "{{ devices.desktop.hw_addr }}"
+        hostname: "{{ devices.desktop.hostname }}"

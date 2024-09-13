@@ -1,17 +1,14 @@
 devices:
 
-  r1:
+  holo:
     ipv4_addr: 192.168.5.1/24 # for coredns templating
     ipv6_addr: "{{ ipv6_prefix }}:f400:fffa::/64" # for coredns templating
-    hostname: r1
+    hostname: holo
     wan_interface:
-      ifname: enp1s0
+      ifname: vtnet0
       ipv6_addr: "{{ ipv6_prefix }}:f400:ffff::/64"
     lan_interface:
-      ifname: bond0
-      lan_slaves:
-        - enp2s0
-        - enp3s0
+      ifname: vtnet1
       ipv4_addr: 192.168.5.1/24
       ipv6_addr: "{{ ipv6_prefix }}:f400:fffa::/64"
 
@@ -22,7 +19,7 @@ devices:
 
   desktop:
     ipv4_addr: 192.168.5.20/24
-    ipv6_addr: "{{ ipv6_prefix }}:f402::20/64"
+    ipv6_addr: "{{ ipv6_prefix }}:f401::20/64"
     hw_addr: e4:1d:2d:4f:e0:50
     duid: "00:04:b6:ac:2b:01:08:11:15:11:05:7f:94:a4:b4:6d:2b:7b"
     hostname: sasurai
@@ -56,31 +53,31 @@ devices:
 
   shp01:
     ipv4_addr: 192.168.5.50/24
-    ipv6_addr: 2a01:e0a:94f:f404:a6cf:12ff:fed7:916d/64
+    ipv6_addr: 2a01:e0a:94f:f401:a6cf:12ff:fed7:916d/64
     hw_addr: a4:cf:12:d7:91:6d
     hostname: shp01
 
   shp02:
     ipv4_addr: 192.168.5.51/24
-    ipv6_addr: 2a01:e0a:94f:f404:a6cf:12ff:fed7:8f48/64
+    ipv6_addr: 2a01:e0a:94f:f401:a6cf:12ff:fed7:8f48/64
     hw_addr: a4:cf:12:d7:8f:48
     hostname: shp02
 
   shp03:
     ipv4_addr: 192.168.5.52/24
-    ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe89:1b35/64
+    ipv6_addr: 2a01:e0a:94f:f401:eadb:84ff:fe89:1b35/64
     hw_addr: e8:db:84:89:1b:35
     hostname: shp03
 
   shp04:
     ipv4_addr: 192.168.5.53/24
-    ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe89:2461/64
+    ipv6_addr: 2a01:e0a:94f:f401:eadb:84ff:fe89:2461/64
     hw_addr: e8:db:84:89:24:61
     hostname: shp04
 
   shp05:
     ipv4_addr: 192.168.5.54/24
-    ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe88:3afa/64
+    ipv6_addr: 2a01:e0a:94f:f401:eadb:84ff:fe88:3afa/64
     hw_addr: e8:db:84:88:3a:fa
     hostname: shp05
 
