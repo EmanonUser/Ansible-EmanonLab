@@ -30,3 +30,8 @@
   loop: "{{ wireguard_res.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='wireguard') | list }}"
   loop_control:
     label: Reload wg-quick@{{ item }}.service
+
+- name: restart wireguard
+  ansible.builtin.service:
+    name: wireguard
+    state: restarted

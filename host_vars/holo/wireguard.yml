@@ -9,7 +9,7 @@ wireguard_confs:
     server_private_key: "{{ wg0.private_key }}"
     disable_routing: true
     peers:
-      - peer: arch
+      - peer: desktop
         public_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'arch') | map(attribute='public_key') | first }}"
         preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'arch') | map(attribute='preshared_key') | first }}"
         keepalive: 60

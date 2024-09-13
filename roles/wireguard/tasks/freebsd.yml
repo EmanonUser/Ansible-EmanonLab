@@ -1,0 +1,39 @@
+---
+- name: Install Wireguard
+  community.general.pkgng:
+    name: wireguard-tools
+    state: present
+
+- name: Create wireguard directory
+  ansible.builtin.file:
+    path: /usr/local/etc/wireguard
+    state: directory
+    owner: root
+    group: wheel
+    mode: u=rw,g=,o=
+
+- name: Configure wireguard
+  ansible.builtin.template:
+    src: wireguard.conf.j2
+    dest: /usr/local/etc/wireguard/{{ item.wireguard }}.conf
+    owner: root
+    group: wheel
+    mode: u=rw,g=,o=
+  notify: restart wireguard
+  loop: "{{ wireguard_confs }}"
+  loop_control:
+    label: "{{ item.wireguard }}.conf"
+
+- name: Enable wireguard interfaces
+  community.general.sysrc:
+    name: wireguard_interfaces
+    value: "{{ item.wireguard }}"
+    state: value_present
+  loop: "{{ wireguard_confs }}"
+  loop_control:
+    label: "{{ item.wireguard }}.conf"
+
+- name: Enable wireguard service
+  community.general.sysrc:
+    name: wireguard_enable
+    value: "YES"

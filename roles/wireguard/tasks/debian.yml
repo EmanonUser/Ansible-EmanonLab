@@ -1,0 +1,23 @@
+---
+- name: Install Wireguard
+  ansible.builtin.apt:
+    name: wireguard-tools
+    state: present
+
+- name: Load Wireguard kernel module
+  community.general.modprobe:
+    name: wireguard
+    state: present
+
+- name: Configure Wireguard
+  ansible.builtin.template:
+    src: wireguard.conf.j2
+    dest: /etc/wireguard/{{ item.wireguard }}.conf
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+  register: wireguard_res
+  loop: "{{ wireguard_confs }}"
+  loop_control:
+    label: /etc/wireguard/{{ item.wireguard }}.conf
+  notify: [Enable wireguard service, Start wireguard service, Reload wireguard service]
