@@ -1,0 +1,88 @@
+---
+dns_servers:
+  ipv4: ["{{ devices.r1.lan_interface.ipv4_addr | ansible.utils.ipaddr('address') }}"]
+  ipv6: ["{{ devices.r1.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"]
+
+ntp_servers:
+  ipv4: ["{{ devices.r1.lan_interface.ipv4_addr | ansible.utils.ipaddr('address') }}"]
+  ipv6: ["{{ devices.r1.lan_interface.ipv6_addr | ansible.utils.ipaddr('address') }}"]
+
+
+libraries_base_path: /usr/local/lib/kea/hooks
+
+kea_dhcp4:
+  - subnet: 192.168.5.0/24
+    id: 1
+    pools:
+      - start: 192.168.5.100
+        end: 192.168.5.200
+    reservations:
+      - ipv4_addr: "{{ devices.frieren.ipv4_addr }}"
+        hw_addr: "{{ devices.frieren.hw_addr }}"
+        hostname: "{{ devices.frieren.hostname }}"
+
+      - ipv4_addr: "{{ devices.ipmi.ipv4_addr }}"
+        hw_addr: "{{ devices.ipmi.hw_addr }}"
+        hostname: "{{ devices.ipmi.hostname }}"
+
+      - ipv4_addr: "{{ devices.desktop.ipv4_addr }}"
+        hw_addr: "{{ devices.desktop.hw_addr }}"
+        hostname: "{{ devices.desktop.hostname }}"
+
+
+      - ipv4_addr: "{{ devices.shp01.ipv4_addr }}"
+        hw_addr: "{{ devices.shp01.hw_addr }}"
+        hostname: "{{ devices.shp01.hostname }}"
+
+      - ipv4_addr: "{{ devices.shp02 .ipv4_addr }}"
+        hw_addr: "{{ devices.shp02.hw_addr }}"
+        hostname: "{{ devices.shp02.hostname }}"
+
+      - ipv4_addr: "{{ devices.shp03.ipv4_addr }}"
+        hw_addr: "{{ devices.shp03.hw_addr }}"
+        hostname: "{{ devices.shp03.hostname }}"
+
+      - ipv4_addr: "{{ devices.shp04.ipv4_addr }}"
+        hw_addr: "{{ devices.shp04.hw_addr }}"
+        hostname: "{{ devices.shp04.hostname }}"
+
+      - ipv4_addr: "{{ devices.shp05.ipv4_addr }}"
+        hw_addr: "{{ devices.shp05.hw_addr }}"
+        hostname: "{{ devices.shp05.hostname }}"
+
+      - ipv4_addr: "{{ devices.hs110.ipv4_addr }}"
+        hw_addr: "{{ devices.hs110.hw_addr }}"
+        hostname: "{{ devices.hs110.hostname }}"
+
+      - ipv4_addr: "{{ devices.ubnt01.ipv4_addr }}"
+        hw_addr: "{{ devices.ubnt01.hw_addr }}"
+        hostname: "{{ devices.ubnt01.hostname }}"
+
+      - ipv4_addr: "{{ devices.printer.ipv4_addr }}"
+        hw_addr: "{{ devices.printer.hw_addr }}"
+        hostname: "{{ devices.printer.hostname }}"
+
+    options_data:
+      - option_data: "routers"
+        data: ["192.168.5.1"]
+
+
+kea_dhcp6:
+  - subnet: "{{ ipv6_prefix }}:f401::/64"
+    pools:
+      - start: "{{ ipv6_prefix }}:f401:fffc::"
+        end: "{{ ipv6_prefix }}:f401:fffc:ffff:ffff:ffff"
+    options_data: []
+    reservations:
+      - ipv6_addr: ["{{ devices.frieren.ipv6_addr }}"]
+        duid: "{{ devices.frieren.duid }}"
+        hostname: "{{ devices.frieren.hostname }}"
+      - ipv6_addr: ["{{ devices.ipmi.ipv6_addr }}"]
+        duid: "{{ devices.ipmi.duid }}"
+        hostname: "{{ devices.ipmi.hostname }}"
+      - ipv6_addr: ["{{ devices.ubnt01.ipv6_slaac_addr }}"]
+        hw_addr: "{{ devices.ubnt01.hw_addr }}"
+        hostname: "{{ devices.ubnt01.hostname }}"
+      - ipv6_addr: ["{{ devices.ubnt02.ipv6_slaac_addr }}"]
+        hw_addr: "{{ devices.ubnt02.hw_addr }}"
+        hostname: "{{ devices.ubnt02.hostname }}"

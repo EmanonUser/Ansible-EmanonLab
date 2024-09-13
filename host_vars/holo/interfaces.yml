@@ -1,0 +1,28 @@
+---
+host_network_interfaces:
+    - interface: "{{ devices.r1.wan_interface.ifname }}"
+      ipv4: true
+      ipv6: true
+      configuration:
+          v4: dhcp
+          v6: static
+      dns_servers:
+          v4: ["127.0.0.1", "9.9.9.9", "1.1.1.1"]
+          v6: ["::1", "2620:fe::fe", "2606:4700:4700::1111"]
+      addresses:
+          v6: ["{{ devices.r1.wan_interface.ipv6_addr }}"]
+
+    - interface: "{{ devices.r1.lan_interface.ifname }}"
+      hwaddress: ea:71:73:be:13:e4
+      ipv4: true
+      ipv6: true
+      configuration:
+          v4: static
+          v6: static
+      bonding:
+          slaves: "{{ devices.r1.lan_interface.lan_slaves }}"
+          mode: 4
+          millim: 100
+      addresses:
+          v4: ["{{ devices.r1.lan_interface.ipv4_addr }}"]
+          v6: ["{{ devices.r1.lan_interface.ipv6_addr }}"]

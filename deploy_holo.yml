@@ -1,0 +1,10 @@
+---
+- name: Provisioning of the main Debian router
+  hosts: holo
+  become: true
+  become_method: doas
+  gather_facts: true
+  roles:
+
+    - role: kea
+      tags: [kea]

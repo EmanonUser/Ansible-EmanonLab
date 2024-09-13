@@ -1,0 +1,32 @@
+---
+- name: Install kea dhcp servers IPv4 + IPv6
+  community.general.pkgng:
+    name: kea
+    state: present
+
+- name: Template kea-dhcp4 server configurations
+  ansible.builtin.template:
+    src: kea-dhcp4.conf.j2
+    dest: /usr/local/etc/kea/kea-dhcp4.conf
+    owner: root
+    group: wheel
+    mode: u=rw,g=r,o=r
+    validate: /usr/local/sbin/kea-dhcp4 -t %s
+
+    #- name: Template kea-dhcp6 server configurations
+    #  ansible.builtin.template:
+    #    src: kea-dhcp6.conf.j2
+    #    dest: /etc/kea/kea-dhcp6.conf
+    #    owner: _kea
+    #    group: _kea
+    #    mode: u=rw,g=r,o=r
+    #    # validate: /usr/sbin/kea-dhcp6 -t %s
+    #
+    #- name: Template kea-ctrl-agent configuration
+    #  ansible.builtin.template:
+    #    src: kea-ctrl-agent.conf.j2
+    #    dest: /etc/kea/kea-ctrl-agent.conf
+    #    owner: _kea
+    #    group: _kea
+    #    mode: u=rw,g=r,o=r
+    #    # validate: /usr/sbin/kea-ctrl-agent -t %s

@@ -21,7 +21,7 @@ devices:
     hostname: s1
 
   desktop:
-    ipv4_addr: 192.168.20.20/24
+    ipv4_addr: 192.168.5.20/24
     ipv6_addr: "{{ ipv6_prefix }}:f402::20/64"
     hw_addr: e4:1d:2d:4f:e0:50
     duid: "00:04:b6:ac:2b:01:08:11:15:11:05:7f:94:a4:b4:6d:2b:7b"
@@ -29,73 +29,73 @@ devices:
 
   frieren:
     name: enp5s0
-    ipv4_addr: 192.168.10.25/24
+    ipv4_addr: 192.168.5.25/24
     ipv6_addr: "{{ ipv6_prefix }}:f401::25/64"
     hw_addr: e4:1d:2d:4f:df:90
     duid: 00:01:00:01:2d:83:22:38:e4:1d:2d:4f:df:90
     hostname: frieren
 
   ipmi:
-    ipv4_addr: 192.168.10.26/24
+    ipv4_addr: 192.168.5.26/24
     ipv6_addr: "{{ ipv6_prefix }}:f401::26/64"
     hw_addr: ac:1f:6b:77:c8:78
     duid: 00:01:00:01:2a:16:93:14:00:00:00:00:00:00
     hostname: ipmi
 
   ubnt01:
-    ipv4_addr: 192.168.10.40/24
+    ipv4_addr: 192.168.5.40/24
     ipv6_slaac_addr: "{{ ipv6_prefix }}:f401:b6fb:e4ff:fe90:4950/64"
     hw_addr: b4:fb:e4:90:49:50
     hostname: ubnt01
 
   ubnt02:
-    ipv4_addr: 192.168.10.41/24
+    ipv4_addr: 192.168.5.41/24
     ipv6_slaac_addr: "{{ ipv6_prefix }}:f401:e263:daff:fe09:6c1c/64"
     hw_addr: e0:63:da:09:6c:1c
     hostname: ubnt02
 
-  shp0:
-    ipv4_addr: 192.168.40.50/24
+  shp01:
+    ipv4_addr: 192.168.5.50/24
     ipv6_addr: 2a01:e0a:94f:f404:a6cf:12ff:fed7:916d/64
     hw_addr: a4:cf:12:d7:91:6d
     hostname: shp01
 
   shp02:
-    ipv4_addr: 192.168.40.51/24
+    ipv4_addr: 192.168.5.51/24
     ipv6_addr: 2a01:e0a:94f:f404:a6cf:12ff:fed7:8f48/64
     hw_addr: a4:cf:12:d7:8f:48
     hostname: shp02
 
   shp03:
-    ipv4_addr: 192.168.40.52/24
+    ipv4_addr: 192.168.5.52/24
     ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe89:1b35/64
     hw_addr: e8:db:84:89:1b:35
     hostname: shp03
 
   shp04:
-    ipv4_addr: 192.168.40.53/24
+    ipv4_addr: 192.168.5.53/24
     ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe89:2461/64
     hw_addr: e8:db:84:89:24:61
     hostname: shp04
 
   shp05:
-    ipv4_addr: 192.168.40.54/24
+    ipv4_addr: 192.168.5.54/24
     ipv6_addr: 2a01:e0a:94f:f404:eadb:84ff:fe88:3afa/64
     hw_addr: e8:db:84:88:3a:fa
     hostname: shp05
 
   hs110:
-    ipv4_addr: 192.168.40.55/24
+    ipv4_addr: 192.168.5.55/24
     hw_addr: 50:c7:bf:0a:f3:44
     hostname: hs110
 
   tmp117:
-    ipv4_addr: 192.168.40.60
+    ipv4_addr: 192.168.5.60
     hw_addr: c8:2b:96:09:17:b0
     hostname: ts01
 
   printer:
-    ipv4_addr: 192.168.30.5/24
+    ipv4_addr: 192.168.5.5/24
     ipv6_addr: "{{ ipv6_prefix }}:f403::5/64"
     hw_addr: 00:21:5a:e5:51:f9
     hostname: printer

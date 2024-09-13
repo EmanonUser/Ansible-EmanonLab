@@ -3,7 +3,7 @@ homelab:
   vars:
     ansible_user: ansible
   hosts:
-    r1:
-      ansible_host: r1.home.arpa
+    holo:
+      ansible_host: 192.168.122.247
     frieren:
       ansible_host: frieren.home.arpa

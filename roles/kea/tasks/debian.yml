@@ -1,0 +1,59 @@
+---
+#- name: Add Cloudsmith Kea GPG Key
+#  ansible.builtin.get_url:
+#    url: https://dl.cloudsmith.io/public/isc/{{ kea_version }}/{{ cloudsmith_gpg_key }}
+#    dest: /usr/share/keyrings/isc_kea-archive-keyring.key
+#    owner: root
+#    group: root
+#    mode: u=rw,g=r,o=r
+#    timeout: 30
+#
+#- name: Add Cloudsmith isc-Kea Debian Repository
+#  ansible.builtin.apt_repository:
+#    repo: >-
+#      deb [signed-by=/usr/share/keyrings/isc_kea-archive-keyring.key]
+#      https://dl.cloudsmith.io/public/isc/{{ kea_version }}/deb/debian {{ ansible_distribution_release }} main
+#    filename: isc-{{ kea_version }}
+#    state: present
+#  notify: ["Apt update", "Apt upgrade"]
+
+- name: Install kea dhcp servers IPv4 + IPv6
+  ansible.builtin.apt:
+    name:
+      - kea
+      - kea-doc
+    state: present
+  notify: ["Enable kea-dhcp4 service", "Start kea-dhcp4 service", "Enable kea-ctrl-agent service", "Enable kea-ctrl-agent service"]
+
+    #- name: Install isc-kea-ctrl-agent (REST API for dhcp4, dhcp6)
+    #  ansible.builtin.apt:
+    #    name: isc-kea-ctrl-agent
+    #    state: present
+    #  notify: ["Enable kea-ctrl-agent service", "Start kea-ctrl-agent service"]
+
+- name: Template kea-dhcp4 server configurations
+  ansible.builtin.template:
+    src: kea-dhcp4.conf.j2
+    dest: /etc/kea/kea-dhcp4.conf
+    owner: _kea
+    group: _kea
+    mode: u=rw,g=r,o=r
+    # validate: /usr/sbin/kea-dhcp4 -t %s
+
+- name: Template kea-dhcp6 server configurations
+  ansible.builtin.template:
+    src: kea-dhcp6.conf.j2
+    dest: /etc/kea/kea-dhcp6.conf
+    owner: _kea
+    group: _kea
+    mode: u=rw,g=r,o=r
+    # validate: /usr/sbin/kea-dhcp6 -t %s
+
+- name: Template kea-ctrl-agent configuration
+  ansible.builtin.template:
+    src: kea-ctrl-agent.conf.j2
+    dest: /etc/kea/kea-ctrl-agent.conf
+    owner: _kea
+    group: _kea
+    mode: u=rw,g=r,o=r
+    # validate: /usr/sbin/kea-ctrl-agent -t %s
