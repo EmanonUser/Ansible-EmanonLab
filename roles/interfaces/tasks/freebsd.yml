@@ -1,0 +1,32 @@
+---
+- name: configure IPv4 interfaces
+  community.general.sysrc:
+    name: "ifconfig_{{ item.name }}"
+    value: "{{ item.value }}"
+  notify: restart networking
+  loop:
+    - { name: alc0, value: DHCP }
+    - { name: ue0, value: inet 192.168.5.1 netmask 255.255.255.0 }
+
+
+- name: configure IPv6 interfaces
+  community.general.sysrc:
+    name: "ifconfig_{{ item.name }}_ipv6"
+    value: "{{ item.value }}"
+  notify: restart networking
+  loop:
+    - { name: alc0, value: inet6 accept_rtadv }
+    - { name: ue0, value: "inet6 2a01:e0a:94f:f401:: prefixlen 64" }
+
+- name: enable routing
+  community.general.sysrc:
+    name: gateway_enable
+    value: YES
+
+- name: enable IPv4 and IPv6 forwarding
+  ansible.posix.sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+  loop:
+    - { name: net.inet.ip.forwarding, value: 1 }
+    - { name: net.inet6.ip6.forwarding, value: 1 }

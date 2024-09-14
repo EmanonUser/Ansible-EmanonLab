@@ -3,3 +3,8 @@
   ansible.builtin.systemd:
     name: networking.service
     state: restarted
+
+- name: restart networking
+  ansible.builtin.service:
+    name: netif
+    state: restarted

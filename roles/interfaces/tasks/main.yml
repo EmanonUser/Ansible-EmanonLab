@@ -1,20 +1,10 @@
 ---
-- name: Install ifenslave package
-  ansible.builtin.apt:
-    name: ifenslave
-    state: present
+- name: Import debian tasks
+  ansible.builtin.include_tasks:
+    file: debian.yml
+  when: ansible_os_family == 'Debian'
 
-- name: Remove old base setup file
-  ansible.builtin.file:
-    path: /etc/network/interfaces.d/setup
-    state: absent
-
-- name: Configure interfaces
-  ansible.builtin.template:
-    src: interfaces.j2
-    dest: /etc/network/interfaces
-    owner: root
-    group: root
-    mode: u=rw,g=,o=
-    force: true
-  notify: Restart networking service
+- name: Import freebsd tasks
+  ansible.builtin.include_tasks:
+    file: freebsd.yml
+  when: ansible_os_family == 'FreeBSD'
