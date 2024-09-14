@@ -4,7 +4,7 @@
     name: kea
     state: present
 
-- name: Template kea-dhcp4 server configurations
+- name: Template kea-dhcp4 server configuration
   ansible.builtin.template:
     src: kea-dhcp4.conf.j2
     dest: /usr/local/etc/kea/kea-dhcp4.conf
@@ -13,7 +13,7 @@
     mode: u=rw,g=r,o=r
     validate: /usr/local/sbin/kea-dhcp4 -T %s
 
-- name: Template kea-dhcp6 server configurations
+- name: Template kea-dhcp6 server configuration
   ansible.builtin.template:
     src: kea-dhcp6.conf.j2
     dest: /usr/local/etc/kea/kea-dhcp6.conf
