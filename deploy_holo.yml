@@ -9,8 +9,15 @@
     - role: sshd
       tags: [sshd]
 
+    - role: interfaces
+      tags: [interfaces]
+
+    - role: rtadvd
+      tags: [rtadvd]
+
     - role: kea
       tags: [kea]
 
     - role: wireguard
       tags: [wireguard]
+

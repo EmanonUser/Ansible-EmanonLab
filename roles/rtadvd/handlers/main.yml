@@ -1,0 +1,4 @@
+- name: restart rtadvd
+  ansible.builtin.service:
+    name: rtadvd
+    state: restarted

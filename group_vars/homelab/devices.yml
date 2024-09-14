@@ -5,10 +5,10 @@ devices:
     ipv6_addr: "{{ ipv6_prefix }}:f400:fffa::/64" # for coredns templating
     hostname: holo
     wan_interface:
-      ifname: vtnet0
+      ifname: alc0
       ipv6_addr: "{{ ipv6_prefix }}:f400:ffff::/64"
     lan_interface:
-      ifname: vtnet1
+      ifname: ue0
       ipv4_addr: 192.168.5.1/24
       ipv6_addr: "{{ ipv6_prefix }}:f400:fffa::/64"
 

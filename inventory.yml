@@ -4,6 +4,6 @@ homelab:
     ansible_user: ansible
   hosts:
     holo:
-      ansible_host: 192.168.122.247
+      ansible_host: 192.168.5.152
     frieren:
       ansible_host: frieren.home.arpa
