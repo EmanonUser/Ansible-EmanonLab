@@ -5,10 +5,20 @@
   loop:
     - { name: rtadvd_enable, value: YES }
     - { name: rtadvd_interfaces, value: ue0 }
+  notify: restart rtadvd
 
 - name: configure rtadvd
   ansible.builtin.copy:
-    content: "ue0:\\\n\t:addr=\"2a01:e0a:94f:f401::0\":prefixlen#64:\\\n\t:rdnss=\"2a01:e0a:94f:f401::\":\\\n\t:dnssl=\"home.arpa\":"
+    content: |
+      ue0:\
+             :raflags#192:\
+             :addr="2a01:e0a:94f:f401::":\
+             :prefixlen#64:\
+             :maxinterval#90:\
+             :mininterval#30:\
+             :rdnss="2a01:e0a:94f:f401::0":\
+             :dnssl="home.arpa,int.emanon.dev":
     dest: /etc/rtadvd.conf
     owner: root
     group: wheel
+  notify: restart rtadvd
