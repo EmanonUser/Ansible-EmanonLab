@@ -1,5 +1,4 @@
 ---
-
 - name: enable SSH PubkeyAuthentication
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
@@ -27,7 +26,6 @@
     - { regexp: "^#KbdInteractiveAuthentication|^KbdInteractiveAuthentication", line: "KbdInteractiveAuthentication no" }
   loop_control:
     label: "{{ item.line }}"
-
   notify: restart ssh service
 
 - name: place ssh hosts keyfiles
