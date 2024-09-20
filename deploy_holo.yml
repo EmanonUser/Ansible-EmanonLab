@@ -18,6 +18,9 @@
     - role: kea
       tags: [kea]
 
+    - role: pf
+      tags: [pf]
+
     - role: wireguard
       tags: [wireguard]
 

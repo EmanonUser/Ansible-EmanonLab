@@ -1,0 +1,15 @@
+---
+- name: enable pf
+  community.general.sysrc:
+    name: "{{ item }}"
+    value: "YES"
+  loop: [pf_enable, pflog_enable]
+
+- name: configure pf
+  ansible.builtin.template:
+    src: pf.conf.j2
+    dest: /etc/pf.conf
+    owner: root
+    group: wheel
+    mode: u=rw,g=r,o=r
+    validate: pfctl -vnf %s
