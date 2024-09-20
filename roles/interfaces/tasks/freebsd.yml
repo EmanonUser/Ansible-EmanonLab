@@ -21,7 +21,7 @@
 - name: enable routing
   community.general.sysrc:
     name: gateway_enable
-    value: YES
+    value: "YES"
 
 - name: enable IPv4 and IPv6 forwarding
   ansible.posix.sysctl:

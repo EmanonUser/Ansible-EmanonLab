@@ -3,7 +3,7 @@
     name: "{{ item.name }}"
     value: "{{ item.value }}"
   loop:
-    - { name: rtadvd_enable, value: YES }
+    - { name: rtadvd_enable, value: "YES" }
     - { name: rtadvd_interfaces, value: ue0 }
   notify: restart rtadvd
 
