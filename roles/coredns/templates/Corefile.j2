@@ -1,6 +1,6 @@
 (snip) {
     bind 127.0.0.1 ::1
-    bind {{ ansible_bond0.device }}
+    bind igb1
     any
     minimal
     log
@@ -13,12 +13,12 @@
 
 {{ acme_domain }}.:{{ coredns_port }} {
     import snip
-    file /opt/coredns/master.db
+    file {{ coredns_path }}/master.db
 }
 
 home.arpa.:53 {
     import snip
-    file /opt/coredns/master.db
+    file {{ coredns_path }}/master.db
 }
 
 .:{{ coredns_port }} {
