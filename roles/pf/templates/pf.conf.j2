@@ -19,6 +19,7 @@ scrub in all
 ### nat src ###
 nat on $ext_if from $int_if:network to any -> ($ext_if)
 
+pass in quick proto tcp from any to any port ssh
 ### nat dest ###
 
 ### icmp ###
@@ -30,14 +31,15 @@ nat on $ext_if from $int_if:network to any -> ($ext_if)
 
 ### filters ###
 ### inbound int_if ###
+pass in log quick on $int_if
 pass in quick on $int_if inet proto icmp
 pass in quick on $int_if inet6 proto ipv6-icmp
 pass in quick on $int_if proto { tcp udp } from $int_if:network to self port domain
 pass in quick on $int_if proto tcp from $int_if:network to self port ssh
-pass in quick on $int_if proto udp from $int_if:network to self port { domain ntp bootpc dhcpv6-server }
+pass in quick on $int_if proto udp from { $int_if:network } to self port { domain ntp bootpc dhcpv6-server }
 
 ### inbound ext_if ###
-antispoof for $ext_if
+## antispoof for $ext_if
 icmp6_types="{ 2, 128 }" # packet too big, echo request (ping6)
 icmp6_types_ext_if="{ 128, 133, 134, 135, 136, 137 }"
 pass in quick on $ext_if inet6 proto ipv6-icmp icmp6-type $icmp6_types keep state
@@ -45,7 +47,6 @@ pass in quick on $ext_if inet6 proto ipv6-icmp from any to { ( $ext_if ), ff02::
 
 icmp_types = "{ 0, 3, 4, 8, 11, 12 }"
 pass in quick on $ext_if inet proto icmp all icmp-type $icmp_types
-
 pass in quick on $ext_if proto tcp from any to any port ssh
 pass in quick on $ext_if proto udp from any to any port 51820
 
@@ -53,3 +54,5 @@ pass in quick on $ext_if proto udp from any to any port 51820
 pass out on $int_if
 ### outbound ext_if ###
 pass out on $ext_if
+
+block in log from any to any
