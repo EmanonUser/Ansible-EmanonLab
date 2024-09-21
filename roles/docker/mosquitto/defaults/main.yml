@@ -4,8 +4,8 @@ mosquitto_image_version: "{{ host_mosquitto_image_version | default('latest') }}
 
 mosquitto_config: "{{ http_services | selectattr('service', 'equalto', 'mosquitto') | first }}"
 mosquitto_ports:
-  - "0.0.0.0:1883:1883/tcp"
-  - "[::]:1883:1883/tcp"
+  - "192.168.5.25:1883:1883/tcp"
+  - "[2a01:e0a:94f:f401:ae1f:6bff:fe77:cfb8]:1883:1883/tcp"
 
 mosquitto_directories:
   - "{{ podman_volumes_path }}/mosquitto/"
