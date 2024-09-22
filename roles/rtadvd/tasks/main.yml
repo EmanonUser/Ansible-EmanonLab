@@ -4,13 +4,13 @@
     value: "{{ item.value }}"
   loop:
     - { name: rtadvd_enable, value: "YES" }
-    - { name: rtadvd_interfaces, value: ue0 }
+    - { name: rtadvd_interfaces, value: igb1 }
   notify: restart rtadvd
 
 - name: configure rtadvd
   ansible.builtin.copy:
     content: |
-      ue0:\
+      igb1:\
              :raflags#192:\
              :addr="2a01:e0a:94f:f401::":\
              :prefixlen#64:\
