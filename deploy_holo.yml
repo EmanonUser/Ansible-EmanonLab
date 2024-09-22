@@ -7,20 +7,24 @@
   roles:
 
     - role: sshd
-      tags: [sshd]
+      tags: [sshd, ssh]
 
     - role: interfaces
       tags: [interfaces]
 
     - role: rtadvd
-      tags: [rtadvd]
+      tags: [rtadvd, slaac]
 
     - role: kea
-      tags: [kea]
+      tags: [kea, dhcp]
+
+    - role: coredns
+      tags: [coredns, dns]
+
 
     - role: pf
-      tags: [pf]
+      tags: [pf, firewall]
 
     - role: wireguard
-      tags: [wireguard]
+      tags: [wireguard, vpn]
 
