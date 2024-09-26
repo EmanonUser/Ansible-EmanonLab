@@ -20,7 +20,7 @@ devices:
   desktop:
     ipv4_addr: 192.168.5.20/24
     ipv6_addr: "{{ ipv6_prefix }}:f401::20/64"
-    hw_addr: e4:1d:2d:4f:e0:50
+    hw_addr: 00:d8:61:57:9c:fb
     duid: "00:04:b6:ac:2b:01:08:11:15:11:05:7f:94:a4:b4:6d:2b:7b"
     hostname: sasurai
 
