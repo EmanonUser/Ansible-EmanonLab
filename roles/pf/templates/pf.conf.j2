@@ -2,25 +2,32 @@ ext_if="igb0"
 int_if="igb1"
 wg_if="wg0"
 
-tcp_services = "{ http, https }"
-udp_services = "{ https }"
-
-
 ### options ###
 set block-policy drop
+set optimization aggressive
 set loginterface $ext_if
 set loginterface $int_if
 set skip on lo0
-set skip on $wg_if
 
 ### scrub ###
 scrub in all
 
 ### nat src ###
 nat on $ext_if from $int_if:network to any -> ($ext_if)
+nat log on $int_if proto { tcp udp } from $int_if:network to 192.168.5.25 port { http https } -> $int_if # NAT reflection
 
-pass in quick proto tcp from any to any port ssh
 ### nat dest ###
+rdr pass on $ext_if proto tcp from any to any port http -> 192.168.5.25 port 80
+rdr pass on $ext_if proto { tcp udp } from any to any port https -> 192.168.5.25 port 443
+rdr pass on $ext_if proto udp from any to any port { 2456 2457 2458 } -> 192.168.5.25
+rdr pass on $int_if proto { tcp udp } from $int_if:network to 82.66.193.124 port { http https } -> 192.168.5.25
+
+
+table <crowdsec-blacklists> persist
+table <crowdsec6-blacklists> persist
+block drop in log quick from <crowdsec-blacklists> to any
+block drop in log quick from <crowdsec6-blacklists> to any
+
 
 ### icmp ###
 # Neighbor Discovery Protocol (NDP) (types 133-137):
@@ -28,18 +35,21 @@ pass in quick proto tcp from any to any port ssh
 #   Neighbor Solicitation (NS), Neighbor Advertisement (NA)
 #   Route Redirection
 
+### SSH ###
+pass in quick proto tcp from any to self port ssh
+
 
 ### filters ###
 ### inbound int_if ###
-pass in log quick on $int_if
+pass in quick on $int_if from $int_if:network to any
 pass in quick on $int_if inet proto icmp
 pass in quick on $int_if inet6 proto ipv6-icmp
 pass in quick on $int_if proto { tcp udp } from $int_if:network to self port domain
-pass in quick on $int_if proto tcp from $int_if:network to self port ssh
-pass in quick on $int_if proto udp from { $int_if:network } to self port { domain ntp bootpc dhcpv6-server }
+pass in quick on $int_if proto udp from { $int_if:network } to self port { ntp bootpc 51820 }
+pass in quick on $int_if proto udp from fe80::/10 to ff02::1/16 port dhcpv6-server
 
 ### inbound ext_if ###
-## antispoof for $ext_if
+antispoof for $ext_if
 icmp6_types="{ 2, 128 }" # packet too big, echo request (ping6)
 icmp6_types_ext_if="{ 128, 133, 134, 135, 136, 137 }"
 pass in quick on $ext_if inet6 proto ipv6-icmp icmp6-type $icmp6_types keep state
@@ -47,12 +57,21 @@ pass in quick on $ext_if inet6 proto ipv6-icmp from any to { ( $ext_if ), ff02::
 
 icmp_types = "{ 0, 3, 4, 8, 11, 12 }"
 pass in quick on $ext_if inet proto icmp all icmp-type $icmp_types
-pass in quick on $ext_if proto tcp from any to any port ssh
-pass in quick on $ext_if proto udp from any to any port 51820
+pass in quick on $ext_if proto udp from any to self port 51820
+pass in quick on $ext_if proto tcp from any to 2a01:e0a:94f:f401:ae1f:6bff:fe77:cfb8 port ssh
+pass in quick on $ext_if proto tcp from any to { 192.168.5.25 2a01:e0a:94f:f401:ae1f:6bff:fe77:cfb8 } port http
+pass in quick on $ext_if proto { tcp udp } from any to { 192.168.5.25 2a01:e0a:94f:f401:ae1f:6bff:fe77:cfb8 } port https
+
+### inbound wg_if ###
+pass in quick on $wg_if from ($wg_if:network) to any
 
 ### outbound int_if ###
 pass out on $int_if
 ### outbound ext_if ###
 pass out on $ext_if
+### outbound wg_if ###
+pass out on $wg_if
 
-block in log from any to any
+
+
+block in from any to any
