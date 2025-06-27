@@ -32,3 +32,11 @@ wireguard_confs:
         allowed_ips:
           - 172.20.5.4/32
           - "{{ ipv6_prefix }}:f406::4/128"
+
+      - peer: laptop
+        public_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'laptop') | map(attribute='public_key') | first }}"
+        preshared_key: "{{ wg0.peers | selectattr('peer', 'equalto', 'laptop') | map(attribute='preshared_key') | first }}"
+        keepalive: 60
+        allowed_ips:
+          - 172.20.5.5/32
+          - "{{ ipv6_prefix }}:f406::5/128"
