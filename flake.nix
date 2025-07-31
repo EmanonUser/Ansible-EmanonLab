@@ -19,6 +19,8 @@
             pkgs.python3
             pkgs.sshpass
             pkgs.ansible
+            pkgs.ansible-lint
+            pkgs.glibcLocales
           ];
       };
     });
