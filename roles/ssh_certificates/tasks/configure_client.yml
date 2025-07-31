@@ -1,0 +1,24 @@
+---
+- name: Copy the user certificate authority private key
+  ansible.builtin.copy:
+    content: "{{ ssh_user_ca_private_key }}"
+    dest: ~/.ansible/tmp/ssh_user_ca_private_key
+    user: ansible
+    group: ansible
+    mode: u=rw,g=r,o=
+
+- name: Generate an OpenSSH ed25519 keypair
+  community.crypto.openssh_keypair:
+    path: /home/{{ primary_user_username }}/.ssh/id_25519
+    regenerate: full_idempotence
+    type: ed25519
+
+- name: Generate an OpenSSH user certificate
+  community.crypto.openssh_cert:
+    type: user
+    signing_key: ~/.ansible/tmp/ssh_user_ca_private_key
+    public_key: /home/{{ primary_user_username }}/.ssh/id_25519.pub
+    path: /home/{{ primary_user_username }}/.ssh/id_25519-cert.pub
+    valid_from: always
+    valid_to: forever
+    principals: "{{ allowed_users }}"

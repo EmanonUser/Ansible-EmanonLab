@@ -1,0 +1,55 @@
+---
+- name: Copy the host certificate authority private key
+  ansible.builtin.copy:
+    content: "{{ ssh_host_ca_private_key }}"
+    dest: ~/.ansible/tmp/ssh_host_ca_private_key
+    user: ansible
+    group: ansible
+    mode: u=rw,g=r,o=
+
+- name: Generate OpenSSH ed25519 hostkeys
+  community.crypto.openssh_keypair:
+    path: /etc/ssh/ssh_host_ed25519_key
+    regenerate: full_idempotence
+    type: ed25519
+
+- name: Generate an OpenSSH host certificate
+  community.crypto.openssh_cert:
+    type: host
+    signing_key: ~/.ansible/tmp/ssh_host_ca_private_key
+    public_key: /etc/ssh/ssh_host_ed25519_key.pub
+    path: /etc/ssh/ssh_host_ed25519_key-cert.pub
+    valid_from: always
+    valid_to: forever
+    identifier: "{{ ansible_hostname }}"
+
+- name: Configure ssh daemon to use the host certificate
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#HostCertificate|^HostCertificate"
+    line: "HostCertificate /etc/ssh/ssh_host_ed25519_key-cert.pub"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=
+    state: present
+    validate: /usr/sbin/sshd -tf %s
+  notify: Restart ssh service
+
+- name: Copy the user certificate authority public key
+  ansible.builtin.copy:
+    content: "{{ user_certificate_authority }}"
+    dest: /etc/ssh/user_certificate_authority.pub
+    mode: u=rw,g=r,o=
+
+- name: Configure ssh daemon to use the user certificate
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#TrustedUserCAKeys|^TrustedUserCAKeys"
+    line: "TrustedUserCAKeys /etc/ssh/ssh_user_certificate_authority.pub"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=
+    state: present
+    validate: /usr/sbin/sshd -tf %s
+  notify: Restart ssh service
+
