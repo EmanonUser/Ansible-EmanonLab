@@ -1,4 +1,4 @@
-- name: enable rtadvd
+- name: Enable rtadvd
   community.general.sysrc:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
@@ -7,7 +7,7 @@
     - { name: rtadvd_interfaces, value: igb1 }
   notify: restart rtadvd
 
-- name: configure rtadvd
+- name: Configure rtadvd
   ansible.builtin.copy:
     content: |
       igb1:\
@@ -21,4 +21,4 @@
     dest: /etc/rtadvd.conf
     owner: root
     group: wheel
-  notify: restart rtadvd
+  notify: Restart rtadvd

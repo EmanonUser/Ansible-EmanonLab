@@ -1,19 +1,19 @@
 ---
 - name: Daemon-reload coredns service
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: Enable coredns service
   ansible.builtin.systemd:
     name: coredns.service
-    enabled: yes
+    enabled: true
 
 - name: Restart coredns service
   ansible.builtin.systemd:
     name: coredns.service
     state: restarte
 
-- name: restart coredns
+- name: Restart coredns
   ansible.builtin.service:
     name: coredns
     state: restarted

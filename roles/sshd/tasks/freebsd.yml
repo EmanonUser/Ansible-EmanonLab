@@ -1,5 +1,5 @@
 ---
-- name: enable SSH PubkeyAuthentication
+- name: Enable SSH PubkeyAuthentication
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: "^#PubkeyAuthentication|^PubkeyAuthentication"
@@ -9,9 +9,9 @@
     mode: u=rw,g=r,o=r
     state: present
     validate: /usr/sbin/sshd -tf %s
-  notify: restart ssh service
+  notify: Restart ssh service
 
-- name: disable SSH PasswordAuthentication
+- name: Disable SSH PasswordAuthentication
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: "{{ item.regexp }}"
@@ -26,9 +26,9 @@
     - { regexp: "^#KbdInteractiveAuthentication|^KbdInteractiveAuthentication", line: "KbdInteractiveAuthentication no" }
   loop_control:
     label: "{{ item.line }}"
-  notify: restart ssh service
+  notify: Restart ssh service
 
-- name: place ssh hosts keyfiles
+- name: Place ssh hosts keyfiles
   ansible.builtin.copy:
     content: "{{ item.content }}"
     dest: "{{ item.dest }}"
@@ -42,7 +42,7 @@
   loop_control:
     label: "{{ item.dest }}"
 
-- name: add host certificate to ssh config
+- name: Add host certificate to ssh config
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: "^#HostCertificate|^HostCertificate"
@@ -52,9 +52,9 @@
     mode: u=rw,g=r,o=r
     state: present
     validate: /usr/sbin/sshd -tf %s
-  notify: restart ssh service
+  notify: Restart ssh service
 
-- name: write certificate authority key
+- name: Write certificate authority key
   ansible.builtin.copy:
     content: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN0Gtix6jUyuMaKCPEHjNkKqZyNPJmLv9jY199zrdDtT User Certificate Authority for *.emanon.dev, *.emanon.int.dev, *.home.arpa
     dest: /etc/ssh/user_certificate_authority.pub
@@ -62,7 +62,7 @@
     group: wheel
     mode: u=rw,g=r,o=r
 
-- name: add user certificate to ssh config
+- name: Add user certificate to ssh config
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: "^#TrustedUserCAKeys|^TrustedUserCAKeys"
@@ -72,5 +72,5 @@
     mode: u=rw,g=r,o=r
     state: present
     validate: /usr/sbin/sshd -tf %s
-  notify: restart ssh service
+  notify: Restart ssh service
 

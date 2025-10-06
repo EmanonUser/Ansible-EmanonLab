@@ -4,7 +4,7 @@
     name: coredns
     create_home: false
     shell: /usr/bin/bash
-    system: yes
+    system: true
     comment: CoreDNS user created by Ansible
     state: present
 

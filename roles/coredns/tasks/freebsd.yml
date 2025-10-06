@@ -1,29 +1,28 @@
 ---
-- name: install coredns
+- name: Install coredns
   community.general.pkgng:
     name: coredns
     state: present
 
-- name: enable coredns service
+- name: Enable coredns service
   community.general.sysrc:
     name: coredns_enable
     value: "YES"
 
-- name: configure CoreDNS
+- name: Configure CoreDNS
   ansible.builtin.template:
     src: Corefile.j2
     dest: "{{ coredns_path }}/Corefile"
     owner: root
     group: wheel
     mode: u=rwx,g=,o=
-  notify: restart coredns
+  notify: Restart coredns
 
-- name: configure CoreDNS local-zone file
+- name: Configure CoreDNS local-zone file
   ansible.builtin.template:
     src: master.db.j2
     dest: "{{ coredns_path }}/master.db"
     owner: root
     group: wheel
     mode: u=rwx,g=,o=
-  notify: restart coredns
-
+  notify: Restart coredns
