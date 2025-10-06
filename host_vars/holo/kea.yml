@@ -23,6 +23,10 @@ kea_dhcp4:
         hw_addr: "{{ devices.frieren.hw_addr }}"
         hostname: "{{ devices.frieren.hostname }}"
 
+      - ipv4_addr: "{{ devices.fern.ipv4_addr }}"
+        hw_addr: "{{ devices.fern.hw_addr }}"
+        hostname: "{{ devices.fern.hostname }}"
+
       - ipv4_addr: "{{ devices.ipmi.ipv4_addr }}"
         hw_addr: "{{ devices.ipmi.hw_addr }}"
         hostname: "{{ devices.ipmi.hostname }}"
@@ -76,6 +80,7 @@ kea_dhcp6:
       - start: "{{ ipv6_prefix }}:f401:fffc::"
         end: "{{ ipv6_prefix }}:f401:fffc:ffff:ffff:ffff"
     options_data: []
+    interface: "{{ devices.holo.lan_interface.ifname }}"
     reservations:
       - ipv6_addr: ["{{ devices.frieren.ipv6_addr }}"]
         duid: "{{ devices.frieren.duid }}"

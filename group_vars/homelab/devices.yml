@@ -32,6 +32,13 @@ devices:
     duid: 00:01:00:01:2d:83:22:38:e4:1d:2d:4f:df:90
     hostname: frieren
 
+  fern:
+    name: ens18
+    ipv4_addr: 192.168.5.30/24
+    ipv6_addr: "{{ ipv6_prefix }}:f401::30/64"
+    hw_addr: bc:24:11:70:32:ea
+    hostname: fern
+
   ipmi:
     ipv4_addr: 192.168.5.26/24
     ipv6_addr: "{{ ipv6_prefix }}:f401::26/64"
