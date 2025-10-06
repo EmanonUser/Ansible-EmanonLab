@@ -27,4 +27,3 @@
 
     - role: wireguard
       tags: [wireguard, vpn]
-
