@@ -71,6 +71,8 @@
      {
         "subnet": "{{ subnet.subnet }}",
         "id": {{ subnet.id }},
+        "rapid-commit": true,
+        "interface": "{{ subnet.interface }}",
         "pools" : [{% for pool in subnet.pools +%}
           {
             "pool": "{{ pool.start }}-{{ pool.end }}"
