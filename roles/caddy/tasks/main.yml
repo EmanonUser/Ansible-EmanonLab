@@ -14,6 +14,7 @@
     file: caddy_certs.yml
 
 - name: Configure and validate caddyfile
+  notify: Restart caddy service
   block:
     - name: Configure caddyfile
       ansible.builtin.template:
@@ -29,4 +30,3 @@
       register: validate
       changed_when: true
       failed_when: validate.rc != 0
-  notify: Restart caddy service

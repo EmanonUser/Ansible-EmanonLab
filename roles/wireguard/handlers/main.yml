@@ -31,7 +31,7 @@
   loop_control:
     label: Reload wg-quick@{{ item }}.service
 
-- name: restart wireguard
+- name: Restart wireguard
   ansible.builtin.service:
     name: wireguard
     state: restarted

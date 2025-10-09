@@ -2,7 +2,7 @@
 - name: Provisioning of the main Debian router
   hosts: holo
   become: true
-  become_method: doas
+  become_method: community.general.doas
   gather_facts: true
   roles:
 

@@ -36,9 +36,9 @@
     group: wheel
     mode: "{{ item.mode }}"
   loop:
-    - { content: "{{ ssh_host_ed25519_key }}", dest: /etc/ssh/ssh_host_ed25519_key, mode: u=rw,o=,g= }
-    - { content: "{{ ssh_host_ed25519_key_pub }}", dest: "/etc/ssh/ssh_host_ed25519_key.pub", mode: u=rw,o=r,g=r }
-    - { content: "{{ ssh_host_ed25519_key_cert_pub }}", dest: "/etc/ssh/ssh_host_ed25519_key-cert.pub", mode: u=rw,o=r,g=r }
+    - { content: "{{ ssh_host_ed25519_key }}", dest: "/etc/ssh/ssh_host_ed25519_key", mode: "u=rw,o=,g=" }
+    - { content: "{{ ssh_host_ed25519_key_pub }}", dest: "/etc/ssh/ssh_host_ed25519_key.pub", mode: "u=rw,o=r,g=r" }
+    - { content: "{{ ssh_host_ed25519_key_cert_pub }}", dest: "/etc/ssh/ssh_host_ed25519_key-cert.pub", mode: "u=rw,o=r,g=r" }
   loop_control:
     label: "{{ item.dest }}"
 
@@ -56,7 +56,9 @@
 
 - name: Write certificate authority key
   ansible.builtin.copy:
-    content: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN0Gtix6jUyuMaKCPEHjNkKqZyNPJmLv9jY199zrdDtT User Certificate Authority for *.emanon.dev, *.emanon.int.dev, *.home.arpa
+    content: |-
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN0Gtix6jUyuMaKCPEHjNkKqZyNPJmLv9jY199zrdDtT
+      User Certificate Authority for *.emanon.dev, *.emanon.int.dev, *.home.arpa
     dest: /etc/ssh/user_certificate_authority.pub
     owner: root
     group: wheel
@@ -73,4 +75,3 @@
     state: present
     validate: /usr/sbin/sshd -tf %s
   notify: Restart ssh service
-

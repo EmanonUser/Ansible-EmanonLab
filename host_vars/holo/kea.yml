@@ -40,7 +40,7 @@ kea_dhcp4:
         hw_addr: "{{ devices.shp01.hw_addr }}"
         hostname: "{{ devices.shp01.hostname }}"
 
-      - ipv4_addr: "{{ devices.shp02 .ipv4_addr }}"
+      - ipv4_addr: "{{ devices.shp02.ipv4_addr }}"
         hw_addr: "{{ devices.shp02.hw_addr }}"
         hostname: "{{ devices.shp02.hostname }}"
 

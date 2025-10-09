@@ -11,7 +11,7 @@
 - name: Restart coredns service
   ansible.builtin.systemd:
     name: coredns.service
-    state: restarte
+    state: restarted
 
 - name: Restart coredns
   ansible.builtin.service:

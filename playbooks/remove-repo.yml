@@ -1,6 +1,6 @@
 ---
 - name: Remove debian repo
-  become: yes
+  become: true
   hosts: all
   vars:
     repo: "deb https://dl.cloudsmith.io/public/isc/kea-1-9/deb/debian buster main"

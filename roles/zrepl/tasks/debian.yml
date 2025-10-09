@@ -7,11 +7,12 @@
     group: root
     mode: u=rw,g=r,o=r
     timeout: 30
-  ignore_errors: yes
 
 - name: Add zrepl source repo (Debian)
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/zrepl-archive-keyring.asc arch={{ cpu_architecture }}] https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} main # noqa 204
+    repo: |-
+      deb [signed-by=/usr/share/keyrings/zrepl-archive-keyring.asc arch={{ cpu_architecture }}]
+      https://zrepl.cschwarz.com/apt/{{ ansible_os_family | lower }} {{ ansible_distribution_release }} main
     state: present
     filename: zrepl
 
@@ -19,7 +20,7 @@
   ansible.builtin.apt:
     name: zrepl
     state: present
-    update_cache: yes
+    update_cache: true
   notify: ["Enable zrepl service", "Start zrepl service"]
 
 - name: Disable upgrade of zrepl, breaking changes (Debian)

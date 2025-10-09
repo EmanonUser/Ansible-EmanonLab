@@ -1,6 +1,6 @@
 ---
 - name: Upgrade Kernel to "{{ kernel_version }}" for debian
-  become: yes
+  become: true
   hosts: all
   vars:
     kernel_version: 5.10.0-0.bpo.4-amd64 # https://packages.debian.org/search?keywords=linux-image+bpo+amd64&searchon=names&section=all

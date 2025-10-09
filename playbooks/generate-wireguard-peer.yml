@@ -20,8 +20,10 @@
       ansible.builtin.lineinfile:
         path: ./peer.txt
         line: "{{ item }}"
-        create: yes
+        create: true
+        mode: u=rw,g=,o=
       loop:
         - "privkey: {{ privkey.stdout }}"
         - "pubkey: {{ pubkey.stdout }}"
         - "presharedkey: {{ presharedkey.stdout }}"
+

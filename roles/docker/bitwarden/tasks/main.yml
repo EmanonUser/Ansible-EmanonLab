@@ -7,6 +7,7 @@
     mode: u=rwx,g=,o=
     state: directory
   loop: "{{ bitwarden_directories }}"
+  become: true
   become_user: "{{ primary_user_username }}"
 
 - name: Run bitwarden container
@@ -18,5 +19,5 @@
     env: "{{ bitwarden_env }}"
     restart_policy: unless-stopped
     state: started
-  become_user: "{{ primary_user_username }}"
   become: true
+  become_user: "{{ primary_user_username }}"

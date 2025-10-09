@@ -1,4 +1,8 @@
 ---
+# .config/ansible-lint
 skip_list:
   - role-name
-  - no-role-prefix
+  - var-naming
+
+exclude_paths:
+  - playbooks/

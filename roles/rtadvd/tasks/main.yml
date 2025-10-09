@@ -21,4 +21,5 @@
     dest: /etc/rtadvd.conf
     owner: root
     group: wheel
+    mode: u=rw,g=r,o=
   notify: Restart rtadvd

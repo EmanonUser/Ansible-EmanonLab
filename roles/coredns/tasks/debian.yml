@@ -19,14 +19,15 @@
 - name: Download CoreDNS archive
   ansible.builtin.get_url:
     url: https://github.com/coredns/coredns/releases/download/v{{ coredns_version }}/coredns_{{ coredns_version }}_linux_{{ cpu_architecture }}.tgz
-    checksum: sha256:https://github.com/coredns/coredns/releases/download/v{{ coredns_version }}/coredns_{{ coredns_version }}_linux_{{ cpu_architecture }}.tgz.sha256 # noqa 204
+    checksum: |-
+      sha256:https://github.com/coredns/coredns/releases/download/v
+      {{ coredns_version }}/coredns_{{ coredns_version }}_linux_{{ cpu_architecture }}.tgz.sha256
     dest: "{{ coredns_path }}/coredns_{{ coredns_version }}.tgz"
     owner: coredns
     group: coredns
     mode: u=rwx,g=,o=
     timeout: 30
   notify: ["Enable coredns service", "Restart coredns service"]
-  ignore_errors: true
 
 - name: Unarchive CoreDNS binary
   ansible.builtin.unarchive:

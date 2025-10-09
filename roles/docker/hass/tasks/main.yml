@@ -6,6 +6,7 @@
     group: emanon
     mode: u=rwx,g=,o=
     state: directory
+  become: true
   become_user: "{{ primary_user_username }}"
 
 - name: Run home assistant container
@@ -19,5 +20,5 @@
     devices: ["/dev/ttyACM0:/dev/ttyACM0"]
     env:
       DISABLE_JEMALLOC: "true"
-  become_user: "{{ primary_user_username }}"
   become: true
+  become_user: "{{ primary_user_username }}"

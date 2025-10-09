@@ -159,7 +159,7 @@ simlinks_shows:
     seasons:
       - src: /data/series/The_Walking_Dead/The Walking Dead S01 (2010) MULTi VFF 1080p 10bit HDLight BluRay x265 HE-AAC 5.1 - QTZ
         dest: /vault/media/jellyfin/Shows/The Walking Dead (2010-2022) [imdbid-tt1520211]/Season 1
-  
+
       - src: /data/series/The_Walking_Dead/The Walking Dead S02 (2011) MULTi VFF 1080p 10bit HDLight BluRay x265 HE-AAC 5.1 - QTZ
         dest: /vault/media/jellyfin/Shows/The Walking Dead (2010-2022) [imdbid-tt1520211]/Season 2
 
@@ -173,7 +173,7 @@ simlinks_shows:
         dest: /vault/media/jellyfin/Shows/The Walking Dead (2010-2022) [imdbid-tt1520211]/Season 5
 
       - src: /data/series/The_Walking_Dead/The Walking Dead S06 (2015) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ
-        dest: /vault/media/jellyfin/Shows/The Walking Dead (2010-2022) [imdbid-tt1520211]/Season 6 
+        dest: /vault/media/jellyfin/Shows/The Walking Dead (2010-2022) [imdbid-tt1520211]/Season 6
 
       - src: /data/series/The_Walking_Dead/The Walking Dead S07 (2016) MULTi VFF 1080p 10bit HDLight BluRay AC3 5.1 x265-QTZ
         dest: /vault/media/jellyfin/Shows/The Walking Dead (2010-2022) [imdbid-tt1520211]/Season 7
@@ -194,4 +194,3 @@ simlinks_shows:
     seasons:
       - src: /data/series/Hijack/Hijack.S01.MULTi.HDR.1080p.WEB.AD.Atmos.H265-TFA
         dest: /vault/media/jellyfin/Shows/Hijack (2023) [imdbid-tt19854762]/Season 1
-
