@@ -19,7 +19,7 @@
     owner: root
     group: wheel
     mode: u=rw,g=,o=
-  notify: restart wireguard
+  notify: Restart wireguard
   loop: "{{ wireguard_confs }}"
   loop_control:
     label: "{{ item.wireguard }}.conf"
