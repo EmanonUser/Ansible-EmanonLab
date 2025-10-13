@@ -21,7 +21,7 @@
     group: wheel
     mode: u=rw,g=r,o=r
     validate: /usr/local/sbin/kea-dhcp6 -T %s
-  notify: restart kea
+  notify: Restart kea
 
 - name: Enable kea services ( dhcp4 + dhcp6 + ctrl agent )
   community.general.sysrc:
