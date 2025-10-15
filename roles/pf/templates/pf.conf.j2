@@ -1,32 +1,45 @@
 ext_if="igb0"
 int_if="igb1"
 wg_if="wg0"
+server_inet_addr="192.168.5.30"
+server_inet6_addr="2a01:e0a:94f:f401:be24:11ff:fe70:32ea"
+inet_subnet="192.168.5.0/24"
+inet6_subnet="2a01:e0a:94f:f400::/61"
+
+satisfactory_game_port="7777"
+satisfactory_messaging_port="8888"
+wireguard_port="51820"
 
 ### options ###
 set block-policy drop
 set optimization aggressive
 set loginterface $ext_if
-set loginterface $int_if
 set skip on lo0
 
 ### scrub ###
 scrub in all
 
+### jail anchor ###
+table <jails> persist
+rdr-anchor "rdr/*"
+
 ### nat src ###
+nat on $ext_if from <jails> to any -> ($ext_if:0)
 nat on $ext_if from $int_if:network to any -> ($ext_if)
-nat log on $int_if proto { tcp udp } from $int_if:network to 192.168.5.25 port { http https } -> $int_if # NAT reflection
+nat on $int_if proto { tcp udp } from $int_if:network to $server_inet_addr port { http https } -> $int_if # NAT reflection
 
 ### nat dest ###
-rdr pass on $ext_if proto tcp from any to any port http -> 192.168.5.25 port 80
-rdr pass on $ext_if proto { tcp udp } from any to any port https -> 192.168.5.25 port 443
-rdr pass on $ext_if proto udp from any to any port { 2456 2457 2458 } -> 192.168.5.25
-rdr pass on $int_if proto { tcp udp } from $int_if:network to 82.66.193.124 port { http https } -> 192.168.5.25
-
+rdr pass on $ext_if proto tcp from any to any port http -> $server_inet_addr port http
+rdr pass on $ext_if proto { tcp udp } from any to any port https -> $server_inet_addr port https
+rdr pass on $ext_if proto { tcp udp } from any to any port $satisfactory_game_port -> $server_inet_addr
+rdr pass on $ext_if proto tcp from any to any port $satisfactory_messaging_port -> $server_inet_addr
+rdr pass on $ext_if proto udp from any to any port { 2456 2457 2458 } -> $server_inet_addr
+rdr pass on $int_if proto { tcp udp } from $int_if:network to igb0 port { http https } -> $server_inet_addr
 
 table <crowdsec-blacklists> persist
 table <crowdsec6-blacklists> persist
-block drop in log quick from <crowdsec-blacklists> to any
-block drop in log quick from <crowdsec6-blacklists> to any
+block drop in quick from <crowdsec-blacklists> to any
+block drop in quick from <crowdsec6-blacklists> to any
 
 
 ### icmp ###
@@ -38,18 +51,22 @@ block drop in log quick from <crowdsec6-blacklists> to any
 ### SSH ###
 pass in quick proto tcp from any to self port ssh
 
-
 ### filters ###
+block in on $ext_if from any to any
+block return-icmp in log on $int_if from any to any
+
 ### inbound int_if ###
-pass in quick on $int_if from $int_if:network to any
+pass in on $int_if from $int_if:network to ! $inet_subnet
+pass in on $int_if from $int_if:network to ! $inet6_subnet
 pass in quick on $int_if inet proto icmp
 pass in quick on $int_if inet6 proto ipv6-icmp
 pass in quick on $int_if proto { tcp udp } from $int_if:network to self port domain
-pass in quick on $int_if proto udp from { $int_if:network } to self port { ntp bootpc 51820 }
+pass in quick on $int_if proto udp from { $int_if:network } to self port { ntp bootpc $wireguard_port }
 pass in quick on $int_if proto udp from fe80::/10 to ff02::1/16 port dhcpv6-server
 
 ### inbound ext_if ###
 antispoof for $ext_if
+antispoof for $int_if
 icmp6_types="{ 2, 128 }" # packet too big, echo request (ping6)
 icmp6_types_ext_if="{ 128, 133, 134, 135, 136, 137 }"
 pass in quick on $ext_if inet6 proto ipv6-icmp icmp6-type $icmp6_types keep state
@@ -57,10 +74,12 @@ pass in quick on $ext_if inet6 proto ipv6-icmp from any to { ( $ext_if ), ff02::
 
 icmp_types = "{ 0, 3, 4, 8, 11, 12 }"
 pass in quick on $ext_if inet proto icmp all icmp-type $icmp_types
-pass in quick on $ext_if proto udp from any to self port 51820
-pass in quick on $ext_if proto tcp from any to 2a01:e0a:94f:f401:ae1f:6bff:fe77:cfb8 port ssh
-pass in quick on $ext_if proto tcp from any to { 192.168.5.25 2a01:e0a:94f:f401:ae1f:6bff:fe77:cfb8 } port http
-pass in quick on $ext_if proto { tcp udp } from any to { 192.168.5.25 2a01:e0a:94f:f401:ae1f:6bff:fe77:cfb8 } port https
+pass in quick on $ext_if proto udp from any to self port $wireguard_port
+pass in quick on $ext_if proto tcp from any to $server_inet6_addr port ssh
+pass in quick on $ext_if proto tcp from any to { $server_inet_addr $server_inet6_addr } port http
+pass in quick on $ext_if proto { tcp udp } from any to { $server_inet_addr $server_inet6_addr } port https
+pass in quick on $ext_if proto { tcp udp } from any to { $server_inet_addr $server_inet6_addr } port $satisfactory_game_port
+pass in quick on $ext_if proto tcp from any to { $server_inet_addr $server_inet6_addr } port $satisfactory_messaging_port
 
 ### inbound wg_if ###
 pass in quick on $wg_if from ($wg_if:network) to any
@@ -71,7 +90,3 @@ pass out on $int_if
 pass out on $ext_if
 ### outbound wg_if ###
 pass out on $wg_if
-
-
-
-block in from any to any
