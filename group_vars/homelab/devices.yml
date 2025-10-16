@@ -2,7 +2,7 @@ devices:
 
   holo:
     ipv4_addr: 192.168.5.1/24 # for coredns templating
-    ipv6_addr: "{{ ipv6_prefix }}:f400:fffa::/64" # for coredns templating
+    ipv6_addr: "{{ ipv6_prefix }}:f401::/64" # for coredns templating
     hostname: holo
     wan_interface:
       ifname: igb0
@@ -10,16 +10,11 @@ devices:
     lan_interface:
       ifname: igb1
       ipv4_addr: 192.168.5.1/24
-      ipv6_addr: "{{ ipv6_prefix }}:f400:fffa::/64"
-
-  s1:
-    ipv4_addr: 192.168.5.2/24
-    ipv6_addr: "{{ ipv6_prefix }}:f400:fffb::/64"
-    hostname: s1
+      ipv6_addr: "{{ ipv6_prefix }}:f401::/64"
 
   desktop:
     ipv4_addr: 192.168.5.20/24
-    ipv6_addr: "{{ ipv6_prefix }}:f401::20/64"
+    ipv6_addr: "{{ ipv6_prefix }}:f401:6a57:c809:150a:46ec/64"
     hw_addr: 00:d8:61:57:9c:fb
     duid: "00:04:b6:ac:2b:01:08:11:15:11:05:7f:94:a4:b4:6d:2b:7b"
     hostname: sasurai
@@ -27,7 +22,6 @@ devices:
   frieren:
     name: enp5s0
     ipv4_addr: 192.168.5.25/24
-    ipv6_addr: "{{ ipv6_prefix }}:f401::25/64"
     hw_addr: ac:1f:6b:77:cf:b8
     duid: 00:01:00:01:2d:83:22:38:e4:1d:2d:4f:df:90
     hostname: frieren
@@ -35,7 +29,7 @@ devices:
   fern:
     name: ens18
     ipv4_addr: 192.168.5.30/24
-    ipv6_addr: "{{ ipv6_prefix }}:f401::30/64"
+    ipv6_addr: "{{ ipv6_prefix }}:f401:be24:11ff:fe70:32ea/64"
     hw_addr: bc:24:11:70:32:ea
     hostname: fern
 

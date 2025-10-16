@@ -1,4 +1,4 @@
-local.emanon.        IN  SOA r.local.emanon. moemanon.pm.me. 12 7200 3600 1209600 3600
+emanon.dev.        IN  SOA r.local.emanon. moemanon.pm.me. 12 7200 3600 1209600 3600
 
 {% for _, device in devices.items() %}
 {% if device.ipv4_addr is defined %}{{ device.hostname }}.{{ local_domain }}.        IN A {{ device.ipv4_addr | ansible.utils.ipaddr('address') }}
