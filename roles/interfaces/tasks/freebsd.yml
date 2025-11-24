@@ -15,7 +15,7 @@
     value: "{{ item.value }}"
   notify: Restart networking
   loop:
-    - { name: igb0, value: inet6 accept_rtadv }
+    - { name: igb0, value: "inet6 2a01:e0a:94f:f400:4262:31ff:fe07:237a prefixlen 64" }
     - { name: igb1, value: "inet6 2a01:e0a:94f:f401:: prefixlen 64" }
 
 - name: Enable routing
