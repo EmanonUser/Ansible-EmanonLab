@@ -5,5 +5,5 @@ homelab:
   hosts:
     holo:
       ansible_host: holo.home.arpa
-    frieren:
-      ansible_host: frieren.home.arpa
+    fern:
+      ansible_host: fern.home.arpa
