@@ -10,7 +10,7 @@
     state: directory
     owner: root
     group: wheel
-    mode: u=rw,g=,o=
+    mode: u=rwx,g=,o=
 
 - name: Configure wireguard
   ansible.builtin.template:
