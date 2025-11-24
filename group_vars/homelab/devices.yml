@@ -22,6 +22,7 @@ devices:
   frieren:
     name: enp5s0
     ipv4_addr: 192.168.5.25/24
+    ipv6_addr: "{{ ipv6_prefix }}:f401::25/64"
     hw_addr: ac:1f:6b:77:cf:b8
     duid: 00:01:00:01:2d:83:22:38:e4:1d:2d:4f:df:90
     hostname: frieren
