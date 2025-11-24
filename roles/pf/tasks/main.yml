@@ -13,3 +13,4 @@
     group: wheel
     mode: u=rw,g=r,o=r
     validate: pfctl -vnf %s
+  notify: Reload pf
