@@ -19,10 +19,6 @@ kea_dhcp4:
       - start: 192.168.5.100
         end: 192.168.5.200
     reservations:
-      - ipv4_addr: "{{ devices.frieren.ipv4_addr }}"
-        hw_addr: "{{ devices.frieren.hw_addr }}"
-        hostname: "{{ devices.frieren.hostname }}"
-
       - ipv4_addr: "{{ devices.fern.ipv4_addr }}"
         hw_addr: "{{ devices.fern.hw_addr }}"
         hostname: "{{ devices.fern.hostname }}"
@@ -82,9 +78,9 @@ kea_dhcp6:
     options_data: []
     interface: "{{ devices.holo.lan_interface.ifname }}"
     reservations:
-      - ipv6_addr: ["{{ devices.frieren.ipv6_addr }}"]
-        duid: "{{ devices.frieren.duid }}"
-        hostname: "{{ devices.frieren.hostname }}"
+      - ipv6_addr: ["{{ devices.fern.ipv6_addr }}"]
+        duid: "{{ devices.fern.duid }}"
+        hostname: "{{ devices.fern.hostname }}"
 
       - ipv6_addr: ["{{ devices.ipmi.ipv6_addr }}"]
         duid: "{{ devices.ipmi.duid }}"
