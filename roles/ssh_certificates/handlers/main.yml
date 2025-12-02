@@ -1,0 +1,15 @@
+---
+- name: Clean host certificate authority private key
+  ansible.builtin.file:
+    path: /home/ansible/.ansible/tmp/ssh_host_ca_private_key
+    state: absent
+
+- name: Clean user certificate authority private key
+  ansible.builtin.file:
+    path: /home/ansible/.ansible/tmp/ssh_user_ca_private_key
+    state: absent
+
+- name: Restart ssh service
+  ansible.builtin.service:
+    name: sshd
+    state: restarted

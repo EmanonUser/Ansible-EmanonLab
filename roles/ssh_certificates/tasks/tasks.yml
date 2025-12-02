@@ -1,8 +1,0 @@
----
-- name: Import daemon certificates tasks
-  ansible.builtin.include_tasks:
-    file: configure_daemon.yml
-
-- name: Import client certificates tasks
-  ansible.builtin.include_tasks:
-    file: configure_client.yml
