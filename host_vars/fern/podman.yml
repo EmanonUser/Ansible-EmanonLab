@@ -1,0 +1,28 @@
+---
+podman_volumes_path: /vault/emanonlab/containers
+podman_use_firewalld: true
+
+jellyfin_volumes:
+  - "{{ podman_volumes_path }}/jellyfin/cache:/cache:rw"
+  - "{{ podman_volumes_path }}/jellyfin/config:/config:rw"
+  - "{{ podman_volumes_path }}/transmission/completed:/now:rw"
+  - /vault/media/series:/data/series:ro
+  - /vault/media/animes:/data/animes:ro
+  - /vault/media/movies:/data/movies:ro
+  - /vault/emanonlab/misc:/data/misc:ro
+  - /vault/media/jellyfin/Shows:/Shows:rw
+  - /vault/media/jellyfin/Animes:/Animes:rw
+  - /vault/media/jellyfin/Movies:/Movies:rw
+
+transmission_volumes:
+  - "{{ podman_volumes_path }}/transmission/home:/transmission/home:rw"
+  - "{{ podman_volumes_path }}/transmission/completed:/transmission/completed:rw"
+  - "{{ podman_volumes_path }}/transmission/incompleted:/transmission/incompleted:rw"
+  - "{{ podman_volumes_path }}/transmission/watch:/transmission/watch:rw"
+  - /vault/media/jellyfin/Shows:/Shows:rw
+  - /vault/media/jellyfin/Animes:/Animes:rw
+  - /vault/media/jellyfin/Movies:/Movies:rw
+  - /vault/media/animes:/media/animes:rw
+  - /vault/media/series:/media/series:rw
+  - /vault/media/movies:/media/movies:rw
+  - /vault/emanonlab/misc:/misc:rw

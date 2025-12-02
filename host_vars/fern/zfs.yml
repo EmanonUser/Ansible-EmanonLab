@@ -1,0 +1,66 @@
+---
+zfs_systemd_on_calendar_scrubing_timer: monthly
+# https://www.freedesktop.org/software/systemd/man/systemd.time.html
+zfs_arc_max: 6442000000  # Bytes
+zfs_manual_zpools_creation: false
+zfs_set_permissions_blacklist: []
+zfs_pools:
+  - pool: fern
+    enable_trim: false
+    base_path: /fern # Carefull with the pool base mountpoint, must be changed too
+    datasets:
+      ## Media datasets ##
+      - dataset: media
+        recordsize: 1M
+      - dataset: media-series
+        recordsize: 1M
+      - dataset: media-movies
+        recordsize: 1M
+      ## Media dataset ##
+
+      ## containers ##
+      - dataset: containers
+        compression: zstd-6
+      - dataset: containers-bitwarden
+        compression: zstd-6
+      - dataset: containers-homeassistant
+        compression: zstd-6
+      - dataset: containers-jellyfin
+        compression: zstd-6
+      - dataset: containers-mosquitto
+        compression: lz4
+      - dataset: containers-satisfactory
+        compression: zstd-6
+      - dataset: containers-satisfactory1-1
+        compression: zstd-6
+      - dataset: containers-torrents
+        compression: lz4
+        recordsize: 1M
+      ## containers ##
+
+      ## emanon datasets ##
+      - dataset: emanon
+        atime: on # yamllint disable-line rule:truthy
+        relatime: on # yamllint disable-line rule:truthy
+
+      - dataset: emanon-documents
+        atime: on # yamllint disable-line rule:truthy
+        relatime: on # yamllint disable-line rule:truthy
+        compression: zstd
+
+      - dataset: emanon-other_users
+        compression: zstd
+      ## emanon datasets ##
+
+      ## emanonlab datasets ##
+      - dataset: emanonlab
+        compression: zstd
+      - dataset: emanonlab-dev
+        compression: zstd-12
+      - dataset: emanonlab-misc
+        compression: lz4
+      - dataset: emanonlab-secret
+        compression: zstd
+      ## emanonlab datasets ##
+      - dataset: virtualmachines
+        compression: zstd-6

@@ -1,0 +1,25 @@
+---
+host_packages:
+  - ca-certificates
+  - apt-transport-https
+  - acl
+  - gnupg2
+  - curl
+  - git
+  - zsh
+  - neovim
+  - unzip
+  - dnsutils
+  - tmux
+  - tcpdump
+  - neofetch
+  - htop
+  - rsync
+  - fio
+  - iotop
+  - lm_sensors
+  - powertop
+  - ripgrep
+  - zoxide
+  - starship
+  - atuin

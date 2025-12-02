@@ -1,0 +1,8 @@
+---
+host_network_interfaces:
+    - interface: "{{ devices.frieren.name }}"
+      ipv4: true
+      ipv6: true
+      configuration:
+      v4: dhcp
+      v6: dhcp
