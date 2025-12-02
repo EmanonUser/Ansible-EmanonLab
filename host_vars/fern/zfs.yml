@@ -1,7 +1,7 @@
 ---
 zfs_systemd_on_calendar_scrubing_timer: monthly
 # https://www.freedesktop.org/software/systemd/man/systemd.time.html
-zfs_arc_max: 6442000000  # Bytes
+zfs_arc_max: 8589934592 # 8 Gibibytes in Bytes
 zfs_manual_zpools_creation: false
 zfs_set_permissions_blacklist: []
 zfs_pools:
@@ -12,6 +12,7 @@ zfs_pools:
       ## Media datasets ##
       - dataset: media
         recordsize: 1M
+        zrepl_snapshot_policy: false
       - dataset: media-series
         recordsize: 1M
       - dataset: media-movies
@@ -21,18 +22,31 @@ zfs_pools:
       ## containers ##
       - dataset: containers
         compression: zstd-6
+        zrepl_snapshot_policy: false
+
       - dataset: containers-bitwarden
         compression: zstd-6
+        zrepl_snapshot_policy: zrepl_P2
+
       - dataset: containers-homeassistant
         compression: zstd-6
+        zrepl_snapshot_policy: zrepl_P2
+
       - dataset: containers-jellyfin
         compression: zstd-6
+
       - dataset: containers-mosquitto
         compression: lz4
+        zrepl_snapshot_policy: zrepl_P2
+
       - dataset: containers-satisfactory
         compression: zstd-6
-      - dataset: containers-satisfactory1-1
+        zrepl_snapshot_policy: zrepl_P3
+
+      - dataset: containers-satisfactory1.1
         compression: zstd-6
+        zrepl_snapshot_policy: zrepl_P3
+
       - dataset: containers-torrents
         compression: lz4
         recordsize: 1M
@@ -42,25 +56,36 @@ zfs_pools:
       - dataset: emanon
         atime: on # yamllint disable-line rule:truthy
         relatime: on # yamllint disable-line rule:truthy
+        zrepl_snapshot_policy: false
 
       - dataset: emanon-documents
         atime: on # yamllint disable-line rule:truthy
         relatime: on # yamllint disable-line rule:truthy
         compression: zstd
+        zrepl_snapshot_policy: zrepl_P2
 
       - dataset: emanon-other_users
         compression: zstd
+        zrepl_snapshot_policy: zrepl_P2
       ## emanon datasets ##
 
       ## emanonlab datasets ##
       - dataset: emanonlab
         compression: zstd
+        zrepl_snapshot_policy: false
+
       - dataset: emanonlab-dev
         compression: zstd-12
+        zrepl_snapshot_policy: zrepl_P2
+
       - dataset: emanonlab-misc
         compression: lz4
-      - dataset: emanonlab-secret
+        zrepl_snapshot_policy: false
+
+      - dataset: emanonlab-secrets
         compression: zstd
+        zrepl_snapshot_policy: zrepl_P2
       ## emanonlab datasets ##
+
       - dataset: virtualmachines
         compression: zstd-6
