@@ -1,12 +1,12 @@
 ---
-- name: Provisioning of the main Debian router
+- name: Provisioning of the main router
   hosts: holo
   become: true
   become_method: community.general.doas
   gather_facts: true
   roles:
 
-    - role: sshd
+    - role: ssh_certificates
       tags: [sshd, ssh]
 
     - role: interfaces
@@ -20,7 +20,6 @@
 
     - role: coredns
       tags: [coredns, dns]
-
 
     - role: pf
       tags: [pf, firewall]
