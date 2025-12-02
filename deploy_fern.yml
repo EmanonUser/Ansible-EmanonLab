@@ -1,6 +1,6 @@
 ---
 - name: Provisioning of the primary server
-  hosts: frieren
+  hosts: fern
   become: true
   gather_facts: true
   roles:
@@ -16,38 +16,8 @@
     - role: zrepl
       tags: [zrepl]
 
-    - role: acme_dns
-      tags: [acme]
-
     - role: restic
       tags: [restic]
 
     - role: docker/docker
       tags: [docker, containers]
-
-    - role: docker/jellyfin
-      tags: [jellyfin, containers]
-
-    - role: docker/transmission
-      tags: [transmission, containers]
-
-    - role: docker/mosquitto
-      tags: [mqtt, containers]
-
-    - role: docker/hass
-      tags: [hass, containers]
-
-    - role: docker/minecraft
-      tags: [minecraft, containers]
-
-    - role: docker/bitwarden
-      tags: [bitwarden, containers]
-
-    - role: docker/valheim
-      tags: [valheim, containers]
-
-    - role: docker/watchtower
-      tags: [watchtower, containers]
-
-    - role: caddy
-      tags: [caddy, containers]
