@@ -30,18 +30,21 @@ resticprofile_config:
         - vaultwarden
         - files
       source:
-        - /vault/emanon/
-        - /vault/emanonlab/articles
-        - /vault/emanonlab/dev
-        - /vault/emanonlab/drawio
-        - /vault/emanonlab/emp
-        - /vault/emanonlab/secrets
-        - /vault/emanonlab/containers/minecraft
-        - /vault/emanonlab/containers/valheim
-        - /vault/emanonlab/containers/bitwarden
-        - /vault/emanonlab/containers/home_assistant
-        - /vault/emanonlab/containers/mosquitto
-        - /vault/emanonlab/containers/jellyfin
+        - /fern/emanon/
+        - /fern/emanonlab/articles
+        - /fern/emanonlab/dev
+        - /fern/emanonlab/drawio
+        - /fern/emanonlab/emp
+        - /fern/emanonlab/secrets
+        - /fern/containers/bitwarden
+        - /fern/containers/homeassistant
+        - /fern/containers/jellyfin
+        - /fern/containers/satisfactory
+        - /fern/containers/satisfactory1-1
+        - /fern/containers/satisfactory1.1
+        - /fern/containers/mosquitto
+        - /root/zfs_datasets_keys
+        - /root/zfs_volumes_keys
 
   vaultwardendb:
     inherit: root
@@ -53,4 +56,4 @@ resticprofile_config:
       stdin: true
       stdin-filename: bitwarden.sqlite3
       stdin-command:
-        - /usr/bin/sqlite3 /vault/emanonlab/containers/bitwarden/data/db.sqlite3 .dump
+        - /usr/bin/sqlite3 /fern/containers/bitwarden/data/db.sqlite3 .dump
