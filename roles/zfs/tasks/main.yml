@@ -74,16 +74,16 @@
     path: "{{ datasets_keylocation }}"
     state: directory
     owner: root
-    group: root
-    mode: u=rwx,g=,o=
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=rx,o=
 
 - name: Create dir for ZFS volumes encryption key(s)
   ansible.builtin.file:
     path: "{{ volumes_keylocation }}"
     state: directory
     owner: root
-    group: root
-    mode: u=rwx,g=,o=
+    group: "{{ primary_user_username }}"
+    mode: u=rwx,g=rx,o=
 
 - name: Create ZFS dataset encryption key(s)
   ansible.builtin.shell:
@@ -101,12 +101,66 @@
   loop_control:
     label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume }}"
 
-- name: Set permissions and imutability for dataset encryption key(s)
+- name: Grant primary user read access on /root
+  ansible.posix.acl:
+    path: "/root/"
+    entity: "{{ primary_user_username }}"
+    etype: user
+    permissions: x
+    state: present
+
+- name: Grant primary user read access on /root (acl mask)
+  ansible.posix.acl:
+    path: "/root/"
+    etype: mask
+    permissions: x
+    state: present
+
+- name: Grant primary user read access on datasets keys
+  ansible.posix.acl:
+    path: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
+    entity: "{{ primary_user_username }}"
+    etype: user
+    permissions: r
+    state: present
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+
+- name: Grant primary user read access on volumes keys
+  ansible.posix.acl:
+    path: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
+    entity: "{{ primary_user_username }}"
+    etype: user
+    permissions: r
+    state: present
+  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume | regex_replace('-', '/') }}"
+
+- name: Grant primary user read access on datasets keys (acl mask)
+  ansible.posix.acl:
+    path: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
+    etype: mask
+    permissions: r
+    state: present
+  loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS dataset: {{ item.0.pool }}/{{ item.1.dataset | regex_replace('-', '/') }}"
+
+- name: Grant primary user read access on volumes keys (acl mask)
+  ansible.posix.acl:
+    path: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
+    etype: mask
+    permissions: r
+    state: present
+  loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
+  loop_control:
+    label: "ZFS volume: {{ item.0.pool }}/{{ item.1.volume | regex_replace('-', '/') }}"
+
+- name: Set imutability for dataset encryption key(s)
   ansible.builtin.file:
     path: "{{ datasets_keylocation }}/{{ item.1.dataset }}.key"
-    owner: root
-    group: root
-    mode: u=r,g=,o=
     attributes: ie
     state: file
   loop: "{{ zfs_pools | subelements('datasets', skip_missing=true) }}"
@@ -117,8 +171,8 @@
   ansible.builtin.file:
     path: "{{ volumes_keylocation }}/{{ item.1.volume }}.key"
     owner: root
-    group: root
-    mode: u=r,g=,o=
+    group: "{{ primary_user_username }}"
+    mode: u=r,g=r,o=
     attributes: ie
     state: file
   loop: "{{ zfs_pools | subelements('volumes', skip_missing=true) }}"
