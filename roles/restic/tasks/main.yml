@@ -11,20 +11,23 @@
 
 - name: Download resticprofile
   ansible.builtin.get_url:
-    url: "https://github.com/creativeprojects/resticprofile/releases/download/v0.26.0/resticprofile_0.26.0_linux_amd64.tar.gz"
+    url: "https://github.com/creativeprojects/resticprofile/releases/download/v0.32.0/resticprofile_0.32.0_linux_amd64.tar.gz"
     dest: "/tmp/resticprofile.tar.gz"
     mode: "0640"
+  when: not ansible_check_mode
 
 - name: Extract resticprofile.tgz
   ansible.builtin.unarchive:
     src: "/tmp/resticprofile.tar.gz"
     dest: "/tmp/"
     remote_src: true
+  when: not ansible_check_mode
 
 - name: Install resticprofile
   ansible.builtin.command:
     cmd: "install /tmp/resticprofile /usr/local/bin/"
     creates: /usr/local/bin/resticprofile
+  when: not ansible_check_mode
 
 - name: Ensures resticprofile configuration directory exists
   ansible.builtin.file:
@@ -36,7 +39,7 @@
 
 - name: Place resticprofile config.json file
   ansible.builtin.copy:
-    content: "{{ resticprofile_config | to_json }}"
+    content: "{{ resticprofile_config | to_nice_json }}"
     dest: /home/{{ primary_user_username }}/.config/resticprofile/profiles.json
     owner: "{{ primary_user_username }}"
     group: "{{ primary_user_username }}"
