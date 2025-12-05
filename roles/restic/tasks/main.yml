@@ -53,6 +53,14 @@
     group: "{{ primary_user_username }}"
     mode: u=rw,g=rw,o=
 
+- name: Place systemd drop-in file
+  ansible.builtin.copy:
+    src: "99-drop-in.conf"
+    dest: /home/{{ primary_user_username }}/.config/resticprofile/99-drop-in.conf
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: u=rw,g=rw,o=
+
 - name: Create restic env directories
   ansible.builtin.file:
     path: /home/{{ primary_user_username }}/.config/resticprofile/{{ item.name }}
