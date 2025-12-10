@@ -6,3 +6,8 @@ TODO:
     - conf journald
     - fix shadow copies, only work with zrepl_default_
     - configure timesyncd
+    - verify .ssh path is created
+    - nix role
+    - zellij role
+    - atuin role
+    - stow role
