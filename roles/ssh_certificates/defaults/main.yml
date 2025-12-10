@@ -1,2 +1,8 @@
 ---
-allowed_users: ["emanon", "root", "ansible"]
+allowed_users: ["{{ primary_user_username }}", "root", "ansible"]
+allowed_hosts:
+  - "*.{{ domain }}"
+  - "*.{{ internal_domain }}"
+  - "*.{{ local_domain }}"
+  - "192.168.5.*"
+  - "2a01:e0a:94f:f40*"

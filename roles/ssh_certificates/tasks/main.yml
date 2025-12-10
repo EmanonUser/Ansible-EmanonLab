@@ -1,8 +1,13 @@
 ---
-#- name: Import daemon certificates tasks
-#  ansible.builtin.include_tasks:
-#    file: configure_daemon.yml
-#
+- name: Determine the correct system group
+  ansible.builtin.set_fact:
+    target_group: "{{ 'wheel' if ansible_os_family == 'FreeBSD' else 'root' }}"
+  run_once: true
+
+- name: Import daemon certificates tasks
+  ansible.builtin.include_tasks:
+    file: configure_daemon.yml
+
 - name: Import client certificates tasks
   ansible.builtin.include_tasks:
     file: configure_client.yml

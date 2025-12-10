@@ -2,10 +2,14 @@
 - name: Copy the host certificate authority private key
   ansible.builtin.copy:
     content: "{{ ssh_host_ca_private_key }}"
-    dest: ~/.ansible/tmp/ssh_host_ca_private_key
-    user: ansible
+    dest: /home/ansible/.ansible/tmp/ssh_host_ca_private_key
+    owner: ansible
     group: ansible
-    mode: u=rw,g=r,o=
+    mode: u=rw,g=,o=
+    validate: /usr/bin/ssh-keygen -l -f %s
+  notify: Clean host certificate authority private key
+  no_log: true
+  changed_when: false
 
 - name: Generate OpenSSH ed25519 hostkeys
   community.crypto.openssh_keypair:
@@ -16,12 +20,19 @@
 - name: Generate an OpenSSH host certificate
   community.crypto.openssh_cert:
     type: host
-    signing_key: ~/.ansible/tmp/ssh_host_ca_private_key
+    signing_key: /home/ansible/.ansible/tmp/ssh_host_ca_private_key
     public_key: /etc/ssh/ssh_host_ed25519_key.pub
     path: /etc/ssh/ssh_host_ed25519_key-cert.pub
     valid_from: always
     valid_to: forever
     identifier: "{{ ansible_hostname }}"
+    principals:
+      - "{{ ansible_hostname }}.{{ internal_domain }}"
+      - "{{ ansible_hostname }}.{{ local_domain }}"
+      - "{{ ansible_hostname }}.{{ domain }}"
+      - "{{ ansible_hostname }}"
+      - "{{ ansible_default_ipv4.address }}"
+      - "{{ ansible_default_ipv6.address }}"
 
 - name: Configure ssh daemon to use the host certificate
   ansible.builtin.lineinfile:
@@ -29,7 +40,7 @@
     regexp: "^#HostCertificate|^HostCertificate"
     line: "HostCertificate /etc/ssh/ssh_host_ed25519_key-cert.pub"
     owner: root
-    group: root
+    group: "{{ target_group }}"
     mode: u=rw,g=r,o=
     state: present
     validate: /usr/sbin/sshd -tf %s
@@ -37,17 +48,20 @@
 
 - name: Copy the user certificate authority public key
   ansible.builtin.copy:
-    content: "{{ user_certificate_authority }}"
+    content: "{{ ssh_user_ca_public_key }}"
     dest: /etc/ssh/user_certificate_authority.pub
+    owner: root
+    group: "{{ target_group }}"
     mode: u=rw,g=r,o=
+    validate: /usr/bin/ssh-keygen -l -f %s
 
 - name: Configure ssh daemon to use the user certificate
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: "^#TrustedUserCAKeys|^TrustedUserCAKeys"
-    line: "TrustedUserCAKeys /etc/ssh/ssh_user_certificate_authority.pub"
+    line: "TrustedUserCAKeys /etc/ssh/user_certificate_authority.pub"
     owner: root
-    group: root
+    group: "{{ target_group }}"
     mode: u=rw,g=r,o=
     state: present
     validate: /usr/sbin/sshd -tf %s

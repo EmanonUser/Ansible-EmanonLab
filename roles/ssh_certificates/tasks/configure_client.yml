@@ -2,23 +2,46 @@
 - name: Copy the user certificate authority private key
   ansible.builtin.copy:
     content: "{{ ssh_user_ca_private_key }}"
-    dest: ~/.ansible/tmp/ssh_user_ca_private_key
-    user: ansible
+    dest: /home/ansible/.ansible/tmp/ssh_user_ca_private_key
+    owner: ansible
     group: ansible
     mode: u=rw,g=r,o=
+    validate: /usr/bin/ssh-keygen -l -f %s
+  notify: Clean user certificate authority private key
+  changed_when: false
+  no_log: true
 
-- name: Generate an OpenSSH ed25519 keypair
-  community.crypto.openssh_keypair:
-    path: /home/{{ primary_user_username }}/.ssh/id_25519
-    regenerate: full_idempotence
-    type: ed25519
+- name: Copy OpenSSH ed25519 keypair
+  ansible.builtin.copy:
+    content: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ primary_user_username }}"
+    group: "{{ primary_user_username }}"
+    mode: "{{ item.mode }}"
+    validate: /usr/bin/ssh-keygen -l -f %s
+    #no_log: true
+  loop:
+    - { src: "{{ ssh_ed25519_private_key }}", dest: "/home/{{ primary_user_username }}/.ssh/id_ed25519", mode: "u=rw,g=,o=" }
+    - { src: "{{ ssh_ed25519_public_key }}", dest: "/home/{{ primary_user_username }}/.ssh/id_ed25519.pub", mode: "u=r,g=,o=" }
+  loop_control:
+    label: "{{ item.dest }}"
 
 - name: Generate an OpenSSH user certificate
   community.crypto.openssh_cert:
     type: user
-    signing_key: ~/.ansible/tmp/ssh_user_ca_private_key
-    public_key: /home/{{ primary_user_username }}/.ssh/id_25519.pub
+    signing_key: /home/ansible/.ansible/tmp/ssh_user_ca_private_key
+    public_key: /home/{{ primary_user_username }}/.ssh/id_ed25519.pub
     path: /home/{{ primary_user_username }}/.ssh/id_25519-cert.pub
     valid_from: always
     valid_to: forever
     principals: "{{ allowed_users }}"
+
+- name: Add CA host public key to known hosts
+  ansible.builtin.lineinfile:
+    line: "@cert-authority {{ allowed_hosts | join(',') }} {{ ssh_host_ca_public_key }}"
+    dest: /etc/ssh/ssh_known_hosts
+    regexp: '^@cert-authority\s+'
+    owner: root
+    group: "{{ target_group }}"
+    mode: u=rw,g=r,o=r
+    create: true
