@@ -19,7 +19,6 @@
     group: "{{ primary_user_username }}"
     mode: "{{ item.mode }}"
     validate: /usr/bin/ssh-keygen -l -f %s
-    #no_log: true
   loop:
     - { src: "{{ ssh_ed25519_private_key }}", dest: "/home/{{ primary_user_username }}/.ssh/id_ed25519", mode: "u=rw,g=,o=" }
     - { src: "{{ ssh_ed25519_public_key }}", dest: "/home/{{ primary_user_username }}/.ssh/id_ed25519.pub", mode: "u=r,g=,o=" }
