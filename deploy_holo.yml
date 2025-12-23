@@ -9,6 +9,9 @@
     - role: ssh_certificates
       tags: [sshd, ssh]
 
+    - role: stow
+      tags: [stow, dotfiles]
+
     - role: interfaces
       tags: [interfaces]
 

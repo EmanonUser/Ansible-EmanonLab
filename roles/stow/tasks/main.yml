@@ -1,0 +1,21 @@
+---
+- name: Install stow
+  ansible.builtin.package:
+    name: [git, stow]
+    state: present
+
+- name: Clone github dotfiles repository
+  ansible.builtin.git:
+    repo: "{{ dotfiles_git_repo }}"
+    dest: "/home/{{ primary_user_username }}/dotfiles"
+    version: main
+    accept_newhostkey: true
+  become: true
+  become_user: "{{ primary_user_username }}"
+
+- name: Install stow packages
+  ansible.builtin.command:
+    cmd: "stow /home/{{ primary_user_username }}/dotfiles/*"
+    creates: "/home/{{ primary_user_username }}/.ssh/config"
+  become: true
+  become_user: "{{ primary_user_username }}"
