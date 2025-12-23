@@ -11,3 +11,27 @@
 - name: Import client certificates tasks
   ansible.builtin.include_tasks:
     file: configure_client.yml
+
+- name: Enable SSH PubkeyAuthentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#PubkeyAuthentication|^PubkeyAuthentication"
+    line: PubkeyAuthentication yes
+    owner: root
+    group: "{{ target_group }}"
+    mode: u=rw,g=r,o=
+    state: present
+    validate: /usr/sbin/sshd -tf %s
+  notify: Restart ssh service
+
+- name: Disable SSH PasswordAuthentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#PasswordAuthentication|^PasswordAuthentication"
+    line: PasswordAuthentication no
+    owner: root
+    group: "{{ target_group }}"
+    mode: u=rw,g=r,o=
+    state: present
+    validate: /usr/sbin/sshd -tf %s
+  notify: Restart ssh service

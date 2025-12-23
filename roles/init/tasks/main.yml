@@ -29,48 +29,9 @@
     password: "{{ primary_user_password | password_hash('sha512', primary_user_password_salt) }}"
     state: present
 
-- name: Create SSH dir for primary user
-  ansible.builtin.file:
-    path: /home/{{ primary_user_username }}/.ssh/
-    owner: "{{ primary_user_username }}"
-    group: "{{ primary_user_username }}"
-    mode: u=rwx,g=,o=
-    state: directory
-
-- name: Add SSH keys to primary user
-  ansible.posix.authorized_key:
-    user: "{{ primary_user_username }}"
-    key: "{{ item }}"
-    state: present
-  loop: "{{ primary_user_ssh_pubkey }}"
-
-- name: Enable SSH PubkeyAuthentication
-  ansible.builtin.lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: "^#PubkeyAuthentication|^PubkeyAuthentication"
-    line: PubkeyAuthentication yes
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-    state: present
-    validate: /usr/sbin/sshd -tf %s
-  notify: Restart ssh service
-
-- name: Disable SSH PasswordAuthentication
-  ansible.builtin.lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: "^#PasswordAuthentication|^PasswordAuthentication"
-    line: PasswordAuthentication no
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-    state: present
-    validate: /usr/sbin/sshd -tf %s
-  notify: Restart ssh service
-
 - name: Add primary user to sudoers
   ansible.builtin.lineinfile:
     path: /etc/sudoers
-    line: "{{ primary_user_username }} ALL=(ALL:ALL) ALL"
+    line: "{{ primary_user_username }} ALL=(ALL:ALL) NOPASSWD: ALL"
     state: present
     validate: /usr/sbin/visudo -cf %s
