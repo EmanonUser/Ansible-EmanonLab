@@ -11,3 +11,4 @@ TODO:
     - zellij role
     - atuin role
     - stow role
+    - crowdsec role
