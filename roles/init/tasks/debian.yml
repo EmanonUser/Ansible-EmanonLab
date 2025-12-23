@@ -8,4 +8,9 @@
   ansible.builtin.apt:
     name: "{{ debian_stable_packages }}"
     state: present
-  notify: Enable ssd trim
+
+- name: Enable ssd trim
+  ansible.builtin.systemd:
+    name: fstrim.timer
+    state: started
+    enabled: true
