@@ -7,6 +7,12 @@
     - role: init
       tags: [init]
 
+    - role: stow
+      tags: [stow, dotfiles]
+
+    - role: atuin
+      tags: [atuin]
+
     - role: interfaces
       tags: [interfaces]
 

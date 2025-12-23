@@ -1,0 +1,17 @@
+---
+- name: Install atuin
+  ansible.builtin.package:
+    name: atuin
+    state: present
+
+- name: Login to Atuin account
+  ansible.builtin.command:
+    cmd: atuin login --username "{{ atuin.username }}" --password "{{ atuin.password }}" --key "{{ atuin.key }}"
+  become: true
+  become_user: "{{ primary_user_username }}"
+  register: res
+  changed_when: '"Logged in!" in res.stdout'
+
+- name: debug
+  debug:
+    msg: "{{ res }}"
