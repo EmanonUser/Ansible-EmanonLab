@@ -11,7 +11,4 @@
   become_user: "{{ primary_user_username }}"
   register: res
   changed_when: '"Logged in!" in res.stdout'
-
-- name: debug
-  debug:
-    msg: "{{ res }}"
+  failed_when: false
