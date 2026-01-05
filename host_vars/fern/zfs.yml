@@ -10,6 +10,8 @@ zfs_pools:
     base_path: /fern # Carefull with the pool base mountpoint, must be changed too
     datasets:
       ## Media datasets ##
+      - dataset: data
+        recordsize: 1M
       - dataset: media
         recordsize: 1M
         zrepl_snapshot_policy: false
