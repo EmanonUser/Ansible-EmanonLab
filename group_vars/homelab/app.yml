@@ -9,8 +9,8 @@ http_services:
     backend: localhost
     port: 3030
 
-  - service: qbitorrent
-    fqdn: qbitorrent.home.emanon.dev
+  - service: qbittorrent
+    fqdn: qbittorrent.home.emanon.dev
     reverse_proxy: fern.home.arpa
     direct_access: false
     internal: true
