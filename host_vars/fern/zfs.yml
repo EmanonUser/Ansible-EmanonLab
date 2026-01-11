@@ -11,13 +11,7 @@ zfs_pools:
     datasets:
       ## Media datasets ##
       - dataset: data
-        recordsize: 1M
-      - dataset: media
-        recordsize: 1M
-        zrepl_snapshot_policy: false
-      - dataset: media-series
-        recordsize: 1M
-      - dataset: media-movies
+        compression: lz4
         recordsize: 1M
       ## Media dataset ##
 
@@ -48,10 +42,6 @@ zfs_pools:
       - dataset: containers-satisfactory1.1
         compression: zstd-6
         zrepl_snapshot_policy: zrepl_P3
-
-      - dataset: containers-torrents
-        compression: lz4
-        recordsize: 1M
       ## containers ##
 
       ## emanon datasets ##
