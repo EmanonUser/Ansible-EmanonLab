@@ -17,6 +17,14 @@ http_services:
     backend: localhost
     port: 8080
 
+  - service: qui
+    fqdn: qui.home.emanon.dev
+    reverse_proxy: fern.home.arpa
+    direct_access: false
+    internal: true
+    backend: localhost
+    port: 7476
+
   - service: prowlarr
     fqdn: prowlarr.home.emanon.dev
     reverse_proxy: fern.home.arpa
@@ -33,6 +41,14 @@ http_services:
     backend: localhost
     port: 8989
 
+  - service: bazarr
+    fqdn: bazarr.home.emanon.dev
+    reverse_proxy: fern.home.arpa
+    direct_access: false
+    internal: true
+    backend: localhost
+    port: 6767
+
   - service: radarr
     fqdn: radarr.home.emanon.dev
     reverse_proxy: fern.home.arpa
@@ -41,8 +57,8 @@ http_services:
     backend: localhost
     port: 7878
 
-  - service: jellyseer
-    fqdn: jellyseer.home.emanon.dev
+  - service: jellyseerr
+    fqdn: jellyseerr.home.emanon.dev
     reverse_proxy: fern.home.arpa
     direct_access: false
     internal: true
